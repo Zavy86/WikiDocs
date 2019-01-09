@@ -49,9 +49,12 @@ class Document{
  public function __get($property){return $this->$property;}
 
  /**
-  * Load document form source file
+  * Load document content form source file
+  *
+  * /** @todo separare la creazione dell'indice e valutare come aggiungere pagina successiva e precedente.. */
+  *
   */
- public function getContent(){
+ public function loadContent(){
   // check if file exist
   if(file_exists($this->FILE)){
    // load content from file
