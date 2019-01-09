@@ -51,7 +51,7 @@ class Document{
  /**
   * Load document content form source file
   *
-  * /** @todo separare la creazione dell'indice e valutare come aggiungere pagina successiva e precedente.. */
+  * /** @todo separare la creazione dell'indice e valutare come aggiungere pagina successiva e precedente..
   *
   */
  public function loadContent(){
