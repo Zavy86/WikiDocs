@@ -11,26 +11,26 @@
 <html>
  <head>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>css/styles.css" media="screen,projection"/>
-  <link  type="image/png" rel="icon" href="<?php echo $WD->PATH; ?>images/favicon.png" sizes="any" />
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles.css" media="screen,projection"/>
+  <link  type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#4CAF50">
-  <title><?php echo ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$WD->TITLE; ?></title>
+  <title><?php echo ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE; ?></title>
  </head>
  <body>
   <header>
    <ul id="nav-mobile" class="sidenav sidenav-fixed">
     <li class="logo">
-     <a id="logo-container" href="<?php echo $WD->PATH; ?>" class="brand-logo">
-      <h3><?php echo $WD->TITLE; ?></h3>
-      <span><em><?php echo $WD->SUBTITLE; ?></em></span>
+     <a id="logo-container" href="<?php echo $APP->PATH; ?>" class="brand-logo">
+      <h3><?php echo $APP->TITLE; ?></h3>
+      <span><em><?php echo $APP->SUBTITLE; ?></em></span>
      </a>
     </li>
     <li class="search">
      <div class="search-wrapper">
-      <form action="<?php echo $WD->PATH; ?>" method="get" autocomplete="off">
+      <form action="<?php echo $APP->PATH; ?>" method="get" autocomplete="off">
        <input id="search" name="search" placeholder="Search in wiki.."><i class="material-icons">search</i>
       </form>
      </div>
@@ -43,15 +43,15 @@
   foreach($index_array as $index_fe){
    echo "<li class=\"bold";
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){echo " active";}
-   echo "\"><a class=\"waves-effect waves-green\" href=\"".$WD->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
+   echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
   }
  }
 ?>
    </ul>
    <div class="sidebar-footer"> <!-- @todo migliorare -->
     <div id="sidebar-footer-content">
-     <span class="default-title"><?php echo $WD->OWNER; ?></span><br>
-     <span class="default-description"><?php echo $WD->NOTICE; ?></span>
+     <span class="default-title"><?php echo $APP->OWNER; ?></span><br>
+     <span class="default-description"><?php echo $APP->NOTICE; ?></span>
     </div>
    </div>
   </header>
@@ -72,7 +72,7 @@
    if($DOC->ID==$element->path){
     echo "<span class=\"nowrap\">".$element->label."</span>";
    }else{
-    echo "<a href=\"".$WD->PATH.$element->path."\" class=\"green-text nowrap\">".$element->label."</a> / ";
+    echo "<a href=\"".$APP->PATH.$element->path."\" class=\"green-text nowrap\">".$element->label."</a> / ";
    }
   }
  }
@@ -92,7 +92,7 @@
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?php echo $DOC->URL; ?>" data-position="bottom" data-tooltip="Cancel editing"><i class="material-icons">cancel</i></a>
        <!-- @todo integrare nella toolbar di simplemde -->
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="Images"><i class="material-icons">image</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $WD->PATH; ?>submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
        <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="Backup current version"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
        <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="Save"><i class="material-icons">save</i></button>
       </span>
@@ -109,7 +109,7 @@
  }
 ?>
 <?php if(MODE=="auth"){ ?>
-       <form id="auth-form" method="post" action="<?php echo $WD->PATH; ?>submit.php?act=authentication">
+       <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=authentication">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <div class="row" style="margin-top:36px">
          <div class="input-field col s9">
@@ -123,7 +123,7 @@
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
-       <form id="editor-form" method="post" action="<?php echo $WD->PATH; ?>submit.php?act=content_save">
+       <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <textarea id="simplemde" name="content"><?php echo $DOC->loadContent(); ?></textarea>
@@ -134,7 +134,7 @@
        <div id="modal_uploader" class="modal">
         <div class="modal-content">
          <h4>Images</h4>
-         <form id="uploader-form" method="post" action="<?php echo $WD->PATH; ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
+         <form id="uploader-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
           <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
           <div class="row" style="margin-top:36px">
            <div class="input-field file-field col s9">
@@ -175,29 +175,29 @@
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
      <div class="col s5">
-      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($WD->DEBUG){echo " ".$WD->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?auth\">Logout</a>";} ?></small></p>
+      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?auth\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php
  // debug
- if($WD->DEBUG){
+ if($APP->DEBUG){
   echo "    <div class=\"divider\"></div>\n\n";
   echo "<!-- debug -->\n<section class=\"debug\">\n";
   wdf_dump($DOC,"DOCUMENT");
-  wdf_dump($WD,"APPLICATION");
+  wdf_dump($APP,"APPLICATION");
   echo "\n</section><!-- /debug -->\n\n";
  }
 ?>
    </div><!-- /container -->
   </main>
   <script type="text/javascript">var path="<?php echo $DOC->PATH; ?>";</script>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>js/initializations.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>helpers/simplemde-1.11.2/js/simplemde.min.js"></script>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>js/editor.js"></script>
-  <script type="text/javascript" src="<?php echo $WD->PATH; ?>js/images.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/js/simplemde.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
 <?php } ?>
 <?php
  // cycle all alerts

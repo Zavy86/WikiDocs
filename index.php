@@ -21,7 +21,7 @@
  // mode definition
  define(MODE,$mode);
  // initialize application
- $WD=new WikiDocs();
+ $APP=new WikiDocs();
  // initialize document
  $DOC=new Document(DOC);
  // initialize markdown parser
