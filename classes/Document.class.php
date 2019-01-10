@@ -83,10 +83,10 @@ class Document{
      }
     }
    }else{
-    // check for authentication
-    if(wdf_authenticated()){
+    // check for edit authorization
+    if(wdf_authenticated()==2){
      // new document
-     $content="# ".$this->NAME."\n";
+     $content="# ".$this->TITLE."\n";
      if(MODE=="view"){
       $content.="We are sorry but the page you are looking for does not exist.\n\n";
       $content.="Click the edit button to create this page!";
