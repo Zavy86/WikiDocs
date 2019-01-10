@@ -119,16 +119,19 @@ class Document{
  public function images(){
   // definition
   $images_array=array();
-  // scan directory for documents
-  $elements=scandir($this->DIR);
-  // cycle all elements
-  foreach($elements as $element_fe){
-   // skip directories
-   if(is_dir($this->DIR."/".$element_fe)){continue;}
-   $file_extension=explode(".",$element_fe);
-   if(!in_array(end($file_extension),array("png","gif","jpg","jpeg"))){continue;}
-   // add element to documents array
-   $images_array[]=$element_fe;
+  // check directory
+  if(is_dir($this->DIR)){
+   // scan directory for documents
+   $elements=scandir($this->DIR);
+   // cycle all elements
+   foreach($elements as $element_fe){
+    // skip directories
+    if(is_dir($this->DIR."/".$element_fe)){continue;}
+    $file_extension=explode(".",$element_fe);
+    if(!in_array(end($file_extension),array("png","gif","jpg","jpeg"))){continue;}
+    // add element to documents array
+    $images_array[]=$element_fe;
+   }
   }
   // sort images
   sort($images_array);
