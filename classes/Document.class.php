@@ -2,7 +2,7 @@
 /**
  * Document class
  *
- * @package Document
+ * @package WikiDocs
  * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
  * @link    https://github.com/Zavy86/wikidocs
  */
@@ -41,7 +41,7 @@ class Document{
  }
 
  /**
-  * Get
+  * Get property
   *
   * @param string $property Property name
   * @return string Property value
@@ -51,66 +51,70 @@ class Document{
  /**
   * Load document content form source file
   *
-  * /** @todo separare la creazione dell'indice e valutare come aggiungere pagina successiva e precedente..
-  *
-  * @param string $paths Path format (WEB|FS)
-  * @return string Content in HTML source code
+  * @param string $paths Format for paths [WEB|FS]
+  * @return string Content markdown source code
   */
  public function loadContent($paths="WEB"){
   // check if file exist
-  if(file_exists($this->FILE)){
-   // load content from file
-   $content=file_get_contents($this->FILE);
+  if(!file_exists($this->FILE)){return false;}
+  // load content from file
+  $content=file_get_contents($this->FILE);
+  // replace path placeholders
+  switch(strtoupper(trim($paths))){
+   case "WEB":$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(PATH,$this->PATH."/"),$content);break;
+   case "FS":$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(URL,$this->DIR."/"),$content);break;
+   default:$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),"",$content);
   }
-  // check for content
-  if(!strlen($content)){
-   // search for documents
-   $index_array=wdf_document_list($this->ID);
-   // check for elements
-   if(count($index_array)){
-    // build index
-    $content="# ".$this->TITLE."\n";
-    // cycle all documents
-    foreach($index_array as $element_fe){
-     // make document list
-     $content.="- [".$element_fe->label."](".PATH.$element_fe->url.")\n";
-     // search for sub-documents
-     $subindex_array=wdf_document_list($element_fe->url);
-     // cycle all sub-documents
-     foreach($subindex_array as $subelement_fe){
-      // make sub-documents list
-      $content.="\t- [".$subelement_fe->label."](".PATH.$subelement_fe->url.")\n";
-     }
-    }
-   }else{
-    // check for edit authorization
-    if(wdf_authenticated()==2){
-     // new document
-     $content="# ".$this->TITLE."\n";
-     if(MODE=="view"){
-      $content.="We are sorry but the page you are looking for does not exist.\n\n";
-      $content.="Click the edit button to create this page!";
-     }
-    }else{
-     // document not found
-     $content="# Error 404 \n";
-     $content.="We are sorry but the page you are looking for does not exist.\n\n";
+  // return
+  return $source;
+ }
+
+ /*
+  * Document render
+  *
+  * @return string Document HTML source code
+  */
+ public function render(){
+  // load content from file and convert paths for web
+  $content=$this->loadContent("WEB");
+  // add content or if content is null add document title to source code
+  if($content!=false){$source=$content;}else{$source="# ".$this->TITLE."\n";}
+  // search for sub-documents
+  $sub_documents=wdf_document_list($this->ID);
+  // check for elements
+  if(count($sub_documents)){
+   // build sub-documents index
+   $source.="\n\n___\n";
+   // cycle all elements
+   foreach($sub_documents as $sub_element_fe){
+    // add element list
+    $source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
+    // search for sub-sub-documents
+    $sub_sub_documents=wdf_document_list($sub_element_fe->url);
+    // cycle all sub-sub-documents
+    foreach($sub_sub_documents as $sub_sub_element_fe){
+     // add element list
+     $source.="\t- [".$sub_sub_element_fe->label."](".PATH.$sub_sub_element_fe->url.")\n";
     }
    }
   }
-  // replace path placeholders
-  switch(strtoupper(trim($paths))){
-   case "WEB":
-    $content=str_replace("{{APP_PATH}}",PATH,$content);
-    $content=str_replace("{{DOC_PATH}}",$this->PATH."/",$content);
-    break;
-   case "FS":
-    $content=str_replace("{{APP_PATH}}",URL,$content);
-    $content=str_replace("{{DOC_PATH}}",$this->DIR."/",$content);
-    break;
+  // check for content or elements index
+  if(!$content && !count($sub_documents)){
+   // check for edit authorization
+   if(wdf_authenticated()==2){
+    if(MODE=="view"){
+     // document to be created
+     $source.="We are sorry but the page you are looking for does not exist.\n\n";
+     $source.="Click the edit button to create this page!";
+    }
+   }else{
+    // document not found
+    $source="# Error 404 \n";
+    $source.="We are sorry but the page you are looking for does not exist.\n\n";
+   }
   }
-  // return
-  return $content;
+  // return source code
+  return $source;
  }
 
  /*
