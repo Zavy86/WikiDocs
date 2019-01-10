@@ -1,0 +1,5 @@
+/nbproject/
+/documents/*
+.htaccess
+config.inc.php
+!index.php
