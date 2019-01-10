@@ -24,7 +24,7 @@
    <ul id="nav-mobile" class="sidenav sidenav-fixed">
     <li class="logo">
      <a id="logo-container" href="<?php echo $APP->PATH; ?>" class="brand-logo">
-      <h3><?php echo $APP->TITLE; ?></h3>
+      <h1><?php echo $APP->TITLE; ?></h1>
       <span><em><?php echo $APP->SUBTITLE; ?></em></span>
      </a>
     </li>
@@ -105,7 +105,7 @@
 <article>
 <?php
  if(MODE=="view"){
-  echo $PARSER->text($DOC->loadContent())."\n";
+  echo $PARSER->text($DOC->render())."\n";
  }
 ?>
 <?php if(MODE=="auth"){ ?>
@@ -126,7 +126,7 @@
        <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
-        <textarea id="simplemde" name="content"><?php echo $DOC->loadContent(); ?></textarea>
+        <textarea id="simplemde" name="content"><?php $source=$DOC->loadContent(); echo (strlen($source)?$source:"# ".$DOC->TITLE); ?></textarea>
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
