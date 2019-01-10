@@ -18,7 +18,7 @@ var simplemde=new SimpleMDE({
  showIcons:["code","table"],
  blockStyles:{
   bold:"**",
-  italic:"_",
+  italic:"*",
   code:"```"
  }
 });

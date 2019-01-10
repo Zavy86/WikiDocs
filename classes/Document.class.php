@@ -83,10 +83,10 @@ class Document{
      }
     }
    }else{
-    // check for authentication
-    if(wdf_authenticated()){
+    // check for edit authorization
+    if(wdf_authenticated()==2){
      // new document
-     $content="# ".$this->NAME."\n";
+     $content="# ".$this->TITLE."\n";
      if(MODE=="view"){
       $content.="We are sorry but the page you are looking for does not exist.\n\n";
       $content.="Click the edit button to create this page!";
@@ -119,16 +119,19 @@ class Document{
  public function images(){
   // definition
   $images_array=array();
-  // scan directory for documents
-  $elements=scandir($this->DIR);
-  // cycle all elements
-  foreach($elements as $element_fe){
-   // skip directories
-   if(is_dir($this->DIR."/".$element_fe)){continue;}
-   $file_extension=explode(".",$element_fe);
-   if(!in_array(end($file_extension),array("png","gif","jpg","jpeg"))){continue;}
-   // add element to documents array
-   $images_array[]=$element_fe;
+  // check directory
+  if(is_dir($this->DIR)){
+   // scan directory for documents
+   $elements=scandir($this->DIR);
+   // cycle all elements
+   foreach($elements as $element_fe){
+    // skip directories
+    if(is_dir($this->DIR."/".$element_fe)){continue;}
+    $file_extension=explode(".",$element_fe);
+    if(!in_array(end($file_extension),array("png","gif","jpg","jpeg"))){continue;}
+    // add element to documents array
+    $images_array[]=$element_fe;
+   }
   }
   // sort images
   sort($images_array);
