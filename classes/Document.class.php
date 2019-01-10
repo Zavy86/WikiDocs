@@ -53,8 +53,10 @@ class Document{
   *
   * /** @todo separare la creazione dell'indice e valutare come aggiungere pagina successiva e precedente..
   *
+  * @param string $paths Path format (WEB|FS)
+  * @return string Content in HTML source code
   */
- public function loadContent(){
+ public function loadContent($paths="WEB"){
   // check if file exist
   if(file_exists($this->FILE)){
    // load content from file
@@ -97,8 +99,16 @@ class Document{
    }
   }
   // replace path placeholders
-  $content=str_replace("{{APP_PATH}}",PATH,$content);
-  $content=str_replace("{{DOC_PATH}}",$this->PATH."/",$content);
+  switch(strtoupper(trim($paths))){
+   case "WEB":
+    $content=str_replace("{{APP_PATH}}",PATH,$content);
+    $content=str_replace("{{DOC_PATH}}",$this->PATH."/",$content);
+    break;
+   case "FS":
+    $content=str_replace("{{APP_PATH}}",URL,$content);
+    $content=str_replace("{{DOC_PATH}}",$this->DIR."/",$content);
+    break;
+  }
   // return
   return $content;
  }

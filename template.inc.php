@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $WD->PATH; ?>css/styles.css" media="screen,projection"/>
@@ -36,7 +36,7 @@
      </div>
     </li>
 <?php
- if(in_array(MODE,array("auth","view","edit","search",))){
+ if(in_array(MODE,array("auth","view","edit","search"))){
   // get primary level index
   $index_array=wdf_document_list();
   // cycle all documents
@@ -82,7 +82,8 @@
      <div class="col s2 m2 l2">
 <?php if(MODE=="view"){ ?>
       <span class="right nowrap">
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?export"; ?>" data-position="bottom" data-tooltip="Export this page"><i class="material-icons">description</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?export"; ?>" target="_blank" data-position="bottom" data-tooltip="Export this page"><i class="material-icons">description</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this page"><i class="material-icons">print</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this page"><i class="material-icons">edit</i></a>
        </span>
 <?php } ?>
@@ -104,7 +105,7 @@
 <article>
 <?php
  if(MODE=="view"){
-  echo $parser->text($DOC->loadContent())."\n";
+  echo $PARSER->text($DOC->loadContent())."\n";
  }
 ?>
 <?php if(MODE=="auth"){ ?>
