@@ -52,12 +52,12 @@ require_once(DIR."classes/WikiDocs.class.php");
 require_once(DIR."classes/Document.class.php");
 
 /**
- * Authentication status
+ * Authentication level
  *
- * @return boolean
+ * @return integer 0 none, 1 view, 2 edit
  */
 function wdf_authenticated(){
- return boolval($_SESSION['wikidocs']['authenticated']);
+ return intval($_SESSION['wikidocs']['authenticated']);
 }
 
 /**

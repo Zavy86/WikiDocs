@@ -36,7 +36,7 @@
      </div>
     </li>
 <?php
- if(in_array(MODE,array("auth","view","edit","search"))){
+ if(in_array(MODE,array("view","edit","search"))){
   // get primary level index
   $index_array=wdf_document_list();
   // cycle all documents
@@ -117,7 +117,7 @@
           <label for="password"><span class="green-text">Insert authentication code..</span></label>
          </div><!-- /input-field -->
          <div class="input-field col s3">
-          <input type="submit" class="btn waves-effect waves-light green" value="Submit">
+          <input type="submit" class="btn green" value="Submit">
          </div><!-- /input-field -->
         </div><!-- /row -->
        </form>
@@ -175,7 +175,7 @@
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
      <div class="col s5">
-      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($WD->DEBUG){echo " ".$WD->VERSION;} ?></small></p>
+      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($WD->DEBUG){echo " ".$WD->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?auth\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php

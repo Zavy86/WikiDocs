@@ -15,6 +15,6 @@
  </head>
  <body>
   <?php echo $PARSER->text($DOC->loadContent())."\n"; ?>
-  <script type="text/javascript">window.printa();</script>
+  <script type="text/javascript">window.print();</script>
  </body>
 </html>

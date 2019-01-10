@@ -12,9 +12,13 @@
  // mode definition
  $mode="view";
  if(isset($_GET['search'])){$mode="search";}
- if(isset($_GET['edit'])){if(wdf_authenticated()){$mode="edit";}else{$mode="auth";}}
  if(isset($_GET['print'])){$mode="print";}
  if(isset($_GET['export'])){$mode="export";}
+ if(isset($_GET['auth'])){session_destroy();session_start();}
+ if(isset($_GET['edit'])){if(wdf_authenticated()==2){$mode="edit";}else{$mode="auth";}}
+ // check for authentication
+ if(strlen(VIEWCODE) && wdf_authenticated()==0){$mode="auth";}
+ // mode definition
  define(MODE,$mode);
  // initialize application
  $WD=new WikiDocs();

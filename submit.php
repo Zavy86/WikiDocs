@@ -34,19 +34,29 @@
  function authentication(){
   // debug
   wdf_dump($_REQUEST,"_REQUEST");
-  // reset session
-  $_SESSION['wikidocs']['authenticated']=false;
+  // reset authentication
+  $_SESSION['wikidocs']['authenticated']=0;
   // acquire variables
   $p_document=strtolower($_POST['document']);
   $p_password=$_POST['password'];
-  // check password
-  if(md5($p_password)===PASSWORD){
+  // check edit code
+  if(md5($p_password)===EDITCODE){
    // update session
-   $_SESSION['wikidocs']['authenticated']=true;
+   $_SESSION['wikidocs']['authenticated']=2;
    // alert and redirect
    wdf_alert("Authentication successfull!","success");
-   wdf_redirect(PATH.$p_document."?edit");
-  }else{
+   wdf_redirect(PATH.$p_document);
+  }
+  // check view code
+  if(md5($p_password)===VIEWCODE){
+   // update session
+   $_SESSION['wikidocs']['authenticated']=1;
+   // alert and redirect
+   wdf_alert("Authentication successfull!","success");
+   wdf_redirect(PATH.$p_document);
+  }
+  // authenticatiojn error
+  if($_SESSION['wikidocs']['authenticated']==0){
    // alert and redirect
    wdf_alert("Invalid authentication code!","danger");
    wdf_redirect(PATH.$p_document);
