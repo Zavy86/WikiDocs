@@ -73,8 +73,8 @@
   $p_revision=boolval($_POST['revision']);
   $p_document=strtolower($_POST['document']);
   $p_content=$_POST['content'];
-  // check permissions
-  if(!wdf_authenticated()){
+  // check authentication
+  if(wdf_authenticated()!=2){
    // alert and redirect
    wdf_alert("You are not authenticated!","danger");
    wdf_redirect(PATH.$p_document);
@@ -139,8 +139,8 @@
   wdf_dump($_REQUEST,"_REQUEST");
   // acquire variables
   $p_document=strtolower($_POST['document']);
-  // check permissions
-  if(!wdf_authenticated()){
+  // check authentication
+  if(wdf_authenticated()!=2){
    // alert and redirect
    wdf_alert("You are not authenticated!","danger");
    wdf_redirect(PATH.$p_document);
@@ -163,8 +163,8 @@
  function image_upload_ajax(){
   // acquire variables
   $p_document=strtolower($_POST['document']);
-  // check permissions
-  if(!wdf_authenticated()){
+  // check authentication
+  if(wdf_authenticated()!=2){
    // error
    echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
    // return
