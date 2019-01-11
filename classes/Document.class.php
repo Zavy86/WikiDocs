@@ -80,7 +80,7 @@ class Document{
   // add content or if content is null add document title to source code
   if($content!=false){$source=$content;}else{$source="# ".$this->TITLE."\n";}
   // search for sub-documents
-  $sub_documents=wdf_document_list($this->ID);
+  $sub_documents=wdf_document_index($this->ID);
   // check for elements
   if(count($sub_documents)){
    // build sub-documents index
@@ -90,7 +90,7 @@ class Document{
     // add element list
     $source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
     // search for sub-sub-documents
-    $sub_sub_documents=wdf_document_list($sub_element_fe->url);
+    $sub_sub_documents=wdf_document_index($sub_element_fe->url);
     // cycle all sub-sub-documents
     foreach($sub_sub_documents as $sub_sub_element_fe){
      // add element list

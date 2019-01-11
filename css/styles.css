@@ -31,6 +31,9 @@ footer{color:#666666;font-size:12px;}
 footer a{color:#666666;}
 footer a:hover,footer a:active{color:#000000;text-decoration:none;}
 
+/* highlights */
+mark{background-color:#e8f5e9;}
+
 /* links */
 a,a:visited{color:#4CAF50;}
 a:hover,a:active{color:#1B5E20;text-decoration:none;}

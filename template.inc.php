@@ -31,14 +31,14 @@
     <li class="search">
      <div class="search-wrapper">
       <form action="<?php echo $APP->PATH; ?>" method="get" autocomplete="off">
-       <input id="search" name="search" placeholder="Search in wiki.."><i class="material-icons">search</i>
+       <input id="search" name="search" placeholder="Search in wiki.." value="<?php echo $_GET['search']; ?>"><i class="material-icons">search</i>
       </form>
      </div>
     </li>
 <?php
  if(in_array(MODE,array("view","edit","search"))){
   // get primary level index
-  $index_array=wdf_document_list();
+  $index_array=wdf_document_index();
   // cycle all documents
   foreach($index_array as $index_fe){
    echo "<li class=\"bold";
@@ -163,7 +163,17 @@
 <?php } ?>
 <?php
  if(MODE=="search"){
-  echo "<h1>Search results</h1><p>This function has not yet been implemented..</p>";
+  echo "<h1>Search results</h1>\n";
+  // search in all documents
+  $matches_array=wdf_document_search($_GET['search']);
+  // cycle all matches documents
+  foreach($matches_array as $document_fe=>$matches_fe){
+   echo "<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";
+   // cycle all mathes lines
+   foreach($matches_fe as $match_fe){
+    echo "<p>".$match_fe."</p>";
+   }
+  }
  }
 ?>
 </article>
