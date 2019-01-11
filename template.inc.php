@@ -163,17 +163,19 @@
 <?php } ?>
 <?php
  if(MODE=="search"){
-  echo "<h1>Search results</h1>\n";
+  echo "<h1>Search results</h1>";
   // search in all documents
   $matches_array=wdf_document_search($_GET['search']);
   // cycle all matches documents
   foreach($matches_array as $document_fe=>$matches_fe){
-   echo "<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";
+   echo "\n<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";
    // cycle all mathes lines
    foreach($matches_fe as $match_fe){
     echo "<p>".$match_fe."</p>";
    }
   }
+  // check for no results
+  if(!count($matches_array)){echo "\n<p>No results found for <mark>".$_GET['search']."</mark>..</p>\n";}else{echo "\n";}
  }
 ?>
 </article>
