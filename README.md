@@ -1,7 +1,7 @@
 # Wiki|Docs
 Just a databaseless markdown flat-file wiki engine.
 
-Or maybe the best you've ever tried! 😜
+Or maybe the best you've ever tried! ;)
 
 *Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)*
 

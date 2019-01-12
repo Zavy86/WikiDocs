@@ -67,6 +67,13 @@
   file_put_contents($dir.".htaccess",$htaccess);
   // check for configuration and htacess files
   if(file_exists($dir."config.inc.php") && file_exists($dir.".htaccess")){$configured=true;}else{$configured=false;}
+  // make default homepage if not exist
+  if(!file_exists($dir."documents/homepage/content.md")){
+   // check for directory or make it
+   if(!is_dir($dir."documents/homepage")){mkdir($dir."documents/homepage",0755,true);}
+   // copy readme as default homepage content
+   copy($dir."README.md",$dir."documents/homepage/content.md");
+  }
  }
 ?>
 <!DOCTYPE html>
