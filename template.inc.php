@@ -163,17 +163,19 @@
 <?php } ?>
 <?php
  if(MODE=="search"){
-  echo "<h1>Search results</h1>\n";
+  echo "<h1>Search results</h1>";
   // search in all documents
   $matches_array=wdf_document_search($_GET['search']);
   // cycle all matches documents
   foreach($matches_array as $document_fe=>$matches_fe){
-   echo "<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";
+   echo "\n<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";
    // cycle all mathes lines
    foreach($matches_fe as $match_fe){
     echo "<p>".$match_fe."</p>";
    }
   }
+  // check for no results
+  if(!count($matches_array)){echo "\n<p>No results found for <mark>".$_GET['search']."</mark>..</p>\n";}else{echo "\n";}
  }
 ?>
 </article>
@@ -181,11 +183,16 @@
     </div><!-- /row -->
     <div class="divider"></div>
     <div class="row">
-     <div class="col s5 offset-s1">
+     <div class="col m5 offset-m1 hide-on-med-and-down">
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
-     <div class="col s5">
+     <div class="col m5 hide-on-med-and-down">
       <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+     </div><!-- /col -->
+     <div class="col s12 hide-on-large-only">
+     <p class="center-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
+     <p class="center-align"><small><b><?php echo $APP->OWNER; ?></b><br><?php echo $APP->NOTICE; ?></p></small></p>
+     <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php
