@@ -52,7 +52,7 @@
     foreach($sub_index_array as $sub_index_fe){
      echo "<li class=\"sub_index";
      if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";}
-     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$subindex_fe->label."</a></li>\n";
+     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a></li>\n";
     }
    }
   }
