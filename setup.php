@@ -38,7 +38,7 @@
   if(strlen($_POST['notice'])){$checks_array['notice']=true;}else{$checks_array['notice']=false;$errors=true;}
   if(strlen($_POST['editcode'])){$checks_array['editcode']=true;}else{$checks_array['editcode']=false;$errors=true;}
   // set session setup
-  if(!$errors){echo "ok";$_SESSION['wikidocs']['setup']=$_POST;}
+  if(!$errors){$_SESSION['wikidocs']['setup']=$_POST;}
  }
  // conclude action
  if($g_act=="conclude"){
@@ -110,11 +110,11 @@
       </div>
       <div class="row">
        <div class="input-field col s12 m5">
-         <input type="text" name="owner" class="validate" value="<?php echo OWNER; ?>" required>
+         <input type="text" name="owner" class="validate" placeholder="Contents owner" required>
          <label for="title"><span class="green-text">Owner</span></label>
        </div>
        <div class="input-field col s12 m7">
-         <input type="text" name="notice" class="validate" value="<?php echo NOTICE; ?>" required>
+         <input type="text" name="notice" class="validate" placeholder="Contents copyright notice" required>
          <label for="subtitle"><span class="green-text">Notice</span></label>
        </div>
       </div>
