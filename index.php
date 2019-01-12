@@ -15,7 +15,7 @@
  if(isset($_GET['print'])){$mode="print";}
  if(isset($_GET['search'])){$mode="search";}
  if(isset($_GET['edit'])){if(wdf_authenticated()==2){$mode="edit";}else{$mode="auth";}}
- if(isset($_GET['exit'])){session_destroy();session_start();}
+ if(isset($_GET['exit'])){session_destroy();wdf_session_start();}
  // check for authentication
  if(strlen(VIEWCODE) && wdf_authenticated()==0){$mode="auth";}
  // mode definition
