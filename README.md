@@ -3,6 +3,8 @@ Just a databaseless markdown flat-file wiki engine.
 
 Or maybe the best you've ever tried! ;)
 
+Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
+
 *Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)*
 
 ## Features
@@ -48,4 +50,4 @@ Or maybe the best you've ever tried! ;)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
 ## License
-Code released under the MIT License.
+Code released under the MIT License
