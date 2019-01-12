@@ -82,9 +82,12 @@
      <div class="col s2 m2 l2">
 <?php if(MODE=="view"){ ?>
       <span class="right nowrap">
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?export"; ?>" target="_blank" data-position="bottom" data-tooltip="Export this page"><i class="material-icons">description</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this page"><i class="material-icons">print</i></a>
+<?php if(wdf_authenticated()==2){ ?>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this page"><i class="material-icons">edit</i></a>
+<?php }else{ ?>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or add new pages"><i class="material-icons">lock_open</i></a>
+<?php } ?>
        </span>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
