@@ -87,7 +87,7 @@
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="#" data-position="bottom" data-tooltip="Add new document" onClick="javascript:new_document();"><i class="material-icons">add_circle</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
 <?php }else{ ?>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or add new documents"><i class="material-icons">lock_open</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
 <?php } ?>
        </span>
 <?php } ?>
@@ -223,7 +223,7 @@
 <?php } ?>
   <script type="text/javascript">
    function new_document(){
-    var new_path=prompt("Enter the new document path:",DOC.ID+"/");
+    var new_path=prompt("Enter the new document path (like argument/section/title)",DOC.ID+"/");
     if(new_path!==DOC.ID+"/"){
      new_path=new_path.replace(" ","-").toLowerCase()+"?edit";
      window.location.href=APP.URL+new_path;
