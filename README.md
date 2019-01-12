@@ -23,6 +23,11 @@ Or maybe the best you've ever tried! 😜
 - Clone the repo `git clone https://github.com/Zavy86/wikidocs.git`
 
 ## Configuration
+
+### Automatic
+- The `setup.php` script will automatically create both `config.inc.php` and `.htacess` files
+
+### Manual
 - Copy the configuration sample file `cp config.sample.inc.php config.inc.php`
 - Edit the configuration file `nano config.inc.php`
 - Create the `.htaccess` file like:
