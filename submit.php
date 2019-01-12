@@ -20,6 +20,8 @@
   case "content_delete":content_delete();break;
   // images
   case "image_upload_ajax":image_upload_ajax();break;
+  case "image_paste":image_paste();break;
+
   /** @todo case "image_delete_ajax":image_delete_ajax();break; */
   // default
   default:
@@ -183,24 +185,46 @@
   if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
   // check for file
   if(!isset($_FILES['image'])||!is_uploaded_file($_FILES['image']['tmp_name'])||$_FILES["image"]["error"]>0){
-   // error
-   echo json_encode(array("error"=>1,"code"=>"file_error"));
-   // return
-   return false;
+   if(!strlen($_POST['image_base64'])){
+   //if(!strlen($_GET['image_base64'])){
+    // error
+    echo json_encode(array("error"=>1,"code"=>"file_error"));
+    // return
+    return false;
+   }
+  }
+  if(isset($_FILES['image'])){$image=$_FILES['image'];}
+  if(strlen($_POST['image_base64'])){
+   $image_parts=explode(";base64,",$_POST['image_base64']);
+   $image['type']=explode("data:",$image_parts[0])[1];
+   $image['ext']=explode("image/",$image_parts[0])[1];
+   $image['base64']=str_replace(" ","+",$image_parts[1]);
+   $image['name']=md5(date("YmdHisu")).".".$image['ext'];
   }
   // check file type
-  if(!in_array($_FILES["image"]["type"],array("image/png","image/gif","image/jpg","image/jpeg"))){
+  if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg"))){
    // error
-   echo json_encode(array("error"=>1,"code"=>"file_not_allowed"));
+   echo json_encode(array("error"=>1,"code"=>"file_not_allowed","file"=>$image));
    // return
    return false;
   }
   // make file name
-  $file_name=strtolower(str_replace(" ","-",$_FILES['image']['name']));
-  // move uploaded file
-  if(move_uploaded_file($_FILES['image']['tmp_name'],$DOC->DIR.$file_name)){
+  $file_name=strtolower(str_replace(" ","-",$image['name']));
+  // check for posted image
+  if($image['tmp_name']){
+   if(move_uploaded_file($image['tmp_name'],$DOC->DIR.$file_name)){$uploaded=true;}
+  // check for pasted image
+  }elseif(strlen($image['base64'])){
+   $bytes=file_put_contents($DOC->DIR.$file_name,base64_decode($image['base64']));
+   if($bytes>0){
+    $image['size']=$bytes;
+    $uploaded=true;
+   }
+  }
+  // check for uploaded
+  if($uploaded){
    // success
-   echo json_encode(array("error"=>null,"code"=>"image_uploaded","name"=>$file_name,"path"=>$DOC->PATH."/".$file_name,"size"=>$_FILES['image']['size']));
+   echo json_encode(array("error"=>null,"code"=>"image_uploaded","name"=>$file_name,"path"=>$DOC->PATH."/".$file_name,"size"=>$image['size']));
    // return
    return true;
   }else{
