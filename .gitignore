@@ -2,4 +2,6 @@
 /documents/*
 .htaccess
 config.inc.php
+robots.txt
+sitemap.xml
 !index.php

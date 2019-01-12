@@ -3,7 +3,7 @@
  *
  * @package WikiDocs
  * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
- * @link    https://github.com/Zavy86/wikidocs
+ * @link    https://github.com/Zavy86/WikiDocs
  */
 
 /* body */
@@ -72,6 +72,8 @@ ul.sidenav.sidenav-fixed>li:last-child{margin-bottom:160px}
 ul.sidenav.sidenav-fixed li.logo{text-align:center;margin-top:32px;margin-bottom:136px}
 ul.sidenav.sidenav-fixed li.logo:hover,ul.sidenav.sidenav-fixed li.logo #logo-container:hover{background-color:transparent}
 ul.sidenav.sidenav-fixed li.logo span{font-weight:normal;}
+ul.sidenav.sidenav-fixed li.sub_index a{font-weight:normal;}
+ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#E8F5E9;}
 #logo-container{height:57px;margin-bottom:32px}
 
 /* search */
