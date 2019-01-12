@@ -4,7 +4,7 @@
  *
  * @package WikiDocs
  * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
- * @link    https://github.com/Zavy86/wikidocs
+ * @link    https://github.com/Zavy86/WikiDocs
  */
 ?>
 <!DOCTYPE html>
@@ -41,9 +41,20 @@
   $index_array=wdf_document_index();
   // cycle all documents
   foreach($index_array as $index_fe){
-   echo "<li class=\"bold";
+   echo "<li class=\"index";
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){echo " active";}
    echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
+   // check for selected index
+   if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){
+    // get secondary level index
+    $sub_index_array=wdf_document_index($index_fe->url);
+    // cycle all documents
+    foreach($sub_index_array as $sub_index_fe){
+     echo "<li class=\"sub_index";
+     if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";}
+     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$subindex_fe->label."</a></li>\n";
+    }
+   }
   }
  }
 ?>
@@ -191,12 +202,12 @@
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
      <div class="col m5 hide-on-med-and-down">
-      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
      <div class="col s12 hide-on-large-only">
      <p class="center-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      <p class="center-align"><small><b><?php echo $APP->OWNER; ?></b><br><?php echo $APP->NOTICE; ?></p></small></p>
-     <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+     <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php
