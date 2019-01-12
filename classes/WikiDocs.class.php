@@ -55,5 +55,16 @@ class WikiDocs{
   */
  public function __get($property){return $this->$property;}
 
+ /**
+  * Export all properties
+  */
+ public function export(){
+  $properties_array=array();
+  foreach($this as $key => $value){
+   $properties_array[$key]=$value;
+  }
+  return $properties_array;
+ }
+
 }
 ?>
