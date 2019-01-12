@@ -8,11 +8,7 @@
  */
 
 // initialize session
-session_start();
-// check for session array
-if(!is_array($_SESSION['wikidocs'])){$_SESSION['wikidocs']=array();}
-// check for alerts array
-if(!is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
+wdf_session_start();
 // check debug from session
 if($_SESSION['wikidocs']['debug']){$debug=true;}
 // check debug from requests
@@ -50,6 +46,18 @@ define('DOC',$g_doc);
  */
 require_once(DIR."classes/WikiDocs.class.php");
 require_once(DIR."classes/Document.class.php");
+
+/**
+ * Initialize session and setup default sessions variables
+ */
+function wdf_session_start(){
+ // start php session
+ session_start();
+ // check for application session array
+ if(!is_array($_SESSION['wikidocs'])){$_SESSION['wikidocs']=array();}
+ // check for application session alerts array
+ if(!is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
+}
 
 /**
  * Authentication level

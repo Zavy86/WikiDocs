@@ -82,9 +82,13 @@
      <div class="col s2 m2 l2">
 <?php if(MODE=="view"){ ?>
       <span class="right nowrap">
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?export"; ?>" target="_blank" data-position="bottom" data-tooltip="Export this page"><i class="material-icons">description</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this page"><i class="material-icons">print</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this page"><i class="material-icons">edit</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
+<?php if(wdf_authenticated()==2){ ?>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="#" data-position="bottom" data-tooltip="Add new document" onClick="javascript:new_document();"><i class="material-icons">add_circle</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
+<?php }else{ ?>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
+<?php } ?>
        </span>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
@@ -217,6 +221,15 @@
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
 <?php } ?>
+  <script type="text/javascript">
+   function new_document(){
+    var new_path=prompt("Enter the new document path (like argument/section/title)",DOC.ID+"/");
+    if(new_path!==DOC.ID+"/"){
+     new_path=new_path.replace(" ","-").toLowerCase()+"?edit";
+     window.location.href=APP.URL+new_path;
+    }
+   }
+  </script>
 <?php
  // cycle all alerts
  foreach($_SESSION['wikidocs']['alerts'] as $index=>$alert){
