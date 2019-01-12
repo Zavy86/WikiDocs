@@ -113,7 +113,7 @@
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <div class="row" style="margin-top:36px">
          <div class="input-field col s9">
-          <input type="password" name="password" required>
+          <input type="password" name="password" required autofocus>
           <label for="password"><span class="green-text">Insert authentication code..</span></label>
          </div><!-- /input-field -->
          <div class="input-field col s3">
@@ -130,7 +130,7 @@
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
-       <!-- modal -->
+       <!-- modal_uploader -->
        <div id="modal_uploader" class="modal">
         <div class="modal-content">
          <h4>Images</h4>
@@ -159,7 +159,7 @@
 <?php } ?>
          </div><!-- /row -->
         </div><!-- /modal-content-->
-       </div><!-- /modal -->
+       </div><!-- /modal_uploader -->
 <?php } ?>
 <?php
  if(MODE=="search"){
@@ -187,7 +187,7 @@
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
      <div class="col s5">
-      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?auth\">Logout</a>";} ?></small></p>
+      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/wikidocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php
@@ -202,7 +202,8 @@
 ?>
    </div><!-- /container -->
   </main>
-  <script type="text/javascript">var path="<?php echo $DOC->PATH; ?>";</script>
+  <script type="text/javascript">var APP=<?php echo json_encode($APP->export()); ?>;</script>
+  <script type="text/javascript">var DOC=<?php echo json_encode($DOC->export()); ?>;</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>

@@ -12,7 +12,7 @@ Or maybe the best you've ever tried! 😜
 - Markdown syntax
 - Editor full WYSIWYG
 - Unlimited page revisions
-- Uploading images
+- Uploading images (also from clipboard)
 - Content can be categorized in namespaces
 - Automatic generated index and sitemap
 - Public and private browsing

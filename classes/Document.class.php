@@ -49,6 +49,17 @@ class Document{
  public function __get($property){return $this->$property;}
 
  /**
+  * Export all properties
+  */
+ public function export(){
+  $properties_array=array();
+  foreach($this as $key => $value){
+   $properties_array[$key]=$value;
+  }
+  return $properties_array;
+ }
+
+ /**
   * Load document content form source file
   *
   * @param string $paths Format for paths [WEB|FS]
@@ -100,17 +111,16 @@ class Document{
   }
   // check for content or elements index
   if(!$content && !count($sub_documents)){
-   // check for edit authorization
-   if(wdf_authenticated()==2){
-    if(MODE=="view"){
-     // document to be created
-     $source.="We are sorry but the page you are looking for does not exist.\n\n";
-     $source.="Click the edit button to create this page!";
-    }
-   }else{
+   // check for view mode
+   if(MODE=="view"){
     // document not found
     $source="# Error 404 \n";
     $source.="We are sorry but the page you are looking for does not exist.\n\n";
+    // check for edit authorization
+    if(wdf_authenticated()==2){
+     // document can be created
+     $source.="Click the edit button to create this page!";
+    }
    }
   }
   // return source code
