@@ -53,6 +53,7 @@
   $config.="define(\"NOTICE\",\"".$_SESSION['wikidocs']['setup']['notice']."\");\n";
   $config.="define(\"EDITCODE\",\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
   $config.="define(\"VIEWCODE\",".($_SESSION['wikidocs']['setup']['viewcode']?"\"".md5($_SESSION['wikidocs']['setup']['viewcode'])."\"":"null").");\n";
+  $config.="define(\"GTAG\",".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").");\n";
   $config.="?>\n";
   // write configuration file
   file_put_contents($dir."config.inc.php",$config);
@@ -136,6 +137,12 @@
        </div>
       </div>
       <div class="row">
+       <div class="input-field col s12 m12">
+         <input type="text" name="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)">
+         <label for="subtitle"><span class="green-text">Google Analytics tag</span></label>
+       </div>
+      </div>
+      <div class="row">
        <div class="input-field col s12">
         <button type="submit" class="btn btn-block waves-effect waves-light green right">Continue<i class="material-icons right">keyboard_arrow_right</i></button>
        </div>
@@ -160,6 +167,7 @@
       <li class="collection-item"><div>NOTICE: <?php echo $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>EDITCODE: <?php echo $_POST['editcode'].($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>VIEWCODE: <?php echo ($_POST['viewcode']?$_POST['viewcode']:"PUBLIC").$check_ok; ?></div></li>
+      <li class="collection-item"><div>GTAG: <?php echo ($_POST['gtag']?$_POST['gtag']:null).$check_ok; ?></div></li>
      </ul>
      <div class="input-field col s12">
 <?php if($errors){ ?>

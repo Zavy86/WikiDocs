@@ -10,6 +10,16 @@
 <!DOCTYPE html>
 <html>
  <head>
+<?php if(strlen(GTAG)){ ?>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo GTAG; ?>"></script>
+  <script>
+   window.dataLayer=window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js',new Date());
+   gtag('config','<?php echo GTAG; ?>');
+  </script>
+<?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
@@ -52,7 +62,7 @@
     foreach($sub_index_array as $sub_index_fe){
      echo "<li class=\"sub_index";
      if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";}
-     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$subindex_fe->label."</a></li>\n";
+     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a></li>\n";
     }
    }
   }
