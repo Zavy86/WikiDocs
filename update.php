@@ -112,5 +112,4 @@
   if(!file_exists(DIR."update.zip")){wdf_dump("Update zip deleted!",null,null,true);}
   else{die("An error occured deleting update zip!");}
  }
-
 ?>
