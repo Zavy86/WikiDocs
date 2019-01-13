@@ -1,8 +1,6 @@
 # Wiki|Docs
 Just a databaseless markdown flat-file wiki engine.
 
-Or maybe the best you've ever tried! ;)
-
 Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 
 *Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)*
@@ -19,6 +17,11 @@ Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 - Automatic generated index and sitemap
 - Public and private browsing
 - and many more..
+
+## Demo
+Try the demo playground at: [http://demo.wikidocs.it](http://demo.wikidocs.it)
+
+Authentication code is: `demo`
 
 ## Setup
 - [Download](https://github.com/Zavy86/wikidocs/releases) the lastest release
