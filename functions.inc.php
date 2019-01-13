@@ -74,9 +74,10 @@ function wdf_authenticated(){
  * @param string $variable Dump variable
  * @param string $label Dump label
  * @param string $class Dump class
+ * @param boolean $force Force dump also if debug is disabled
  */
-function wdf_dump($variable,$label=null,$class=null){
- if(!DEBUG){return false;}
+function wdf_dump($variable,$label=null,$class=null,$force=false){
+ if(!DEBUG && !$force){return false;}
  echo "\n<!-- dump -->\n";
  echo "<pre class='debug ".$class."'>\n";
  if($label<>null){echo "<b>".$label."</b>\n";}
