@@ -151,13 +151,11 @@
        <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
-        <textarea id="simplemde" name="content">
 <?php
  if($_GET['draft'] && file_exists($DOC->DIR."draft.md")){$source=file_get_contents($DOC->DIR."draft.md");}
  if(!strlen($source)){$source=$DOC->loadContent();}
- if(strlen($source)){echo $source;}else{echo "# ".$DOC->TITLE;}
 ?>
-        </textarea>
+        <textarea id="simplemde" name="content"><?php echo (strlen($source)?$source:"# ".$DOC->TITLE); ?></textarea>
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
