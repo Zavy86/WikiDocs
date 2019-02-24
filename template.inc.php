@@ -151,7 +151,13 @@
        <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
-        <textarea id="simplemde" name="content"><?php $source=$DOC->loadContent(); echo (strlen($source)?$source:"# ".$DOC->TITLE); ?></textarea>
+        <textarea id="simplemde" name="content">
+<?php
+ if($_GET['draft'] && file_exists($DOC->DIR."draft.md")){$source=file_get_contents($DOC->DIR."draft.md");}
+ if(!strlen($source)){$source=$DOC->loadContent();}
+ if(strlen($source)){echo $source;}else{echo "# ".$DOC->TITLE;}
+?>
+        </textarea>
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
@@ -241,6 +247,9 @@
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/js/simplemde.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
+<?php } ?>
+<?php if(MODE=="edit" && !$_GET['draft'] && file_exists($DOC->DIR."draft.md")){ ?>
+  <script type="text/javascript">if(confirm("A draft has been found, do you want to load it??")){window.location.replace(window.location+"&draft=1");}</script>
 <?php } ?>
   <script type="text/javascript">
    function new_document(){
