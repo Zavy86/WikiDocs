@@ -27,12 +27,13 @@ var simplemde=new SimpleMDE({
  * Changed status
  */
 var changed=false;
+var changed_draft=false;
 
 /**
  * Event Handlers
  */
 // content changed
-simplemde.codemirror.on("change",function(){changed=true;});
+simplemde.codemirror.on("change",function(){changed=true;changed_draft=true;});
 // prevent exit without save
 $(window).on("beforeunload",function(){if(changed){return confirm("Do you really want to exit without save?");}});
 // save button click
@@ -51,3 +52,35 @@ $("#editor-revision").click(function(){
   $("#editor-revision-checkbox").text("check_box");
  }
 });
+
+/**
+ * Timer Handler
+ */
+setInterval(function(){
+ if(changed_draft){
+  $.ajax({
+   url:APP.URL+"submit.php?act=draft_save_ajax",
+   type:"POST",
+   data:{
+    document:DOC.ID,
+    content:$("textarea[name='content']").val()
+   },
+   cache:false,
+   success:function(response){
+    // decode response
+    decoded=JSON.parse(response);
+    // alert if error
+    if(decoded.error===1){
+     alert(decoded.code);
+    }else{
+     // drfat saved
+     changed_draft=false;
+    }
+   },
+   error:function(XMLHttpRequest,textStatus,errorThrown){
+    // alert
+    alert("Status: "+textStatus+" Error: "+errorThrown);
+   }
+  });
+ }
+},60000);

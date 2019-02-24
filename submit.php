@@ -20,7 +20,9 @@
   case "content_delete":content_delete();break;
   // images
   case "image_upload_ajax":image_upload_ajax();break;
-  case "image_paste":image_paste();break;
+  //case "image_paste":image_paste();break;
+  // drafts
+  case "draft_save_ajax":draft_save_ajax();break;
 
   /** @todo case "image_delete_ajax":image_delete_ajax();break; */
   // default
@@ -122,6 +124,8 @@
   $bytes=file_put_contents($DOC->DIR."content.md",$p_content);
   // alerts
   if($bytes>0){
+   // delete draft if exist
+   if(file_exists($DOC->DIR."draft.md")){unlink($DOC->DIR."draft.md");}
    // sum size of all images
    foreach($DOC->images() as $image_fe){$bytes+=filesize($DOC->DIR.$image_fe);}
    if($bytes<1000000){$size=number_format($bytes/1000,2,",",".")." KB";}else{$size=number_format($bytes/1000000,2,",",".")." MB";}
@@ -140,7 +144,7 @@
   // debug
   wdf_dump($_REQUEST,"_REQUEST");
   // acquire variables
-  $p_document=strtolower($_POST['document']);
+  $p_document=strtolower($_GET['document']);
   // check authentication
   if(wdf_authenticated()!=2){
    // alert and redirect
@@ -230,6 +234,47 @@
   }else{
    // error
    echo json_encode(array("error"=>1,"code"=>"uploading_error"));
+   // return
+   return false;
+  }
+ }
+
+ /**
+  * Draft Save (AJAX)
+  */
+ function draft_save_ajax(){
+  // acquire variables
+  $p_document=strtolower($_POST['document']);
+  $p_content=$_POST['content'];
+  // check authentication
+  if(wdf_authenticated()!=2){
+   // error
+   echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
+   // return
+   return false;
+  }
+  // check document path
+  if(!strlen($p_document)){
+   // error
+   echo json_encode(array("error"=>1,"code"=>"document_empty"));
+   // return
+   return false;
+  }
+  // initialize document
+  $DOC=new Document($p_document);
+  // check for directory or make it
+  if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
+  // save draft content file
+  $bytes=file_put_contents($DOC->DIR."draft.md",$p_content);
+  // check for saved
+  if($bytes>0){
+   // success
+   echo json_encode(array("error"=>null,"code"=>"draft_saved"));
+   // return
+   return true;
+  }else{
+   // error
+   echo json_encode(array("error"=>1,"code"=>"draft_saving_error"));
    // return
    return false;
   }
