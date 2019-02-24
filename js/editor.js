@@ -83,4 +83,4 @@ setInterval(function(){
    }
   });
  }
-},60000);
+},10000);
