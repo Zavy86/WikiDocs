@@ -157,10 +157,15 @@
    wdf_alert("Document path cannot be empty","danger");
    wdf_redirect(PATH);
   }
-  // check for document
-  // is_dir(..)
-  // delete content
-  die("This function has not yet been implemented..");
+  // initialize document
+  $DOC=new Document($p_document);
+  // check for trash directory or make it
+  if(!is_dir(DIR."trash")){mkdir(DIR."trash",0755,true);}
+  // move docuemnt to trash
+  if(is_dir($DOC->DIR)){rename($DOC->DIR,DIR."trash/".$DOC->ID."_".date("Ymd_His"));}
+  // alert and redirect
+  wdf_alert("Document deleted","warning");
+  wdf_redirect(PATH);
  }
 
  /**
