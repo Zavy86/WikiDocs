@@ -37,6 +37,7 @@
   if(strlen($_POST['owner'])){$checks_array['owner']=true;}else{$checks_array['owner']=false;$errors=true;}
   if(strlen($_POST['notice'])){$checks_array['notice']=true;}else{$checks_array['notice']=false;$errors=true;}
   if(strlen($_POST['editcode'])){$checks_array['editcode']=true;}else{$checks_array['editcode']=false;$errors=true;}
+  if(strlen($_POST['color'])==7 && substr($_POST['color'],0,1)=="#"){$checks_array['color']=true;}else{$checks_array['color']=false;$errors=true;}
   // set session setup
   if(!$errors){$_SESSION['wikidocs']['setup']=$_POST;}
  }
@@ -51,6 +52,7 @@
   $config.="define(\"SUBTITLE\",\"".$_SESSION['wikidocs']['setup']['subtitle']."\");\n";
   $config.="define(\"OWNER\",\"".$_SESSION['wikidocs']['setup']['owner']."\");\n";
   $config.="define(\"NOTICE\",\"".$_SESSION['wikidocs']['setup']['notice']."\");\n";
+  $config.="define(\"COLOR\",\"".$_SESSION['wikidocs']['setup']['color']."\");\n";
   $config.="define(\"EDITCODE\",\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
   $config.="define(\"VIEWCODE\",".($_SESSION['wikidocs']['setup']['viewcode']?"\"".md5($_SESSION['wikidocs']['setup']['viewcode'])."\"":"null").");\n";
   $config.="define(\"GTAG\",".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").");\n";
@@ -86,6 +88,7 @@
   <link  type="image/png" rel="icon" href="images/favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#4CAF50">
+  <style>:root{--theme-color:#4CAF50;}</style>
   <title>Setup - Wiki|Docs</title>
  </head>
  <body>
@@ -137,7 +140,11 @@
        </div>
       </div>
       <div class="row">
-       <div class="input-field col s12 m12">
+       <div class="input-field col s12 m5">
+         <input type="text" name="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="#4CAF50" required>
+         <label for="subtitle"><span class="green-text">Color</span></label>
+       </div>
+       <div class="input-field col s12 m7">
          <input type="text" name="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)">
          <label for="subtitle"><span class="green-text">Google Analytics tag</span></label>
        </div>
@@ -165,6 +172,7 @@
       <li class="collection-item"><div>SUBTITLE: <?php echo $_POST['subtitle'].($checks_array['subtitle']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>OWNER: <?php echo $_POST['owner'].($checks_array['owner']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>NOTICE: <?php echo $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko); ?></div></li>
+      <li class="collection-item"><div>COLOR: <?php echo $_POST['color'].($checks_array['color']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>EDITCODE: <?php echo $_POST['editcode'].($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>VIEWCODE: <?php echo ($_POST['viewcode']?$_POST['viewcode']:"PUBLIC").$check_ok; ?></div></li>
       <li class="collection-item"><div>GTAG: <?php echo ($_POST['gtag']?$_POST['gtag']:null).$check_ok; ?></div></li>

@@ -24,9 +24,10 @@
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles.css" media="screen,projection"/>
-  <link  type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
+  <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#4CAF50">
+  <meta name="theme-color" content="<?php echo $APP->COLOR; ?>">
+  <style>:root{--theme-color:<?php echo $APP->COLOR; ?>;}</style>
   <title><?php echo ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE; ?></title>
  </head>
  <body>
@@ -53,7 +54,7 @@
   foreach($index_array as $index_fe){
    echo "<li class=\"index";
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){echo " active";}
-   echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
+   echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
    // check for selected index
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){
     // get secondary level index
@@ -62,7 +63,7 @@
     foreach($sub_index_array as $sub_index_fe){
      echo "<li class=\"sub_index";
      if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";}
-     echo "\"><a class=\"waves-effect waves-green\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a></li>\n";
+     echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a></li>\n";
     }
    }
   }
@@ -80,7 +81,7 @@
    <div class="container">
     <div class="row breadcrumbs" style="padding-top:18px">
      <div class="col s2 m1 offset-m1 hide-on-large-only">
-      <a class="btn btn-floating btn-small tooltipped waves-effect waves-light sidenav-trigger green" href="#" data-target="nav-mobile" data-position="bottom" data-tooltip="Sidebar"><i class="material-icons">menu</i></a>
+      <a class="btn btn-floating btn-small tooltipped waves-effect waves-light sidenav-trigger main-color" href="#" data-target="nav-mobile" data-position="bottom" data-tooltip="Sidebar"><i class="material-icons">menu</i></a>
      </div><!-- /col -->
      <div class="col s8 m7 l8 offset-l1 center-on-small-only" style="padding-top:3px">
       <span>
@@ -93,7 +94,7 @@
    if($DOC->ID==$element->path){
     echo "<span class=\"nowrap\">".$element->label."</span>";
    }else{
-    echo "<a href=\"".$APP->PATH.$element->path."\" class=\"green-text nowrap\">".$element->label."</a> / ";
+    echo "<a href=\"".$APP->PATH.$element->path."\" class=\"main-color-text nowrap\">".$element->label."</a> / ";
    }
   }
  }
@@ -103,12 +104,12 @@
      <div class="col s2 m2 l2">
 <?php if(MODE=="view"){ ?>
       <span class="right nowrap">
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
 <?php if(wdf_authenticated()==2){ ?>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="#" data-position="bottom" data-tooltip="Add new document" onClick="javascript:new_document();"><i class="material-icons">add_circle</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Add new document" onClick="javascript:new_document();"><i class="material-icons">add_circle</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
 <?php }else{ ?>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light green" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?php echo $DOC->URL."?auth"; ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
 <?php } ?>
        </span>
 <?php } ?>
@@ -139,10 +140,10 @@
         <div class="row" style="margin-top:36px">
          <div class="input-field col s9">
           <input type="password" name="password" required autofocus>
-          <label for="password"><span class="green-text">Insert authentication code..</span></label>
+          <label for="password"><span class="main-color-text">Insert authentication code..</span></label>
          </div><!-- /input-field -->
          <div class="input-field col s3">
-          <input type="submit" class="btn green" value="Submit">
+          <input type="submit" class="btn main-color" value="Submit">
          </div><!-- /input-field -->
         </div><!-- /row -->
        </form>
@@ -167,7 +168,7 @@
           <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
           <div class="row" style="margin-top:36px">
            <div class="input-field file-field col s9">
-            <div class="btn waves-effect waves-light green">
+            <div class="btn waves-effect waves-light main-color">
              <span>Browse</span>
              <input type="file" name="image" required>
             </div><!-- /btn -->
@@ -176,7 +177,7 @@
             </div><!-- /file-path-wrapper -->
            </div><!-- /input-field -->
            <div class="input-field col s3">
-            <input id="uploader-submit" type="submit" class="btn green right" value="Upload">
+            <input id="uploader-submit" type="submit" class="btn main-color right" value="Upload">
            </div><!-- /input-field -->
           </div><!-- /row -->
          </form>
