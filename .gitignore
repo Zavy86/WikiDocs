@@ -1,5 +1,6 @@
 /nbproject/
 /documents/*
+/trash/*
 .htaccess
 config.inc.php
 robots.txt
