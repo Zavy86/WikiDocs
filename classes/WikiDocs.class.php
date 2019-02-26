@@ -24,6 +24,7 @@ class WikiDocs{
  protected $SUBTITLE;
  protected $OWNER;
  protected $NOTICE;
+ protected $COLOR;
  protected $AUTHENTICATED;
  protected $MODE;
 
@@ -38,6 +39,7 @@ class WikiDocs{
   $this->SUBTITLE=SUBTITLE;
   $this->OWNER=OWNER;
   $this->NOTICE=NOTICE;
+  $this->COLOR=COLOR;
   $this->HOST=HOST;
   $this->ROOT=ROOT;
   $this->PATH=PATH;
@@ -45,6 +47,8 @@ class WikiDocs{
   $this->DIR=DIR;
   $this->AUTHENTICATED=wdf_authenticated();
   $this->MODE=MODE;
+  // check for color
+  if(substr($this->COLOR,0,1)!="#"){$this->COLOR="#4CAF50";}
  }
 
  /**
