@@ -134,7 +134,7 @@
   echo $PARSER->text($DOC->render())."\n";
  }
 ?>
-<?php if(MODE=="auth"){ ?>
+<?php if(MODE=="auth"){ session_destroy(); ?>
        <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=authentication">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <div class="row" style="margin-top:36px">
