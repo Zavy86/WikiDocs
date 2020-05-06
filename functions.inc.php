@@ -284,7 +284,7 @@ function wdf_document_search($query,$parent=null){
 function wdf_document_title($document){
  // make path
  $content_path=DIR."documents/".$document."/content.md";
- // load first line for document title if exist
+ // load content line by line to find document title if exist
  if(file_exists($content_path)){
   $handle=fopen($content_path,"r");
   while(!feof($handle)){
@@ -295,7 +295,8 @@ function wdf_document_title($document){
    }
   }
   fclose($handle);
- }else{
+ }
+ if(!strlen($title)){
   // make title by path
   $hierarchy=explode("/",$document);
   $title=ucwords(str_replace("-"," ",end($hierarchy)));
