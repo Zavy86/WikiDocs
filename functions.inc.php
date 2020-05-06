@@ -284,12 +284,19 @@ function wdf_document_search($query,$parent=null){
 function wdf_document_title($document){
  // make path
  $content_path=DIR."documents/".$document."/content.md";
- // load first line for document title if exist
+ // load content line by line to find document title if exist
  if(file_exists($content_path)){
-  $firstline=fgets(fopen($content_path,"r"));
-  // check if firstline is the title
-  if(substr($firstline,0,1)=="#"){$title=trim(substr($firstline,1));}
- }else{
+  $handle=fopen($content_path,"r");
+  while(!feof($handle)){
+   $line=fgets($handle);
+   if(substr($line,0,2)=="# "){
+    $title=trim(substr($line,1));
+    break;
+   }
+  }
+  fclose($handle);
+ }
+ if(!strlen($title)){
   // make title by path
   $hierarchy=explode("/",$document);
   $title=ucwords(str_replace("-"," ",end($hierarchy)));
