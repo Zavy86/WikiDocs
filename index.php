@@ -19,7 +19,7 @@
  // check for authentication
  if(strlen(VIEWCODE) && wdf_authenticated()==0){$mode="auth";}
  // mode definition
- define(MODE,$mode);
+ define("MODE",$mode);
  // initialize application
  $APP=new WikiDocs();
  // initialize document

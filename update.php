@@ -10,7 +10,7 @@
  // include functions
  require_once("functions.inc.php");
  // mode definition
- define(MODE,"engine");
+ define("MODE","engine");
  // check authentication
  if(wdf_authenticated()!=2){
   wdf_dump("You are not authenticated!",null,null,true);
