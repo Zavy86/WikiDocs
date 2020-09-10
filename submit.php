@@ -10,7 +10,7 @@
  // include functions
  require_once("functions.inc.php");
  // mode definition
- define(MODE,"engine");
+ define("MODE","engine");
  // switch action
  switch($_GET['act']){
   // authentication
@@ -111,7 +111,7 @@
    }
   }
   // document path definition
-  define(DOC_PATH,$DOC->PATH."/");
+  define("DOC_PATH",$DOC->PATH."/");
   // replace url in images
   $p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
   // replace url in images
