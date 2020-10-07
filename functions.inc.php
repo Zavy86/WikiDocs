@@ -16,6 +16,8 @@ if(isset($_GET['debug'])){
  if($_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
  else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
 }
+// if behind https reverse proxy, set HTTPS property correctly
+if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
 // errors settings
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",$debug);
