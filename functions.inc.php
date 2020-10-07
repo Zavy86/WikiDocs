@@ -36,7 +36,7 @@ if(!strlen($g_doc)){$g_doc="homepage";}
 define("DEBUG",$debug);
 define("VERSION",file_get_contents("VERSION.txt"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
-define("ROOT",rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),PATH));
+define("ROOT",str_replace(PATH, "", str_replace("\\","/",realpath(dirname(__FILE__))."/")));
 define("URL",HOST.PATH);
 define("DIR",ROOT.PATH);
 define("DOC",$g_doc);
