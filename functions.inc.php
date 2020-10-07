@@ -10,7 +10,7 @@
 // initialize session
 wdf_session_start();
 // check debug from session
-if($_SESSION['wikidocs']['debug']){$debug=true;}
+if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
 // check debug from requests
 if(isset($_GET['debug'])){
  if($_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
