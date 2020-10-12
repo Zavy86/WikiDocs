@@ -16,6 +16,8 @@ Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 - Content can be categorized in namespaces
 - Automatic generated index and sitemap
 - Public and private browsing
+- Syntax highlighting
+- Dark mode
 - and many more..
 
 ## Demo

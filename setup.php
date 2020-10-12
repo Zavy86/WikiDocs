@@ -56,6 +56,8 @@
   $config.="define(\"EDITCODE\",\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
   $config.="define(\"VIEWCODE\",".($_SESSION['wikidocs']['setup']['viewcode']?"\"".md5($_SESSION['wikidocs']['setup']['viewcode'])."\"":"null").");\n";
   $config.="define(\"GTAG\",".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").");\n";
+  $dark=(isset($_SESSION['wikidocs']['setup']['dark']))?'true':'false';
+  $config.="define(\"DARK\",{$dark});\n";
   $config.="?>\n";
   // write configuration file
   file_put_contents($dir."config.inc.php",$config);
@@ -150,7 +152,13 @@
        </div>
       </div>
       <div class="row">
-       <div class="input-field col s12">
+       <div class="input-field col s12 m5">
+        <label for="check-dark">
+         <input type="checkbox" name="dark" id="check-dark">
+         <span class="green-text">Dark Mode</span>
+        </label>
+       </div>
+       <div class="input-field col s12 m7">
         <button type="submit" class="btn btn-block waves-effect waves-light green right">Continue<i class="material-icons right">keyboard_arrow_right</i></button>
        </div>
       </div>

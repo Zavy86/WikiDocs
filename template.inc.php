@@ -22,13 +22,15 @@
 <?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde<?php echo(DARK)?'-dark':'';?>.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/styles/<?php echo(DARK)?'monokai-sublime':'default';?>.css" media="screen,projection">
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/<?php echo(DARK)?'dark-':'';?>styles.css" media="screen,projection"/>
   <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="<?php echo $APP->COLOR; ?>">
   <style>:root{--theme-color:<?php echo $APP->COLOR; ?>;}</style>
   <title><?php echo ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE; ?></title>
+
  </head>
  <body>
   <header>
@@ -241,6 +243,8 @@
   <script type="text/javascript">var DOC=<?php echo json_encode($DOC->export()); ?>;</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
+  <script src="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/js/simplemde.min.js"></script>
