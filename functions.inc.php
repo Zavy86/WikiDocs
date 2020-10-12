@@ -10,12 +10,14 @@
 // initialize session
 wdf_session_start();
 // check debug from session
-if($_SESSION['wikidocs']['debug']){$debug=true;}
+if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
 // check debug from requests
 if(isset($_GET['debug'])){
  if($_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
  else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
 }
+// if behind https reverse proxy, set HTTPS property correctly
+if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
 // errors settings
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",$debug);
@@ -36,7 +38,7 @@ if(!strlen($g_doc)){$g_doc="homepage";}
 define("DEBUG",$debug);
 define("VERSION",file_get_contents("VERSION.txt"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
-define("ROOT",rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),PATH));
+define("ROOT",str_replace(PATH, "", str_replace("\\","/",realpath(dirname(__FILE__))."/")));
 define("URL",HOST.PATH);
 define("DIR",ROOT.PATH);
 define("DOC",$g_doc);

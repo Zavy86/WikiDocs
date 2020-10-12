@@ -29,7 +29,7 @@
   // reset session setup
   $_SESSION['wikidocs']['setup']=null;
   // build dir from given path
-  $dir=rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),$_POST['path']).$_POST['path'];
+  $dir=str_replace($_POST['path'], "", str_replace("\\","/",realpath(dirname(__FILE__))."/")).$_POST['path'];
   // check setup
   if(file_exists($dir."setup.php")){$checks_array['path']=true;}else{$checks_array['path']=false;$errors=true;}
   if(strlen($_POST['title'])){$checks_array['title']=true;}else{$checks_array['title']=false;$errors=true;}
