@@ -52,12 +52,11 @@
   $config.="define(\"SUBTITLE\",\"".$_SESSION['wikidocs']['setup']['subtitle']."\");\n";
   $config.="define(\"OWNER\",\"".$_SESSION['wikidocs']['setup']['owner']."\");\n";
   $config.="define(\"NOTICE\",\"".$_SESSION['wikidocs']['setup']['notice']."\");\n";
-  $config.="define(\"COLOR\",\"".$_SESSION['wikidocs']['setup']['color']."\");\n";
   $config.="define(\"EDITCODE\",\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
   $config.="define(\"VIEWCODE\",".($_SESSION['wikidocs']['setup']['viewcode']?"\"".md5($_SESSION['wikidocs']['setup']['viewcode'])."\"":"null").");\n";
+  $config.="define(\"COLOR\",\"".$_SESSION['wikidocs']['setup']['color']."\");\n";
+  $config.="define(\"DARK\",".(isset($_SESSION['wikidocs']['setup']['dark'])?"true":"false").");\n";
   $config.="define(\"GTAG\",".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").");\n";
-  $dark=(isset($_SESSION['wikidocs']['setup']['dark']))?'true':'false';
-  $config.="define(\"DARK\",{$dark});\n";
   $config.="?>\n";
   // write configuration file
   file_put_contents($dir."config.inc.php",$config);
@@ -142,9 +141,15 @@
        </div>
       </div>
       <div class="row">
-       <div class="input-field col s12 m5">
+       <div class="input-field col s6 m3">
          <input type="text" name="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="#4CAF50" required>
          <label for="subtitle"><span class="green-text">Color</span></label>
+       </div>
+       <div class="input-field col s6 m2">
+        <label for="check-dark">
+         <input type="checkbox" name="dark" id="check-dark">
+         <span class="black-text">Dark Mode</span>
+        </label>
        </div>
        <div class="input-field col s12 m7">
          <input type="text" name="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)">
@@ -152,13 +157,7 @@
        </div>
       </div>
       <div class="row">
-       <div class="input-field col s12 m5">
-        <label for="check-dark">
-         <input type="checkbox" name="dark" id="check-dark">
-         <span class="green-text">Dark Mode</span>
-        </label>
-       </div>
-       <div class="input-field col s12 m7">
+       <div class="input-field col s12 m12">
         <button type="submit" class="btn btn-block waves-effect waves-light green right">Continue<i class="material-icons right">keyboard_arrow_right</i></button>
        </div>
       </div>
@@ -180,9 +179,10 @@
       <li class="collection-item"><div>SUBTITLE: <?php echo $_POST['subtitle'].($checks_array['subtitle']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>OWNER: <?php echo $_POST['owner'].($checks_array['owner']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>NOTICE: <?php echo $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko); ?></div></li>
-      <li class="collection-item"><div>COLOR: <?php echo $_POST['color'].($checks_array['color']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>EDITCODE: <?php echo $_POST['editcode'].($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
       <li class="collection-item"><div>VIEWCODE: <?php echo ($_POST['viewcode']?$_POST['viewcode']:"PUBLIC").$check_ok; ?></div></li>
+      <li class="collection-item"><div>COLOR: <?php echo $_POST['color'].($checks_array['color']?$check_ok:$check_ko); ?></div></li>
+      <li class="collection-item"><div>DARK: <?php echo (strlen($_POST['dark'])?"true":"false").$check_ok; ?></div></li>
       <li class="collection-item"><div>GTAG: <?php echo ($_POST['gtag']?$_POST['gtag']:null).$check_ok; ?></div></li>
      </ul>
      <div class="input-field col s12">
