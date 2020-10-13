@@ -23,4 +23,6 @@ define("EDITCODE","efb2a684e4afb7d55e6147fbe5a332ee");
 define("VIEWCODE","ecae13117d6f0584c25a9da6c8f8415e");
 // Main theme color
 define("COLOR","#4CAF50");
+// Dark mode
+define("DARK",false);
 ?>
