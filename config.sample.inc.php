@@ -21,6 +21,8 @@ define("NOTICE","Copyright 2019 &copy; All rigths reserved.");
 define("EDITCODE","efb2a684e4afb7d55e6147fbe5a332ee");
 // MD5 encoded password for reading (set null for public wiki)
 define("VIEWCODE","ecae13117d6f0584c25a9da6c8f8415e");
+// Google Analytics Tag
+define("GTAG",null);
 // Main theme color
 define("COLOR","#4CAF50");
 // Dark mode
