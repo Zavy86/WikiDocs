@@ -25,6 +25,7 @@ class WikiDocs{
  protected $OWNER;
  protected $NOTICE;
  protected $COLOR;
+ protected $DARK;
  protected $AUTHENTICATED;
  protected $MODE;
 
@@ -40,6 +41,7 @@ class WikiDocs{
   $this->OWNER=OWNER;
   $this->NOTICE=NOTICE;
   $this->COLOR=COLOR;
+  $this->DARK=DARK;
   $this->HOST=HOST;
   $this->ROOT=ROOT;
   $this->PATH=PATH;
@@ -49,6 +51,7 @@ class WikiDocs{
   $this->MODE=MODE;
   // check for color
   if(substr($this->COLOR,0,1)!="#"){$this->COLOR="#4CAF50";}
+  if(!is_bool($this->DARK)){$this->DARK=false;}
  }
 
  /**

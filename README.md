@@ -16,6 +16,8 @@ Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 - Content can be categorized in namespaces
 - Automatic generated index and sitemap
 - Public and private browsing
+- Syntax highlighting
+- Dark mode
 - and many more..
 
 ## Demo
@@ -51,6 +53,14 @@ Authentication code is: `demo`
 - [GitHub](https://github.com/Zavy86)
 - [WebSite](http://www.zavynet.org)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
+
+## Contributors
+**Alex Meyer**
+- [GitHub](https://github.com/reyemxela)
+
+**Bo Allen**
+- [GitHub](https://github.com/bitwisecreative)
+- [WebSite](http://www.bitwisecreative.com/)
 
 ## License
 Code released under the MIT License

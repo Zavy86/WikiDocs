@@ -17,7 +17,7 @@ if(isset($_GET['debug'])){
  else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
 }
 // if behind https reverse proxy, set HTTPS property correctly
-if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
 // errors settings
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",$debug);
@@ -38,7 +38,8 @@ if(!strlen($g_doc)){$g_doc="homepage";}
 define("DEBUG",$debug);
 define("VERSION",file_get_contents("VERSION.txt"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
-define("ROOT",str_replace(PATH, "", str_replace("\\","/",realpath(dirname(__FILE__))."/")));
+//define("ROOT",str_replace(PATH, "", str_replace("\\","/",realpath(dirname(__FILE__))."/"))); /* @todo check with reyemxela */
+define("ROOT",rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),PATH));
 define("URL",HOST.PATH);
 define("DIR",ROOT.PATH);
 define("DOC",$g_doc);
@@ -56,9 +57,9 @@ function wdf_session_start(){
  // start php session
  session_start();
  // check for application session array
- if(!is_array($_SESSION['wikidocs'])){$_SESSION['wikidocs']=array();}
+ if(!isset($_SESSION['wikidocs']) || !is_array($_SESSION['wikidocs'])){$_SESSION['wikidocs']=array();}
  // check for application session alerts array
- if(!is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
+ if(!isset($_SESSION['wikidocs']['alerts']) || !is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
 }
 
 /**
