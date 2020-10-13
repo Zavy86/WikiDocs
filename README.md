@@ -54,5 +54,13 @@ Authentication code is: `demo`
 - [WebSite](http://www.zavynet.org)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
+## Contributors
+**Alex Meyer**
+- [GitHub](https://github.com/reyemxela)
+
+**Bo Allen**
+- [GitHub](https://github.com/bitwisecreative)
+- [WebSite](http://www.bitwisecreative.com/)
+
 ## License
 Code released under the MIT License
