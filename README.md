@@ -51,7 +51,7 @@ Authentication code is: `demo`
 ## Developers
 **Manuel Zavatta**
 - [GitHub](https://github.com/Zavy86)
-- [WebSite](http://www.zavynet.org)
+- [WebSite](http://www.zavy.im)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
 ## Contributors
