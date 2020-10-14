@@ -33,7 +33,7 @@ if(substr($g_doc,-1)=="/"){$g_doc=substr($g_doc,0,-1);}
 if(!strlen($g_doc)){$g_doc="homepage";}
 // make root dir from given path
 $original_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
-$root_dir=substr($original_dir,0,strrpos($original_dir,(string)$_POST['path'])).$_POST['path'];
+$root_dir=substr($original_dir,0,strrpos($original_dir,(string)PATH)).PATH;
 
 /**
  * Definitions
