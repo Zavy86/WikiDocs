@@ -31,6 +31,9 @@ $g_doc=strtolower(str_replace(array(" "),"-",$_GET['doc']));
 if(substr($g_doc,-1)=="/"){$g_doc=substr($g_doc,0,-1);}
 // set homepage as default if no request
 if(!strlen($g_doc)){$g_doc="homepage";}
+// make root dir from given path
+$original_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
+$root_dir=substr($original_dir,0,strrpos($original_dir,(string)$_POST['path'])).$_POST['path'];
 
 /**
  * Definitions
@@ -38,9 +41,7 @@ if(!strlen($g_doc)){$g_doc="homepage";}
 define("DEBUG",$debug);
 define("VERSION",file_get_contents("VERSION.txt"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
-$orig_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
-define("ROOT",substr($orig_dir, 0, strrpos($orig_dir, PATH)));
-//define("ROOT",rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),PATH));
+define("ROOT",$root_dir);
 define("URL",HOST.PATH);
 define("DIR",ROOT.PATH);
 define("DOC",$g_doc);

@@ -24,16 +24,15 @@
  define('PATH_URI',explode("setup.php",$_SERVER['REQUEST_URI'])[0]);
  // die if configuration already exist
  if(file_exists("config.inc.php")){die("Wiki|Docs is already configured..");}
+ // make root dir from given path
+ $original_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
+ $root_dir=substr($original_dir,0,strrpos($original_dir,(string)$_POST['path'])).$_POST['path'];
  // check action
  if($g_act=="check"){
   // reset session setup
   $_SESSION['wikidocs']['setup']=null;
-  // build dir from given path
-  $orig_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
-  $dir=substr($orig_dir, 0, strrpos($orig_dir, (string)$_POST['path'])).$_POST['path'];
-  //$dir=str_replace($_POST['path'], "", str_replace("\\","/",realpath(dirname(__FILE__))."/")).$_POST['path'];
   // check setup
-  if(file_exists($dir."setup.php")){$checks_array['path']=true;}else{$checks_array['path']=false;$errors=true;}
+  if(file_exists($root_dir."setup.php")){$checks_array['path']=true;}else{$checks_array['path']=false;$errors=true;}
   if(strlen($_POST['title'])){$checks_array['title']=true;}else{$checks_array['title']=false;$errors=true;}
   if(strlen($_POST['subtitle'])){$checks_array['subtitle']=true;}else{$checks_array['subtitle']=false;$errors=true;}
   if(strlen($_POST['owner'])){$checks_array['owner']=true;}else{$checks_array['owner']=false;$errors=true;}
@@ -45,10 +44,6 @@
  }
  // conclude action
  if($g_act=="conclude"){
-  // build dir from given path
-  $orig_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
-  $dir=substr($orig_dir, 0, strrpos($orig_dir, (string)$_POST['path'])).$_POST['path'];
-  //$dir=rtrim(str_replace("\\","/",realpath(dirname(__FILE__))."/"),$_POST['path']).$_POST['path'];
   // build configuration file
   $config="<?php\n";
   $config.="define(\"PATH\",\"".$_SESSION['wikidocs']['setup']['path']."\");\n";
@@ -63,7 +58,7 @@
   $config.="define(\"GTAG\",".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").");\n";
   $config.="?>\n";
   // write configuration file
-  file_put_contents($dir."config.inc.php",$config);
+  file_put_contents($root_dir."config.inc.php",$config);
   // build htacess file
   $htaccess="<IfModule mod_rewrite.c>\n";
   $htaccess.="RewriteEngine On\n";
@@ -72,15 +67,15 @@
   $htaccess.="RewriteRule ^(.*)$ index.php?doc=$1 [NC,L,QSA]\n";
   $htaccess.="</IfModule>\n";
   // write htaccess
-  file_put_contents($dir.".htaccess",$htaccess);
+  file_put_contents($root_dir.".htaccess",$htaccess);
   // check for configuration and htacess files
-  if(file_exists($dir."config.inc.php") && file_exists($dir.".htaccess")){$configured=true;}else{$configured=false;}
+  if(file_exists($root_dir."config.inc.php") && file_exists($root_dir.".htaccess")){$configured=true;}else{$configured=false;}
   // make default homepage if not exist
-  if(!file_exists($dir."documents/homepage/content.md")){
+  if(!file_exists($root_dir."documents/homepage/content.md")){
    // check for directory or make it
-   if(!is_dir($dir."documents/homepage")){mkdir($dir."documents/homepage",0755,true);}
+   if(!is_dir($root_dir."documents/homepage")){mkdir($root_dir."documents/homepage",0755,true);}
    // copy readme as default homepage content
-   copy($dir."README.md",$dir."documents/homepage/content.md");
+   copy($root_dir."README.md",$root_dir."documents/homepage/content.md");
   }
  }
 ?>
