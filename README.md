@@ -26,8 +26,31 @@ Try the demo playground at: [http://demo.wikidocs.it](http://demo.wikidocs.it)
 Authentication code is: `demo`
 
 ## Setup
+### Manual
 - [Download](https://github.com/Zavy86/wikidocs/releases) the lastest release
 - Clone the repo `git clone https://github.com/Zavy86/wikidocs.git`
+
+### Docker
+There is a [Docker image](https://hub.docker.com/r/reyemxela/wikidocs) that sets up WikiDocs with Apache2 and PHP automatically.
+#### Quick run
+```
+docker run -d -p 80:80 -v /path/to/documents:/documents -e PUID=1000 -e PGID=1000 reyemxela/wikidocs
+```
+#### docker-compose
+```
+version: '2'
+
+services:
+  wikidocs:
+    image: reyemxela/wikidocs
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 80:80
+    volumes:
+      - /path/to/documents:/documents
+```
 
 ## Configuration
 
