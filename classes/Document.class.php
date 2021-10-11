@@ -142,7 +142,7 @@ class Document{
     // skip directories
     if(is_dir($this->DIR."/".$element_fe)){continue;}
     $file_extension=explode(".",$element_fe);
-    if(!in_array(end($file_extension),array("png","gif","jpg","jpeg"))){continue;}
+    if(!in_array(end($file_extension),array("png","gif","jpg","jpeg","svg"))){continue;}
     // add element to documents array
     $images_array[]=$element_fe;
    }
