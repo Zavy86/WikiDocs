@@ -113,9 +113,9 @@
   // document path definition
   define("DOC_PATH",$DOC->PATH."/");
   // replace url in images
-  $p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+  $p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg|.svg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
   // replace url in images
-  $p_content=preg_replace_callback('/\[(.*)\]:\s?(.*)(.png|.gif|.jpg|.jpeg)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+  $p_content=preg_replace_callback('/\[(.*)\]:\s?(.*)(.png|.gif|.jpg|.jpeg|.svg|)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
   // replace path in url
   $p_content=preg_replace_callback('/\[(.*)\]\s?\((.*)\)/',function($match){return str_replace("(".PATH,"({{APP_PATH}}",$match[0]);},$p_content);
   // debug
@@ -211,7 +211,7 @@
    $image['name']=md5(date("YmdHisu")).".".$image['ext'];
   }
   // check file type
-  if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg"))){
+  if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg","image/svg+xml"))){
    // error
    echo json_encode(array("error"=>1,"code"=>"file_not_allowed","file"=>$image));
    // return
