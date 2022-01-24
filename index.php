@@ -25,7 +25,7 @@
  // initialize document
  $DOC=new Document(DOC);
  // initialize markdown parser
- require_once(DIR."helpers/parsedown-1.7.1/Parsedown.php");
+ require_once(DIR."helpers/parsedown-1.7.4/Parsedown.php");
  $PARSER=new Parsedown();
  $PARSER->setMarkupEscaped(true);
  // include web or print template
