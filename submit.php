@@ -210,6 +210,13 @@
    $image['base64']=str_replace(" ","+",$image_parts[1]);
    $image['name']=md5(date("YmdHisu")).".".$image['ext'];
   }
+  // check extension
+  if(!in_array($image['ext'],array("png","gif","jpg","jpeg","svg"))){
+   // error
+   echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$image));
+   // return
+   return false;
+  }
   // check file type
   if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg","image/svg+xml"))){
    // error
