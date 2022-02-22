@@ -46,6 +46,7 @@
  if($g_act=="conclude"){
   // build configuration file
   $config="<?php\n";
+  $config.="define(\"DEBUGGABLE\",false);\n";
   $config.="define(\"PATH\",\"".$_SESSION['wikidocs']['setup']['path']."\");\n";
   $config.="define(\"TITLE\",\"".$_SESSION['wikidocs']['setup']['title']."\");\n";
   $config.="define(\"SUBTITLE\",\"".$_SESSION['wikidocs']['setup']['subtitle']."\");\n";
