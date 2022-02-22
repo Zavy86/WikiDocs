@@ -202,11 +202,14 @@
     return false;
    }
   }
-  if(isset($_FILES['image'])){$image=$_FILES['image'];}
+  if(isset($_FILES['image'])){
+   $image=$_FILES['image'];
+   $image['ext']=strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
+  }
   if(strlen($_POST['image_base64'])){
    $image_parts=explode(";base64,",$_POST['image_base64']);
    $image['type']=explode("data:",$image_parts[0])[1];
-   $image['ext']=explode("image/",$image_parts[0])[1];
+   $image['ext']=strtolower(explode("image/",$image_parts[0])[1]);
    $image['base64']=str_replace(" ","+",$image_parts[1]);
    $image['name']=md5(date("YmdHisu")).".".$image['ext'];
   }
