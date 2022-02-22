@@ -8,7 +8,7 @@
  */
 
 // errors settings
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 // initialize session
 wdf_session_start();
 // if behind https reverse proxy, set HTTPS property correctly
