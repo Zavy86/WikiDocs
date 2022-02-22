@@ -159,10 +159,20 @@
   }
   // initialize document
   $DOC=new Document($p_document);
+  wdf_dump($DOC,'DOC');
   // check for trash directory or make it
   if(!is_dir(DIR."trash")){mkdir(DIR."trash",0755,true);}
-  // move docuemnt to trash
-  if(is_dir($DOC->DIR)){rename($DOC->DIR,DIR."trash/".$DOC->ID."_".date("Ymd_His"));}
+  // check for recursive path
+  /*if(strrpos($DOC->ID,'/')){
+   wdf_dump(strrpos($DOC->ID,'/'));
+   $recursive_path=(substr($DOC->ID,0,strrpos($DOC->ID,'/')));
+   // check for recursive directory or make it
+   if(!is_dir(DIR."trash/".$recursive_path)){mkdir(DIR."trash/".$recursive_path,0755,true);}
+  }*/
+  $trash_id=str_replace('/','___',$DOC->ID)."_".date("Ymd_His");
+  wdf_dump($trash_id);
+  // move document to trash
+  if(is_dir($DOC->DIR)){rename($DOC->DIR,DIR."trash/".$trash_id);}
   // alert and redirect
   wdf_alert("Document deleted","warning");
   wdf_redirect(PATH);
