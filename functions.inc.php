@@ -7,24 +7,25 @@
  * @link    https://github.com/Zavy86/wikidocs
  */
 
+// errors settings
+error_reporting(E_ALL);
 // initialize session
 wdf_session_start();
-// check debug from session
-if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
-// check debug from requests
-if(isset($_GET['debug'])){
- if($_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
- else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
-}
 // if behind https reverse proxy, set HTTPS property correctly
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
-// errors settings
-error_reporting(E_ALL & ~E_NOTICE);
-ini_set("display_errors",$debug);
 // check for configuration file
 if(!file_exists(realpath(dirname(__FILE__))."/config.inc.php")){die("WikiDocs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
 // include configuration file
 require_once("config.inc.php");
+// check debug from session
+if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
+// check debug from requests
+if(isset($_GET['debug'])){
+ if(DEBUGGABLE && $_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
+ else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
+}
+// errors display for debug
+ini_set("display_errors",$debug);
 // get document id from rewrited url
 $g_doc=strtolower(str_replace(array(" "),"-",$_GET['doc']));
 // remove trailing slashes

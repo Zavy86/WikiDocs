@@ -7,6 +7,8 @@
  * @link    https://github.com/Zavy86/WikiDocs
  */
 
+// Enable debug
+define("DEBUGGABLE",false);
 // Virtualhost path or sub-directory with trailing slashes
 define("PATH","/wikidocs/");
 // Application title
