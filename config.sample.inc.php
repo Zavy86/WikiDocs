@@ -29,4 +29,3 @@ define("GTAG",null);
 define("COLOR","#4CAF50");
 // Dark mode
 define("DARK",false);
-?>

@@ -17,6 +17,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
 if(!file_exists(realpath(dirname(__FILE__))."/config.inc.php")){die("WikiDocs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
 // include configuration file
 require_once("config.inc.php");
+$debug=false;
 // check debug from session
 if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
 // check debug from requests
