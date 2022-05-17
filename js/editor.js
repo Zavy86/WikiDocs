@@ -7,9 +7,9 @@
  */
 
 /**
- * Simple Markdown Editor
+ * Simple Markdown Editor (EasyMDE)
  */
-var simplemde=new SimpleMDE({
+var simplemde=new EasyMDE({
  element:document.getElementById("simplemde"),
  spellChecker:false,
  autofocus:true,

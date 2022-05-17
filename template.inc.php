@@ -22,7 +22,7 @@
 <?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/css/simplemde<?php echo ($APP->DARK?"-dark":""); ?>.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/css/easymde<?php /*echo ($APP->DARK?"-dark":"");*/ ?>.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles-<?php echo ($APP->DARK?"dark":"default"); ?>.css" media="screen,projection"/>
   <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
@@ -118,7 +118,6 @@
 <?php if(MODE=="edit"){ ?>
       <span class="right nowrap">
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?php echo $DOC->URL; ?>" data-position="bottom" data-tooltip="Cancel editing"><i class="material-icons">cancel</i></a>
-       <!-- @todo integrare nella toolbar di simplemde -->
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="Images"><i class="material-icons">image</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
        <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="Backup current version"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
@@ -247,7 +246,7 @@
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/simplemde-1.11.2/js/simplemde.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
 <?php } ?>
