@@ -89,7 +89,7 @@ ul.sidenav.sidenav-fixed li{line-height:44px}
 /*ul.sidenav.sidenav-fixed li:hover{background-color:#e8f5e9;}*/
 ul.sidenav.sidenav-fixed li:hover{background-color:#444 !important;}
 /*ul.sidenav.sidenav-fixed li.active{background-color:#c8e6c9;}*/
-ul.sidenav.sidenav-fixed li.active{background-color:#444 !important;}
+/*ul.sidenav.sidenav-fixed li.active{background-color:#444 !important;}*/
 ul.sidenav.sidenav-fixed li a{text-decoration:none;line-height:44px;height:44px;padding:0 30px;}
 ul.sidenav.sidenav-fixed>li:last-child{margin-bottom:160px}
 ul.sidenav.sidenav-fixed li.logo{text-align:center;margin-top:32px;margin-bottom:186px}
@@ -98,6 +98,7 @@ ul.sidenav.sidenav-fixed li.logo span{font-weight:normal;}
 ul.sidenav.sidenav-fixed li.sub_index a{font-weight:normal;}
 /*ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e8f5e9;}*/
 ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#444 !important;}
+ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important;}
 #logo-container{height:57px;margin-bottom:32px}
 
 /* search */
@@ -135,3 +136,25 @@ pre.debug{margin:9px;font-size:12px;}
 
 /* disable text wrap */
 .nowrap{white-space:nowrap;}
+
+.editor-toolbar .easymde-dropdown,
+.editor-toolbar button {
+    color: #ccc;
+}
+
+strong {
+    font-weight: 700;
+}
+
+code {
+    background: #23241f;
+    padding: 0 5px;
+}
+
+h2 {
+    padding-top: 25px;
+}
+
+img {
+    margin: unset;
+}

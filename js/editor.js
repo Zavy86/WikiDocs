@@ -14,7 +14,7 @@ var simplemde=new EasyMDE({
  spellChecker:false,
  autofocus:true,
  forceSync:true,
- hideIcons:["image"],
+ //hideIcons:["image"],
  showIcons:["code","table"],
  blockStyles:{
   bold:"**",

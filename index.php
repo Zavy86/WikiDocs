@@ -25,9 +25,11 @@
  // initialize document
  $DOC=new Document(DOC);
  // initialize markdown parser
- require_once(DIR."helpers/parsedown-1.7.4/Parsedown.php");
+ //require_once(DIR."helpers/parsedown-1.7.4/Parsedown.php");
+ require_once(DIR."helpers/parsedown-1.8.0-beta-5/Parsedown.php");
+ require_once(DIR."helpers/parsedown-extra-0.8.1/ParsedownExtra.php");
  $PARSER=new Parsedown();
  $PARSER->setMarkupEscaped(true);
+ $Extra=new ParsedownExtra();
  // include web or print template
  if(MODE=="print"){require_once(DIR."print.inc.php");}else{require_once(DIR."template.inc.php");}
-?>
