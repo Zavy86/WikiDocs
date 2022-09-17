@@ -31,6 +31,9 @@ body{font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
 /* headers */
 h1,h2,h3,h4,h5,h6{color:var(--theme-color);font-weight:300;line-height:110%;}
+h1.contrast, h2.contrast, h3.contrast, h4.contrast, h5.contrast, h6.contrast {
+    color: #249f6b;
+}
 h1{font-size:3.5rem;margin:1.75rem 0 1.0rem 0;}
 h2{font-size:3.0rem;margin:1.5rem 0 1.0rem 0;}
 h3{font-size:2.5rem;margin:1.75rem 0 1.0rem 0;}
