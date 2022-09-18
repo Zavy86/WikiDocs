@@ -74,9 +74,8 @@
      if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active"; $thirdLevelStyle = "display:block"; } else {$thirdLevelStyle = "display:none";}
      echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a>\n";
 
-	    // get 3rd level and show sub-menus
+	    // get 3rd level index and build sub-menus
 	    $subsub_index_array=wdf_document_index($sub_index_fe->url);
-      //echo '<pre>'.print_r($subsub_index_array).'</pre>';
       if (!empty($subsub_index_array)) {
         echo "<ul style=".$thirdLevelStyle.">";
 	      foreach($subsub_index_array as $third_index_fe){
@@ -157,23 +156,13 @@
       <div class="col s12 m10 offset-m1">
 <article>
 <?php
-//var_dump(MODE);
-
-/*
-echo '<pre>';
-print_r($DOC);
-echo '</pre>';
-
-echo '<pre>';
-print_r($DOC->loadContent());
-echo '</pre>';
-*/
-
-
-
  if(MODE=="view"){
-  //echo $PARSER->text($DOC->render())."\n";
-	 echo $Extra->text($DOC->render());
+  /* Old parser without markdownExtra support
+  echo $PARSER->text($DOC->render())."\n";
+  */
+
+  // New markdownExtra parser
+	echo $Extra->text($DOC->render());
  }
 ?>
 <?php if(MODE=="auth"){ session_destroy(); ?>
