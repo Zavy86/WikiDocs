@@ -52,22 +52,47 @@
  if(in_array(MODE,array("view","edit","search"))){
   // get primary level index
   $index_array=wdf_document_index();
+
   // cycle all documents
   foreach($index_array as $index_fe){
    echo "<li class=\"index";
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){echo " active";}
    echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$index_fe->url."\">".$index_fe->label."</a></li>\n";
+
    // check for selected index
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){
-    // get secondary level index
+
+     // get secondary level index
     $sub_index_array=wdf_document_index($index_fe->url);
+
+    // third-level default style
+    $thirdLevelStyle = 'display:none';
+
     // cycle all documents
     foreach($sub_index_array as $sub_index_fe){
      echo "<li class=\"sub_index";
-     if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";}
-     echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a></li>\n";
+     if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active"; $thirdLevelStyle = "display:block"; } else {$thirdLevelStyle = "display:none";}
+     echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a>\n";
+
+	    // get 3rd level index and build sub-menus
+	    $subsub_index_array=wdf_document_index($sub_index_fe->url);
+      if (!empty($subsub_index_array)) {
+        echo "<ul style=".$thirdLevelStyle.">";
+	      foreach($subsub_index_array as $third_index_fe){
+		      echo "<li class=\"subsub_index";
+		      if($third_index_fe->url==substr($DOC->ID,0,strlen($third_index_fe->url))){echo " active";}
+		      echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$third_index_fe->url."\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;".$third_index_fe->label."</a></li>\n";
+	      }
+        echo "</ul>";
+      }
+
+      //close <li> from sub_index
+	    echo "</li>";
+
     }
+
    }
+
   }
  }
 ?>
@@ -132,7 +157,12 @@
 <article>
 <?php
  if(MODE=="view"){
+  /* Old parser without markdownExtra support
   echo $PARSER->text($DOC->render())."\n";
+  */
+
+  // New markdownExtra parser
+	echo $Extra->text($DOC->render());
  }
 ?>
 <?php if(MODE=="auth"){ session_destroy(); ?>

@@ -90,25 +90,25 @@ class Document{
   $content=$this->loadContent("WEB");
   // add content or if content is null add document title to source code
   if($content!=false){$source=$content;}else{$source="# ".$this->TITLE."\n";}
-  // search for sub-documents
-  $sub_documents=wdf_document_index($this->ID);
-  // check for elements
-  if(count($sub_documents)){
-   // build sub-documents index
-   $source.="\n\n___\n";
-   // cycle all elements
-   foreach($sub_documents as $sub_element_fe){
-    // add element list
-    $source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
-    // search for sub-sub-documents
-    $sub_sub_documents=wdf_document_index($sub_element_fe->url);
-    // cycle all sub-sub-documents
-    foreach($sub_sub_documents as $sub_sub_element_fe){
-     // add element list
-     $source.="\t- [".$sub_sub_element_fe->label."](".PATH.$sub_sub_element_fe->url.")\n";
-    }
-   }
-  }
+	 // search for sub-documents
+	 $sub_documents=wdf_document_index($this->ID);
+	 // check for elements
+	 if(count($sub_documents)){
+		 // build sub-documents index
+		 $source.="\n\n___\n";
+		 // cycle all elements
+		 foreach($sub_documents as $sub_element_fe){
+			 // add element list
+			 $source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
+			 // search for sub-sub-documents
+			 $sub_sub_documents=wdf_document_index($sub_element_fe->url);
+			 // cycle all sub-sub-documents
+			 foreach($sub_sub_documents as $sub_sub_element_fe){
+				 // add element list
+				 $source.="\t- [".$sub_sub_element_fe->label."](".PATH.$sub_sub_element_fe->url.")\n";
+			 }
+		 }
+	 }
   // check for content or elements index
   if(!$content && !count($sub_documents)){
    // check for view mode
@@ -178,5 +178,3 @@ class Document{
  }
 
 }
-
-?>
