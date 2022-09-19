@@ -47,6 +47,9 @@ a:hover,a:active{text-decoration:underline;}
 img{max-width:100%;display:block;margin:0 auto;}
 img.polaroid{width:100%;height:auto;padding:9px;background-color:#ffffff;border:1px solid #dddddd;border-radius:9px;display:inline-block;}
 
+/* codes */
+code{background:#f0f0f0;padding:0 5px;}
+
 /* input colors */
 input:not([type]):focus:not([readonly]),
 input[type="text"]:not(.browser-default):focus:not([readonly]),
@@ -114,8 +117,8 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
  .sidenav-overlay{z-index:997;}
 }
 
-/* debug */
-pre.debug{margin:9px;font-size:12px;}
-
 /* disable text wrap */
 .nowrap{white-space:nowrap;}
+
+/* debug */
+pre.debug{margin:9px;font-size:12px;}
