@@ -74,20 +74,17 @@ services:
 - Make sure that RewriteBase is the same as the PATH in the configuration file
 
 ## Developers
+
+### Creator
 **Manuel Zavatta**
 - [GitHub](https://github.com/Zavy86)
 - [WebSite](http://www.zavy.im)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
-## Contributors
-**Alex Meyer**
-- [GitHub](https://github.com/reyemxela)
-
-**Bo Allen**
-- [GitHub](https://github.com/bitwisecreative)
-
-**Micha**
-- [GitHub](https://github.com/serial)
+### Contributors
+- [**Alex Meyer**](https://github.com/reyemxela)
+- [**Bo Allen**](https://github.com/bitwisecreative)
+- [**Micha**](https://github.com/serial)
 
 ## License
 Code released under the MIT License
