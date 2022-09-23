@@ -85,7 +85,9 @@ services:
 
 **Bo Allen**
 - [GitHub](https://github.com/bitwisecreative)
-- [WebSite](http://www.bitwisecreative.com/)
+
+**Micha**
+- [GitHub](https://github.com/serial)
 
 ## License
 Code released under the MIT License
