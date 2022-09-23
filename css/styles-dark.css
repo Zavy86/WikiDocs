@@ -113,7 +113,7 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 #nav-mobile li.search .search-wrapper input#search{color:#777777;display:block;font-size:16px;font-weight:300;width:100%;height:62px;margin:0;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 45px 0 30px;border:0;}
 
 /* sidebar-footer */
-.sidebar-footer{position:fixed;bottom:0;left:0;padding:15px 30px 20px;width:299px;border-top:solid 1px #dddddd;background-color:#ffffff;font-size:14px;line-height:1.5;z-index:299;}
+.sidebar-footer{position:fixed;bottom:0;left:0;padding:15px 30px 20px;width:299px;border-top:solid 1px #dddddd;background-color:#ffffff;font-size:14px;line-height:1.5;z-index:2;}
 .sidebar-footer .default-title,.sidebar-footer .default-description{display:inline;font-size:12px;}
 .sidebar-footer .default-title{position:relative;margin-right:8px;font-weight:600;}
 .sidebar-footer .default-title:before{position:absolute;top:calc(-50% - 17px);padding:4px 6px;border-radius:3px;background-color:var(--theme-color);color:#ffffff;content:"Wiki|Docs";letter-spacing:.4px;font-weight:600;font-size:10px;line-height:1;}
@@ -127,7 +127,7 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 .editor-preview-side{z-index:307;}
 .CodeMirror-fullscreen{z-index:309;}
 .editor-toolbar.fullscreen{z-index:309;}
-.sidenav{z-index:299;}
+.sidenav{z-index:2;}
 .sidenav-overlay{z-index:297;}
 @media only screen and (max-width:992px){
  .sidenav{z-index:999;}
@@ -135,6 +135,9 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 }
 .editor-toolbar .easymde-dropdown,
 .editor-toolbar button{color: #ccc;}
+.editor-toolbar.fullscreen{background:#333;}
+.EasyMDEContainer .CodeMirror-fullscreen{background: #e7e7e7;}
+.editor-preview{background:#333;}
 
 /* disable text wrap */
 .nowrap{white-space:nowrap;}
