@@ -1,6 +1,6 @@
-FROM alpine:3
+FROM alpine:3.15
 
-RUN apk add --no-cache \
+RUN apk update && apk upgrade && apk add --no-cache \
     apache2 \
     php7 \
     php7-apache2 \
