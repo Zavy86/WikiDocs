@@ -44,7 +44,7 @@ version: '2'
 
 services:
   wikidocs:
-    image: reyemxela/wikidocs
+    image: zavy86/wikidocs
     environment:
       - PUID=1000
       - PGID=1000
@@ -52,6 +52,7 @@ services:
       - 80:80
     volumes:
       - /path/to/documents:/documents
+      - /path/to/config:/config
 ```
 
 ## Configuration
