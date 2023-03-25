@@ -16,7 +16,7 @@
  $errors=false;
  $checks_array=array();
  // acquire variables
- $g_act=$_GET['act'];
+ $g_act=($_GET['act'] ?? '');
  if(!$g_act){$g_act="setup";}
  // include coonfiguration sample
  include("config.sample.inc.php");
@@ -26,7 +26,7 @@
  if(file_exists("config.inc.php")){die("Wiki|Docs is already configured..");}
  // make root dir from given path
  $original_dir=str_replace("\\","/",realpath(dirname(__FILE__))."/");
- $root_dir=substr($original_dir,0,strrpos($original_dir,(string)$_POST['path'])).$_POST['path'];
+ $root_dir=substr($original_dir,0,strrpos($original_dir,($_POST['path'] ?? ''))).($_POST['path'] ?? '');
  // check action
  if($g_act=="check"){
   // reset session setup
