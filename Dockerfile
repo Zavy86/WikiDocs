@@ -1,3 +1,17 @@
+#
+# Wiki|Docs
+#
+# Build command:
+# docker build --no-cache -t zavy86/wikidocs .
+#
+# Build multi-architecture
+# docker buildx create --name builder --driver docker-container --use
+# docker buildx inspect --bootstrap
+# docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
+#
+# Push command:
+# docker push zavy86/wikidocs
+#
 FROM alpine:3.15
 
 RUN apk update && apk upgrade && apk add --no-cache \
