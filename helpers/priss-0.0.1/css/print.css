@@ -25,7 +25,7 @@ h3{font-size:15pt;}
 h4,h5,h6{font-size:12pt;}
 
 /* ELEMENTS */
-code {font: 10pt Courier, monospace;}
+code {font: 10pt Courier, monospace;white-space: pre-wrap;}
 blockquote {margin: 1.3em; padding: 1em;  font-size: 10pt;}
 hr {background-color: #ccc;}
 

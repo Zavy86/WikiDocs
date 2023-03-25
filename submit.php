@@ -216,7 +216,7 @@
    $image=$_FILES['image'];
    $image['ext']=strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
   }
-  if(strlen($_POST['image_base64'])){
+  if(strlen($_POST['image_base64'] ?? '')){
    $image_parts=explode(";base64,",$_POST['image_base64']);
    $image['type']=explode("data:",$image_parts[0])[1];
    $image['ext']=strtolower(explode("image/",$image_parts[0])[1]);
