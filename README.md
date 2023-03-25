@@ -33,10 +33,10 @@ Authentication code is: `demo`
 - Clone the repo `git clone https://github.com/Zavy86/wikidocs.git`
 
 ### Docker
-There is a [Docker image](https://hub.docker.com/r/reyemxela/wikidocs) that sets up WikiDocs with Apache2 and PHP automatically.
+There is a [Docker image](https://hub.docker.com/repository/docker/zavy86/wikidocs/general) that sets up WikiDocs with Apache2 and PHP automatically.
 #### Quick run
 ```
-docker run -d -p 80:80 -v /path/to/documents:/documents -e PUID=1000 -e PGID=1000 reyemxela/wikidocs
+docker run -d -p 80:80 -v /path/to/documents:/documents -e PUID=1000 -e PGID=1000 zavy86/wikidocs
 ```
 #### docker-compose
 ```
@@ -86,6 +86,7 @@ services:
 - [**Alex Meyer**](https://github.com/reyemxela)
 - [**Bo Allen**](https://github.com/bitwisecreative)
 - [**Micha**](https://github.com/serial)
+- [**Amin Persia**](https://github.com/leomoon)
 
 ## License
 Code released under the MIT License
