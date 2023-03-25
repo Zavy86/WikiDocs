@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-<?php if(strlen(GTAG)){ ?>
+<?php if(strlen(GTAG ?? '')){ ?>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo GTAG; ?>"></script>
   <script>
@@ -44,7 +44,7 @@
     <li class="search">
      <div class="search-wrapper">
       <form action="<?php echo $APP->PATH; ?>" method="get" autocomplete="off">
-       <input id="search" name="search" placeholder="Search in wiki.." value="<?php echo $_GET['search']; ?>"><i class="material-icons">search</i>
+       <input id="search" name="search" placeholder="Search in wiki.." value="<?php echo ($_GET['search'] ?? ''); ?>"><i class="material-icons">search</i>
       </form>
      </div>
     </li>
@@ -169,8 +169,8 @@
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
 <?php
- if($_GET['draft'] && file_exists($DOC->DIR."draft.md")){$source=file_get_contents($DOC->DIR."draft.md");}
- if(!strlen($source)){$source=$DOC->loadContent();}
+ if($_GET['draft'] ?? '' && file_exists($DOC->DIR."draft.md")){$source=file_get_contents($DOC->DIR."draft.md");}
+ if(!strlen($source ?? '')){$source=$DOC->loadContent();}
 ?>
         <textarea id="simplemde" name="content"><?php echo (strlen($source)?$source:"# ".$DOC->TITLE); ?></textarea>
        </form>
@@ -265,7 +265,7 @@
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
 <?php } ?>
-<?php if(MODE=="edit" && !$_GET['draft'] && file_exists($DOC->DIR."draft.md")){ ?>
+<?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")){ ?>
   <script type="text/javascript">if(confirm("A draft has been found, do you want to load it??")){window.location.replace(window.location+"&draft=1");}</script>
 <?php } ?>
   <script type="text/javascript">

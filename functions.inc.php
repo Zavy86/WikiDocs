@@ -28,7 +28,7 @@ if(isset($_GET['debug'])){
 // errors display for debug
 ini_set("display_errors",$debug);
 // get document id from rewrited url
-$g_doc=strtolower(str_replace(array(" "),"-",$_GET['doc']));
+$g_doc=strtolower(str_replace(array(" "),"-",($_GET['doc'] ?? '')));
 // remove trailing slashes
 if(substr($g_doc,-1)=="/"){$g_doc=substr($g_doc,0,-1);}
 // set homepage as default if no request
@@ -72,7 +72,7 @@ function wdf_session_start(){
  * @return integer 0 none, 1 view, 2 edit
  */
 function wdf_authenticated(){
- return intval($_SESSION['wikidocs']['authenticated']);
+ return intval($_SESSION['wikidocs']['authenticated'] ?? '');
 }
 
 /**
@@ -161,7 +161,7 @@ function wdf_timestamp_format($timestamp,$format="Y-m-d H:i:s"){
 function wdf_document_list($parent=null){
  $documents_array=array();
  // check parameters
- if(substr($parent,-1)!="/"){$parent.="/";}
+ if(substr((string)$parent,-1)!="/"){$parent.="/";}
  if($parent=="/"){$parent=null;}
  // make directory full path
  $directory_path=DIR."documents/".$parent;
@@ -303,7 +303,7 @@ function wdf_document_title($document){
   }
   fclose($handle);
  }
- if(!strlen($title)){
+ if(!strlen($title ?? '')){
   // make title by path
   $hierarchy=explode("/",$document);
   $title=ucwords(str_replace("-"," ",end($hierarchy)));

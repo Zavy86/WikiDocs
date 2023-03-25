@@ -37,7 +37,7 @@ class Document{
   $this->TIMESTAMP=null;
   // check if file exist
   if(!file_exists($this->FILE)){$this->FILE=null;}
-  if(file_exists($this->FILE)){$this->TIMESTAMP=filemtime($this->FILE);}
+  if(file_exists($this->FILE ?? '')){$this->TIMESTAMP=filemtime($this->FILE);}
  }
 
  /**
@@ -67,7 +67,7 @@ class Document{
   */
  public function loadContent($paths="WEB"){
   // check if file exist
-  if(!file_exists($this->FILE)){return false;}
+  if(!file_exists($this->FILE ?? '')){return false;}
   // load content from file
   $content=file_get_contents($this->FILE);
   // replace path placeholders

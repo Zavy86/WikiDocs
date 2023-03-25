@@ -17,7 +17,7 @@
  if(isset($_GET['edit'])){if(wdf_authenticated()==2){$mode="edit";}else{$mode="auth";}}
  if(isset($_GET['exit'])){session_destroy();wdf_session_start();}
  // check for authentication
- if(strlen(VIEWCODE) && wdf_authenticated()==0){$mode="auth";}
+ if(strlen(VIEWCODE ?? '') && wdf_authenticated()==0){$mode="auth";}
  // mode definition
  define("MODE",$mode);
  // initialize application
