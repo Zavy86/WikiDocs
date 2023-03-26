@@ -29,6 +29,9 @@ body, .sidenav, .sidebar-footer, .modal {
 /* body */
 body{font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
+/* bidirectional language support */
+h1,h2,h3,h4,h5,h6,p,code,th,td{unicode-bidi:plaintext;text-align:start;}
+
 /* headers */
 h1,h2,h3,h4,h5,h6{color:var(--theme-color);font-weight:300;line-height:110%;}
 h1.contrast,h2.contrast,h3.contrast,h4.contrast,h5.contrast,h6.contrast{color:#249f6b;}
@@ -40,9 +43,9 @@ h5{font-size:1.5rem;margin:0.75rem 0 1.0rem 0;}
 h6{font-size:1.0rem;margin:0.5rem 0 1.0rem 0;}
 
 /* reset article ul */
-article ul{padding-left:30px !important;margin-top:10px !important;margin-bottom:15px !important;}
-article ul li{list-style-type: initial !important;}
-article ul ul{padding-left:30px !important;margin-top:0 !important;margin-bottom:0 !important;}
+article ul,article ol{padding-left:30px !important;margin-top:10px !important;margin-bottom:15px !important;}
+article ul li,article ul li{list-style-type: initial !important;}
+article ul ul,article ul ul{padding-left:30px !important;margin-top:0 !important;margin-bottom:0 !important;}
 
 /* justify article p */
 /*article p{text-align:justify;}*/

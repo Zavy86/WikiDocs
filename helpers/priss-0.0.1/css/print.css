@@ -17,6 +17,10 @@ body {
 	font-size: 12pt;
 }
 
+
+/* bidirectional language support */
+h1,h2,h3,h4,h5,h6,p,pre,th,td{unicode-bidi:plaintext;text-align:start;}
+
 /* HEADINGS */
 h1,h2,h3,h4,h5,h6 {font-family: Helvetica, Arial, sans-serif;}
 h1{font-size:19pt;}
