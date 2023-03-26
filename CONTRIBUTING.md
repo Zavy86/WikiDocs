@@ -1,4 +1,4 @@
 # Contributing
-Please use the `develop` branch for any pull request.
+Please use the `master` branch for any pull request.
 
 Thank you
