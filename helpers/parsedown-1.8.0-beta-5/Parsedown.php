@@ -587,6 +587,9 @@ class Parsedown
                 ),
                 'element' => array(
                     'name' => $name,
+                    'attributes' => array(
+                        'dir' => "auto"
+                    ),
                     'elements' => array(),
                 ),
             );
