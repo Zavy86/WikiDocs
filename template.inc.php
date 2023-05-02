@@ -25,10 +25,10 @@
   </script>
 <?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/css/easymde<?php /*echo ($APP->DARK?"-dark":"");*/ ?>.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/styles-<?php echo ($APP->DARK?"dark":"default"); ?>.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/easymde-2.16.1/css/easymde<?php /*echo ($APP->DARK?"-dark":"");*/ ?>.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/css/styles-<?php echo ($APP->DARK?"dark":"default"); ?>.css" media="screen,projection"/>
   <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>public/favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="<?php echo $APP->COLOR; ?>">
@@ -258,15 +258,15 @@
   </main>
   <script type="text/javascript">var APP=<?php echo json_encode($APP->export()); ?>;</script>
   <script type="text/javascript">var DOC=<?php echo json_encode($DOC->export()); ?>;</script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/jquery-3.3.1/js/jquery.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/materialize-1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/easymde-2.16.1/js/easymde.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/editor.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/images.js"></script>
 <?php } ?>
 <?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")){ ?>
   <script type="text/javascript">if(confirm("A draft has been found, do you want to load it??")){window.location.replace(window.location+"&draft=1");}</script>

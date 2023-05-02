@@ -84,8 +84,8 @@ if($g_act=="conclude"){
 <html lang="en">
 <head>
  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
- <link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
- <link type="text/css" rel="stylesheet" href="public/styles-default.css" media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" href="public/helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" href="public/css/styles-default.css" media="screen,projection"/>
  <link  type="image/png" rel="icon" href="public/favicon.png" sizes="any"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
  <meta name="theme-color" content="#4CAF50">
@@ -210,7 +210,7 @@ if($g_act=="conclude"){
    <?php } ?>
   </div><!-- /row-->
  </div><!-- /container-->
- <script type="text/javascript" src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
- <script type="text/javascript" src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
+ <script type="text/javascript" src="public/helpers/jquery-3.3.1/js/jquery.min.js"></script>
+ <script type="text/javascript" src="public/helpers/materialize-1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
