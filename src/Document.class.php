@@ -7,26 +7,22 @@
  * @link    https://github.com/Zavy86/wikidocs
  */
 
-/**
- * Document class
- */
-class Document{
+final class Document{
 
-	/** Properties */
-	protected $ID;
-	protected $PATH;
-	protected $URL;
-	protected $DIR;
-	protected $TITLE;
-	protected $FILE;
-	protected $TIMESTAMP;
+	protected string $ID;
+	protected string $PATH;
+	protected string $URL;
+	protected string $DIR;
+	protected string $TITLE;
+	protected ?string $FILE;
+	protected ?int $TIMESTAMP;
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $id Document ID (examples: homepage, samples/typography )
 	 */
-	public function __construct($id){
+	public function __construct(string $id){
 		// definitions
 		$this->ID=$id;
 		$this->PATH=PATH."datasets/documents/".$this->ID;
@@ -44,14 +40,16 @@ class Document{
 	 * Get property
 	 *
 	 * @param string $property Property name
-	 * @return string Property value
+	 * @return mixed Property value
 	 */
-	public function __get($property){return $this->$property;}
+	public function __get(string $property){return $this->{$property};}
 
 	/**
 	 * Export all properties
+	 *
+	 * @return array of properties
 	 */
-	public function export(){
+	public function export():array{
 		$properties_array=array();
 		foreach($this as $key => $value){
 			$properties_array[$key]=$value;
@@ -65,7 +63,7 @@ class Document{
 	 * @param string $paths Format for paths [WEB|FS]
 	 * @return string Content markdown source code
 	 */
-	public function loadContent($paths="WEB"){
+	public function loadContent($paths="WEB"):string{
 		// check if file exist
 		if(!file_exists($this->FILE ?? '')){return false;}
 		// load content from file
@@ -80,12 +78,12 @@ class Document{
 		return $source;
 	}
 
-	/*
+	/**
 	 * Document render
 	 *
 	 * @return string Document HTML source code
 	 */
-	public function render(){
+	public function render():string{
 		// load content from file and convert paths for web
 		$content=$this->loadContent("WEB");
 		// add content or if content is null add document title to source code
@@ -139,10 +137,12 @@ class Document{
 		return $source;
 	}
 
-	/*
+	/**
 	 * Document images
+	 *
+	 * @return array of images
 	 */
-	public function images(){
+	public function images():array{
 		// definition
 		$images_array=array();
 		// check directory
@@ -165,10 +165,12 @@ class Document{
 		return $images_array;
 	}
 
-	/*
+	/**
 	 * Document hierarchy
+	 *
+	 * @return array of hierarchy links
 	 */
-	public function hierarchy(){
+	public function hierarchy():array{
 		// definition
 		$hierarchy_array=array();
 		// explode document path

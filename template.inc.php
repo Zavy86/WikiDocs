@@ -291,7 +291,7 @@
    case "info":$class="blue";break;
   }
   // show alert
-  echo "  <script type=\"text/javascript\">M.toast({html:\"".$alert->message."\",classes:\"rounded ".$class."\"});</script>\n";
+  echo "  <script type=\"text/javascript\">M.toast({html:\"".$alert->message."\",src:\"rounded ".$class."\"});</script>\n";
   // remove from session
   unset($_SESSION['wikidocs']['alerts'][$index]);
  }

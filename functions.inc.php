@@ -51,8 +51,8 @@ define("DOC",$g_doc);
 /**
  * Classes
  */
-require_once(DIR."classes/WikiDocs.class.php");
-require_once(DIR."classes/Document.class.php");
+require_once(DIR."src/WikiDocs.class.php");
+require_once(DIR."src/Document.class.php");
 
 /**
  * Initialize session and setup default sessions variables
