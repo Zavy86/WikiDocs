@@ -43,7 +43,7 @@ die("@todo");
   }
   // backup current version
   $backup_name=date("Ymd_His").".zip";
-  $command="cd ".DIR." ; pwd ; zip -r ./backups/".$backup_name." ./documents";
+  $command="cd ".DIR." ; pwd ; zip -r ./backups/".$backup_name." ./datasets/documents";
   $shell_output=exec('whoami')."@".exec('hostname').":".shell_exec($command);
   wdf_dump($shell_output,$command,null,true);
   // check if previous update was deleted
@@ -84,11 +84,11 @@ die("@todo");
   if(file_exists(DIR."update/WikiDocs-master/.htaccess")){wdf_dump(".htaccess copied!",null,null,true);}
   else{die("An error occured copying .htaccess!");}
   // copy documents into update
-  $command="cd ".DIR." ; pwd ; cp -R ./documents ./update/WikiDocs-master/";
+  $command="cd ".DIR." ; pwd ; cp -R ./datasets/documents ./update/WikiDocs-master/";
   $shell_output=exec('whoami')."@".exec('hostname').":".shell_exec($command);
   wdf_dump($shell_output,$command,null,true);
   // check for htaccess
-  if(file_exists(DIR."update/WikiDocs-master/documents/homepage/content.md")){wdf_dump("documents copied!",null,null,true);}
+  if(file_exists(DIR."update/WikiDocs-master/datasets/documents/homepage/content.md")){wdf_dump("documents copied!",null,null,true);}
   else{die("An error occured copying documents!");}
   // overwrite with update
   $command="cd ".DIR." ; pwd ; cp -R ./update/WikiDocs-master/* ./";

@@ -1,11 +1,17 @@
-/.idea/
-/nbproject/
-/documents/*
-/trash/*
 .htaccess
 config.inc.php
 robots.txt
 sitemap.xml
-!index.php
 
-/datasets/config.inc.php
+
+datasets/config.inc.php
+datasets/documents/*
+datasets/trash/*
+
+!datasets/documents/.gitkeep
+!datasets/trash/.gitkeep
+
+
+
+
+!index.php

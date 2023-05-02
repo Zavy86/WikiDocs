@@ -72,11 +72,11 @@ if($g_act=="conclude"){
  // check for configuration and htacess files
  if(file_exists($root_dir."datasets/config.inc.php") && file_exists($root_dir.".htaccess")){$configured=true;}else{$configured=false;}
  // make default homepage if not exist
- if(!file_exists($root_dir."documents/homepage/content.md")){
+ if(!file_exists($root_dir."datasets/documents/homepage/content.md")){
   // check for directory or make it
-  if(!is_dir($root_dir."documents/homepage")){mkdir($root_dir."documents/homepage",0755,true);}
+  if(!is_dir($root_dir."datasets/documents/homepage")){mkdir($root_dir."datasets/documents/homepage",0755,true);}
   // copy readme as default homepage content
-  copy($root_dir."README.md",$root_dir."documents/homepage/content.md");
+  copy($root_dir."README.md",$root_dir."datasets/documents/homepage/content.md");
  }
 }
 ?>

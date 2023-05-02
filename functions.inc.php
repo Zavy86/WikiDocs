@@ -165,7 +165,7 @@ function wdf_document_list($parent=null){
  if(substr((string)$parent,-1)!="/"){$parent.="/";}
  if($parent=="/"){$parent=null;}
  // make directory full path
- $directory_path=DIR."documents/".$parent;
+ $directory_path=DIR."datasets/documents/".$parent;
  // check for directory
  if(is_dir($directory_path)){
   // scan directory for documents
@@ -257,9 +257,9 @@ function wdf_document_search($query,$parent=null){
  // cycle all directories
  foreach($paths_array as $path_fe){
   // check if content file exist
-  if(file_exists(DIR."documents/".$path_fe."/content.md")){
+  if(file_exists(DIR."datasets/documents/".$path_fe."/content.md")){
    // open file handle for read
-   $handle=fopen(DIR."documents/".$path_fe."/content.md","r");
+   $handle=fopen(DIR."datasets/documents/".$path_fe."/content.md","r");
    if($handle){
     while(!feof($handle)){
      // get line in buffer
@@ -291,7 +291,7 @@ function wdf_document_search($query,$parent=null){
  */
 function wdf_document_title($document){
  // make path
- $content_path=DIR."documents/".$document."/content.md";
+ $content_path=DIR."datasets/documents/".$document."/content.md";
  // load content line by line to find document title if exist
  if(file_exists($content_path)){
   $handle=fopen($content_path,"r");
