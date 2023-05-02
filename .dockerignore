@@ -1,0 +1,11 @@
+.git/
+.idea/
+documents/*
+trash/*
+.gitignore
+.htaccess
+development.dockerfile
+production.dockerfile
+config.inc.php
+robots.txt
+sitemap.xml
