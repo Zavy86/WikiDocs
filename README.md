@@ -1,4 +1,7 @@
 # Wiki|Docs
+
+> **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED read later
+
 Just a databaseless markdown flat-file wiki engine.
 
 Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
@@ -58,11 +61,11 @@ services:
 ## Configuration
 
 ### Automatic
-- The `setup.php` script will automatically create both `config.inc.php` and `.htacess` files
+- The `setup.php` script will automatically create both `datasets/config.inc.php` and `.htacess` files
 
 ### Manual
-- Copy the configuration sample file `cp config.sample.inc.php config.inc.php`
-- Edit the configuration file `nano config.inc.php`
+- Copy the configuration sample file `cp datasets/config.sample.inc.php datasets/config.inc.php`
+- Edit the configuration file `nano datasets/config.inc.php`
 - Create the `.htaccess` file like:
 ```
 <IfModule mod_rewrite.c>
@@ -73,6 +76,11 @@ services:
 </IfModule>
 ```
 - Make sure that RewriteBase is the same as the PATH in the configuration file
+
+> **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED  
+> Move trash directory to datasets/trash  
+> Move documents directory to datasets/documents  
+> Move config.inc.php to datasets/config.inc.php  
 
 ## Developers
 
