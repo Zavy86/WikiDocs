@@ -20,6 +20,9 @@ require_once(baseDIR.'src/WikiDocs.class.php');
 require_once(baseDIR.'src/Document.class.php');
 require_once baseDIR.'src/functions.inc.php';              // @todo rinomare baseDIR in DIR e togliere da sotto
 
+// require external libraries
+require_once(baseDIR."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
+require_once(baseDIR."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
 
 // start session
 wdf_session_start();  // @todo fare classe dedicata?

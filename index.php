@@ -28,8 +28,6 @@ $APP=new WikiDocs();
 // initialize document
 $DOC=new Document(DOC);
 // initialize markdown+extra parser (v1.8.0-beta-5 with markdownExtra)
-require_once(DIR."libraries/parsedown-1.8.0-beta-5/Parsedown.php");
-require_once(DIR."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
 $PARSER=new ParsedownExtra();
 //$PARSER->setMarkupEscaped(true);
 // include web or print template
