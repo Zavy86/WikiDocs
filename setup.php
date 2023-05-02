@@ -85,7 +85,7 @@ if($g_act=="conclude"){
 <head>
  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
- <link type="text/css" rel="stylesheet" href="css/styles-default.css" media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" href="public/styles-default.css" media="screen,projection"/>
  <link  type="image/png" rel="icon" href="images/favicon.png" sizes="any"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
  <meta name="theme-color" content="#4CAF50">
