@@ -7,3 +7,5 @@ config.inc.php
 robots.txt
 sitemap.xml
 !index.php
+
+/datasets/config.inc.php

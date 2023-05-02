@@ -14,9 +14,9 @@ wdf_session_start();
 // if behind https reverse proxy, set HTTPS property correctly
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
 // check for configuration file
-if(!file_exists(realpath(dirname(__FILE__))."/config.inc.php")){die("WikiDocs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
+if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){die("WikiDocs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
 // include configuration file
-require_once("config.inc.php");
+require_once("datasets/config.inc.php");
 $debug=false;
 // check debug from session
 if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug'] == 1)){$debug=true;}
@@ -91,6 +91,7 @@ function wdf_dump($variable,$label=null,$class=null,$force=false){
  if(is_string($variable)){$variable=str_replace(array("<",">"),array("&lt;","&gt;"),$variable);}
  print_r($variable);
  echo "</pre>\n<!-- /dump -->\n";
+ return true;
 }
 
 /**
@@ -98,7 +99,7 @@ function wdf_dump($variable,$label=null,$class=null,$force=false){
  *
  * @param string $location Location URL
  */
-function wdf_redirect($location){
+function wdf_redirect($location):void{
  if(DEBUG){die("<a href=\"".$location."\">".$location."</a>");}
  exit(header("location: ".$location));
 }
@@ -191,8 +192,8 @@ function wdf_document_list($parent=null){
 /**
  * Documents List
  *
- * @param type $parent Parent document ID
- * @return index array
+ * @param string $parent Parent document ID
+ * @return array
  */
 function wdf_document_index($parent=null){
  // definitions
