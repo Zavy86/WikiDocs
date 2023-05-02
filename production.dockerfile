@@ -1,5 +1,5 @@
 #
-# Wiki|Docs
+# Wiki|Docs Production Build
 #
 # Build command:
 # docker build --no-cache -t zavy86/wikidocs .
@@ -9,20 +9,21 @@
 # docker buildx inspect --bootstrap
 # docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
 #
-# Push command:
-# docker push zavy86/wikidocs
-#
+
 FROM alpine:3.15
 
-RUN apk update && apk upgrade && apk add --no-cache \
-    apache2 \
-    php7 \
-    php7-apache2 \
-    php7-session \
-    php7-mbstring \
-    php7-json \
-    shadow \
-    curl
+ARG DEPENDENCIES="\
+apache2 \
+php7 \
+php7-apache2 \
+php7-json \
+php7-mbstring \
+php7-session \
+shadow \
+"
+
+# installation
+RUN apk add --no-cache $DEPENDENCIES
 
 # enable rewrite module and allow .htaccess overrides
 RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apache2/httpd.conf && \
