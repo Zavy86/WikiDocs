@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 ini_set('display_errors',true);
 */
 // include functions
-require_once("functions.inc.php");
+require_once("bootstrap.inc.php");
 // mode definition
 $mode="view";
 if(isset($_GET['auth'])){$mode="auth";}
