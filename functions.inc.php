@@ -14,7 +14,7 @@ wdf_session_start();
 // if behind https reverse proxy, set HTTPS property correctly
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
 // check for configuration file
-if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){die("WikiDocs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
+if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){die("Wiki|Docs is not configured..<br><br>Launch <a href='setup.php'>Setup</a> script!");}
 // include configuration file
 require_once("datasets/config.inc.php");
 $debug=false;
@@ -57,7 +57,7 @@ require_once(DIR."src/Document.class.php");
 /**
  * Initialize session and setup default sessions variables
  */
-function wdf_session_start(){
+function wdf_session_start():void{
  // start php session
  session_start();
  // check for application session array
@@ -69,21 +69,21 @@ function wdf_session_start(){
 /**
  * Authentication level
  *
- * @return integer 0 none, 1 view, 2 edit
+ * @return int 0 none, 1 view, 2 edit
  */
-function wdf_authenticated(){
+function wdf_authenticated():int{
  return intval($_SESSION['wikidocs']['authenticated'] ?? '');
 }
 
 /**
  * Dump a variable into a debug box (only if debug is enabled)
  *
- * @param string $variable Dump variable
- * @param string $label Dump label
- * @param string $class Dump class
- * @param boolean $force Force dump also if debug is disabled
+ * @param mixed $variable Dump variable
+ * @param ?string $label Dump label
+ * @param ?string $class Dump class
+ * @param bool $force Force dump also if debug is disabled
  */
-function wdf_dump($variable,$label=null,$class=null,$force=false){
+function wdf_dump($variable,?string $label=null,?string $class=null,bool $force=false):bool{
  if(!DEBUG && !$force){return false;}
  echo "\n<!-- dump -->\n";
  echo "<pre class='debug ".$class."'>\n";
@@ -99,7 +99,7 @@ function wdf_dump($variable,$label=null,$class=null,$force=false){
  *
  * @param string $location Location URL
  */
-function wdf_redirect($location):void{
+function wdf_redirect(string $location):void{
  if(DEBUG){die("<a href=\"".$location."\">".$location."</a>");}
  exit(header("location: ".$location));
 }
@@ -109,9 +109,9 @@ function wdf_redirect($location):void{
  *
  * @param string $message Alert message
  * @param string $class Alert class (success|info|warning|danger)
- * @return boolean
+ * @return bool
  */
-function wdf_alert($message,$class="info"){
+function wdf_alert(string $message,string $class="info"):bool{
  // checks
  if(!$message){return false;}
  // build alert object
@@ -141,11 +141,12 @@ function wdf_alert($message,$class="info"){
 /**
  * Timestamp Format
  *
- * @param integer $timestamp Unix timestamp
+ * @param ?int $timestamp Unix timestamp
  * @param string $format Date Time format (see php.net/manual/en/function.date.php)
  * @return string|boolean Formatted timestamp or false
+ * @throws Exception
  */
-function wdf_timestamp_format($timestamp,$format="Y-m-d H:i:s"){
+function wdf_timestamp_format(?int $timestamp,string $format="Y-m-d H:i:s"){
  if(!is_numeric($timestamp) || $timestamp==0){return false;}
  // build date time object
  $datetime=new DateTime("@".$timestamp);
@@ -156,10 +157,10 @@ function wdf_timestamp_format($timestamp,$format="Y-m-d H:i:s"){
 /**
  * Document list in path
  *
- * @param string $parent Parent Document ID
- * @return array
+ * @param ?string $parent Parent Document ID
+ * @return Document[] array of documents
  */
-function wdf_document_list($parent=null){
+function wdf_document_list(?string $parent=null):array{
  $documents_array=array();
  // check parameters
  if(substr((string)$parent,-1)!="/"){$parent.="/";}
@@ -192,10 +193,10 @@ function wdf_document_list($parent=null){
 /**
  * Documents List
  *
- * @param string $parent Parent document ID
- * @return array
+ * @param ?string $parent Parent document ID
+ * @return Document[] array of Documents
  */
-function wdf_document_index($parent=null){
+function wdf_document_index(?string $parent=null):array{
  // definitions
  $index_array=array();
  $documents_array=array();
@@ -233,10 +234,10 @@ function wdf_document_index($parent=null){
  * Documents search in path
  *
  * @param string $query String for search
- * @param string $parent Parent Document ID
- * @return array
+ * @param ?string $parent Parent Document ID
+ * @return array of results
  */
-function wdf_document_search($query,$parent=null){
+function wdf_document_search(string $query,?string $parent=null):array{
  // tree to array
  function tree_to_array(&$array,$parent=null){
   foreach(wdf_document_list($parent) as $dir_fe){
@@ -286,10 +287,13 @@ function wdf_document_search($query,$parent=null){
 }
 
 /**
- * Document title from content or path
+ * Document title
+ *
  * @param string $document Document ID
+ * @return string Document title
  */
-function wdf_document_title($document){
+function wdf_document_title(string $document):string{
+ $title='';
  // make path
  $content_path=DIR."datasets/documents/".$document."/content.md";
  // load content line by line to find document title if exist
@@ -304,7 +308,7 @@ function wdf_document_title($document){
   }
   fclose($handle);
  }
- if(!strlen($title ?? '')){
+ if(!strlen($title)){
   // make title by path
   $hierarchy=explode("/",$document);
   $title=ucwords(str_replace("-"," ",end($hierarchy)));
@@ -312,5 +316,3 @@ function wdf_document_title($document){
  // return
  return $title;
 }
-
-?>
