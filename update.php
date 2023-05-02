@@ -6,7 +6,7 @@
  * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
  * @link    https://github.com/Zavy86/wikidocs
  */
-
+die("@todo");
  // include functions
  require_once("functions.inc.php");
  // mode definition
