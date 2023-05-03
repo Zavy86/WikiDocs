@@ -7,7 +7,7 @@
  */
 
 // include functions
-require_once("../bootstrap.inc.php");
+require_once("bootstrap.inc.php");
 // mode definition
 $mode="view";
 if(isset($_GET['auth'])){$mode="auth";}
@@ -26,4 +26,4 @@ $DOC=new Document(DOC);
 // initialize markdown parser (v1.8.0-beta-5 with markdownExtra)
 $PARSER=new ParsedownExtra();
 // include web or print template
-if(MODE=="print"){require_once(baseDIR."public/print.inc.php");}else{require_once(baseDIR."public/template.inc.php");}
+if(MODE=="print"){require_once(BASE."print.inc.php");}else{require_once(BASE."template.inc.php");}

@@ -11,18 +11,18 @@ error_reporting(E_ALL);
 ini_set('display_errors',(isset($_GET['debug']) && $_GET['debug']==1));
 
 // base directory
-define('baseDIR',str_replace(['/','\\'],DIRECTORY_SEPARATOR,__DIR__.'/'));
+define('BASE',str_replace(['/','\\'],DIRECTORY_SEPARATOR,__DIR__.'/'));
 if(version_compare(PHP_VERSION,'7.4.0')<0){die('Required at least PHP version 7.4.0, current version: '.PHP_VERSION);}
 
-// require classes and functions
-require_once(baseDIR.'src/WikiDocs.class.php');
-require_once(baseDIR.'src/Document.class.php');
-require_once(baseDIR.'src/Session.class.php');
-require_once baseDIR.'src/functions.inc.php';              // @todo rinomare baseDIR in DIR e togliere da sotto
+// require functions and classes
+require_once(BASE.'functions.inc.php');
+require_once(BASE.'classes/WikiDocs.class.php');
+require_once(BASE.'classes/Document.class.php');
+require_once(BASE.'classes/Session.class.php');
 
 // require external libraries
-require_once(baseDIR."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
-require_once(baseDIR."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
+require_once(BASE."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
+require_once(BASE."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
 
 // if behind https reverse proxy, set HTTPS property correctly
 if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']=='https'){$_SERVER['HTTPS']='on';}
@@ -60,7 +60,7 @@ $root_dir=substr($original_dir,0,strrpos($original_dir,(string)PATH));
 
 // constant definitions
 define("DEBUG",$debug);
-define("VERSION",file_get_contents(baseDIR."VERSION"));
+define("VERSION",file_get_contents(BASE."VERSION"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
 define("ROOT",$root_dir);
 define("URL",HOST.PATH);
