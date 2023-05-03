@@ -3,8 +3,7 @@
  * Session class
  *
  * @package WikiDocs
- * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
- * @link    https://github.com/Zavy86/wikidocs
+ * @repository https://github.com/Zavy86/wikidocs
  */
 
 final class Session{

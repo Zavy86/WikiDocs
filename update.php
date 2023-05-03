@@ -3,8 +3,7 @@
  * Update
  *
  * @package WikiDocs
- * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
- * @link    https://github.com/Zavy86/wikidocs
+ * @repository https://github.com/Zavy86/wikidocs
  */
 die("@todo");
  // include functions
@@ -112,4 +111,3 @@ die("@todo");
   if(!file_exists(DIR."update.zip")){wdf_dump("Update zip deleted!",null,null,true);}
   else{die("An error occured deleting update zip!");}
  }
-?>

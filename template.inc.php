@@ -3,8 +3,7 @@
  * Template
  *
  * @package WikiDocs
- * @author  Manuel Zavatta <manuel.zavatta@gmail.com>
- * @link    https://github.com/Zavy86/WikiDocs
+ * @repository https://github.com/Zavy86/WikiDocs
  *
  * @var WikiDocs $APP
  * @var Document $DOC
