@@ -45,7 +45,7 @@ function authentication(){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=2;
 		// alert and redirect
-		wdf_alert("Authentication successfull!","success");
+		wdf_alert("Authentication successfully!","success");
 		wdf_redirect(PATH.$p_document);
 	}
 	// check view code
@@ -53,7 +53,7 @@ function authentication(){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=1;
 		// alert and redirect
-		wdf_alert("Authentication successfull!","success");
+		wdf_alert("Authentication successfully!","success");
 		wdf_redirect(PATH.$p_document);
 	}
 	// authenticatiojn error
@@ -126,7 +126,7 @@ function content_save(){
 		// sum size of all images
 		foreach($DOC->images() as $image_fe){$bytes+=filesize($DOC->DIR.$image_fe);}
 		if($bytes<1000000){$size=number_format($bytes/1000,2,",",".")." KB";}else{$size=number_format($bytes/1000000,2,",",".")." MB";}
-		wdf_alert("Document succesfully saved! [".$size."]","success");
+		wdf_alert("Document successfully saved! [".$size."]","success");
 	}else{
 		wdf_alert("An error occurred while saving the document!","danger");
 	}
@@ -159,13 +159,7 @@ function content_delete(){
 	wdf_dump($DOC,'DOC');
 	// check for trash directory or make it
 	if(!is_dir(DIR."datasets/trash")){mkdir(DIR."datasets/trash",0755,true);}
-	// check for recursive path
-	/*if(strrpos($DOC->ID,'/')){
-	 wdf_dump(strrpos($DOC->ID,'/'));
-	 $recursive_path=(substr($DOC->ID,0,strrpos($DOC->ID,'/')));
-	 // check for recursive directory or make it
-	 if(!is_dir(DIR."datasets/trash/".$recursive_path)){mkdir(DIR."datasets/trash/".$recursive_path,0755,true);}
-	}*/
+	// set trash id
 	$trash_id=str_replace('/','___',$DOC->ID)."_".date("Ymd_His");
 	wdf_dump($trash_id);
 	// move document to trash
@@ -202,7 +196,6 @@ function image_upload_ajax(){
 	// check for file
 	if(!isset($_FILES['image'])||!is_uploaded_file($_FILES['image']['tmp_name'])||$_FILES["image"]["error"]>0){
 		if(!strlen($_POST['image_base64'])){
-			//if(!strlen($_GET['image_base64'])){
 			// error
 			echo json_encode(array("error"=>1,"code"=>"file_error"));
 			// return
