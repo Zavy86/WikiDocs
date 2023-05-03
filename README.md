@@ -1,4 +1,5 @@
 # Wiki|Docs
+> Latest version 0.5.0
 
 > **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED read later
 
