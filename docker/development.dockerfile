@@ -2,7 +2,7 @@
 # Wiki|Docs Development Build
 #
 # Build command:
-# docker build --no-cache -f development.dockerfile -t wikidocs-dev .
+# docker build --no-cache -f docker/development.dockerfile -t wikidocs-dev .
 #
 # Run command:
 # docker run --name wikidocs-dev -d -p 80:80 -v ${PWD}:/var/www/localhost/htdocs wikidocs-dev
