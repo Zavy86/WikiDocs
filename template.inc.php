@@ -8,6 +8,7 @@
  *
  * @var WikiDocs $APP
  * @var Document $DOC
+ * @var Session $SESSION
  * @var ParsedownExtra $PARSER
  */
 ?>
@@ -125,7 +126,7 @@
 <?php if(MODE=="view"){ ?>
       <span class="right nowrap">
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?php echo $DOC->URL."?print"; ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
-<?php if(wdf_authenticated()==2){ ?>
+<?php if(Session::getInstance()->autenticationLevel()==2){ ?>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Add new document" onClick="javascript:new_document();"><i class="material-icons">add_circle</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?php echo $DOC->URL."?edit"; ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
 <?php }else{ ?>
@@ -236,12 +237,12 @@
       <p class="left-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      </div><!-- /col -->
      <div class="col m5 hide-on-med-and-down">
-      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+      <p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
      <div class="col s12 hide-on-large-only">
      <p class="center-align"><small>This page was last edited on <?php echo wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i"); ?></small></p>
      <p class="center-align"><small><b><?php echo $APP->OWNER; ?></b><br><?php echo $APP->NOTICE; ?></p></small></p>
-     <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(wdf_authenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+     <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
      </div><!-- /col -->
     </div><!-- /row -->
 <?php

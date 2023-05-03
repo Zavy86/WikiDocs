@@ -78,7 +78,7 @@
   $p_document=strtolower($_POST['document']);
   $p_content=$_POST['content'];
   // check authentication
-  if(wdf_authenticated()!=2){
+  if(Session::getInstance()->autenticationLevel()!=2){
    // alert and redirect
    wdf_alert("You are not authenticated!","danger");
    wdf_redirect(PATH.$p_document);
@@ -146,7 +146,7 @@
   // acquire variables
   $p_document=strtolower($_GET['document']);
   // check authentication
-  if(wdf_authenticated()!=2){
+  if(Session::getInstance()->autenticationLevel()!=2){
    // alert and redirect
    wdf_alert("You are not authenticated!","danger");
    wdf_redirect(PATH.$p_document);
@@ -185,7 +185,7 @@
   // acquire variables
   $p_document=strtolower($_POST['document']);
   // check authentication
-  if(wdf_authenticated()!=2){
+  if(Session::getInstance()->autenticationLevel()!=2){
    // error
    echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
    // return
@@ -272,7 +272,7 @@
   $p_document=strtolower($_POST['document']);
   $p_content=$_POST['content'];
   // check authentication
-  if(wdf_authenticated()!=2){
+  if(Session::getInstance()->autenticationLevel()!=2){
    // error
    echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
    // return

@@ -8,27 +8,6 @@
  */
 
 /**
- * Initialize session and setup default sessions variables
- */
-function wdf_session_start():void{
-	// start php session
-	session_start();
-	// check for application session array
-	if(!isset($_SESSION['wikidocs']) || !is_array($_SESSION['wikidocs'])){$_SESSION['wikidocs']=array();}
-	// check for application session alerts array
-	if(!isset($_SESSION['wikidocs']['alerts']) || !is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
-}
-
-/**
- * Authentication level
- *
- * @return int 0 none, 1 view, 2 edit
- */
-function wdf_authenticated():int{
-	return intval($_SESSION['wikidocs']['authenticated'] ?? '');
-}
-
-/**
  * Dump a variable into a debug box (only if debug is enabled)
  *
  * @param mixed $variable Dump variable

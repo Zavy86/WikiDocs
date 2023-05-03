@@ -18,15 +18,12 @@ if(version_compare(PHP_VERSION,'7.4.0')<0){die('Required at least PHP version 7.
 // require classes and functions
 require_once(baseDIR.'src/WikiDocs.class.php');
 require_once(baseDIR.'src/Document.class.php');
+require_once(baseDIR.'src/Session.class.php');
 require_once baseDIR.'src/functions.inc.php';              // @todo rinomare baseDIR in DIR e togliere da sotto
 
 // require external libraries
 require_once(baseDIR."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
 require_once(baseDIR."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
-
-// start session
-wdf_session_start();  // @todo fare classe dedicata?
-
 
 // if behind https reverse proxy, set HTTPS property correctly
 if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']=='https'){$_SERVER['HTTPS']='on';}
@@ -38,12 +35,12 @@ if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){die("Wi
 require_once("datasets/config.inc.php");
 
 // check debug from session
-if(isset($_SESSION['wikidocs']['debug']) && ($_SESSION['wikidocs']['debug']==1)){$debug=true;}else{$debug=false;}
+if(Session::getInstance()->isDebug()){$debug=true;}else{$debug=false;}
 
-// check debug from requests
+// check debug from requests   @todo spostare in classe Session
 if(isset($_GET['debug'])){
-	if(DEBUGGABLE && $_GET['debug']==1){$debug=true;$_SESSION['wikidocs']['debug']=true;}
-	else{$debug=false;$_SESSION['wikidocs']['debug']=false;}
+	if(DEBUGGABLE && $_GET['debug']==1){$debug=true;Session::getInstance()->setDebug(true);}
+	else{$debug=false;Session::getInstance()->setDebug(false);}
 }
 
 // errors display for debug

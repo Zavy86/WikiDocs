@@ -44,7 +44,7 @@ final class WikiDocs{
 		$this->PATH=PATH;
 		$this->URL=URL;
 		$this->DIR=DIR;
-		$this->AUTHENTICATED=wdf_authenticated();
+		$this->AUTHENTICATED=Session::getInstance()->isAuthenticated();
 		$this->MODE=MODE;
 		// check for color
 		if(substr($this->COLOR,0,1)!="#"){$this->COLOR="#4CAF50";}

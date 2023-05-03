@@ -8,11 +8,11 @@
  */
 die("@todo");
  // include functions
- require_once("functions.inc.php");
+ require_once("bootstrap.inc.php");
  // mode definition
  define("MODE","engine");
  // check authentication
- if(wdf_authenticated()!=2){
+ if($SESSION->autenticationLevel()!=2){
   wdf_dump("You are not authenticated!",null,null,true);
   die();
  }

@@ -117,7 +117,7 @@ final class Document{
 					$source="# Welcome\n";
 					$source.="This is your Wiki|Docs home page.\n\n";
 					// check for edit authorization
-					if(wdf_authenticated()==2){
+					if(Session::getInstance()->autenticationLevel()==2){
 						// document can be created
 						$source.="Click the edit button to create this page!";
 					}
@@ -126,7 +126,7 @@ final class Document{
 					$source="# Error 404\n";
 					$source.="We are sorry but the page you are looking for does not exist.\n\n";
 					// check for edit authorization
-					if(wdf_authenticated()==2){
+					if(Session::getInstance()->autenticationLevel()==2){
 						// document can be created
 						$source.="Click the edit button to create this page!";
 					}

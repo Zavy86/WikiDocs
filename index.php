@@ -17,10 +17,10 @@ $mode="view";
 if(isset($_GET['auth'])){$mode="auth";}
 if(isset($_GET['print'])){$mode="print";}
 if(isset($_GET['search'])){$mode="search";}
-if(isset($_GET['edit'])){if(wdf_authenticated()==2){$mode="edit";}else{$mode="auth";}}
-if(isset($_GET['exit'])){session_destroy();wdf_session_start();}
+if(isset($_GET['edit'])){if(Session::getInstance()->autenticationLevel()==2){$mode="edit";}else{$mode="auth";}}
+if(isset($_GET['exit'])){Session::getInstance()->restart();}
 // check for authentication
-if(strlen(VIEWCODE ?? '') && wdf_authenticated()==0){$mode="auth";}
+if(strlen(VIEWCODE ?? '') && !Session::getInstance()->isAuthenticated()){$mode="auth";}
 // mode definition
 define("MODE",$mode);
 // initialize application
