@@ -11,7 +11,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
  <head>
 <?php if(strlen(GTAG ?? '')){ ?>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +137,7 @@
       <span class="right nowrap">
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?php echo $DOC->URL; ?>" data-position="bottom" data-tooltip="Cancel editing"><i class="material-icons">cancel</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="Images"><i class="material-icons">image</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>public/submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
        <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="Backup current version"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
        <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="Save"><i class="material-icons">save</i></button>
       </span>
@@ -154,7 +154,7 @@
  }
 ?>
 <?php if(MODE=="auth"){ session_destroy(); ?>
-       <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=authentication">
+       <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=authentication">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <div class="row" style="margin-top:36px">
          <div class="input-field col s9">
@@ -168,7 +168,7 @@
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
-       <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
+       <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
 <?php
@@ -183,7 +183,7 @@
        <div id="modal_uploader" class="modal">
         <div class="modal-content">
          <h4>Images</h4>
-         <form id="uploader-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
+         <form id="uploader-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=image_upload_ajax" enctype="multipart/form-data">
           <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
           <div class="row" style="margin-top:36px">
            <div class="input-field file-field col s9">

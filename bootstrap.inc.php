@@ -60,7 +60,7 @@ $root_dir=substr($original_dir,0,strrpos($original_dir,(string)PATH));
 
 // constant definitions
 define("DEBUG",$debug);
-define("VERSION",file_get_contents("VERSION"));
+define("VERSION",file_get_contents(baseDIR."VERSION"));
 define("HOST",(isset($_SERVER['HTTPS'])?"https":"http")."://".$_SERVER['HTTP_HOST']);
 define("ROOT",$root_dir);
 define("URL",HOST.PATH);

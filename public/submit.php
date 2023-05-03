@@ -7,7 +7,7 @@
  */
 
 // include functions
-require_once("bootstrap.inc.php");
+require_once("../bootstrap.inc.php");
 // mode definition
 define("MODE","engine");
 // switch action
@@ -19,10 +19,8 @@ switch($_GET['act']){
 	case "content_delete":content_delete();break;
 	// images
 	case "image_upload_ajax":image_upload_ajax();break;
-	//case "image_paste":image_paste();break;
 	// drafts
 	case "draft_save_ajax":draft_save_ajax();break;
-
 	/** @todo case "image_delete_ajax":image_delete_ajax();break; */
 	// default
 	default:
