@@ -5,8 +5,6 @@
  * @package WikiDocs
  * @repository https://github.com/Zavy86/wikidocs
  */
-
-// include functions
 require_once("bootstrap.inc.php");
 // mode definition
 define("MODE","engine");

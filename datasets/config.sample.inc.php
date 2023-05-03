@@ -18,6 +18,8 @@ const SUBTITLE="flat-file markdown wiki engine";
 const OWNER="Manuel Zavatta | WikiDocs.it";
 // Contents credits notice
 const NOTICE="Copyright 2019 &copy; All rigths reserved.";
+// Privacy banner for GDPR-compliant
+const PRIVACY=null;
 // MD5 encoded password for editing
 const EDITCODE="efb2a684e4afb7d55e6147fbe5a332ee";
 // MD5 encoded password for reading (set null for public wiki)

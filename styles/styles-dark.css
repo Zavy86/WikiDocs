@@ -10,6 +10,7 @@ body,.sidenav,.sidebar-footer,.modal{background-color:#333 !important;color:#ccc
 .divider{background-color:#222 !important;}
 .search-wrapper{border-color:#222 !important;}
 .sidenav a{color:#bbb !important;}
+input{color:#bbb;}
 
 /* footer */
 footer{color:#666666;font-size:12px;}
