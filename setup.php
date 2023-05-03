@@ -37,8 +37,7 @@ if($g_act=="check"){
  if(strlen($_POST['subtitle'])){$checks_array['subtitle']=true;}else{$checks_array['subtitle']=false;$errors=true;}
  if(strlen($_POST['owner'])){$checks_array['owner']=true;}else{$checks_array['owner']=false;$errors=true;}
  if(strlen($_POST['notice'])){$checks_array['notice']=true;}else{$checks_array['notice']=false;$errors=true;}
- if(strlen($_POST['editcode'])){$checks_array['editcode']=true;}else{$checks_array['editcode']=false;$errors=true;}
- if(strlen($_POST['color'])==7 && substr($_POST['color'],0,1)=="#"){$checks_array['color']=true;}else{$checks_array['color']=false;$errors=true;}
+ if(strlen($_POST['editcode']) && $_POST['editcode']===$_POST['editcode_repeat']){$checks_array['editcode']=true;}else{$checks_array['editcode']=false;$errors=true;}
  // set session setup
  if(!$errors){$_SESSION['wikidocs']['setup']=$_POST;}
 }
@@ -52,31 +51,25 @@ if($g_act=="conclude"){
  $config.="const SUBTITLE=\"".$_SESSION['wikidocs']['setup']['subtitle']."\";\n";
  $config.="const OWNER=\"".$_SESSION['wikidocs']['setup']['owner']."\";\n";
  $config.="const NOTICE=\"".$_SESSION['wikidocs']['setup']['notice']."\";\n";
+ $config.="const PRIVACY=null;\n";
  $config.="const EDITCODE=\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\";\n";
- $config.="const VIEWCODE=".($_SESSION['wikidocs']['setup']['viewcode']?"\"".md5($_SESSION['wikidocs']['setup']['viewcode'])."\"":"null").";\n";
- $config.="const COLOR=\"".$_SESSION['wikidocs']['setup']['color']."\";\n";
- $config.="const DARK=".(isset($_SESSION['wikidocs']['setup']['dark'])?"true":"false").";\n";
- $config.="const GTAG=".($_SESSION['wikidocs']['setup']['gtag']?"\"".$_SESSION['wikidocs']['setup']['gtag']."\"":"null").";\n";
+ $config.="const VIEWCODE=null;\n";
+ $config.="const COLOR=\"#4CAF50\";\n";
+ $config.="const DARK=false;\n";
+ $config.="const GTAG=null;\n";
  // write configuration file
  file_put_contents($root_dir."datasets/config.inc.php",$config);
  // build htacess file
  $htaccess="<IfModule mod_rewrite.c>\n";
- $htaccess.="RewriteEngine On\n";
- $htaccess.="RewriteBase ".$_SESSION['wikidocs']['setup']['path']."\n";
- $htaccess.="RewriteCond %{REQUEST_FILENAME} !-f\n";
- $htaccess.="RewriteRule ^(.*)$ index.php?doc=$1 [NC,L,QSA]\n";
+ $htaccess.="\tRewriteEngine On\n";
+ $htaccess.="\tRewriteBase ".$_SESSION['wikidocs']['setup']['path']."\n";
+ $htaccess.="\tRewriteCond %{REQUEST_FILENAME} !-f\n";
+ $htaccess.="\tRewriteRule ^(.*)$ index.php?doc=$1 [NC,L,QSA]\n";
  $htaccess.="</IfModule>\n";
  // write htaccess
  file_put_contents($root_dir.".htaccess",$htaccess);
- // check for configuration and htacess files
+ // check for configuration and apache access files
  if(file_exists($root_dir."datasets/config.inc.php") && file_exists($root_dir.".htaccess")){$configured=true;}else{$configured=false;}
- // make default homepage if not exist
- if(!file_exists($root_dir."datasets/documents/homepage/content.md")){
-  // check for directory or make it
-  if(!is_dir($root_dir."datasets/documents/homepage")){mkdir($root_dir."datasets/documents/homepage",0755,true);}
-  // copy readme as default homepage content
-  copy($root_dir."README.md",$root_dir."datasets/documents/homepage/content.md");
- }
 }
 ?>
 <!DOCTYPE html>
@@ -132,28 +125,12 @@ if($g_act=="conclude"){
      </div>
      <div class="row">
       <div class="input-field col s12 m5">
-       <input type="text" name="editcode" id="editcode" class="validate" placeholder="Choose a strong password for editing.." required>
+       <input type="password" name="editcode" id="editcode" class="validate" placeholder="Choose a strong password for editing.." required>
        <label for="editcode"><span class="green-text">Edit authentication code</span></label>
       </div>
       <div class="input-field col s12 m7">
-       <input type="text" name="viewcode" id="viewcode" class="validate" placeholder="Leave it blank if you want to make this wiki public..">
-       <label for="viewcode"><span class="green-text">View authentication code</span></label>
-      </div>
-     </div>
-     <div class="row">
-      <div class="input-field col s6 m3">
-       <input type="text" name="color" id="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="#4CAF50" required>
-       <label for="color"><span class="green-text">Color</span></label>
-      </div>
-      <div class="input-field col s6 m2">
-       <label for="check-dark">
-        <input type="checkbox" name="dark" id="check-dark">
-        <span class="black-text">Dark Mode</span>
-       </label>
-      </div>
-      <div class="input-field col s12 m7">
-       <input type="text" name="gtag" id="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)">
-       <label for="gtag"><span class="green-text">Google Analytics tag</span></label>
+       <input type="password" name="editcode_repeat" id="editcode" class="validate" placeholder="Choose a strong password for editing.." required>
+       <label for="editcode"><span class="green-text">Repeat edit authentication code</span></label>
       </div>
      </div>
      <div class="row">
@@ -179,11 +156,7 @@ if($g_act=="conclude"){
      <li class="collection-item"><div>SUBTITLE: <?php echo $_POST['subtitle'].($checks_array['subtitle']?$check_ok:$check_ko); ?></div></li>
      <li class="collection-item"><div>OWNER: <?php echo $_POST['owner'].($checks_array['owner']?$check_ok:$check_ko); ?></div></li>
      <li class="collection-item"><div>NOTICE: <?php echo $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>EDITCODE: <?php echo $_POST['editcode'].($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>VIEWCODE: <?php echo ($_POST['viewcode']?:"PUBLIC").$check_ok; ?></div></li>
-     <li class="collection-item"><div>COLOR: <?php echo $_POST['color'].($checks_array['color']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>DARK: <?php echo (strlen($_POST['dark'])?"true":"false").$check_ok; ?></div></li>
-     <li class="collection-item"><div>GTAG: <?php echo ($_POST['gtag']?:null).$check_ok; ?></div></li>
+     <li class="collection-item"><div>EDITCODE: <?php echo str_repeat('*',strlen($_POST['editcode'])).($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
     </ul>
     <div class="input-field col s12">
      <?php if($errors){ ?>
