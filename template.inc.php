@@ -54,7 +54,7 @@
 <?php
  if(in_array(MODE,array("view","edit","search"))){
   // get primary level index
-  $index_array=wdf_document_index();
+  $index_array=Document::index();
   // cycle all documents
   foreach($index_array as $index_fe){
    echo "<li class=\"index";
@@ -63,7 +63,7 @@
    // check for selected index
    if($index_fe->url==substr($DOC->ID,0,strlen($index_fe->url))){
     // get secondary level index
-    $sub_index_array=wdf_document_index($index_fe->url);
+    $sub_index_array=Document::index($index_fe->url);
     // third level default style
     $thirdLevelStyle='display:none';
     // cycle all documents
@@ -72,7 +72,7 @@
      if($sub_index_fe->url==substr($DOC->ID,0,strlen($sub_index_fe->url))){echo " active";$thirdLevelStyle="display:block";}else{$thirdLevelStyle="display:none";}
      echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$sub_index_fe->url."\">&nbsp;&nbsp;&nbsp;".$sub_index_fe->label."</a>\n";
 	    // get third level index and build sub-menus
-	    $subsub_index_array=wdf_document_index($sub_index_fe->url);
+	    $subsub_index_array=Document::index($sub_index_fe->url);
      if(!empty($subsub_index_array)){
       echo "<ul style=".$thirdLevelStyle.">";
 	     foreach($subsub_index_array as $third_index_fe){
@@ -214,7 +214,7 @@
  if(MODE=="search"){
   echo "<h1>Search results</h1>";
   // search in all documents
-  $matches_array=wdf_document_search($_GET['search']);
+  $matches_array=Document::search($_GET['search']);
   // cycle all matches documents
   foreach($matches_array as $document_fe=>$matches_fe){
    echo "\n<hr><h5><a href=\"".URL.$document_fe."\" target=\"_blank\"><b>".$document_fe."</b></a></h5>";

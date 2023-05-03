@@ -8,7 +8,7 @@
  */
 
  // include functions
- require_once("functions.inc.php");
+ require_once("bootstrap.inc.php");
  // mode definition
  define("MODE","engine");
  // switch action
