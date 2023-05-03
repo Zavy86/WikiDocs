@@ -1,0 +1,126 @@
+/**
+ * Styles
+ *
+ * @package WikiDocs
+ * @link    https://github.com/Zavy86/WikiDocs
+ */
+
+/* main color */
+.main-color{background-color:var(--theme-color) !important;}
+.main-color-text{color:var(--theme-color) !important;}
+
+/* body */
+body{font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* bidirectional language support */
+h1,h2,h3,h4,h5,h6,p,code,th,td{unicode-bidi:plaintext;text-align:start;}
+
+/* headers */
+h1,h2,h3,h4,h5,h6{color:var(--theme-color);font-weight:300;line-height:110%;}
+h1{font-size:3.5rem;margin:1.75rem 0 1.0rem 0;}
+h2{font-size:3.0rem;margin:1.5rem 0 1.0rem 0;}
+h3{font-size:2.5rem;margin:1.75rem 0 1.0rem 0;}
+h4{font-size:2.0rem;margin:1.0rem 0 1.0rem 0;}
+h5{font-size:1.5rem;margin:0.75rem 0 1.0rem 0;}
+h6{font-size:1.0rem;margin:0.5rem 0 1.0rem 0;}
+
+/* reset article ul */
+article ul,article ol{padding-left:30px !important;margin-top:10px !important;margin-bottom:15px !important;}
+article ul li,article ol li{list-style-type: initial !important;}
+article ul ul,article ol li{padding-left:30px !important;margin-top:0 !important;margin-bottom:0 !important;}
+
+/* justify article p */
+/*article p{text-align:justify;}*/
+
+/* footer */
+footer{color:#666666;font-size:12px;}
+footer a{color:#666666;}
+footer a:hover,footer a:active{color:#000000;text-decoration:none;}
+
+/* highlights */
+mark{background-color:#fcf8e3;}
+
+/* links */
+a,a:visited{color:var(--theme-color);}
+/*a:hover,a:active{color:#1b5e20;text-decoration:none;}*/
+a:hover,a:active{text-decoration:underline;}
+
+/* images */
+img{max-width:100%;display:block;margin:0 auto;}
+img.polaroid{width:100%;height:auto;padding:9px;background-color:#ffffff;border:1px solid #dddddd;border-radius:9px;display:inline-block;}
+
+/* codes */
+code{background:#f0f0f0;padding:0 5px;}
+
+/* input colors */
+input:not([type]):focus:not([readonly]),
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="url"]:not(.browser-default):focus:not([readonly]),
+input[type="time"]:not(.browser-default):focus:not([readonly]),
+input[type="date"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime-local"]:not(.browser-default):focus:not([readonly]),
+input[type="tel"]:not(.browser-default):focus:not([readonly]),
+input[type="number"]:not(.browser-default):focus:not([readonly]),
+input[type="search"]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]){border-bottom:1px solid var(--theme-color);box-shadow:0 1px 0 0 var(--theme-color);-webkit-box-shadow:0 1px 0 0 var(--theme-color);}
+
+/* sidebar */
+header,main,footer{padding-left:300px;}
+@media only screen and (min-width:601px){main>.container{width:100%}}
+@media only screen and (max-width:992px){header,main,footer{padding-left:0;}}
+@media only screen and (max-width:992px){.sidebar-footer{display:none;}} /** @todo verificare come fare in modalita mobile */
+ul.sidenav.sidenav-fixed{overflow:hidden;box-shadow:none;-webkit-box-shadow:none;border-right:1px solid #dddddd;}
+ul.sidenav.sidenav-fixed:hover{overflow-y:auto;}
+ul.sidenav.sidenav-fixed li{line-height:44px}
+/*ul.sidenav.sidenav-fixed li:hover{background-color:#e8f5e9;}*/
+ul.sidenav.sidenav-fixed li:hover{background-color:#efefef !important;}
+/*ul.sidenav.sidenav-fixed li.active{background-color:#c8e6c9;}*/
+ul.sidenav.sidenav-fixed li.active{background-color:#e0e0e0 !important;}
+ul.sidenav.sidenav-fixed li a{text-decoration:none;line-height:44px;height:44px;padding:0 30px;}
+ul.sidenav.sidenav-fixed>li:last-child{margin-bottom:160px}
+ul.sidenav.sidenav-fixed li.logo{text-align:center;margin-top:32px;margin-bottom:186px}
+ul.sidenav.sidenav-fixed li.logo:hover,ul.sidenav.sidenav-fixed li.logo #logo-container:hover{background-color:transparent !important}
+ul.sidenav.sidenav-fixed li.logo span{font-weight:normal;}
+ul.sidenav.sidenav-fixed li.sub_index a{font-weight:normal;}
+/*ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e8f5e9;}*/
+ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important;}
+#logo-container{height:57px;margin-bottom:32px}
+
+/* search */
+#nav-mobile li.search:hover{background-color:#ffffff;}
+#nav-mobile li.search{position:absolute;left:0;right:0;top:210px;margin-top:1px;padding:1px 0 0 0;z-index:2;}
+#nav-mobile li.search .search-wrapper{color:#777777;margin-top:-1px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;-webkit-transition:margin .25s ease;transition:margin .25s ease;}
+#nav-mobile li.search .search-wrapper i.material-icons{position:absolute;top:21px;right:10px;cursor:pointer;}
+#nav-mobile li.search .search-wrapper input#search:focus{outline:none;border-top:1px solid var(--theme-color);border-bottom:1px solid var(--theme-color);box-shadow:none;-webkit-box-shadow:none;}
+#nav-mobile li.search .search-wrapper input#search{color:#777777;display:block;font-size:16px;font-weight:300;width:100%;height:62px;margin:0;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 45px 0 30px;border:0;}
+
+/* sidebar-footer */
+.sidebar-footer{position:fixed;bottom:0;left:0;padding:15px 30px 20px;width:299px;border-top:solid 1px #dddddd;background-color:#ffffff;font-size:14px;line-height:1.5;z-index:2;}
+.sidebar-footer .default-title,.sidebar-footer .default-description{display:inline;font-size:12px;}
+.sidebar-footer .default-title{position:relative;margin-right:8px;font-weight:600;}
+.sidebar-footer .default-title:before{position:absolute;top:calc(-50% - 17px);padding:4px 6px;border-radius:3px;background-color:var(--theme-color);color:#ffffff;content:"Wiki|Docs";letter-spacing:.4px;font-weight:600;font-size:10px;line-height:1;}
+
+/* simplemde */
+#editor-form{z-index:300;margin-top:30px;}
+.CodeMirror,.CodeMirror-scroll{max-height:50vh;}
+.CodeMirror-fullscreen,.CodeMirror-fullscreen .CodeMirror-scroll{max-height:none;}
+.CodeMirror{z-index:301;}
+.editor-preview{z-index:307;}
+.editor-preview-side{z-index:307;}
+.CodeMirror-fullscreen{z-index:309;}
+.editor-toolbar.fullscreen{z-index:309;}
+.sidenav{z-index:2;}
+.sidenav-overlay{z-index:297;}
+@media only screen and (max-width:992px){
+  .sidenav{z-index:999;}
+  .sidenav-overlay{z-index:997;}
+}
+
+/* disable text wrap */
+.nowrap{white-space:nowrap;}
+
+/* debug */
+pre.debug{margin:9px;font-size:12px;}
