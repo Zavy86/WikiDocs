@@ -79,7 +79,7 @@ if($g_act=="conclude"){
  <link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="styles/styles.css" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="styles/styles-light.css" media="screen,projection"/>
- <link  type="image/png" rel="icon" href="favicon.png" sizes="any"/>
+ <link  type="image/ico" rel="icon" href="favicon.ico" sizes="any"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
  <meta name="theme-color" content="#4CAF50">
  <style>:root{--theme-color:#4CAF50;}</style>

@@ -29,7 +29,7 @@
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>styles/styles.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>styles/styles-<?php echo ($APP->DARK?"dark":"light"); ?>.css" media="screen,projection"/>
-  <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>favicon.png" sizes="any"/>
+  <link type="image/ico" rel="icon" href="<?php echo $APP->PATH; ?>favicon.ico" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="<?php echo $APP->COLOR; ?>">
   <style>:root{--theme-color:<?php echo $APP->COLOR; ?>;}</style>

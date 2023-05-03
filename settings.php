@@ -41,7 +41,7 @@ if($g_act=="store"){
  <link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="styles/styles.css" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="styles/styles-<?php echo (DARK?"dark":"light"); ?>.css" media="screen,projection"/>
- <link  type="image/png" rel="icon" href="favicon.png" sizes="any"/>
+ <link  type="image/ico" rel="icon" href="favicon.ico" sizes="any"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
  <meta name="theme-color" content="<?php echo COLOR; ?>">
  <style>:root{--theme-color:<?php echo COLOR; ?>;}</style>
