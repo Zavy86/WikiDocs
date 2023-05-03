@@ -24,12 +24,12 @@
   </script>
 <?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/css/styles.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/css/styles-<?php echo ($APP->DARK?"dark":"light"); ?>.css" media="screen,projection"/>
-  <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>public/favicon.png" sizes="any"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles-<?php echo ($APP->DARK?"dark":"light"); ?>.css" media="screen,projection"/>
+  <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="<?php echo $APP->COLOR; ?>">
   <style>:root{--theme-color:<?php echo $APP->COLOR; ?>;}</style>
@@ -137,7 +137,7 @@
       <span class="right nowrap">
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?php echo $DOC->URL; ?>" data-position="bottom" data-tooltip="Cancel editing"><i class="material-icons">cancel</i></a>
        <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="Images"><i class="material-icons">image</i></a>
-       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>public/submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
+       <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?php echo $APP->PATH; ?>submit.php?act=content_delete&document=<?php echo $DOC->ID; ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
        <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="Backup current version"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
        <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="Save"><i class="material-icons">save</i></button>
       </span>
@@ -154,7 +154,7 @@
  }
 ?>
 <?php if(MODE=="auth"){ session_destroy(); ?>
-       <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=authentication">
+       <form id="auth-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=authentication">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
         <div class="row" style="margin-top:36px">
          <div class="input-field col s9">
@@ -168,7 +168,7 @@
        </form>
 <?php } ?>
 <?php if(MODE=="edit"){ ?>
-       <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=content_save">
+       <form id="editor-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=content_save">
         <input type="hidden" name="revision" value="1">
         <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
 <?php
@@ -183,7 +183,7 @@
        <div id="modal_uploader" class="modal">
         <div class="modal-content">
          <h4>Images</h4>
-         <form id="uploader-form" method="post" action="<?php echo $APP->PATH; ?>public/submit.php?act=image_upload_ajax" enctype="multipart/form-data">
+         <form id="uploader-form" method="post" action="<?php echo $APP->PATH; ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
           <input type="hidden" name="document" value="<?php echo $DOC->ID; ?>">
           <div class="row" style="margin-top:36px">
            <div class="input-field file-field col s9">
@@ -258,15 +258,15 @@
   </main>
   <script type="text/javascript">var APP=<?php echo json_encode($APP->export()); ?>;</script>
   <script type="text/javascript">var DOC=<?php echo json_encode($DOC->export()); ?>;</script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/jquery-3.3.1/js/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/materialize-1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/initializations.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/helpers/easymde-2.16.1/js/easymde.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/editor.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>public/js/images.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/editor.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/images.js"></script>
 <?php } ?>
 <?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")){ ?>
   <script type="text/javascript">if(confirm("A draft has been found, do you want to load it??")){window.location.replace(window.location+"&draft=1");}</script>

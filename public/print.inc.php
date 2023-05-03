@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>public/helpers/priss-0.0.1/css/print.css" media="print,screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/priss-0.0.1/css/print.css" media="print,screen,projection"/>
   <title><?php echo ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE; ?></title>
  </head>
  <body>
