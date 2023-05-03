@@ -81,7 +81,7 @@ services:
 > **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED  
 > Move trash directory to datasets/trash  
 > Move documents directory to datasets/documents  
-> Move config.inc.php to datasets/config.inc.php  
+> Move config.inc.php to datasets/config.inc.php
 
 ## Developers
 

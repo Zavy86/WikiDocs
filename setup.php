@@ -18,7 +18,7 @@ $checks_array=array();
 // acquire variables
 $g_act=($_GET['act'] ?? '');
 if(!$g_act){$g_act="setup";}
-// include coonfiguration sample
+// include configuration sample
 include("datasets/config.sample.inc.php");
 // defines constants
 define('PATH_URI',explode("setup.php",$_SERVER['REQUEST_URI'])[0]);
