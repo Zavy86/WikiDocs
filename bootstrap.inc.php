@@ -67,3 +67,6 @@ define("ROOT",$root_dir);
 define("URL",HOST.PATH);
 define("DIR",ROOT.PATH);
 define("DOC",$g_doc);
+
+// check for privacy agreement
+if(isset($_GET['privacy'])){Session::getInstance()->privacyAgreement($_GET['privacy']);}

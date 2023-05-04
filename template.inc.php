@@ -242,6 +242,21 @@ if($DOC->ID=="homepage"){
         <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
       </div><!-- /col -->
     </div><!-- /row -->
+    <p><?= wdf_dump($_COOKIE,null,null,true) ?></p>
+    <?php if(!Session::getInstance()->privacyAgreeded()): ?>
+      <!-- Modal Structure -->
+      <div id="modal-privacy" class="modal">
+        <div class="modal-content">
+          <h4>Privacy Banner</h4>
+          <p><?= PRIVACY ?></p>
+        </div>
+        <div class="modal-footer">
+          <a href="https://www.google.com" class="modal-close btn btn-small waves-effect waves-light grey white-text">DISAGREE</a>
+          <a href="?privacy=1" class="modal-close btn btn-small waves-effect waves-light main-color white-text">AGREE</a>
+        </div>
+      </div>
+      <script>document.addEventListener('DOMContentLoaded',function(){M.Modal.init(document.getElementById('modal-privacy'),{'dismissible':false,'opacity':0.72}).open();});</script>
+    <?php endif; ?>
     <?php if($APP->DEBUG): ?>
       <div class=\"divider\"></div>
       <!-- debug -->
