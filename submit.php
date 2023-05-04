@@ -8,7 +8,7 @@
 require_once("bootstrap.inc.php");
 // mode definition
 define("MODE","engine");
-define("ACT",htmlspecialchars($_GET['act'] == ''));
+define("ACT",htmlspecialchars($_GET['act'] ?? ''));
 // switch action
 switch(ACT){
 	// authentication
