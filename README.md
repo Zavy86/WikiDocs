@@ -33,8 +33,7 @@ Authentication code is: `demo`
 ## Setup
 
 ### Manual
-- [Download](https://github.com/Zavy86/wikidocs/releases) the lastest release
-- Clone the repo `git clone https://github.com/Zavy86/wikidocs.git`
+[Download](https://github.com/Zavy86/wikidocs/releases) the lastest release or clone the repository with `git clone https://github.com/Zavy86/wikidocs.git`
 
 ### Docker
 There is a [Docker image](https://hub.docker.com/repository/docker/zavy86/wikidocs) that sets up Wiki|Docs with Apache2 and PHP automatically.
