@@ -31,6 +31,7 @@ RUN sed -ri \
     -e 's!^(\s*AllowOverride) None.*$!\1 All!g' \
     "/etc/apache2/httpd.conf"
 RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
+RUN rm /var/www/localhost/htdocs/index.html
 
 # start script to override apache user's uid/gid
 RUN echo -e \
