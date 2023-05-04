@@ -27,6 +27,7 @@
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>styles/styles.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>styles/styles-<?php echo ($APP->DARK?"dark":"light"); ?>.css" media="screen,projection"/>
   <link type="image/ico" rel="icon" href="<?php echo $APP->PATH; ?>favicon.ico" sizes="any"/>
@@ -262,7 +263,10 @@
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/katex-0.16.7/js/katex.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/katex-0.16.7/js/auto-render.js"></script>
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+  <script type="text/javascript">renderMathInElement(document.body);</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>scripts/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
