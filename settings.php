@@ -15,7 +15,7 @@ if($g_act=="store"){
  $VIEWCODE=($_POST['viewcode']===VIEWCODE?VIEWCODE:(strlen($_POST['viewcode'])?md5($_POST['viewcode']):null));
  // build configuration file
  $config="<?php\n";
- $config.="const DEBUGGABLE=false;\n";
+ $config.="const DEBUGGABLE=".(DEBUGGABLE?"true":"false").";\n";
  $config.="const PATH=\"".PATH."\";\n";
  $config.="const TITLE=\"".$_POST['title']."\";\n";
  $config.="const SUBTITLE=\"".$_POST['subtitle']."\";\n";
