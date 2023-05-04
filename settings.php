@@ -40,11 +40,11 @@ if($g_act=="store"){
  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
  <link type="text/css" rel="stylesheet" href="styles/styles.css" media="screen,projection"/>
- <link type="text/css" rel="stylesheet" href="styles/styles-<?php echo (DARK?"dark":"light"); ?>.css" media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" href="styles/styles-<?= (DARK?"dark":"light") ?>.css" media="screen,projection"/>
  <link  type="image/ico" rel="icon" href="favicon.ico" sizes="any"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <meta name="theme-color" content="<?php echo COLOR; ?>">
- <style>:root{--theme-color:<?php echo COLOR; ?>;}</style>
+ <meta name="theme-color" content="<?= COLOR ?>">
+ <style>:root{--theme-color:<?= COLOR ?>;}</style>
  <title>Settings - Wiki|Docs</title>
 </head>
 <body>
@@ -60,43 +60,43 @@ if($g_act=="store"){
    <form action="settings.php?act=store" method="post">
     <div class="row">
      <div class="input-field col s12 m5">
-      <input type="text" name="title" id="title" class="validate" value="<?php echo TITLE; ?>" required>
+      <input type="text" name="title" id="title" class="validate" value="<?= TITLE ?>" required>
       <label for="title"><span class="green-text">Title</span></label>
      </div>
      <div class="input-field col s12 m7">
-      <input type="text" name="subtitle" id="subtitle" class="validate" value="<?php echo SUBTITLE; ?>" required>
+      <input type="text" name="subtitle" id="subtitle" class="validate" value="<?= SUBTITLE ?>" required>
       <label for="subtitle"><span class="green-text">Subtitle</span></label>
      </div>
     </div>
     <div class="row">
      <div class="input-field col s12 m5">
-      <input type="text" name="owner" id="owner" class="validate" placeholder="Contents owner" value="<?php echo OWNER; ?>" required>
+      <input type="text" name="owner" id="owner" class="validate" placeholder="Contents owner" value="<?= OWNER ?>" required>
       <label for="owner"><span class="green-text">Owner</span></label>
      </div>
      <div class="input-field col s12 m7">
-      <input type="text" name="notice" id="notice" class="validate" placeholder="Contents copyright notice" value="<?php echo NOTICE; ?>" required>
+      <input type="text" name="notice" id="notice" class="validate" placeholder="Contents copyright notice" value="<?= NOTICE ?>" required>
       <label for="notice"><span class="green-text">Notice</span></label>
      </div>
     </div>
     <div class="row">
      <div class="input-field col s12 m12">
-      <input type="text" name="privacy" id="privacy" class="validate" placeholder="Privacy banner for GDPR compliant" value="<?php echo PRIVACY; ?>">
+      <input type="text" name="privacy" id="privacy" class="validate" placeholder="Privacy banner for GDPR compliant" value="<?= PRIVACY ?>">
       <label for="privacy"><span class="green-text">Privacy banner</span></label>
      </div>
     </div>
     <div class="row">
      <div class="input-field col s12 m5">
-      <input type="password" name="editcode" id="editcode" class="validate" placeholder="Choose a strong password for editing.." value="<?php echo EDITCODE; ?>" required>
+      <input type="password" name="editcode" id="editcode" class="validate" placeholder="Choose a strong password for editing.." value="<?= EDITCODE ?>" required>
       <label for="editcode"><span class="green-text">Edit authentication code</span></label>
      </div>
      <div class="input-field col s12 m7">
-      <input type="password" name="viewcode" id="viewcode" class="validate" placeholder="Leave it blank if you want to make this wiki public.." value="<?php echo VIEWCODE; ?>">
+      <input type="password" name="viewcode" id="viewcode" class="validate" placeholder="Leave it blank if you want to make this wiki public.." value="<?= VIEWCODE ?>">
       <label for="viewcode"><span class="green-text">View authentication code</span></label>
      </div>
     </div>
     <div class="row">
      <div class="input-field col s6 m3">
-      <input type="text" name="color" id="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="<?php echo COLOR; ?>" required>
+      <input type="text" name="color" id="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="<?= COLOR ?>" required>
       <label for="color"><span class="green-text">Color</span></label>
      </div>
      <div class="input-field col s6 m2">
@@ -106,13 +106,13 @@ if($g_act=="store"){
       </label>
      </div>
      <div class="input-field col s12 m7">
-      <input type="text" name="gtag" id="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)" value="<?php echo GTAG; ?>">
+      <input type="text" name="gtag" id="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)" value="<?= GTAG ?>">
       <label for="gtag"><span class="green-text">Google Analytics tag</span></label>
      </div>
     </div>
     <div class="row">
      <div class="input-field col s12 m12">
-      <button type="button" class="btn btn-block waves-effect waves-light grey left" onclick="location.href='<?php echo PATH ?>';">Cancel<i class="material-icons left">keyboard_arrow_left</i></button>
+      <button type="button" class="btn btn-block waves-effect waves-light grey left" onclick="location.href='<?= PATH ?>';">Cancel<i class="material-icons left">keyboard_arrow_left</i></button>
       <button type="submit" class="btn btn-block waves-effect waves-light green right">Save<i class="material-icons right">check</i></button>
      </div>
     </div>
@@ -120,7 +120,7 @@ if($g_act=="store"){
   </div><!-- /col -->
  </div><!-- /row-->
 </div><!-- /container-->
-<script type="text/javascript" src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
-<script type="text/javascript" src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
+<script src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
+<script src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

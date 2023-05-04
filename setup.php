@@ -99,17 +99,17 @@ if($g_act=="conclude"){
     <form action="setup.php?act=check" method="post">
      <div class="row">
       <div class="input-field col s12">
-       <input type="text" name="path" id="path" class="validate" value="<?php echo PATH_URI; ?>" required>
+       <input type="text" name="path" id="path" class="validate" value="<?= PATH_URI ?>" required>
        <label for="path"><span class="green-text">Path</span></label>
       </div>
      </div>
      <div class="row">
       <div class="input-field col s12 m5">
-       <input type="text" name="title" id="title" class="validate" value="<?php echo TITLE; ?>" required>
+       <input type="text" name="title" id="title" class="validate" value="<?= TITLE ?>" required>
        <label for="title"><span class="green-text">Title</span></label>
       </div>
       <div class="input-field col s12 m7">
-       <input type="text" name="subtitle" id="subtitle" class="validate" value="<?php echo SUBTITLE; ?>" required>
+       <input type="text" name="subtitle" id="subtitle" class="validate" value="<?= SUBTITLE ?>" required>
        <label for="subtitle"><span class="green-text">Subtitle</span></label>
       </div>
      </div>
@@ -151,16 +151,16 @@ if($g_act=="conclude"){
     <h2>Checking configuration</h2>
     <p>Your configuration has been verified..</p>
     <ul class="collection">
-     <li class="collection-item"><div>PATH: <?php echo $_POST['path'].($checks_array['path']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>TITLE: <?php echo $_POST['title'].($checks_array['title']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>SUBTITLE: <?php echo $_POST['subtitle'].($checks_array['subtitle']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>OWNER: <?php echo $_POST['owner'].($checks_array['owner']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>NOTICE: <?php echo $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko); ?></div></li>
-     <li class="collection-item"><div>EDITCODE: <?php echo str_repeat('*',strlen($_POST['editcode'])).($checks_array['editcode']?$check_ok:$check_ko); ?></div></li>
+     <li class="collection-item"><div>PATH: <?= $_POST['path'].($checks_array['path']?$check_ok:$check_ko) ?></div></li>
+     <li class="collection-item"><div>TITLE: <?= $_POST['title'].($checks_array['title']?$check_ok:$check_ko) ?></div></li>
+     <li class="collection-item"><div>SUBTITLE: <?= $_POST['subtitle'].($checks_array['subtitle']?$check_ok:$check_ko) ?></div></li>
+     <li class="collection-item"><div>OWNER: <?= $_POST['owner'].($checks_array['owner']?$check_ok:$check_ko) ?></div></li>
+     <li class="collection-item"><div>NOTICE: <?= $_POST['notice'].($checks_array['notice']?$check_ok:$check_ko) ?></div></li>
+     <li class="collection-item"><div>EDITCODE: <?= str_repeat('*',strlen($_POST['editcode'])).($checks_array['editcode']?$check_ok:$check_ko) ?></div></li>
     </ul>
     <div class="input-field col s12">
      <?php if($errors){ ?>
-      <button onClick="javascript:window.history.back();" class="btn btn-block waves-effect waves-light green lighten-2">Edit configuration<i class="material-icons left">keyboard_arrow_left</i></button>
+      <button onClick="window.history.back();" class="btn btn-block waves-effect waves-light green lighten-2">Edit configuration<i class="material-icons left">keyboard_arrow_left</i></button>
      <?php }else{ ?>
       <a href="setup.php?act=conclude" class="waves-effect waves-light btn green white-text right">Continue<i class="material-icons right">keyboard_arrow_right</i></a>
      <?php } ?>
@@ -174,7 +174,7 @@ if($g_act=="conclude"){
    <h2>Saving configuration</h2>
    <?php if($configured){ ?>
     <p>Your configuration has been saved..</p>
-    <p><a href="<?php echo $_SESSION['wikidocs']['setup']['path']; ?>">Continue</a> to your wiki!</p>
+    <p><a href="<?= $_SESSION['wikidocs']['setup']['path'] ?>">Continue</a> to your wiki!</p>
     <i class="material-icons small green-text">check_circle</i>
    <?php }else{ ?>
     <p class="red-text">An error occurred while saving the configuration!</p>
@@ -183,7 +183,7 @@ if($g_act=="conclude"){
    <?php } ?>
   </div><!-- /row-->
  </div><!-- /container-->
- <script type="text/javascript" src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
- <script type="text/javascript" src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
+ <script src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
+ <script src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

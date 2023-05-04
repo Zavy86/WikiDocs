@@ -17,6 +17,8 @@ if(isset($_GET['exit'])){Session::getInstance()->restart();}
 if(strlen(VIEWCODE ?? '') && !Session::getInstance()->isAuthenticated()){$mode='auth';}
 // mode definition
 define('MODE',$mode);
+// search definition
+define('SEARCH',(isset($_GET['search'])?htmlspecialchars($_GET['search']):null));
 // initialize application
 $APP=new WikiDocs();
 // initialize document

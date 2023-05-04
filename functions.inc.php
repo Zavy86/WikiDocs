@@ -14,15 +14,14 @@
  * @param ?string $class Dump class
  * @param bool $force Force dump also if debug is disabled
  */
-function wdf_dump($variable,?string $label=null,?string $class=null,bool $force=false):bool{
-	if(!DEBUG && !$force){return false;}
+function wdf_dump($variable,?string $label=null,?string $class=null,bool $force=false):void{
+	if(!DEBUG && !$force){return;}
 	echo "\n<!-- dump -->\n";
 	echo "<pre class='debug ".$class."'>\n";
 	if($label<>null){echo "<b>".$label."</b>\n";}
 	if(is_string($variable)){$variable=str_replace(array("<",">"),array("&lt;","&gt;"),$variable);}
 	print_r($variable);
 	echo "</pre>\n<!-- /dump -->\n";
-	return true;
 }
 
 /**
