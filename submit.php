@@ -8,8 +8,9 @@
 require_once("bootstrap.inc.php");
 // mode definition
 define("MODE","engine");
+define("ACT",htmlspecialchars($_GET['act'] == ''));
 // switch action
-switch($_GET['act']){
+switch(ACT){
 	// authentication
 	case "authentication":authentication();break;
 	// contents
@@ -23,7 +24,7 @@ switch($_GET['act']){
 	// default
 	default:
 		// alert and redirect
-		wdf_alert("The action ".$_GET['act']." does not exist!","danger");
+		wdf_alert("The action ".ACT." does not exist!","danger");
 		wdf_redirect(PATH);
 }
 
