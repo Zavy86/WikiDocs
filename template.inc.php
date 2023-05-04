@@ -108,7 +108,7 @@
       <span>
         <?php
         if($DOC->ID=="homepage"){
-          echo "Wiki|Docs";
+          echo $APP->TITLE;
         }else{
           foreach($DOC->hierarchy() as $element){
             // check for current document
