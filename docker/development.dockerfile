@@ -27,8 +27,6 @@ RUN apk add --no-cache $DEPENDENCIES
 
 # configure httpd
 RUN sed -ri \
-#    -e 's!^DocumentRoot "/var/www/localhost/htdocs"$!DocumentRoot "/var/www/localhost/htdocs/public"!g' \
-#    -e 's!^<Directory "/var/www/localhost/htdocs">$!<Directory "/var/www/localhost/htdocs/public">!g' \
     -e 's!^#(LoadModule rewrite_module .*)$!\1!g' \
     -e 's!^(\s*AllowOverride) None.*$!\1 All!g' \
     "/etc/apache2/httpd.conf"

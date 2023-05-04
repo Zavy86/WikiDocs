@@ -15,18 +15,18 @@ if($g_act=="store"){
  $VIEWCODE=($_POST['viewcode']===VIEWCODE?VIEWCODE:(strlen($_POST['viewcode'])?md5($_POST['viewcode']):null));
  // build configuration file
  $config="<?php\n";
- $config.="const DEBUGGABLE=".(DEBUGGABLE?"true":"false").";\n";
- $config.="const PATH=\"".PATH."\";\n";
- $config.="const TITLE=\"".$_POST['title']."\";\n";
- $config.="const SUBTITLE=\"".$_POST['subtitle']."\";\n";
- $config.="const OWNER=\"".$_POST['owner']."\";\n";
- $config.="const NOTICE=".($_POST['notice']?"\"".$_POST['notice']."\"":"null").";\n";
- $config.="const PRIVACY=".($_POST['privacy']?"\"".$_POST['privacy']."\"":"null").";\n";
- $config.="const EDITCODE=\"".$EDITCODE."\";\n";
- $config.="const VIEWCODE=".($VIEWCODE?"\"".$VIEWCODE."\"":"null").";\n";
- $config.="const COLOR=\"".$_POST['color']."\";\n";
- $config.="const DARK=".(isset($_POST['dark'])?"true":"false").";\n";
- $config.="const GTAG=".($_POST['gtag']?"\"".$_POST['gtag']."\"":"null").";\n";
+ $config.="define('DEBUGGABLE',".(DEBUGGABLE?"true":"false").");\n";
+ $config.="define('PATH',\"".PATH."\");\n";
+ $config.="define('TITLE',\"".$_POST['title']."\");\n";
+ $config.="define('SUBTITLE',\"".$_POST['subtitle']."\");\n";
+ $config.="define('OWNER',\"".$_POST['owner']."\");\n";
+ $config.="define('NOTICE',".($_POST['notice']?"\"".$_POST['notice']."\"":"null").");\n";
+ $config.="define('PRIVACY',".($_POST['privacy']?"\"".$_POST['privacy']."\"":"null").");\n";
+ $config.="define('EDITCODE',\"".$EDITCODE."\");\n";
+ $config.="define('VIEWCODE',".($VIEWCODE?"\"".$VIEWCODE."\"":"null").");\n";
+ $config.="define('COLOR',\"".$_POST['color']."\");\n";
+ $config.="define('DARK',".(isset($_POST['dark'])?"true":"false").");\n";
+ $config.="define('GTAG',".($_POST['gtag']?"\"".$_POST['gtag']."\"":"null").");\n";
  // write configuration file
  file_put_contents(BASE."datasets/config.inc.php",$config);
  // alert and redirect

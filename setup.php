@@ -19,7 +19,7 @@ $checks_array=array();
 $g_act=($_GET['act'] ?? '');
 if(!$g_act){$g_act="setup";}
 // include configuration sample
-include("datasets/config.sample.inc.php");
+include("datasets/sample.config.inc.php");
 // defines constants
 define('PATH_URI',explode("setup.php",$_SERVER['REQUEST_URI'])[0]);
 // die if configuration already exist
@@ -45,18 +45,18 @@ if($g_act=="check"){
 if($g_act=="conclude"){
  // build configuration file
  $config="<?php\n";
- $config.="const DEBUGGABLE=false;\n";
- $config.="const PATH=\"".$_SESSION['wikidocs']['setup']['path']."\";\n";
- $config.="const TITLE=\"".$_SESSION['wikidocs']['setup']['title']."\";\n";
- $config.="const SUBTITLE=\"".$_SESSION['wikidocs']['setup']['subtitle']."\";\n";
- $config.="const OWNER=\"".$_SESSION['wikidocs']['setup']['owner']."\";\n";
- $config.="const NOTICE=\"".$_SESSION['wikidocs']['setup']['notice']."\";\n";
- $config.="const PRIVACY=null;\n";
- $config.="const EDITCODE=\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\";\n";
- $config.="const VIEWCODE=null;\n";
- $config.="const COLOR=\"#4CAF50\";\n";
- $config.="const DARK=false;\n";
- $config.="const GTAG=null;\n";
+ $config.="define('DEBUGGABLE',false);\n";
+ $config.="define('PATH',\"".$_SESSION['wikidocs']['setup']['path']."\");\n";
+ $config.="define('TITLE',\"".$_SESSION['wikidocs']['setup']['title']."\");\n";
+ $config.="define('SUBTITLE',\"".$_SESSION['wikidocs']['setup']['subtitle']."\");\n";
+ $config.="define('OWNER',\"".$_SESSION['wikidocs']['setup']['owner']."\");\n";
+ $config.="define('NOTICE',\"".$_SESSION['wikidocs']['setup']['notice']."\");\n";
+ $config.="define('PRIVACY',null);\n";
+ $config.="define('EDITCODE',\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
+ $config.="define('VIEWCODE',null);\n";
+ $config.="define('COLOR',\"#4CAF50\");\n";
+ $config.="define('DARK',false);\n";
+ $config.="define('GTAG',null);\n";
  // write configuration file
  file_put_contents($root_dir."datasets/config.inc.php",$config);
  // build htacess file
