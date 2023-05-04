@@ -13,9 +13,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/priss-0.0.1/css/print.css" media="print,screen,projection"/>
- <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
- <title><?= ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE ?></title>
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/priss-0.0.1/css/print.css" media="print,screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
+	<title><?= ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE ?></title>
 </head>
 <body>
 <?= $PARSER->text($DOC->loadContent())."\n" ?>
