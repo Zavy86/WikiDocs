@@ -13,16 +13,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php if(strlen(GTAG ?? '')){ ?>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= GTAG ?>"></script>
-    <script>
-      window.dataLayer=window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js',new Date());
-      gtag('config','<?= GTAG ?>');
-    </script>
-  <?php } ?>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
@@ -35,6 +25,16 @@
   <meta name="theme-color" content="<?= $APP->COLOR ?>">
   <style>:root{--theme-color:<?= $APP->COLOR ?>;}</style>
   <title><?= ($DOC->ID!="homepage"?$DOC->TITLE." - ":null).$APP->TITLE ?></title>
+  <?php if(strlen(GTAG ?? '') && Session::getInstance()->privacyAgreeded()): ?>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= GTAG ?>"></script>
+    <script>
+      window.dataLayer=window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js',new Date());
+      gtag('config','<?= GTAG ?>');
+    </script>
+  <?php endif; ?>
 </head>
 <body>
 <header>
@@ -106,20 +106,20 @@
       </div><!-- /col -->
       <div class="col s8 m7 l8 offset-l1 center-on-small-only" style="padding-top:3px">
       <span>
-<?php
-if($DOC->ID=="homepage"){
-  echo "Wiki|Docs";
-}else{
-  foreach($DOC->hierarchy() as $element){
-    // check for current document
-    if($DOC->ID==$element->path){
-      echo "<span class=\"nowrap\">".$element->label."</span>";
-    }else{
-      echo "<a href=\"".$APP->PATH.$element->path."\" class=\"main-color-text nowrap\">".$element->label."</a> / ";
-    }
-  }
-}
-?>
+        <?php
+        if($DOC->ID=="homepage"){
+          echo "Wiki|Docs";
+        }else{
+          foreach($DOC->hierarchy() as $element){
+            // check for current document
+            if($DOC->ID==$element->path){
+              echo "<span class=\"nowrap\">".$element->label."</span>";
+            }else{
+              echo "<a href=\"".$APP->PATH.$element->path."\" class=\"main-color-text nowrap\">".$element->label."</a> / ";
+            }
+          }
+        }
+        ?>
       </span>
       </div><!-- /col -->
       <div class="col s2 m2 l2">
@@ -242,12 +242,11 @@ if($DOC->ID=="homepage"){
         <p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
       </div><!-- /col -->
     </div><!-- /row -->
-    <p><?= wdf_dump($_COOKIE,null,null,true) ?></p>
     <?php if(!Session::getInstance()->privacyAgreeded()): ?>
       <!-- Modal Structure -->
       <div id="modal-privacy" class="modal">
         <div class="modal-content">
-          <h4>Privacy Banner</h4>
+          <h4>Cookie Agreement</h4>
           <p><?= PRIVACY ?></p>
         </div>
         <div class="modal-footer">
