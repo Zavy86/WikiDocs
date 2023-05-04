@@ -57,4 +57,13 @@ final class Session{
 		return boolval($_SESSION['wikidocs']['debug']);
 	}
 
+	public function privacyAgreement(bool $value){
+		setcookie('privacy',$value,time()+(60*60*24*30),'/');
+		header('Location:'.PATH.DOC);
+	}
+
+	public function privacyAgreeded():bool{
+		return boolval($_COOKIE['privacy']);
+	}
+
 }
