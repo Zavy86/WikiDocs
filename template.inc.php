@@ -23,6 +23,7 @@
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.18.0/css/easymde<?php /*echo ($APP->DARK?"-dark":"");*/ ?>.min.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/easymde-fix<?php echo ($APP->DARK?"-dark":""); ?>.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-11.7.0/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.min.css" media="screen,projection">
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles-<?php echo ($APP->DARK?"dark":"default"); ?>.css" media="screen,projection"/>
   <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
