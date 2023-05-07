@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/easymde.svg?style=for-the-badge)](https://www.npmjs.com/package/easymde)
 [![npm version](https://img.shields.io/npm/v/easymde/next.svg?style=for-the-badge)](https://www.npmjs.com/package/easymde/v/next)
-[![Build Status](https://img.shields.io/github/workflow/status/ionaru/easy-markdown-editor/Test%20&%20Deploy/master?style=for-the-badge)](https://github.com/Ionaru/easy-markdown-editor/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ionaru/easy-markdown-editor/cd.yaml?branch=master&style=for-the-badge)](https://github.com/Ionaru/easy-markdown-editor/actions?query=branch%3Amaster)
 
 > This repository is a fork of
 [SimpleMDE, made by Sparksuite](https://github.com/sparksuite/simplemde-markdown-editor/).
@@ -16,9 +16,9 @@ In addition, the syntax is rendered while editing to clearly show the expected r
 EasyMDE also features both built-in auto saving and spell checking.
 The editor is entirely customizable, from theming to toolbar buttons and javascript hooks.
 
-[**Try the demo**](https://easy-markdown-editor.tk/)
+[**Try the demo**](https://stackblitz.com/edit/easymde/)
 
-[![Preview](https://user-images.githubusercontent.com/3472373/51319377-26fe6e00-1a5d-11e9-8cc6-3137a566796d.png)](https://easy-markdown-editor.tk/)
+[![Preview](https://user-images.githubusercontent.com/3472373/51319377-26fe6e00-1a5d-11e9-8cc6-3137a566796d.png)](https://stackblitz.com/edit/easymde/)
 
 
 ## Quick access
@@ -71,7 +71,7 @@ Or *jsDelivr*:
 
 ### Loading the editor
 
-After installing and/or importing the module, you can load EasyMDE onto the first TextArea on the web page:
+After installing and/or importing the module, you can load EasyMDE onto the first `textarea` element on the web page:
 
 ```html
 <textarea></textarea>
@@ -80,7 +80,7 @@ const easyMDE = new EasyMDE();
 </script>
 ```
 
-Alternatively you can select a specific TextArea, via Javascript:
+Alternatively you can select a specific `textarea`, via JavaScript:
 
 ```html
 <textarea id="my-text-area"></textarea>
@@ -89,19 +89,9 @@ const easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
 </script>
 ```
 
-Or via jQuery:
-
-```html
-<textarea id="my-text-area"></textarea>
-<script>
-const easyMDE = new EasyMDE({element: $('#my-text-area')[0]});
-</script>
-```
-
-
 ### Editor functions
 
-Use EasyMDE.value() to get the content of the editor:
+Use `easyMDE.value()` to get the content of the editor:
 
 ```html
 <script>
@@ -109,7 +99,7 @@ easyMDE.value();
 </script>
 ```
 
-Use EasyMDE.value(val) to set the content of the editor:
+Use `easyMDE.value(val)` to set the content of the editor:
 
 ```html
 <script>
@@ -126,8 +116,8 @@ easyMDE.value('New input for **EasyMDE**');
 - **autofocus**: If set to `true`, focuses the editor automatically. Defaults to `false`.
 - **autosave**: *Saves the text that's being written and will load it back in the future. It will forget the text when the form it's contained in is submitted.*
   - **enabled**: If set to `true`, saves the text automatically. Defaults to `false`.
-  - **delay**: Delay between saves, in milliseconds. Defaults to `10000` (10s).
-  - **submit_delay**: Delay before assuming that submit of the form failed and saving the text, in milliseconds. Defaults to `autosave.delay` or `10000` (10s).
+  - **delay**: Delay between saves, in milliseconds. Defaults to `10000` (10 seconds).
+  - **submit_delay**: Delay before assuming that submit of the form failed and saving the text, in milliseconds. Defaults to `autosave.delay` or `10000` (10 seconds).
   - **uniqueId**: You must set a unique string identifier so that EasyMDE can autosave. Something that separates this from other instances of EasyMDE elsewhere on your website.
   - **timeFormat**: Set DateTimeFormat. More information see [DateTimeFormat instances](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat). Default `locale: en-US, format: hour:minute`.
   - **text**: Set text for autosave.
@@ -138,12 +128,13 @@ easyMDE.value('New input for **EasyMDE**');
   - **italic**: Can be set to `*` or `_`. Defaults to `*`.
 - **unorderedListStyle**: can be `*`, `-` or `+`. Defaults to `*`.
 - **scrollbarStyle**: Chooses a scrollbar implementation. The default is "native", showing native scrollbars. The core library also provides the "null" style, which completely hides the scrollbars. Addons can implement additional scrollbar models.
-- **element**: The DOM element for the TextArea to use. Defaults to the first TextArea on the page.
+- **element**: The DOM element for the `textarea` element to use. Defaults to the first `textarea` element on the page.
 - **forceSync**: If set to `true`, force text changes made in EasyMDE to be immediately stored in original text area. Defaults to `false`.
 - **hideIcons**: An array of icon names to hide. Can be used to hide specific icons shown by default without completely customizing the toolbar.
 - **indentWithTabs**: If set to `false`, indent using spaces instead of tabs. Defaults to `true`.
 - **initialValue**: If set, will customize the initial value of the editor.
 - **previewImagesInEditor**: - EasyMDE will show preview of images, `false` by default, preview for images will appear only for images on separate lines.
+- **imagesPreviewHandler**: - A custom function for handling the preview of images. Takes the parsed string between the parantheses of the image markdown `![]( )` as argument and returns a string that serves as the `src` attribute of the `<img>` tag in the preview. Enables dynamic previewing of images in the frontend without having to upload them to a server, allows copy-pasting of images to the editor with preview.
 - **insertTexts**: Customize how certain buttons that insert text behave. Takes an array with two elements. The first element will be the text inserted before the cursor or highlight, and the second element will be inserted after. For example, this is the default link value: `["[", "](http://)"]`.
   - horizontalRule
   - image
@@ -168,17 +159,20 @@ easyMDE.value('New input for **EasyMDE**');
 - **promptTexts**: Customize the text used to prompt for URLs.
   - **image**: The text to use when prompting for an image's URL.  Defaults to `URL of the image:`.
   - **link**: The text to use when prompting for a link's URL. Defaults to `URL for the link:`.
-- **uploadImage**: If set to `true`, enables the image upload functionality, which can be triggered by drag&drop, copy-paste and through the browse-file window (opened when the user click on the *upload-image* icon). Defaults to `false`.
-- **imageMaxSize**: Maximum image size in bytes, checked before upload (note: never trust client, always check image size at server-side). Defaults to `1024*1024*2` (2Mb).
+- **iconClassMap**: Used to specify the icon class names for the various toolbar buttons.
+- **uploadImage**: If set to `true`, enables the image upload functionality, which can be triggered by drag and drop, copy-paste and through the browse-file window (opened when the user click on the *upload-image* icon). Defaults to `false`.
+- **imageMaxSize**: Maximum image size in bytes, checked before upload (note: never trust client, always check the image size at server-side). Defaults to `1024 * 1024 * 2` (2 MB).
 - **imageAccept**: A comma-separated list of mime-types used to check image type before upload (note: never trust client, always check file types at server-side). Defaults to `image/png, image/jpeg`.
 - **imageUploadFunction**: A custom function for handling the image upload. Using this function will render the options `imageMaxSize`, `imageAccept`, `imageUploadEndpoint` and `imageCSRFToken` ineffective.
-    - The function gets a file and onSuccess and onError callback functions as parameters. `onSuccess(imageUrl: string)` and `onError(errorMessage: string)`
-- **imageUploadEndpoint**: The endpoint where the images data will be sent, via an asynchronous *POST* request. The server is supposed to save this image, and return a json response.
-     - if the request was successfully processed (HTTP 200-OK): `{"data": {"filePath": "<filePath>"}}` where *filePath* is the path of the image (absolute if `imagePathAbsolute` is set to true, relative if otherwise);
-     - otherwise: `{"error": "<errorCode>"}`, where *errorCode* can be `noFileGiven` (HTTP 400), `typeNotAllowed` (HTTP 415), `fileTooLarge` (HTTP 413) or `importError` (see *errorMessages* below). If *errorCode* is not one of the *errorMessages*, it is alerted unchanged to the user. This allows for server side error messages.
+    - The function gets a file and `onSuccess` and `onError` callback functions as parameters. `onSuccess(imageUrl: string)` and `onError(errorMessage: string)`
+- **imageUploadEndpoint**: The endpoint where the images data will be sent, via an asynchronous *POST* request. The server is supposed to save this image, and return a JSON response.
+     - if the request was successfully processed (HTTP 200 OK): `{"data": {"filePath": "<filePath>"}}` where *filePath* is the path of the image (absolute if `imagePathAbsolute` is set to true, relative if otherwise);
+     - otherwise: `{"error": "<errorCode>"}`, where *errorCode* can be `noFileGiven` (HTTP 400 Bad Request), `typeNotAllowed` (HTTP 415 Unsupported Media Type), `fileTooLarge` (HTTP 413 Payload Too Large) or `importError` (see *errorMessages* below). If *errorCode* is not one of the *errorMessages*, it is alerted unchanged to the user. This allows for server-side error messages.
      No default value.
 - **imagePathAbsolute**: If set to `true`, will treat `imageUrl` from `imageUploadFunction` and *filePath* returned from `imageUploadEndpoint` as an absolute rather than relative path, i.e. not prepend `window.location.origin` to it.
-- **imageCSRFToken**: CSRF token to include with AJAX call to upload image. For instance used with Django backend.
+- **imageCSRFToken**: CSRF token to include with AJAX call to upload image. For various instances like Django, Spring and Laravel.
+- **imageCSRFName**: CSRF token filed name to include with AJAX call to upload image, applied when `imageCSRFToken` has value, defaults to `csrfmiddlewaretoken`.
+- **imageCSRFHeader**: If set to `true`, passing CSRF token via header. Defaults to `false`, which pass CSRF through request body.
 - **imageTexts**: Texts displayed to the user (mainly on the status bar) for the import image feature, where `#image_name#`, `#image_size#` and `#image_max_size#` will replaced by their respective values, that can be used for customization or internationalization:
     - **sbInit**: Status message displayed initially if `uploadImage` is set to `true`. Defaults to `Attach files by drag and dropping or pasting from clipboard.`.
     - **sbOnDragEnter**: Status message displayed when the user drags a file to the text area. Defaults to `Drop image to upload it.`.
@@ -196,8 +190,8 @@ easyMDE.value('New input for **EasyMDE**');
   - **codeSyntaxHighlighting**: If set to `true`, will highlight using [highlight.js](https://github.com/isagalaev/highlight.js). Defaults to `false`. To use this feature you must include highlight.js on your page or pass in using the `hljs` option. For example, include the script and the CSS files like:<br>`<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>`<br>`<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">`
   - **hljs**: An injectible instance of [highlight.js](https://github.com/isagalaev/highlight.js). If you don't want to rely on the global namespace (`window.hljs`), you can provide an instance here. Defaults to `undefined`.
   - **markedOptions**: Set the internal Markdown renderer's [options](https://marked.js.org/#/USING_ADVANCED.md#options). Other `renderingConfig` options will take precedence.
-  - **singleLineBreaks**: If set to `false`, disable parsing GFM single line breaks. Defaults to `true`.
-  - **sanitizerFunction**: Custom function for sanitizing the HTML output of markdown renderer.
+  - **singleLineBreaks**: If set to `false`, disable parsing [GitHub Flavored Markdown](https://github.github.com/gfm/) (GFM) single line breaks. Defaults to `true`.
+  - **sanitizerFunction**: Custom function for sanitizing the HTML output of Markdown renderer.
 - **shortcuts**: Keyboard shortcuts associated with this instance. Defaults to the [array of shortcuts](#keyboard-shortcuts).
 - **showIcons**: An array of icon names to show. Can be used to show specific icons hidden by default without completely customizing the toolbar.
 - **spellChecker**: If set to `false`, disable the spell checker. Defaults to `true`.  Optionally pass a CodeMirrorSpellChecker-compliant function.
@@ -212,6 +206,7 @@ easyMDE.value('New input for **EasyMDE**');
 - **theme**: Override the theme. Defaults to `easymde`.
 - **toolbar**: If set to `false`, hide the toolbar. Defaults to the [array of icons](#toolbar-icons).
 - **toolbarTips**: If set to `false`, disable toolbar button tips. Defaults to `true`.
+- **toolbarButtonClassPrefix**: Adds a prefix to the toolbar button classes when set. For example, a value of `"mde"` results in `"mde-bold"` for the Bold button.
 - **direction**: `rtl` or `ltr`. Changes text direction to support right-to-left languages. Defaults to `ltr`.
 
 
@@ -273,6 +268,11 @@ const editor = new EasyMDE({
             preview.innerHTML = customMarkdownParser(plainText);
         }, 250);
 
+        // If you return null, the innerHTML of the preview will not
+        // be overwritten. Useful if you control the preview node's content via
+        // vdom diffing.
+        // return null;
+
         return "Loading...";
     },
     promptURLs: true,
@@ -312,13 +312,14 @@ const editor = new EasyMDE({
     tabSize: 4,
     toolbar: false,
     toolbarTips: false,
+    toolbarButtonClassPrefix: "mde",
 });
 ```
 
 
 ### Toolbar icons
 
-Below are the built-in toolbar icons (only some of which are enabled by default), which can be reorganized however you like. "Name" is the name of the icon, referenced in the JS. "Action" is either a function or a URL to open. "Class" is the class given to the icon. "Tooltip" is the small tooltip that appears via the `title=""` attribute. Note that shortcut hints are added automatically and reflect the specified action if it has a key bind assigned to it (i.e. with the value of `action` set to `bold` and that of `tooltip` set to `Bold`, the final text the user will see would be "Bold (Ctrl-B)").
+Below are the built-in toolbar icons (only some of which are enabled by default), which can be reorganized however you like. "Name" is the name of the icon, referenced in the JavaScript. "Action" is either a function or a URL to open. "Class" is the class given to the icon. "Tooltip" is the small tooltip that appears via the `title=""` attribute. Note that shortcut hints are added automatically and reflect the specified action if it has a key bind assigned to it (i.e. with the value of `action` set to `bold` and that of `tooltip` set to `Bold`, the final text the user will see would be "Bold (Ctrl-B)").
 
 Additionally, you can add a separator between any icons by adding `"|"` to the toolbar array.
 
@@ -340,12 +341,15 @@ ordered-list | toggleOrderedList | Numbered List<br>fa fa-list-ol
 clean-block | cleanBlock | Clean block<br>fa fa-eraser
 link | drawLink | Create Link<br>fa fa-link
 image | drawImage | Insert Image<br>fa fa-picture-o
+upload-image | drawUploadedImage | Raise browse-file window<br>fa fa-image
 table | drawTable | Insert Table<br>fa fa-table
 horizontal-rule | drawHorizontalRule | Insert Horizontal Line<br>fa fa-minus
 preview | togglePreview | Toggle Preview<br>fa fa-eye no-disable
 side-by-side | toggleSideBySide | Toggle Side by Side<br>fa fa-columns no-disable no-mobile
 fullscreen | toggleFullScreen | Toggle Fullscreen<br>fa fa-arrows-alt no-disable no-mobile
 guide | [This link](https://www.markdownguide.org/basic-syntax/) | Markdown Guide<br>fa fa-question-circle
+undo | undo | Undo<br>fa fa-undo
+redo | redo | Redo<br>fa fa-redo
 
 
 ### Toolbar customization
@@ -360,7 +364,7 @@ const easyMDE = new EasyMDE({
 });
 ```
 
-All information and/or add your own icons
+All information and/or add your own icons or text
 
 ```js
 const easyMDE = new EasyMDE({
@@ -371,13 +375,14 @@ const easyMDE = new EasyMDE({
             className: "fa fa-bold",
             title: "Bold",
         },
-        "italics", // shortcut to pre-made button
+        "italic", // shortcut to pre-made button
         {
             name: "custom",
             action: (editor) => {
                 // Add your own code
             },
             className: "fa fa-star",
+            text: "Starred",
             title: "Custom Button",
             attributes: { // for custom attributes
                 id: "custom-id",
@@ -437,20 +442,26 @@ EasyMDE comes with an array of predefined keyboard shortcuts, but they can be al
 
 Shortcut (Windows / Linux) | Shortcut (macOS) | Action
 :--- | :--- | :---
-*Ctrl-'* | *Cmd-'* | "toggleBlockquote"
-*Ctrl-B* | *Cmd-B* | "toggleBold"
-*Ctrl-E* | *Cmd-E* | "cleanBlock"
-*Ctrl-H* | *Cmd-H* | "toggleHeadingSmaller"
-*Ctrl-I* | *Cmd-I* | "toggleItalic"
-*Ctrl-K* | *Cmd-K* | "drawLink"
-*Ctrl-L* | *Cmd-L* | "toggleUnorderedList"
-*Ctrl-P* | *Cmd-P* | "togglePreview"
-*Ctrl-Alt-C* | *Cmd-Alt-C* | "toggleCodeBlock"
-*Ctrl-Alt-I* | *Cmd-Alt-I* | "drawImage"
-*Ctrl-Alt-L* | *Cmd-Alt-L* | "toggleOrderedList"
-*Shift-Ctrl-H* | *Shift-Cmd-H* | "toggleHeadingBigger"
-*F9* | *F9* | "toggleSideBySide"
-*F11* | *F11* | "toggleFullScreen"
+<kbd>Ctrl</kbd>-<kbd>'</kbd> | <kbd>Cmd</kbd>-<kbd>'</kbd> | "toggleBlockquote"
+<kbd>Ctrl</kbd>-<kbd>B</kbd> | <kbd>Cmd</kbd>-<kbd>B</kbd> | "toggleBold"
+<kbd>Ctrl</kbd>-<kbd>E</kbd> | <kbd>Cmd</kbd>-<kbd>E</kbd> | "cleanBlock"
+<kbd>Ctrl</kbd>-<kbd>H</kbd> | <kbd>Cmd</kbd>-<kbd>H</kbd> | "toggleHeadingSmaller"
+<kbd>Ctrl</kbd>-<kbd>I</kbd> | <kbd>Cmd</kbd>-<kbd>I</kbd> | "toggleItalic"
+<kbd>Ctrl</kbd>-<kbd>K</kbd> | <kbd>Cmd</kbd>-<kbd>K</kbd> | "drawLink"
+<kbd>Ctrl</kbd>-<kbd>L</kbd> | <kbd>Cmd</kbd>-<kbd>L</kbd> | "toggleUnorderedList"
+<kbd>Ctrl</kbd>-<kbd>P</kbd> | <kbd>Cmd</kbd>-<kbd>P</kbd> | "togglePreview"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>C</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>C</kbd> | "toggleCodeBlock"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>I</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>I</kbd> | "drawImage"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>L</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>L</kbd> | "toggleOrderedList"
+<kbd>Shift</kbd>-<kbd>Ctrl</kbd>-<kbd>H</kbd> | <kbd>Shift</kbd>-<kbd>Cmd</kbd>-<kbd>H</kbd> | "toggleHeadingBigger"
+<kbd>F9</kbd> | <kbd>F9</kbd> | "toggleSideBySide"
+<kbd>F11</kbd> | <kbd>F11</kbd> | "toggleFullScreen"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>1</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>1</kbd> | "toggleHeading1"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>2</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>2</kbd> | "toggleHeading2"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>3</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>3</kbd> | "toggleHeading3"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>4</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>4</kbd> | "toggleHeading4"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>5</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>5</kbd> | "toggleHeading5"
+<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>6</kbd> | <kbd>Cmd</kbd>-<kbd>Alt</kbd>-<kbd>6</kbd> | "toggleHeading6"
 
 Here is how you can change a few, while leaving others untouched:
 
@@ -494,7 +505,7 @@ easyMDE.toTextArea();
 easyMDE = null;
 ```
 
-If you need to remove installed listeners (when editor not needed anymore), call `easyMDE.cleanup()`
+If you need to remove registered event listeners (when the editor is not needed anymore), call `easyMDE.cleanup()`.
 
 
 ### Useful methods
@@ -516,7 +527,7 @@ EasyMDE is a continuation of SimpleMDE.
 
 SimpleMDE began as an improvement of [lepture's Editor project](https://github.com/lepture/editor), but has now taken on an identity of its own. It is bundled with [CodeMirror](https://github.com/codemirror/codemirror) and depends on [Font Awesome](http://fontawesome.io).
 
-CodeMirror is the backbone of the project and parses much of the Markdown syntax as it's being written. This allows us to add styles to the Markdown that's being written. Additionally, a toolbar and status bar have been added to the top and bottom, respectively. Previews are rendered by [Marked](https://github.com/chjj/marked) using GFM.
+CodeMirror is the backbone of the project and parses much of the Markdown syntax as it's being written. This allows us to add styles to the Markdown that's being written. Additionally, a toolbar and status bar have been added to the top and bottom, respectively. Previews are rendered by [Marked](https://github.com/chjj/marked) using GitHub Flavored Markdown (GFM).
 
 
 ## SimpleMDE fork
@@ -531,7 +542,7 @@ Changes include:
 * Support for Node 8 and beyond
 * Lots of refactored code
 * Links in preview will open in a new tab by default
-* Typescript support
+* TypeScript support
 
 My intention is to continue development on this project, improving it and keeping it alive.
 
