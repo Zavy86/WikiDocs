@@ -23,7 +23,7 @@
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/easymde-2.16.1/css/easymde<?php /*echo ($APP->DARK?"-dark":"");*/ ?>.min.css" media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.css" media="screen,projection">
+  <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>helpers/highlightjs-11.7.0/css/<?php echo ($APP->DARK?"monokai-sublime":"default"); ?>.min.css" media="screen,projection">
   <link type="text/css" rel="stylesheet" href="<?php echo $APP->PATH; ?>css/styles-<?php echo ($APP->DARK?"dark":"default"); ?>.css" media="screen,projection"/>
   <link type="image/png" rel="icon" href="<?php echo $APP->PATH; ?>images/favicon.png" sizes="any"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -257,7 +257,7 @@
   <script type="text/javascript">var DOC=<?php echo json_encode($DOC->export()); ?>;</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
+  <script type="text/javascript" src="<?php echo $APP->PATH; ?>helpers/highlightjs-11.7.0/js/highlight.min.js"></script>
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
   <script type="text/javascript" src="<?php echo $APP->PATH; ?>js/initializations.js"></script>
 <?php if(MODE=="edit"){ ?>
