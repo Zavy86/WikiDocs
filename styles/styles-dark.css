@@ -1,0 +1,48 @@
+/**
+ * Styles
+ *
+ * @package WikiDocs
+ * @repository https://github.com/Zavy86/WikiDocs
+ */
+
+/* dark overrides */
+body,.sidenav,.sidebar-footer,.modal,.modal-footer{background-color:#333 !important;color:#ccc !important;border-color:#222 !important;}
+.divider{background-color:#222 !important;}
+.search-wrapper{border-color:#222 !important;}
+.sidenav a{color:#bbb !important;}
+input{color:#bbb;}
+
+/* footer */
+footer{color:#666666;font-size:12px;}
+footer a{color:#666666;}
+footer a:hover,footer a:active{text-decoration:none;}
+
+/* highlights */
+mark{background-color:#fcf8e3;}
+
+/* images */
+img.polaroid{background-color:#ffffff;border:1px solid #dddddd;}
+
+/* code */
+code{background:#23241f;padding:0 5px;}
+
+/* sidebar */
+ul.sidenav.sidenav-fixed{border-right:1px solid #dddddd;}
+ul.sidenav.sidenav-fixed li:hover{background-color:#444 !important;}
+ul.sidenav.sidenav-fixed li.logo:hover,ul.sidenav.sidenav-fixed li.logo #logo-container:hover{background-color:transparent !important}
+ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#444 !important;}
+ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important;}
+
+/* search */
+#nav-mobile li.search:hover{background-color:#444;}
+#nav-mobile li.search .search-wrapper{color:#777777;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;}
+
+/* sidebar-footer */
+.sidebar-footer{border-top:solid 1px #dddddd;background-color:#ffffff;}
+.sidebar-footer .default-title:before{color:#ffffff;}
+
+/* simplemde */
+.editor-toolbar .easymde-dropdown,.editor-toolbar button{color:#ccc;}
+.editor-toolbar.fullscreen{background:#333;}
+.EasyMDEContainer .CodeMirror-fullscreen{background: #e7e7e7;}
+.editor-preview{background:#333;}

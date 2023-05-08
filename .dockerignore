@@ -1,11 +1,11 @@
 .git/
 .idea/
-documents/*
-trash/*
-.gitignore
 .htaccess
-development.dockerfile
-production.dockerfile
-config.inc.php
 robots.txt
 sitemap.xml
+datasets/config.inc.php
+datasets/documents/*
+datasets/trash/*
+!datasets/documents/.gitkeep
+!datasets/trash/.gitkeep
+!index.php
