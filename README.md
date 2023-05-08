@@ -23,7 +23,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Public and private browsing
 - Syntax highlighting
 - Dark mode
-- and many more..
+- and many more...
 
 ## Demo
 Try the demo playground at: [http://demo.wikidocs.it](http://demo.wikidocs.it)
