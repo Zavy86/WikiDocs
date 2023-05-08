@@ -10,7 +10,7 @@
 # Build multi-architecture and push
 # docker buildx create --name builder --driver docker-container --use
 # docker buildx inspect --bootstrap
-# docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
+# docker buildx build -f docker/production.dockerfile --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
 #
 
 FROM alpine:3.15
