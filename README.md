@@ -94,8 +94,9 @@ services:
 
 ### Creator
 **Manuel Zavatta**
-- [GitHub](https://github.com/Zavy86)
 - [WebSite](http://www.zavy.im)
+- [GitHub](https://github.com/Zavy86)
+- [YouTube](https://www.youtube.com/@zavy86)
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
 ### Contributors
