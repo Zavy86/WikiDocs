@@ -26,8 +26,8 @@ h6{font-size:1.0rem;margin:0.5rem 0 1.0rem 0;}
 
 /* reset article ul */
 article ul,article ol{padding-left:30px !important;margin-top:10px !important;margin-bottom:15px !important;}
-article ul li,article ol li{list-style-type: initial !important;}
-article ul ul,article ol li{padding-left:30px !important;margin-top:0 !important;margin-bottom:0 !important;}
+article ul li,article ul li{list-style-type: initial !important;}
+article ul ul,article ul ul{padding-left:30px !important;margin-top:0 !important;margin-bottom:0 !important;}
 
 /* justify article p */
 /*article p{text-align:justify;}*/
