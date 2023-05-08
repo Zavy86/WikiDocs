@@ -29,6 +29,7 @@ code{background:#23241f;padding:0 5px;}
 /* sidebar */
 ul.sidenav.sidenav-fixed{border-right:1px solid #dddddd;}
 ul.sidenav.sidenav-fixed li:hover{background-color:#444 !important;}
+ul.sidenav.sidenav-fixed li.active{background-color:#303030 !important;}
 ul.sidenav.sidenav-fixed li.logo:hover,ul.sidenav.sidenav-fixed li.logo #logo-container:hover{background-color:transparent !important}
 ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#444 !important;}
 ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important;}
