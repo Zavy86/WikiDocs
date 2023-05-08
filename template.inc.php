@@ -127,8 +127,8 @@
 					<span class="right nowrap">
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?print" ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
             <?php if(Session::getInstance()->autenticationLevel()==2): ?>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="settings.php" data-position="bottom" data-tooltip="Add new document"><i class="material-icons">settings</i></a>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Settings" onClick="new_document();"><i class="material-icons">add_circle</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="settings.php" data-position="bottom" data-tooltip="Settings"><i class="material-icons">settings</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Add new document" onClick="new_document();"><i class="material-icons">add_circle</i></a>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?edit" ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
 						<?php else: ?>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?auth" ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
