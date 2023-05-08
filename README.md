@@ -16,6 +16,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - No database required
 - Markdown syntax
 - Editor full WYSIWYG
+- Support for math KaTeX
 - Unlimited page revisions
 - Uploading images (also from clipboard)
 - Content can be categorized in namespaces
