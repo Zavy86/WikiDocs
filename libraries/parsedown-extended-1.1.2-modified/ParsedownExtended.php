@@ -1313,7 +1313,7 @@ class ParsedownExtended extends DynamicParent
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" disabled /> '.$this->format($text);
+        return '<p><label><input type="checkbox" disabled /><span> '.$this->format($text).'</span></label></p>';
     }
 
     protected function checkboxChecked($text)
@@ -1322,7 +1322,7 @@ class ParsedownExtended extends DynamicParent
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" checked disabled /> '.$this->format($text);
+        return '<p><label><input type="checkbox" checked disabled /><span> '.$this->format($text).'</span></label></p>';
     }
 
     /**

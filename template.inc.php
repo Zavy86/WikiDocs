@@ -16,7 +16,7 @@
 	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-10.2.1/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.css" media="screen,projection">
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-<?= ($APP->DARK?"dark":"light") ?>.css" media="screen,projection"/>
@@ -127,8 +127,8 @@
 					<span class="right nowrap">
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?print" ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
             <?php if(Session::getInstance()->autenticationLevel()==2): ?>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="settings.php" data-position="bottom" data-tooltip="Add new document"><i class="material-icons">settings</i></a>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Settings" onClick="new_document();"><i class="material-icons">add_circle</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href=<?php echo $$root_dir; ?>"/settings.php" data-position="bottom" data-tooltip="Settings"><i class="material-icons">settings</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Add new document" onClick="new_document();"><i class="material-icons">add_circle</i></a>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?edit" ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
 						<?php else: ?>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?auth" ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
@@ -270,7 +270,7 @@
 <script>var DOC=<?= json_encode($DOC->export()) ?>;</script>
 <script src="<?= $APP->PATH ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
-<script src="<?= $APP->PATH ?>helpers/highlightjs-10.2.1/js/highlight.min.js"></script>
+<script src="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/js/highlight.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/katex.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/auto-render.js"></script>
 <script>renderMathInElement(document.body);</script>
