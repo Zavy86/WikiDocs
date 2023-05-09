@@ -47,3 +47,6 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 .editor-toolbar.fullscreen{background:#333;}
 .EasyMDEContainer .CodeMirror-fullscreen{background: #e7e7e7;}
 .editor-preview{background:#333;}
+
+/* inputs */
+label{color:#ccc;}
