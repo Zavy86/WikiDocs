@@ -43,10 +43,15 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 .sidebar-footer .default-title:before{color:#ffffff;}
 
 /* simplemde */
-.editor-toolbar .easymde-dropdown,.editor-toolbar button{color:#ccc;}
+.EasyMDEContainer .CodeMirror {color:#ccc;border-color:#ccc;background-color:#444;}
+.EasyMDEContainer .editor-toolbar > * {color:#ccc;}
+.EasyMDEContainer .editor-toolbar > .active, .editor-toolbar > button:hover, .editor-preview pre, .cm-s-easymde .cm-comment{color:#ccc;background-color:#23241F;}
 .editor-toolbar.fullscreen{background:#333;}
-.EasyMDEContainer .CodeMirror-fullscreen{background: #e7e7e7;}
-.editor-preview{background:#333;}
+.EasyMDEContainer .CodeMirror-fullscreen{background:#444;color:#ccc;}
+.editor-preview{background:#333;color:#ccc;}
+.CodeMirror-selectedtext{background-color: #d9d9d9 !important;color: #444 !important;}
+::selection{background-color: #d9d9d9 !important;color: #444 !important;}
+::-moz-selection{background-color: #d9d9d9 !important;color: #444 !important;}
 
 /* inputs */
 label{color:#ccc;}
