@@ -7,6 +7,7 @@
  *
  * @var WikiDocs $APP
  * @var Document $DOC
+ * @var Localization $TXT
  * @var ParsedownExtra $PARSER
  */
 ?>
@@ -48,7 +49,7 @@
 		<li class="search">
 			<div class="search-wrapper">
 				<form action="<?= $APP->PATH ?>" method="get" autocomplete="off">
-					<input id="search" name="search" placeholder="Search in wiki.." value="<?= SEARCH ?>"><i class="material-icons">search</i>
+					<input id="search" name="search" placeholder="<?= $TXT->Search ?>" value="<?= SEARCH ?>"><i class="material-icons">search</i>
 				</form>
 			</div>
 		</li>
@@ -83,7 +84,6 @@
 							}
 							echo "</ul>";
 						}
-						//close <li> from sub_index
 						echo "</li>";
 					}
 				}
@@ -102,7 +102,7 @@
 	<div class="container">
 		<div class="row breadcrumbs" style="padding-top:18px">
 			<div class="col s2 m1 offset-m1 hide-on-large-only">
-				<a class="btn btn-floating btn-small tooltipped waves-effect waves-light sidenav-trigger main-color" href="#" data-target="nav-mobile" data-position="bottom" data-tooltip="Sidebar"><i class="material-icons">menu</i></a>
+				<a class="btn btn-floating btn-small tooltipped waves-effect waves-light sidenav-trigger main-color" href="#" data-target="nav-mobile" data-position="bottom" data-tooltip="<?= $TXT->TooltipSidebar ?>"><i class="material-icons">menu</i></a>
 			</div><!-- /col -->
 			<div class="col s8 m7 l8 offset-l1 center-on-small-only" style="padding-top:3px">
       <span>
@@ -125,23 +125,23 @@
 			<div class="col s2 m2 l2">
 				<?php if(MODE=="view"): ?>
 					<span class="right nowrap">
-            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?print" ?>" target="_blank" data-position="bottom" data-tooltip="Print this document"><i class="material-icons">print</i></a>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?print" ?>" target="_blank" data-position="bottom" data-tooltip="<?= $TXT->TooltipPrint ?>"><i class="material-icons">print</i></a>
             <?php if(Session::getInstance()->autenticationLevel()==2): ?>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $APP->PATH ?>settings.php" data-position="bottom" data-tooltip="Settings"><i class="material-icons">settings</i></a>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="Add new document" onClick="new_document();"><i class="material-icons">add_circle</i></a>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?edit" ?>" data-position="bottom" data-tooltip="Edit this document"><i class="material-icons">border_color</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $APP->PATH ?>settings.php" data-position="bottom" data-tooltip="<?= $TXT->TooltipSettings ?>"><i class="material-icons">settings</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="<?= $TXT->TooltipNewDocument ?>" onClick="new_document();"><i class="material-icons">add_circle</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?edit" ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipEditDocument ?>"><i class="material-icons">border_color</i></a>
 						<?php else: ?>
-							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?auth" ?>" data-position="bottom" data-tooltip="Sign in to edit or<br>add new documents"><i class="material-icons">lock_open</i></a>
+							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?auth" ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipSignIn ?>"><i class="material-icons">lock_open</i></a>
 						<?php endif; ?>
           </span>
 				<?php endif; ?>
 				<?php if(MODE=="edit"): ?>
 					<span class="right nowrap">
-            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?= $DOC->URL ?>" data-position="bottom" data-tooltip="Cancel editing"><i class="material-icons">cancel</i></a>
-            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="Images"><i class="material-icons">image</i></a>
-            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?= $APP->PATH ?>submit.php?act=content_delete&document=<?= $DOC->ID ?>" data-position="bottom" data-tooltip="Delete this content" onClick="return(confirm('Do you really want to delete this content?'))"><i class="material-icons">delete</i></a>
-            <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="Backup current version"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
-            <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="Save"><i class="material-icons">save</i></button>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?= $DOC->URL ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipCancelEditing ?>"><i class="material-icons">cancel</i></a>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="<?= $TXT->TooltipImages ?>"><i class="material-icons">image</i></a>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?= $APP->PATH ?>submit.php?act=content_delete&document=<?= $DOC->ID ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipDeleteDocument ?>" onClick="return(confirm('<?= str_replace(["'",'"'],"\'",$TXT->TooltipDeleteDocumentConfirm) ?>'))"><i class="material-icons">delete</i></a>
+            <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="<?= $TXT->TooltipVersioning ?>"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
+            <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="<?= $TXT->TooltipSave ?>"><i class="material-icons">save</i></button>
           </span>
 				<?php endif; ?>
 			</div><!-- /col -->
@@ -160,10 +160,10 @@
 						<div class="row" style="margin-top:36px">
 							<div class="input-field col s9">
 								<input type="password" name="password" required autofocus>
-								<label for="password"><span class="main-color-text">Insert authentication code..</span></label>
+								<label for="password"><span class="main-color-text"><?= $TXT->AuthPassword ?>..</span></label>
 							</div><!-- /input-field -->
 							<div class="input-field col s3">
-								<input type="submit" class="btn main-color" value="Submit">
+								<input type="submit" class="btn main-color" value="<?= $TXT->AuthSubmit ?>">
 							</div><!-- /input-field -->
 						</div><!-- /row -->
 					</form>
@@ -184,21 +184,21 @@
 					<!-- modal_uploader -->
 					<div id="modal_uploader" class="modal">
 						<div class="modal-content">
-							<h4>Images</h4>
+							<h4><?= $TXT->Images ?></h4>
 							<form id="uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
 								<input type="hidden" name="document" value="<?= $DOC->ID ?>">
 								<div class="row" style="margin-top:36px">
 									<div class="input-field file-field col s9">
 										<div class="btn waves-effect waves-light main-color">
-											<span>Browse</span>
+											<span><?= $TXT->ImagesBrowse ?></span>
 											<input type="file" name="image" required>
 										</div><!-- /btn -->
 										<div class="file-path-wrapper">
-											<input type="text" id="uploader-path" class="file-path validate" placeholder="Select an image to upload..">
+											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>..">
 										</div><!-- /file-path-wrapper -->
 									</div><!-- /input-field -->
 									<div class="input-field col s3">
-										<input id="uploader-submit" type="submit" class="btn main-color right" value="Upload">
+										<input id="uploader-submit" type="submit" class="btn main-color right" value="<?= $TXT->ImagesSubmit ?>">
 									</div><!-- /input-field -->
 								</div><!-- /row -->
 							</form>
@@ -214,7 +214,7 @@
 				<?php endif; ?>
 				<?php if(MODE=="search"): ?>
 					<article>
-						<h1>Search results</h1>
+						<h1><?= $TXT->SearchResults ?></h1>
 						<?php foreach($matches_array=Document::search(SEARCH) as $document_fe=>$matches_fe): ?>
 							<hr><h5><a href="<?= URL.$document_fe ?>" target="_blank"><b><?= $document_fe ?></b></a></h5>
 							<?php foreach($matches_fe as $match_fe): ?>
@@ -222,7 +222,7 @@
 							<?php endforeach; ?>
 						<?php endforeach; ?>
 						<?php if(!count($matches_array)): ?>
-							<p>No results found for <mark><?= SEARCH ?></mark>..</p>
+							<p><?= $TXT->SearchNoResults ?> <mark><?= SEARCH ?></mark>..</p>
 						<?php endif; ?>
 					</article>
 				<?php endif; ?>
@@ -231,27 +231,27 @@
 		<div class="divider"></div>
 		<div class="row">
 			<div class="col m5 offset-m1 hide-on-med-and-down">
-				<p class="left-align"><small>This page was last edited on <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?></small></p>
+				<p class="left-align"><small><?= $TXT->LastUpdate ?> <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?></small></p>
 			</div><!-- /col -->
 			<div class="col m5 hide-on-med-and-down">
-				<p class="right-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+				<p class="right-align"><small><?= $TXT->PoweredBy ?> <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">".$TXT->Logout."</a>";} ?></small></p>
 			</div><!-- /col -->
 			<div class="col s12 hide-on-large-only">
 				<p class="center-align"><small>This page was last edited on <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?></small></p>
 				<p class="center-align"><small><b><?= $APP->OWNER ?></b><br><?= $APP->NOTICE ?></p></small></p>
-				<p class="center-align"><small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">Logout</a>";} ?></small></p>
+				<p class="center-align"><small><?= $TXT->PoweredBy ?> <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">".$TXT->Logout."</a>";} ?></small></p>
 			</div><!-- /col -->
 		</div><!-- /row -->
 		<?php if(!Session::getInstance()->privacyAgreeded()): ?>
 			<!-- Modal Structure -->
 			<div id="modal-privacy" class="modal">
 				<div class="modal-content">
-					<h4>Cookie Agreement</h4>
+					<h4><?= $TXT->CookieAgreement ?></h4>
 					<p><?= PRIVACY ?></p>
 				</div>
 				<div class="modal-footer">
-					<a href="https://www.google.com" class="modal-close btn btn-small waves-effect waves-light grey white-text">DISAGREE</a>
-					<a href="?privacy=1" class="modal-close btn btn-small waves-effect waves-light main-color white-text">AGREE</a>
+					<a href="https://www.google.com" class="modal-close btn btn-small waves-effect waves-light grey white-text"><?= $TXT->CookieButtonDisagree ?></a>
+					<a href="?privacy=1" class="modal-close btn btn-small waves-effect waves-light main-color white-text"><?= $TXT->CookieButtonAgree ?></a>
 				</div>
 			</div>
 			<script>document.addEventListener('DOMContentLoaded',function(){M.Modal.init(document.getElementById('modal-privacy'),{'dismissible':false,'opacity':0.72}).open();});</script>
@@ -282,11 +282,11 @@
 	<script src="<?= $APP->PATH ?>scripts/images.js"></script>
 <?php endif; ?>
 <?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")): ?>
-	<script>if(confirm("A draft has been found, do you want to load it??")){window.location.replace(window.location+"&draft=1");}</script>
+	<script>if(confirm("<?= str_replace(["'",'"'],"\'",$TXT->ConfirmLoadDraft) ?>")){window.location.replace(window.location+"&draft=1");}</script>
 <?php endif; ?>
 <script>
   function new_document(){
-    var new_path=prompt("Enter the new document path (like argument/section/title)",DOC.ID+"/");
+    var new_path=prompt("<?= str_replace(["'",'"'],"\'",$TXT->PromptNewDocument) ?>",DOC.ID+"/");
     if(new_path!==DOC.ID+"/"){
       new_path=new_path.replace(" ","-").toLowerCase()+"?edit";
       window.location.href=APP.URL+new_path;

@@ -8,7 +8,9 @@
 
 // Enable debug
 define('DEBUGGABLE',false);
-// Virtualhost path or subdirectory with trailing slashes
+// Localization language (availables: en, it)
+define('LANG',"en");
+// Application title
 define('PATH',"/");
 // Application title
 define('TITLE',"Wiki|Docs");

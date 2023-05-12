@@ -4,8 +4,11 @@
  *
  * @package WikiDocs
  * @repository https://github.com/Zavy86/wikidocs
+ *
  */
 require_once("bootstrap.inc.php");
+// get localization
+$TXT=Localization::getInstance();
 // acquire variables
 $g_act=($_GET['act'] ?? '');
 // store action
@@ -17,6 +20,7 @@ if($g_act=="store"){
 	$config="<?php\n";
 	$config.="define('DEBUGGABLE',".(DEBUGGABLE?"true":"false").");\n";
 	$config.="define('PATH',\"".PATH."\");\n";
+	$config.="define('LANG',\"".$_POST['lang']."\");\n";
 	$config.="define('TITLE',\"".$_POST['title']."\");\n";
 	$config.="define('SUBTITLE',\"".$_POST['subtitle']."\");\n";
 	$config.="define('OWNER',\"".$_POST['owner']."\");\n";
@@ -30,7 +34,7 @@ if($g_act=="store"){
 	// write configuration file
 	file_put_contents(BASE."datasets/config.inc.php",$config);
 	// alert and redirect
-	wdf_alert("Settings stored!","success");
+	wdf_alert($TXT->SettingsStored,"success");
 	wdf_redirect(PATH);
 }
 ?>
@@ -45,75 +49,83 @@ if($g_act=="store"){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta name="theme-color" content="<?= COLOR ?>">
 	<style>:root{--theme-color:<?= COLOR ?>;}</style>
-	<title>Settings - Wiki|Docs</title>
+	<title><?= $TXT->Settings ?> - Wiki|Docs</title>
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col s12">
 			<h1>Wiki|Docs</h1>
-			<p>Just a databaseless markdown flat-file wiki engine..</p>
+			<p><?= $TXT->Payoff ?></p>
 		</div><!-- /col -->
 		<div class="col s12">
-			<h2>Settings</h2>
-			<p>Configure your wiki engine..</p>
+			<h2><?= $TXT->Settings ?></h2>
+			<p><?= $TXT->SettingsConfigure ?>..</p>
 			<form action="settings.php?act=store" method="post">
 				<div class="row">
 					<div class="input-field col s12 m5">
 						<input type="text" name="title" id="title" class="validate" value="<?= TITLE ?>" required>
-						<label for="title"><span class="green-text">Title</span></label>
+						<label for="title"><span class="green-text"><?= $TXT->SettingsTitle ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
 						<input type="text" name="subtitle" id="subtitle" class="validate" value="<?= SUBTITLE ?>" required>
-						<label for="subtitle"><span class="green-text">Subtitle</span></label>
+						<label for="subtitle"><span class="green-text"><?= $TXT->SettingsSubtitle ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m5">
-						<input type="text" name="owner" id="owner" class="validate" placeholder="Contents owner" value="<?= OWNER ?>" required>
-						<label for="owner"><span class="green-text">Owner</span></label>
+						<input type="text" name="owner" id="owner" class="validate" placeholder="<?= $TXT->SettingsOwnerPlaceholder ?>" value="<?= OWNER ?>" required>
+						<label for="owner"><span class="green-text"><?= $TXT->SettingsOwner ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
-						<input type="text" name="notice" id="notice" class="validate" placeholder="Contents copyright notice" value="<?= NOTICE ?>" required>
-						<label for="notice"><span class="green-text">Notice</span></label>
+						<input type="text" name="notice" id="notice" class="validate" placeholder="<?= $TXT->SettingsNoticePlaceholder ?>" value="<?= NOTICE ?>" required>
+						<label for="notice"><span class="green-text"><?= $TXT->SettingsNotice ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" name="privacy" id="privacy" class="validate" placeholder="Privacy banner for GDPR compliant" value="<?= PRIVACY ?>">
-						<label for="privacy"><span class="green-text">Privacy banner</span></label>
+						<input type="text" name="privacy" id="privacy" class="validate" placeholder="<?= $TXT->SettingsPrivacyPlaceholder ?>" value="<?= PRIVACY ?>">
+						<label for="privacy"><span class="green-text"><?= $TXT->SettingsPrivacy ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m5">
-						<input type="password" name="editcode" id="editcode" class="validate" placeholder="Choose a strong password for editing.." value="<?= EDITCODE ?>" required>
-						<label for="editcode"><span class="green-text">Edit authentication code</span></label>
+						<input type="password" name="editcode" id="editcode" class="validate" placeholder="<?= $TXT->SettingsEditCodePlaceholder ?>.." value="<?= EDITCODE ?>" required>
+						<label for="editcode"><span class="green-text"><?= $TXT->SettingsEditCode ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
-						<input type="password" name="viewcode" id="viewcode" class="validate" placeholder="Leave it blank if you want to make this wiki public.." value="<?= VIEWCODE ?>">
-						<label for="viewcode"><span class="green-text">View authentication code</span></label>
+						<input type="password" name="viewcode" id="viewcode" class="validate" placeholder="<?= $TXT->SettingsViewCodePlaceholder ?>.." value="<?= VIEWCODE ?>">
+						<label for="viewcode"><span class="green-text"><?= $TXT->SettingsViewCode ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s6 m3">
-						<input type="text" name="color" id="color" class="validate" placeholder="Choose the main color.. (#4CAF50)" value="<?= COLOR ?>" required>
-						<label for="color"><span class="green-text">Color</span></label>
+						<input type="text" name="color" id="color" class="validate" placeholder="<?= $TXT->SettingsColorPlaceholder ?>.. (#4CAF50)" value="<?= COLOR ?>" required>
+						<label for="color"><span class="green-text"><?= $TXT->SettingsColor ?></span></label>
 					</div>
 					<div class="input-field col s6 m2">
 						<label for="check-dark">
 							<input type="checkbox" name="dark" id="check-dark"<?php if(DARK){echo " checked";}?>>
-							<span>Dark Mode</span>
+							<span><?= $TXT->SettingsDark ?></span>
 						</label>
 					</div>
-					<div class="input-field col s12 m7">
-						<input type="text" name="gtag" id="gtag" class="validate" placeholder="Insert you Google Analytics tag.. (like UA-123456789-1)" value="<?= GTAG ?>">
-						<label for="gtag"><span class="green-text">Google Analytics tag</span></label>
+					<div class="input-field col s12 m5">
+						<input type="text" name="gtag" id="gtag" class="validate" placeholder="<?= $TXT->SettingsGtagPlaceholder ?>.. (like UA-123456789-1)" value="<?= GTAG ?>">
+						<label for="gtag"><span class="green-text"><?= $TXT->SettingsGtag ?></span></label>
+					</div>
+					<div class="input-field col s12 m2">
+						<select name="lang" id="lang" class="validate" value="<?= LANG ?>">
+							<?php foreach(Localization::available() as $value=>$label): ?>
+								<option value="<?= $value ?>"<?= ($value==LANG?" selected":null) ?>><?= $label ?></option>
+							<?php endforeach; ?>
+						</select>
+						<label for="lang"><span class="green-text"><?= $TXT->SettingsLanguage ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<button type="button" class="btn btn-block waves-effect waves-light grey left" onclick="location.href='<?= PATH ?>';">Cancel<i class="material-icons left">keyboard_arrow_left</i></button>
-						<button type="submit" class="btn btn-block waves-effect waves-light green right">Save<i class="material-icons right">check</i></button>
+						<button type="button" class="btn btn-block waves-effect waves-light grey left" onclick="location.href='<?= PATH ?>';"><?= $TXT->SettingsCancel ?><i class="material-icons left">keyboard_arrow_left</i></button>
+						<button type="submit" class="btn btn-block waves-effect waves-light green right"><?= $TXT->SettingsSubmit ?><i class="material-icons right">check</i></button>
 					</div>
 				</div>
 			</form>
@@ -122,5 +134,11 @@ if($g_act=="store"){
 </div><!-- /container-->
 <script src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
 <script src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded',function(){
+		let selectElements=document.querySelectorAll('select');
+		let instances=M.FormSelect.init(selectElements);
+	});
+</script>
 </body>
 </html>

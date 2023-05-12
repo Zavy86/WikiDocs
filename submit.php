@@ -32,6 +32,8 @@ switch(ACT){
  * Authentication
  */
 function authentication(){
+	// get localization
+	$TXT=Localization::getInstance();
 	// debug
 	wdf_dump($_REQUEST,"_REQUEST");
 	// reset authentication
@@ -44,7 +46,7 @@ function authentication(){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=2;
 		// alert and redirect
-		wdf_alert("Authentication successfully!","success");
+		wdf_alert($TXT->SubmitAuthSuccess,"success");
 		wdf_redirect(PATH.$p_document);
 	}
 	// check view code
@@ -52,13 +54,13 @@ function authentication(){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=1;
 		// alert and redirect
-		wdf_alert("Authentication successfully!","success");
+		wdf_alert($TXT->SubmitAuthSuccess,"success");
 		wdf_redirect(PATH.$p_document);
 	}
 	// authenticatiojn error
 	if($_SESSION['wikidocs']['authenticated']==0){
 		// alert and redirect
-		wdf_alert("Invalid authentication code!","danger");
+		wdf_alert($TXT->SubmitAuthInvalid,"danger");
 		wdf_redirect(PATH.$p_document);
 	}
 }
@@ -67,6 +69,8 @@ function authentication(){
  * Content Save
  */
 function content_save(){
+	// get localization
+	$TXT=Localization::getInstance();
 	// debug
 	wdf_dump($_REQUEST,"_REQUEST");
 	// acquire variables
@@ -76,19 +80,19 @@ function content_save(){
 	// check authentication
 	if(Session::getInstance()->autenticationLevel()!=2){
 		// alert and redirect
-		wdf_alert("You are not authenticated!","danger");
+		wdf_alert($TXT->SubmitNotAuthenticated,"danger");
 		wdf_redirect(PATH.$p_document);
 	}
 	// check document path
 	if(!strlen($p_document)){
 		// alert and redirect
-		wdf_alert("Document path cannot be empty","danger");
+		wdf_alert($TXT->SubmitDocumentPathCannotBeEmpty,"danger");
 		wdf_redirect(PATH);
 	}
 	// check content
 	if(!strlen($p_content)){
 		// alert and redirect
-		wdf_alert("Document content cannot be empty!","danger");
+		wdf_alert($TXT->SubmitDocumentContentCannotBeEmpty,"danger");
 		wdf_redirect(PATH.$p_document."?edit");
 	}
 	// initialize document
@@ -125,9 +129,9 @@ function content_save(){
 		// sum size of all images
 		foreach($DOC->images() as $image_fe){$bytes+=filesize($DOC->DIR.$image_fe);}
 		if($bytes<1000000){$size=number_format($bytes/1000,2,",",".")." KB";}else{$size=number_format($bytes/1000000,2,",",".")." MB";}
-		wdf_alert("Document successfully saved! [".$size."]","success");
+		wdf_alert($TXT->SubmitDocumentSaved." [".$size."]","success");
 	}else{
-		wdf_alert("An error occurred while saving the document!","danger");
+		wdf_alert($TXT->SubmitDocumentError,"danger");
 	}
 	// redirect
 	wdf_redirect(PATH.$p_document);
@@ -137,6 +141,8 @@ function content_save(){
  * Content Delete
  */
 function content_delete(){
+	// get localization
+	$TXT=Localization::getInstance();
 	// debug
 	wdf_dump($_REQUEST,"_REQUEST");
 	// acquire variables
@@ -144,13 +150,13 @@ function content_delete(){
 	// check authentication
 	if(Session::getInstance()->autenticationLevel()!=2){
 		// alert and redirect
-		wdf_alert("You are not authenticated!","danger");
+		wdf_alert($TXT->SubmitNotAuthenticated,"danger");
 		wdf_redirect(PATH.$p_document);
 	}
 	// check document path
 	if(!strlen($p_document)){
 		// alert and redirect
-		wdf_alert("Document path cannot be empty","danger");
+		wdf_alert($TXT->SubmitDocumentPathCannotBeEmpty,"danger");
 		wdf_redirect(PATH);
 	}
 	// initialize document
@@ -164,7 +170,7 @@ function content_delete(){
 	// move document to trash
 	if(is_dir($DOC->DIR)){rename($DOC->DIR,DIR."datasets/trash/".$trash_id);}
 	// alert and redirect
-	wdf_alert("Document deleted","warning");
+	wdf_alert($TXT->SubmitDocumentDeleted,"warning");
 	wdf_redirect(PATH);
 }
 
