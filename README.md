@@ -23,6 +23,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Automatic generated index and sitemap
 - Public and private browsing
 - Syntax highlighting
+- Multi language
 - Dark mode
 - and many more...
 
@@ -101,10 +102,10 @@ services:
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
 ### Contributors
+- [**Amin Persia**](https://github.com/leomoon)
 - [**Alex Meyer**](https://github.com/reyemxela)
 - [**Bo Allen**](https://github.com/bitwisecreative)
 - [**Micha**](https://github.com/serial)
-- [**Amin Persia**](https://github.com/leomoon)
 
 ## License
 Code released under the MIT License
