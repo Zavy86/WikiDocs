@@ -26,6 +26,9 @@ $APP=new WikiDocs();
 // initialize document
 $DOC=new Document(DOC);
 // initialize markdown parser
-$PARSER=new ParsedownExtended();
+$PARSER=new ParsedownExtended([
+    'typographer' => true,
+    'toc' => true
+]);
 // include web or print template
 if(MODE=='print'){require_once(BASE.'print.inc.php');}else{require_once(BASE.'template.inc.php');}

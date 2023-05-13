@@ -63,7 +63,7 @@ final class Session{
 	}
 
 	public function privacyAgreeded():bool{
-		if(!strlen(PRIVACY)){return true;}
+		if(!strlen(PRIVACY ?? '')){return true;}
 		return boolval($_COOKIE['privacy'] ?? false);
 	}
 
