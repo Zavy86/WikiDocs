@@ -68,12 +68,12 @@ services:
 
 ## Upgrade
 
-> **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED  
-- Move trash directory to datasets/trash  
-- Move documents directory to datasets/documents  
+> **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED
+- Move trash directory to datasets/trash
+- Move documents directory to datasets/documents
 - Move config.inc.php to datasets/config.inc.php
 
-## Configuration
+## Apache Configuration
 
 ### Automatic
 - The `setup.php` script will automatically create both `datasets/config.inc.php` and `.htacess` files
@@ -81,7 +81,7 @@ services:
 ### Manual
 - Copy the configuration sample file `cp datasets/config.sample.inc.php datasets/config.inc.php`
 - Edit the configuration file `nano datasets/config.inc.php`
-- Create the `.htaccess` file like this: 
+- Create the `.htaccess` file like this:
 ```
 <IfModule mod_rewrite.c>
 	RewriteEngine On
@@ -91,6 +91,22 @@ services:
 </IfModule>
 ```
 - Make sure that RewriteBase is the same as the PATH in the configuration file included trailing slashes
+
+## Nginx Configuration
+
+### Manual
+- Use this as Nginx configuration for WikiDocs:
+  ```
+  ...
+          location /wikidocs/ {
+                  if (!-e $request_filename){
+                  rewrite ^/(.*)$ /index.php?doc=$1 last;
+                  }
+                  try_files $uri $uri/ =404;
+          }
+  ```
+- Copy the configuration sample file `cp datasets/config.sample.inc.php datasets/config.inc.php`
+- Edit the configuration file `nano datasets/config.inc.php`
 
 ## Developers
 
