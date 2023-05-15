@@ -235,7 +235,7 @@
 							</form>
 							<ul id="attachments-list">
 								<?php foreach($DOC->attachments() as $attachment): ?>
-									<li><a class="tooltipped" href="#" data-position="bottom" data-tooltip="<?= $TXT->AttachmentsDelete ?>"  onClick="return(confirm('<?= str_replace(["'",'"'],"\'",$TXT->AttachmentsDeleteConfirm) ?>'))"><i class="material-icons" style="font-size: 13px;">delete</i></a> <?= $attachment->label ?></li>
+									<li>- <?= $attachment->label ?></li>
 								<?php endforeach; ?>
 							</div><!-- /row -->
 						</div><!-- /modal-content-->
