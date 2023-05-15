@@ -18,6 +18,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Editor full WYSIWYG
 - Support for math KaTeX
 - Unlimited page revisions
+- Uploading and downloading Attachments
 - Uploading images (also from clipboard)
 - Content can be categorized in namespaces
 - Automatic generated index and sitemap
