@@ -153,6 +153,7 @@ final class Document{
 				// skip directories
 				if(is_dir($this->DIR."/".$element_fe)){continue;}
 				$file_extension=explode(".",$element_fe);
+				// check extensions
 				if(!in_array(end($file_extension),array("png","gif","jpg","jpeg","svg"))){continue;}
 				// add element to documents array
 				$images_array[]=$element_fe;
@@ -162,6 +163,35 @@ final class Document{
 		sort($images_array);
 		// return
 		return $images_array;
+	}
+
+	/**
+	 * Document attachments
+	 *
+	 * @return array of attachments
+	 */
+	public function attachments():array{
+		// definition
+		$attachments_array=array();
+		// check directory
+		if(is_dir($this->DIR)){
+			// scan directory for documents
+			$elements=scandir($this->DIR);
+			// cycle all elements
+			foreach($elements as $element_fe){
+				// skip directories
+				if(is_dir($this->DIR."/".$element_fe)){continue;}
+				$file_extension=explode(".",$element_fe);
+				// check extensions
+				if(!in_array(end($file_extension),array("pdf","doc","docx","xls","xlsx","ppt","pptx"))){continue;}
+				// add element to documents array
+				$attachments_array[]=$element_fe;
+			}
+		}
+		// sort attachments
+		sort($attachments_array);
+		// return
+		return $attachments_array;
 	}
 
 	/**
