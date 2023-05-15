@@ -87,6 +87,16 @@ final class Document{
 		$content=$this->loadContent("WEB");
 		// add content or if content is null add document title to source code
 		if($content!=false){$source=$content;}else{$source="# ".$this->TITLE."\n";}
+		// check for attachments
+		$attachments_array=$this->attachments();
+		if(count($attachments_array)){
+			// build attachments index
+			$source.="\n\n___\n";
+			// cycle all attachments
+			foreach($attachments_array as $attachment_fe){
+				$source.="- [".$attachment_fe->label."](".$attachment_fe->url.")\n";
+			}
+		}
 		// search for sub-documents
 		$sub_documents=Document::index($this->ID);
 		// check for elements
@@ -96,6 +106,7 @@ final class Document{
 			// cycle all elements
 			foreach($sub_documents as $sub_element_fe){
 				// add element list
+				wdf_dump($sub_element_fe->url);
 				$source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
 				// search for sub-sub-documents
 				$sub_sub_documents=Document::index($sub_element_fe->url);
@@ -184,8 +195,12 @@ final class Document{
 				$file_extension=explode(".",$element_fe);
 				// check extensions
 				if(!in_array(end($file_extension),array("pdf","doc","docx","xls","xlsx","ppt","pptx"))){continue;}
+				// make element
+				$attachment=new stdClass();
+				$attachment->label=$element_fe;
+				$attachment->url=substr(URL,0,-1).$this->PATH."/".$element_fe;
 				// add element to documents array
-				$attachments_array[]=$element_fe;
+				$attachments_array[]=$attachment;
 			}
 		}
 		// sort attachments
