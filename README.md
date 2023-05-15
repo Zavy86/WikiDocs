@@ -120,8 +120,10 @@ services:
 ### Contributors
 - [**Amin Persia**](https://github.com/leomoon)
 - [**Alex Meyer**](https://github.com/reyemxela)
-- [**Bo Allen**](https://github.com/bitwisecreative)
 - [**Micha**](https://github.com/serial)
+- [**Bo Allen**](https://github.com/bitwisecreative)
+- [**Jv3ga**](https://github.com/jv3ga)
+- [**Sam**](https://github.com/sam-6174)
 
 ## License
 Code released under the MIT License
