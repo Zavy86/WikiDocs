@@ -138,7 +138,8 @@
 				<?php if(MODE=="edit"): ?>
 					<span class="right nowrap">
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light grey" href="<?= $DOC->URL ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipCancelEditing ?>"><i class="material-icons">cancel</i></a>
-            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_uploader" data-position="bottom" data-tooltip="<?= $TXT->TooltipImages ?>"><i class="material-icons">image</i></a>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_image_uploader" data-position="bottom" data-tooltip="<?= $TXT->TooltipImages ?>"><i class="material-icons">image</i></a>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light purple modal-trigger" href="#modal_attachment_uploader" data-position="bottom" data-tooltip="<?= $TXT->TooltipImages ?>"><i class="material-icons">attachment</i></a>
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?= $APP->PATH ?>submit.php?act=content_delete&document=<?= $DOC->ID ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipDeleteDocument ?>" onClick="return(confirm('<?= str_replace(["'",'"'],"\'",$TXT->TooltipDeleteDocumentConfirm) ?>'))"><i class="material-icons">delete</i></a>
             <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="<?= $TXT->TooltipVersioning ?>"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
             <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="<?= $TXT->TooltipSave ?>"><i class="material-icons">save</i></button>
@@ -181,11 +182,11 @@
 					</form>
 				<?php endif; ?>
 				<?php if(MODE=="edit"): ?>
-					<!-- modal_uploader -->
-					<div id="modal_uploader" class="modal">
+					<!-- modal_image_uploader -->
+					<div id="modal_image_uploader" class="modal">
 						<div class="modal-content">
 							<h4><?= $TXT->Images ?></h4>
-							<form id="uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
+							<form id="images-uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
 								<input type="hidden" name="document" value="<?= $DOC->ID ?>">
 								<div class="row" style="margin-top:36px">
 									<div class="input-field file-field col s9">
@@ -194,7 +195,7 @@
 											<input type="file" name="image" required>
 										</div><!-- /btn -->
 										<div class="file-path-wrapper">
-											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>..">
+											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>.. (png, jpg, gif, svg)">
 										</div><!-- /file-path-wrapper -->
 									</div><!-- /input-field -->
 									<div class="input-field col s3">
@@ -210,7 +211,35 @@
 								<?php endforeach; ?>
 							</div><!-- /row -->
 						</div><!-- /modal-content-->
-					</div><!-- /modal_uploader -->
+					</div><!-- /modal_image_uploader -->
+					<!-- modal_attachment_uploader -->
+					<div id="modal_attachment_uploader" class="modal">
+						<div class="modal-content">
+							<h4><?= $TXT->Attachments ?></h4>
+							<form id="attachments-uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=attachment_upload_ajax" enctype="multipart/form-data">
+								<input type="hidden" name="document" value="<?= $DOC->ID ?>">
+								<div class="row" style="margin-top:36px">
+									<div class="input-field file-field col s9">
+										<div class="btn waves-effect waves-light main-color">
+											<span><?= $TXT->AttachmentsBrowse ?></span>
+											<input type="file" name="attachment" required>
+										</div><!-- /btn -->
+										<div class="file-path-wrapper">
+											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>.. (pdf, doc/x, xls/x, ppt/x)">
+										</div><!-- /file-path-wrapper -->
+									</div><!-- /input-field -->
+									<div class="input-field col s3">
+										<input id="uploader-submit" type="submit" class="btn main-color right" value="<?= $TXT->AttachmentsSubmit ?>">
+									</div><!-- /input-field -->
+								</div><!-- /row -->
+							</form>
+							<ul id="attachments-list">
+								<?php foreach($DOC->attachments() as $attachment): ?>
+									<li>- <?= $attachment->label ?></li>
+								<?php endforeach; ?>
+							</div><!-- /row -->
+						</div><!-- /modal-content-->
+					</div><!-- /modal_attachment_uploader -->
 				<?php endif; ?>
 				<?php if(MODE=="search"): ?>
 					<article>
@@ -282,6 +311,7 @@
 	<script src="<?= $APP->PATH ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
 	<script src="<?= $APP->PATH ?>scripts/editor.js"></script>
 	<script src="<?= $APP->PATH ?>scripts/images.js"></script>
+	<script src="<?= $APP->PATH ?>scripts/attachments.js"></script>
 <?php endif; ?>
 <?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")): ?>
 	<script>if(confirm("<?= str_replace(["'",'"'],"\'",$TXT->ConfirmLoadDraft) ?>")){window.location.replace(window.location+"&draft=1");}</script>

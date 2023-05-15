@@ -18,7 +18,7 @@ $('body').on('click','.image-picker',function(){
 /**
  * Form upload
  */
-$("#uploader-form").on('submit',(function(e){
+$("#images-uploader-form").on('submit',(function(e){
 	// prevent default submit
 	e.preventDefault();
 	// lock buttons
