@@ -13,7 +13,10 @@
 body{font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
 /* bidirectional language support */
-h1,h2,h3,h4,h5,h6,p,code,th,td{unicode-bidi:plaintext;text-align:start;}
+h1,h2,h3,h4,h5,h6,p,code,th,td,div,input{unicode-bidi:plaintext;text-align:start;}
+input:-moz-placeholder{unicode-bidi: plaintext;text-align:start;}
+input:-ms-input-placeholder{unicode-bidi: plaintext;text-align:start;}
+input::-webkit-input-placeholder{unicode-bidi: plaintext;text-align:start;}
 
 /* headers */
 h1,h2,h3,h4,h5,h6{color:var(--theme-color);font-weight:300;line-height:110%;}
