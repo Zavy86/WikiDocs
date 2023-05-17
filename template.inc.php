@@ -297,7 +297,7 @@
 </main>
 <script>var APP=<?= json_encode($APP->export()) ?>;</script>
 <script>var DOC=<?= json_encode($DOC->export()) ?>;</script>
-<script src="<?= $APP->PATH ?>helpers/jquery-3.3.1/js/jquery.min.js"></script>
+<script src="<?= $APP->PATH ?>helpers/jquery-3.7.0/js/jquery.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/js/highlight.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/katex.min.js"></script>
