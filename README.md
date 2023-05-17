@@ -119,12 +119,13 @@ services:
 - [Contacts](mailto://manuel.zavatta@gmail.com)
 
 ### Contributors
-- [**Amin Persia**](https://github.com/leomoon)
-- [**Alex Meyer**](https://github.com/reyemxela)
-- [**Micha**](https://github.com/serial)
-- [**Bo Allen**](https://github.com/bitwisecreative)
-- [**Jv3ga**](https://github.com/jv3ga)
-- [**Sam**](https://github.com/sam-6174)
+- [Amin Persia](https://github.com/leomoon)
+- [Alex Meyer](https://github.com/reyemxela)
+- [Micha](https://github.com/serial)
+- [Bo Allen](https://github.com/bitwisecreative)
+- [Jv3ga](https://github.com/jv3ga)
+- [Sam](https://github.com/sam-6174)
+- [kevwkev](https://github.com/kevwkev)
 
 ## License
 Code released under the MIT License
