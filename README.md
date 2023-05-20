@@ -8,7 +8,7 @@ Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_
 
-[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.it/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://www.youtube.com/watch?v=NFILGeozt7k "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
+[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.it/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://www.youtube.com/watch?v=NFILGeozt7k "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
 ## Features
 - Open source
