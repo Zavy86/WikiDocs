@@ -18,6 +18,8 @@ switch(ACT){
 	case "content_delete":content_delete();break;
 	// images
 	case "image_upload_ajax":image_upload_ajax();break;
+	// attachments
+	case "attachment_upload_ajax":attachment_upload_ajax();break;
 	// drafts
 	case "draft_save_ajax":draft_save_ajax();break;
 	/** @todo case "image_delete_ajax":image_delete_ajax();break; */
@@ -219,7 +221,7 @@ function image_upload_ajax(){
 		$image['name']=md5(date("YmdHisu")).".".$image['ext'];
 	}
 	// check extension
-	if(!in_array($image['ext'],array("png","gif","jpg","jpeg","svg"))){
+	if(!in_array($image['ext'],array("png","jpg","jpeg","gif","svg"))){
 		// error
 		echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$image));
 		// return
@@ -249,6 +251,80 @@ function image_upload_ajax(){
 	if($uploaded){
 		// success
 		echo json_encode(array("error"=>null,"code"=>"image_uploaded","name"=>$file_name,"path"=>$DOC->PATH."/".$file_name,"size"=>$image['size']));
+		// return
+		return true;
+	}else{
+		// error
+		echo json_encode(array("error"=>1,"code"=>"uploading_error"));
+		// return
+		return false;
+	}
+}
+
+/**
+ * Atachment Upload (AJAX)
+ */
+function attachment_upload_ajax(){
+	// acquire variables
+	$p_document=strtolower($_POST['document']);
+	// check authentication
+	if(Session::getInstance()->autenticationLevel()!=2){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
+		// return
+		return false;
+	}
+	// check document path
+	if(!strlen($p_document)){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"document_empty"));
+		// return
+		return false;
+	}
+	// initialize document
+	$DOC=new Document($p_document);
+	// check for directory or make it
+	if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
+	// check for file
+	if(!isset($_FILES['attachment'])||!is_uploaded_file($_FILES['attachment']['tmp_name'])||$_FILES["attachment"]["error"]>0){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"file_error"));
+		// return
+		return false;
+	}
+	// make attachment
+	$attachment=$_FILES['attachment'];
+	$attachment['ext']=strtolower(pathinfo($_FILES['attachment']['name'],PATHINFO_EXTENSION));
+	// check extension
+	if(!in_array($attachment['ext'],array("pdf","doc","docx","xls","xlsx","ppt","pptx"))){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$attachment));
+		// return
+		return false;
+	}
+	// check file type
+	if(!in_array($attachment["type"],array(
+		"application/pdf",
+		"application/msword",
+		"application/vnd.ms-excel",
+		"application/vnd.ms-powerpoint",
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		"application/vnd.openxmlformats-officedocument.presentationml.presentation"
+	))){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"file_not_allowed","file"=>$attachment));
+		// return
+		return false;
+	}
+	// make file name
+	$file_name=strtolower(str_replace(" ","-",$attachment['name']));
+	// move temporary file
+	$uploaded=move_uploaded_file($attachment['tmp_name'],$DOC->DIR.$file_name);
+	// check for uploaded
+	if($uploaded){
+		// success
+		echo json_encode(array("error"=>null,"code"=>"attachment_uploaded","name"=>$file_name,"path"=>$DOC->PATH."/".$file_name,"size"=>$attachment['size']));
 		// return
 		return true;
 	}else{

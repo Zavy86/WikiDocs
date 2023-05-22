@@ -132,7 +132,7 @@ if($g_act=="store"){
 		</div><!-- /col -->
 	</div><!-- /row-->
 </div><!-- /container-->
-<script src="helpers/jquery-3.3.1/js/jquery.min.js"></script>
+<script src="helpers/jquery-3.7.0/js/jquery.min.js"></script>
 <script src="helpers/materialize-1.0.0/js/materialize.min.js"></script>
 <script>
 	document.addEventListener('DOMContentLoaded',function(){
