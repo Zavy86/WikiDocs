@@ -13,6 +13,7 @@ final class Document{
 	protected string $URL;
 	protected string $DIR;
 	protected string $TITLE;
+	protected string $VERSION;
 	protected ?string $FILE;
 	protected ?int $TIMESTAMP;
 
@@ -28,6 +29,7 @@ final class Document{
 		$this->URL=URL.$this->ID;
 		$this->DIR=ROOT.$this->PATH."/";
 		$this->TITLE=self::getTitle($this->ID);
+		$this->VERSION=(strlen($_GET['version']??'')?$_GET['version']:"latest");
 		$this->FILE=$this->DIR."content.md";
 		$this->TIMESTAMP=null;
 		// check if file exist
@@ -63,10 +65,16 @@ final class Document{
 	 * @return string Content markdown source code
 	 */
 	public function loadContent($paths="WEB"):string{
+		// check for specific version
+		if($this->VERSION!=="latest"){
+			$file_path=$this->DIR."versions/".$this->VERSION.".md";
+			// check if exists or fallback to default file
+			if(!file_exists($file_path)){$file_path=$this->FILE ?? '';}
+		}else{$file_path=$this->FILE ?? '';}
 		// check if file exist
-		if(!file_exists($this->FILE ?? '')){return false;}
+		if(!file_exists($file_path)){return false;}
 		// load content from file
-		$content=file_get_contents($this->FILE);
+		$content=file_get_contents($file_path);
 		// replace path placeholders
 		switch(strtoupper(trim($paths))){
 			case "WEB":$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(PATH,$this->PATH."/"),$content);break;
@@ -106,7 +114,7 @@ final class Document{
 			// cycle all elements
 			foreach($sub_documents as $sub_element_fe){
 				// add element list
-				wdf_dump($sub_element_fe->url);
+				//wdf_dump($sub_element_fe->url);
 				$source.="- [".$sub_element_fe->label."](".PATH.$sub_element_fe->url.")\n";
 				// search for sub-sub-documents
 				$sub_sub_documents=Document::index($sub_element_fe->url);
@@ -207,6 +215,39 @@ final class Document{
 		sort($attachments_array);
 		// return
 		return $attachments_array;
+	}
+
+	/**
+	 * Document versions
+	 *
+	 * @return array of versions
+	 */
+	public function versions():array{
+		// definition
+		$versions_array=array();
+		// check directory
+		if(is_dir($this->DIR."/versions/")){
+			// scan directory for documents
+			$elements=scandir($this->DIR."/versions/");
+			// cycle all elements
+			foreach($elements as $element_fe){
+				// skip directories
+				if(is_dir($this->DIR."/versions/".$element_fe)){continue;}
+				$file_extension=explode(".",$element_fe);
+				// check extensions
+				if(end($file_extension)!=='md'){continue;}
+				// make element
+				$version=new stdClass();
+				$version->label=$element_fe;
+				$version->url=$this->URL."?version=".substr($element_fe,0,-3);
+				// add element to documents array
+				$versions_array[]=$version;
+			}
+		}
+		// sort versions
+		sort($versions_array);
+		// return
+		return $versions_array;
 	}
 
 	/**
