@@ -15,6 +15,7 @@ switch(ACT){
 	case "authentication":authentication();break;
 	// contents
 	case "content_save":content_save();break;
+	case "content_restore":content_restore();break;
 	case "content_delete":content_delete();break;
 	// images
 	case "image_upload_ajax":image_upload_ajax();break;
@@ -136,6 +137,51 @@ function content_save(){
 		wdf_alert($TXT->SubmitDocumentError,"danger");
 	}
 	// redirect
+	wdf_redirect(PATH.$p_document);
+}
+
+/**
+ * Content Restore
+ */
+function content_restore(){
+	// get localization
+	$TXT=Localization::getInstance();
+	// debug
+	wdf_dump($_REQUEST,"_REQUEST");
+	// acquire variables
+	$p_document=strtolower($_GET['document']);
+	// check authentication
+	if(Session::getInstance()->autenticationLevel()!=2){
+		// alert and redirect
+		wdf_alert($TXT->SubmitNotAuthenticated,"danger");
+		wdf_redirect(PATH.$p_document);
+	}
+	// check document path
+	if(!strlen($p_document)){
+		// alert and redirect
+		wdf_alert($TXT->SubmitDocumentPathCannotBeEmpty,"danger");
+		wdf_redirect(PATH);
+	}
+	// initialize document
+	$DOC=new Document($p_document);
+	wdf_dump($DOC,'DOC');
+	// check if version exixts
+	if(!file_exists($DOC->DIR."versions/".$DOC->VERSION.".md")){
+		// alert and redirect
+		wdf_alert($TXT->SubmitDocumentVersionNotFound,"danger");
+		wdf_redirect(PATH);
+	}
+	// check for content file
+	if(file_exists($DOC->DIR."content.md")){
+		// check for revisions directory
+		if(!is_dir($DOC->DIR."versions")){mkdir($DOC->DIR."versions",0755,true);}
+		// store current version
+		rename($DOC->DIR."content.md",$DOC->DIR."versions/".date("Ymd_His").".md");
+	}
+	// restore selected version
+	copy($DOC->DIR."versions/".$DOC->VERSION.".md",$DOC->DIR."content.md");
+	// alert and redirect
+	wdf_alert($TXT->SubmitDocumentRestored,"warning");
 	wdf_redirect(PATH.$p_document);
 }
 

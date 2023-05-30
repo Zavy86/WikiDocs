@@ -131,6 +131,7 @@
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $APP->PATH ?>settings.php" data-position="bottom" data-tooltip="<?= $TXT->TooltipSettings ?>"><i class="material-icons">settings</i></a>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="#" data-position="bottom" data-tooltip="<?= $TXT->TooltipNewDocument ?>" onClick="new_document();"><i class="material-icons">add_circle</i></a>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?edit" ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipEditDocument ?>"><i class="material-icons">border_color</i></a>
+							<?php if($DOC->VERSION!=="latest"): ?><a class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" href="<?= $APP->PATH ?>submit.php?act=content_restore&document=<?= $DOC->ID ?>&version=<?= $DOC->VERSION ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipRestoreVersion ?>" onClick="return(confirm('<?= str_replace(["'",'"'],"\'",$TXT->TooltipRestoreVersionConfirm) ?>'))"><i class="material-icons">update</i></a><?php endif; ?>
 						<?php else: ?>
 							<a class="btn btn-floating btn-small tooltipped waves-effect waves-light main-color" href="<?= $DOC->URL."?auth" ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipSignIn ?>"><i class="material-icons">lock_open</i></a>
 						<?php endif; ?>
@@ -142,7 +143,8 @@
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light blue modal-trigger" href="#modal_image_uploader" data-position="bottom" data-tooltip="<?= $TXT->TooltipImages ?>"><i class="material-icons">image</i></a>
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light purple modal-trigger" href="#modal_attachment_uploader" data-position="bottom" data-tooltip="<?= $TXT->Attachments ?>"><i class="material-icons">attachment</i></a>
             <a class="btn btn-floating btn-small tooltipped waves-effect waves-light red" href="<?= $APP->PATH ?>submit.php?act=content_delete&document=<?= $DOC->ID ?>" data-position="bottom" data-tooltip="<?= $TXT->TooltipDeleteDocument ?>" onClick="return(confirm('<?= str_replace(["'",'"'],"\'",$TXT->TooltipDeleteDocumentConfirm) ?>'))"><i class="material-icons">delete</i></a>
-            <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light orange" data-position="bottom" data-tooltip="<?= $TXT->TooltipVersioning ?>"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
+            <a class="btn btn-floating btn-small tooltipped waves-effect waves-light orange modal-trigger" href="#modal_versions" data-position="bottom" data-tooltip="<?= $TXT->TooltipVersions ?>"><i class="material-icons">history</i></a>
+            <button id="editor-revision" class="btn btn-floating btn-small tooltipped waves-effect waves-light amber" data-position="bottom" data-tooltip="<?= $TXT->TooltipVersioning ?>"><i id="editor-revision-checkbox" class="material-icons">check_box</i></button>
             <button id="editor-save" class="btn btn-floating btn-small tooltipped waves-effect waves-light green" data-position="bottom" data-tooltip="<?= $TXT->TooltipSave ?>"><i class="material-icons">save</i></button>
           </span>
 				<?php endif; ?>
@@ -238,9 +240,20 @@
 								<?php foreach($DOC->attachments() as $attachment): ?>
 									<li>- <?= $attachment->label ?></li>
 								<?php endforeach; ?>
-							</div><!-- /row -->
+							</ul><!-- /row -->
 						</div><!-- /modal-content-->
 					</div><!-- /modal_attachment_uploader -->
+					<!-- modal_version_uploader -->
+					<div id="modal_versions" class="modal">
+						<div class="modal-content">
+							<h4><?= $TXT->Versions ?></h4>
+							<ul id="versions-list">
+								<?php foreach($DOC->versions() as $version): ?>
+									<li>- <a href="<?= $version->url ?>"><?= $version->label ?></a></li>
+								<?php endforeach; ?>
+							</ul><!-- /row -->
+						</div><!-- /modal-content-->
+					</div><!-- /modal_version_uploader -->
 				<?php endif; ?>
 				<?php if(MODE=="search"): ?>
 					<article>
