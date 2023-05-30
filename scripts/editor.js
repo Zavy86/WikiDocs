@@ -10,6 +10,7 @@
  */
 var simplemde=new EasyMDE({
 	element:document.getElementById("simplemde"),
+	autoDownloadFontAwesome:false,
 	spellChecker:false,
 	autofocus:true,
 	forceSync:true,
