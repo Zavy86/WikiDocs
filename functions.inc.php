@@ -83,3 +83,51 @@ function wdf_timestamp_format(?int $timestamp,string $format="Y-m-d H:i:s"){
 	// return date time formatted
 	return $datetime->format($format);
 }
+
+/**
+ * Regenerate Sitemap
+ */
+function wdf_regenerate_sitemap(){
+	$baseURL=URL;
+	$lastMod=date('Y-m-d\TH:i:sP',Document::getUpdateDate("/homepage"));
+	// open sitemap
+	$sitemap=<<<EOS
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url>
+  <loc>$baseURL</loc>
+  <lastmod>$lastMod</lastmod>
+ </url>
+
+EOS;
+	// add documents from root
+	$sitemap.=wdf_regenerate_sitemap_documents();
+	// close sitemap
+	$sitemap.=<<<EOS
+</urlset>
+
+EOS;
+	// write sitemap to file
+	file_put_contents(DIR."sitemap.xml",$sitemap);
+}
+function wdf_regenerate_sitemap_documents(?string $parent=null){
+	$sitemap='';
+	$documents=Document::index($parent);
+	// cycle all documents
+	foreach($documents as $document){
+		// set variables
+		$url=URL.$document->url;
+		$lastMod=date('Y-m-d\TH:i:sP',Document::getUpdateDate($document->url));
+		// add to sitemap
+		$sitemap.=<<<EOS
+ <url>
+  <loc>$url</loc>
+  <lastmod>$lastMod</lastmod>
+ </url>
+
+EOS;
+		// add sub documents recursively
+		$sitemap.= wdf_regenerate_sitemap_documents($document->url);
+	}
+	return $sitemap;
+}

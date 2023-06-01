@@ -136,6 +136,8 @@ function content_save(){
 	}else{
 		wdf_alert($TXT->SubmitDocumentError,"danger");
 	}
+	// regenerate sitemap
+	wdf_regenerate_sitemap();
 	// redirect
 	wdf_redirect(PATH.$p_document);
 }
@@ -180,6 +182,8 @@ function content_restore(){
 	}
 	// restore selected version
 	copy($DOC->DIR."versions/".$DOC->VERSION.".md",$DOC->DIR."content.md");
+	// regenerate sitemap
+	wdf_regenerate_sitemap();
 	// alert and redirect
 	wdf_alert($TXT->SubmitDocumentRestored,"warning");
 	wdf_redirect(PATH.$p_document);
@@ -217,6 +221,8 @@ function content_delete(){
 	wdf_dump($trash_id);
 	// move document to trash
 	if(is_dir($DOC->DIR)){rename($DOC->DIR,DIR."datasets/trash/".$trash_id);}
+	// regenerate sitemap
+	wdf_regenerate_sitemap();
 	// alert and redirect
 	wdf_alert($TXT->SubmitDocumentDeleted,"warning");
 	wdf_redirect(PATH);

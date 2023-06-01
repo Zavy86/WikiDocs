@@ -309,7 +309,23 @@ final class Document{
 		return $title;
 	}
 
-
+	/**
+	 * Document Update Date
+	 *
+	 * @param string $document Document ID
+	 * @return integer Update Date
+	 */
+	static function getUpdateDate(string $document):string{
+		$date=0;
+		// make path
+		$content_path=DIR."datasets/documents/".$document."/content.md";
+		// load content line by line to find document title if exist
+		if(file_exists($content_path)){
+			$date=filemtime($content_path);
+		}
+		// return
+		return $date;
+	}
 
 	/**
 	 * Document list in path
