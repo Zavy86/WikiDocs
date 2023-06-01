@@ -26,6 +26,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Syntax highlighting
 - Multi language
 - Dark mode
+- Sitemap
 - and many more...
 
 ## Demo
