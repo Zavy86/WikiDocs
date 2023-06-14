@@ -1,7 +1,5 @@
 # Wiki|Docs
 
-> **WARNING** - UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED (read later)
-
 Just a databaseless markdown flat-file wiki engine.
 
 Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
@@ -67,13 +65,6 @@ services:
     volumes:
       - /path/to/local/wikidocs/datasets/or/volume:/datasets
 ```
-
-## Upgrade
-
-> **WARNING** UPDATE FROM VERSION <0.4.4 to 0.5.0> MANUAL PROCEDURE REQUIRED
-- Move trash directory to datasets/trash
-- Move documents directory to datasets/documents
-- Move config.inc.php to datasets/config.inc.php
 
 ## Apache Configuration
 
