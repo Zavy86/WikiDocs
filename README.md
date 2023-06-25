@@ -118,6 +118,7 @@ services:
 - [Jv3ga](https://github.com/jv3ga)
 - [Sam](https://github.com/sam-6174)
 - [kevwkev](https://github.com/kevwkev)
+- [Сергей Ворон](https://github.com/vorons)
 
 ## License
 Code released under the MIT License
