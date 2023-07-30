@@ -7,4 +7,3 @@ datasets/trash/*
 !datasets/documents/.gitkeep
 !datasets/trash/.gitkeep
 !index.php
-docker-compose.yaml
