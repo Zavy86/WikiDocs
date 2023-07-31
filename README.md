@@ -119,6 +119,7 @@ services:
 - [Sam](https://github.com/sam-6174)
 - [kevwkev](https://github.com/kevwkev)
 - [Сергей Ворон](https://github.com/vorons)
+- [Nicolas Prenveille](https://github.com/nicolas35380)
 
 ## License
 Code released under the MIT License
