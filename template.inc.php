@@ -9,6 +9,7 @@
  * @var Document $DOC
  * @var Localization $TXT
  * @var ParsedownExtra $PARSER
+ * @var Theme $THEME
  */
 ?>
 <!DOCTYPE html>
@@ -20,8 +21,8 @@
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-<?= ($APP->DARK?"dark":"light") ?>.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/<?= $THEME->StyleCss ?>.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/<?= $THEME->StyleCss ?>-<?= ($APP->DARK?"dark":"light") ?>.css" media="screen,projection"/>
 	<link type="image/ico" rel="icon" href="<?= $APP->PATH ?>favicon.ico" sizes="any"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta name="theme-color" content="<?= $APP->COLOR ?>">
@@ -95,7 +96,7 @@
 	<div class="sidebar-footer"> <!-- @todo migliorare -->
 		<div id="sidebar-footer-content">
 			<span class="default-title"><?= $APP->OWNER ?></span><br>
-			<span class="default-description"><?= $APP->NOTICE ?></span>
+			<span class="default-description"><?= $APP->NOTICE ?></span><br />
 		</div>
 	</div>
 </header>

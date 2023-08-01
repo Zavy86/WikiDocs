@@ -1,0 +1,7 @@
+{
+	"Name": "Default",
+	"Description": "Default Wiki|Docs theme",
+	"StyleCss": "styles",
+	"LightCss": "styles-light",
+	"DarkCss": "styles-dark"	
+}

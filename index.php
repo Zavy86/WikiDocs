@@ -21,6 +21,8 @@ define('MODE',$mode);
 define('SEARCH',(isset($_GET['search'])?htmlspecialchars($_GET['search']):null));
 // get localization
 $TXT=Localization::getInstance();
+// get theme
+$THEME=Theme::getInstance();
 // initialize application
 $APP=new WikiDocs();
 // initialize document

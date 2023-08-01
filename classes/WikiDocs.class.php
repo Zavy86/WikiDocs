@@ -24,6 +24,7 @@ final class WikiDocs{
 	protected bool $DARK;
 	protected bool $AUTHENTICATED;
 	protected string $MODE;
+	protected string $THEME;
 
 	/**
 	 * Constructor
@@ -45,6 +46,7 @@ final class WikiDocs{
 		$this->DIR=DIR;
 		$this->AUTHENTICATED=Session::getInstance()->isAuthenticated();
 		$this->MODE=MODE;
+		$this->THEME=THEME;
 		// check for color
 		if(substr($this->COLOR,0,1)!="#"){$this->COLOR="#4CAF50";}
 		if(!is_bool($this->DARK)){$this->DARK=false;}

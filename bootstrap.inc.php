@@ -18,6 +18,7 @@ if(version_compare(PHP_VERSION,'7.4.0')<0){die('Required at least PHP version 7.
 require_once(BASE.'functions.inc.php');
 require_once(BASE.'classes/WikiDocs.class.php');
 require_once(BASE.'classes/Localization.class.php');
+require_once(BASE.'classes/Theme.class.php');
 require_once(BASE.'classes/Document.class.php');
 require_once(BASE.'classes/Session.class.php');
 

@@ -9,6 +9,11 @@
 require_once("bootstrap.inc.php");
 // get localization
 $TXT=Localization::getInstance();
+
+// get theme
+$CSS=Theme::getInstance();
+
+
 // acquire variables
 $g_act=($_GET['act'] ?? '');
 // store action
@@ -31,6 +36,7 @@ if($g_act=="store"){
 	$config.="define('COLOR',\"".$_POST['color']."\");\n";
 	$config.="define('DARK',".(isset($_POST['dark'])?"true":"false").");\n";
 	$config.="define('GTAG',".($_POST['gtag']?"\"".$_POST['gtag']."\"":"null").");\n";
+	$config.="define('THEME',\"".$_POST['theme']."\");\n";
 	// write configuration file
 	file_put_contents(BASE."datasets/config.inc.php",$config);
 	// alert and redirect
@@ -43,7 +49,7 @@ if($g_act=="store"){
 <head>
 	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="helpers/materialize-1.0.0/css/materialize.min.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="styles/styles.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="styles/<?= $THEME->StyleCss ?>" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="styles/styles-<?= (DARK?"dark":"light") ?>.css" media="screen,projection"/>
 	<link  type="image/ico" rel="icon" href="favicon.ico" sizes="any"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -60,7 +66,7 @@ if($g_act=="store"){
 		</div><!-- /col -->
 		<div class="col s12">
 			<h2><?= $TXT->Settings ?></h2>
-			<p><?= $TXT->SettingsConfigure ?>..</p>
+			<p><?= $TXT->SettingsConfigure ?>.</p>
 			<form action="settings.php?act=store" method="post">
 				<div class="row">
 					<div class="input-field col s12 m5">
@@ -109,7 +115,15 @@ if($g_act=="store"){
 							<span><?= $TXT->SettingsDark ?></span>
 						</label>
 					</div>
-					<div class="input-field col s12 m5">
+					<div class="input-field col s12 m2">
+						<select name="theme" id="theme" class="validate" value="<?= THEME ?>">
+							<?php foreach(Theme::available() as $value=>$label): ?>
+								<option value="<?= $value ?>"<?= ($value==THEME?" selected":null) ?>><?= $label ?></option>
+							<?php endforeach; ?>
+						</select>
+						<label for="theme"><span class="green-text"><?= $TXT->SettingTheme ?></span></label>
+					</div>
+					<div class="input-field col s12 m3">
 						<input type="text" name="gtag" id="gtag" class="validate" placeholder="<?= $TXT->SettingsGtagPlaceholder ?>.. (like UA-123456789-1)" value="<?= GTAG ?>">
 						<label for="gtag"><span class="green-text"><?= $TXT->SettingsGtag ?></span></label>
 					</div>

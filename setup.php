@@ -57,6 +57,7 @@ if($g_act=="conclude"){
 	$config.="define('COLOR',\"#4CAF50\");\n";
 	$config.="define('DARK',false);\n";
 	$config.="define('GTAG',null);\n";
+	$config.="define('THEME',\"default-theme\");\n";
 	// write configuration file
 	file_put_contents($root_dir."datasets/config.inc.php",$config);
 	// build htacess file
