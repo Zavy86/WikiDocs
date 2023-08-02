@@ -96,7 +96,7 @@
 	<div class="sidebar-footer"> <!-- @todo migliorare -->
 		<div id="sidebar-footer-content">
 			<span class="default-title"><?= $APP->OWNER ?></span><br>
-			<span class="default-description"><?= $APP->NOTICE ?></span><br />
+			<span class="default-description"><?= $APP->NOTICE ?></span>
 		</div>
 	</div>
 </header>

@@ -9,11 +9,8 @@
 require_once("bootstrap.inc.php");
 // get localization
 $TXT=Localization::getInstance();
-
 // get theme
 $CSS=Theme::getInstance();
-
-
 // acquire variables
 $g_act=($_GET['act'] ?? '');
 // store action
