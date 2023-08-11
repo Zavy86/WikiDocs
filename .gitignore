@@ -1,6 +1,7 @@
 .htaccess
 robots.txt
 sitemap.xml
+styles/styles-custom.css
 datasets/config.inc.php
 datasets/documents/*
 datasets/trash/*

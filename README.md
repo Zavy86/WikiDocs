@@ -101,6 +101,12 @@ services:
 - Copy the configuration sample file `cp datasets/config.sample.inc.php datasets/config.inc.php`
 - Edit the configuration file `nano datasets/config.inc.php`
 
+## Customization
+
+You can customize the default template by creating the file `styles/styles-custom.css`.
+
+
+
 ## Developers
 
 ### Creator
