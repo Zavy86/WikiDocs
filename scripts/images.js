@@ -15,6 +15,39 @@ $('body').on('click','.image-picker',function(){
 	$("#modal_uploader").modal("close");
 });
 
+
+/*
+ * Image delete function in the modal of images-list
+ */
+document.querySelectorAll('.image-delete').forEach(item => {
+	item.addEventListener('click', event => {
+		let image_name = item.attributes.image.value;
+
+		$.ajax({
+			url: APP.PATH+"submit.php?act=image_delete_ajax",
+			type: "post",
+			dataType: "html",
+			data: "document="+DOC.ID+"&image_name="+image_name,
+			cache: false,
+			processData: false,
+			success: function( response ) {
+				let decodedResponse = JSON.parse(response);
+				console.log(decodedResponse.code + " => " + decodedResponse.file);
+
+				if ( decodedResponse.error === 1 ){
+					alert(decodedResponse.code);
+				} else {
+					let image_element = document.querySelector(`[image="${image_name}"]`).parentElement;
+					image_element.remove();
+				}
+			},
+			error:function(XMLHttpRequest,textStatus,errorThrown){
+				alert("Status: "+textStatus+" Error: "+errorThrown);
+			}
+		});
+	})
+})
+
 /**
  * Form upload
  */
@@ -132,3 +165,63 @@ window.addEventListener("paste",function(e){
 		}
 	});
 },false);
+
+
+
+document.addEventListener("dragover", function(event) {
+	event.preventDefault();
+});
+
+document.addEventListener("drop",function(event) {
+	//console.log(event);
+
+	for (let file of event.dataTransfer.files) {
+		//console.log(file);
+
+		getBase64(file).then(function(data) {
+			//console.log(data);
+
+			$.ajax({
+				url: APP.PATH+"submit.php?act=image_drop_upload_ajax",
+				type: "post",
+				dataType: "html",
+				data: "document="+DOC.ID+"&image_base64="+data+"&image_name="+file.name+"&directory="+DOC,
+				cache: false,
+				processData: false,
+				success: function( response ) {
+					let decodedResponse = JSON.parse(response);
+					console.log(decodedResponse.code + " => " + decodedResponse.path);
+
+					if ( decodedResponse.error === 1 ){
+						alert(decodedResponse.code);
+					} else {
+						let deletion_only_possible_after_save_text = $("#images-list input[name=lang_parseToJs_deletionText]").val();
+						let image  = '<div class="col s6 m3">';
+								image += '<a href="#" class="image-picker waves-effect waves-light" image="'+decodedResponse.name+'">';
+								image += '<img class="polaroid" src="'+decodedResponse.path+'">';
+								image += '</a>';
+								image += '<span class="center-align">'+deletion_only_possible_after_save_text+'</span>';
+								image += '</div>';
+
+						$("#images-list").append(image);
+						// add image to editor
+						simplemde.codemirror.replaceSelection('![]('+decodedResponse.path+')\n');
+					}
+				},
+				error:function(XMLHttpRequest,textStatus,errorThrown){
+					alert("Status: "+textStatus+" Error: "+errorThrown);
+				}
+			});
+
+		});
+	}
+});
+
+function getBase64(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
+}

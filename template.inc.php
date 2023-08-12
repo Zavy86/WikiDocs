@@ -208,9 +208,11 @@
 								</div><!-- /row -->
 							</form>
 							<div class="row" id="images-list">
+                <input type="hidden" name="lang_parseToJs_deletionText" value="<?= $TXT->ImageDeleteText_notSaved ?>">
 								<?php foreach($DOC->images() as $image): ?>
 									<div class="col s6 m3">
 										<a href="#" class="image-picker waves-effect waves-light" image="<?= $image ?>"><img class="polaroid" src="<?= $DOC->PATH."/".$image ?>"/></a>
+                    <a href="#" class="image-delete" image="<?= $image ?>"><?= $TXT->ImageDeleteText ?></a>
 									</div><!-- /col -->
 								<?php endforeach; ?>
 							</div><!-- /row -->
