@@ -30,6 +30,8 @@ class ParsedownFilter extends ParsedownExtended{
 	}
 
 	protected function filters(&$el){
+		if(!is_array($el)){return;}
+		if(!array_key_exists('name',$el)){return;}
 		if($el['name']=='a'){
 			$url=$el['attributes']['href'];
 			/***
