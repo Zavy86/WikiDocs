@@ -37,7 +37,7 @@ document.querySelectorAll('.image-delete').forEach(item => {
 				if ( decodedResponse.error === 1 ){
 					alert(decodedResponse.code);
 				} else {
-					let image_element = document.querySelector(`[image="${image_name}"]`).parentElement;
+					let image_element = document.querySelector(`#images-list [image="${image_name}"]`).parentElement;
 					image_element.remove();
 				}
 			},
@@ -126,7 +126,9 @@ function retrieveImageFromClipboardAsBase64(pasteEvent,callback,imageFormat){
 	}
 }
 
-// event listener
+/**
+ * Paste from clipboard - Event listener
+ */
 window.addEventListener("paste",function(e){
 	// handle the event
 	retrieveImageFromClipboardAsBase64(e, function(imageDataBase64){
@@ -167,7 +169,9 @@ window.addEventListener("paste",function(e){
 },false);
 
 
-
+/**
+ * Drag n Drop file uploader
+ */
 document.addEventListener("dragover", function(event) {
 	event.preventDefault();
 });
@@ -195,12 +199,10 @@ document.addEventListener("drop",function(event) {
 					if ( decodedResponse.error === 1 ){
 						alert(decodedResponse.code);
 					} else {
-						let deletion_only_possible_after_save_text = $("#images-list input[name=lang_parseToJs_deletionText]").val();
 						let image  = '<div class="col s6 m3">';
 								image += '<a href="#" class="image-picker waves-effect waves-light" image="'+decodedResponse.name+'">';
 								image += '<img class="polaroid" src="'+decodedResponse.path+'">';
 								image += '</a>';
-								image += '<span class="center-align">'+deletion_only_possible_after_save_text+'</span>';
 								image += '</div>';
 
 						$("#images-list").append(image);

@@ -208,14 +208,16 @@
 								</div><!-- /row -->
 							</form>
 							<div class="row" id="images-list">
-                <input type="hidden" name="lang_parseToJs_deletionText" value="<?= $TXT->ImageDeleteText_notSaved ?>">
 								<?php foreach($DOC->images() as $image): ?>
 									<div class="col s6 m3">
 										<a href="#" class="image-picker waves-effect waves-light" image="<?= $image ?>"><img class="polaroid" src="<?= $DOC->PATH."/".$image ?>"/></a>
-                    <a href="#" class="image-delete" image="<?= $image ?>"><?= $TXT->ImageDeleteText ?></a>
+                    <a href="#" class="image-delete" image="<?= $image ?>" style="display: block; text-align: center"><span class="fa fa-trash-o" aria-hidden="true"></span> &nbsp; <?= $TXT->ImageDeleteText ?></a>
 									</div><!-- /col -->
 								<?php endforeach; ?>
 							</div><!-- /row -->
+              <div class="row" id="images-info">
+                <i><small>* <?= $TXT->FilesDeleteInfoText ?></small></i>
+              </div>
 						</div><!-- /modal-content-->
 					</div><!-- /modal_image_uploader -->
 					<!-- modal_attachment_uploader -->
@@ -241,9 +243,12 @@
 							</form>
 							<ul id="attachments-list">
 								<?php foreach($DOC->attachments() as $attachment): ?>
-									<li>- <?= $attachment->label ?></li>
+									<li>- <?= $attachment->label ?> &nbsp; <a href="#" class="attachment-delete tooltipped" attachment="<?= $attachment->label ?>" data-position="top" data-tooltip="<?= $TXT->AttachmentsDelete ?>"><span class="fa fa-trash-o" aria-hidden="true"></span></a></li>
 								<?php endforeach; ?>
 							</ul><!-- /row -->
+              <div class="row" id="attachments-info">
+                <i><small>* <?= $TXT->FilesDeleteInfoText ?></small></i>
+              </div>
 						</div><!-- /modal-content-->
 					</div><!-- /modal_attachment_uploader -->
 					<!-- modal_version_uploader -->

@@ -47,3 +47,35 @@ $("#attachments-uploader-form").on('submit',(function(e){
 		}
 	});
 }));
+
+/*
+ * Attachment delete function
+ */
+document.querySelectorAll('.attachment-delete').forEach(item => {
+	item.addEventListener('click', event => {
+		let attachment_name = item.attributes.attachment.value;
+
+		$.ajax({
+			url: APP.PATH+"submit.php?act=attachment_delete_ajax",
+			type: "post",
+			dataType: "html",
+			data: "document="+DOC.ID+"&attachment_name="+attachment_name,
+			cache: false,
+			processData: false,
+			success: function( response ) {
+				let decodedResponse = JSON.parse(response);
+				console.log(decodedResponse.code + " => " + decodedResponse.file);
+
+				if ( decodedResponse.error === 1 ){
+					alert(decodedResponse.code);
+				} else {
+					let attachment_element = document.querySelector(`#attachments-list [attachment="${attachment_name}"]`).parentElement;
+					attachment_element.remove();
+				}
+			},
+			error:function(XMLHttpRequest,textStatus,errorThrown){
+				alert("Status: "+textStatus+" Error: "+errorThrown);
+			}
+		});
+	})
+})
