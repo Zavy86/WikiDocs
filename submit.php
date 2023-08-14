@@ -19,8 +19,11 @@ switch(ACT){
 	case "content_delete":content_delete();break;
 	// images
 	case "image_upload_ajax":image_upload_ajax();break;
+	case "image_drop_upload_ajax":image_drop_upload_ajax();break;
+	case "image_delete_ajax":image_delete_ajax();break;
 	// attachments
 	case "attachment_upload_ajax":attachment_upload_ajax();break;
+	case "attachment_delete_ajax":attachment_delete_ajax();break;
 	// drafts
 	case "draft_save_ajax":draft_save_ajax();break;
 	/** @todo case "image_delete_ajax":image_delete_ajax();break; */
@@ -244,7 +247,7 @@ function image_upload_ajax(){
 	// check document path
 	if(!strlen($p_document)){
 		// error
-		echo json_encode(array("error"=>1,"code"=>"document_empty"));
+		echo json_encode(array("error"=>1,"code"=>"document_empty", 'document' => $p_document));
 		// return
 		return false;
 	}
@@ -311,6 +314,99 @@ function image_upload_ajax(){
 		// return
 		return false;
 	}
+}
+
+/**
+ * Image Upload - drag-n-drop (AJAX)
+ */
+function image_drop_upload_ajax() {
+
+	$document = $_POST['document'];
+	$image_base64     = $_POST['image_base64'];
+	$image_filename   = $_POST['image_name'];
+
+	if(Session::getInstance()->autenticationLevel()!=2){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
+		// return
+		return false;
+	}
+
+	if(!strlen($image_base64)){
+		// error
+		echo json_encode(array("error"=>1,"code"=>"image_empty", 'file' => $image_filename));
+		// return
+		return false;
+	}
+
+	// initialize document
+	$DOC = new Document($document);
+	if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
+
+	// We need to remove the "data:image/{type};base64," amd split it into parts from $data
+	if (preg_match('/^data:image\/(\w+);base64,/', $image_base64, $type)) {
+		$image_base64 = substr($image_base64, strpos($image_base64, ',') + 1);
+		$type = strtolower($type[1]); // jpg, png, gif
+
+		//check for valid image type
+		if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
+			echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$image_filename));
+			return false;
+		}
+		$image_base64 = str_replace( ' ', '+', $image_base64 );
+		$image_base64 = base64_decode($image_base64);
+
+		if ($image_base64 === false) {
+			$args = [
+				'error' => 1,
+				'code' => 'base64_decode failed',
+				'file' => $image_filename
+			];
+			echo json_encode($args);
+			return false;
+		}
+	} else {
+		$args = [
+			'error' => 1,
+			'code' => 'did not match data URI with image data',
+			'file' => $image_filename
+		];
+		echo json_encode($args);
+		return false;
+	}
+
+	// create the filename for the image to store with the correct extension
+	$filename_parts             = explode('.', $image_filename);;
+	$filename_without_extension = $filename_parts[0];
+	$filename_cleaned           = strtolower(str_replace(" ","-",$filename_without_extension));
+	$filename                   = "{$filename_cleaned}.{$type}";
+
+	$filepath_absolute  = $DOC->DIR;
+	$filepath_relative  = $DOC->PATH;
+	$imageFile          = $filepath_absolute.$filename;
+
+	$file = file_put_contents($imageFile, $image_base64);
+
+	if ($file) {
+		$args = [
+			'error' => null,
+			'code' => 'image_uploaded',
+			'name' => $filename,
+			'path' => $filepath_relative."/".$filename
+		];
+		echo json_encode($args);
+		return true;
+	} else {
+		$args = [
+			'error' => 1,
+			'code' => 'image_not_uploaded',
+			'name' => $filename,
+			'path' => $filepath_relative."/".$filename
+		];
+		echo json_encode($args);
+		return false;
+	}
+
 }
 
 /**
@@ -383,6 +479,47 @@ function attachment_upload_ajax(){
 		// error
 		echo json_encode(array("error"=>1,"code"=>"uploading_error"));
 		// return
+		return false;
+	}
+}
+
+/**
+ * Attachment Delete (AJAX)
+ */
+function attachment_delete_ajax() {
+
+	$document             = $_POST['document'];
+	$attachment_filename  = $_POST['attachment_name'];
+
+	if (Session::getInstance()->autenticationLevel() != 2) {
+		// error
+		echo json_encode(array("error" => 1, "code" => "not_authenticated"));
+		// return
+		return false;
+	}
+
+	// initialize document
+	$DOC = new Document($document);
+	if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
+
+	if (empty($attachment_filename)) {
+		echo json_encode(array("error"=>1,"code"=>"filename_empty"));
+		return false;
+	}
+
+	$filename = $DOC->DIR.$attachment_filename;
+
+	if (file_exists($filename)) {
+		$attachment_deleted = unlink($filename);
+	} else {
+		echo json_encode(array("error"=>1,"code"=>"attachment_not_found","file"=>$filename));
+	}
+
+	if ($attachment_deleted) {
+		echo json_encode(array("error" => null, "code" => "attachment_deleted", "file" => $filename));
+		return true;
+	} else {
+		echo json_encode(array("error"=>1,"code"=>"attachment_not_deleted","file"=>$filename));
 		return false;
 	}
 }

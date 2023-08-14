@@ -390,7 +390,7 @@ final class Document{
 			}
 		}
 		// sort document array by title
-		asort($documents_array);
+		asort($documents_array, SORT_NATURAL);
 		// cycle all documents and build index array
 		foreach($documents_array as $url_fe=>$label_fe){
 			// build index element
