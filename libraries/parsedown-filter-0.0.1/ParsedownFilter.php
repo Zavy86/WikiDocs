@@ -20,10 +20,12 @@ class ParsedownFilter extends ParsedownExtended{
 	}
 
 	protected function element(array $Element){
-		if(is_string($Element['name'])){
-			$result=$this->filters($Element);
-			if($result===false){
-				// remove tag
+		if (isset($Element['name'])) {
+			if(is_string($Element['name'])){
+				$result=$this->filters($Element);
+				if($result===false){
+					// remove tag
+				}
 			}
 		}
 		return parent::element($Element);
