@@ -20,22 +20,18 @@ class ParsedownFilter extends ParsedownExtended{
 	}
 
 	protected function element(array $Element){
-		if (isset($Element['name'])) {
-			if(is_string($Element['name'])){
-				$result=$this->filters($Element);
-				if($result===false){
-					// remove tag
-				}
+		if(array_key_exists('name',$Element)){
+			$result=$this->filters($Element);
+			if($result===false){
+				// remove tag
 			}
 		}
 		return parent::element($Element);
 	}
 
-	protected function filters(&$el){
-		if(!is_array($el)){return;}
-		if(!array_key_exists('name',$el)){return;}
-		if($el['name']=='a'){
-			$url=$el['attributes']['href'];
+	protected function filters(array &$Element){
+		if($Element['name']=='a'){
+			$url=$Element['attributes']['href'];
 			/***
 			 * If there is no protocol handler, and the link is not an open protocol address,
 			 * the links must be relative, so we can return as there is nothing to do.
@@ -46,8 +42,8 @@ class ParsedownFilter extends ParsedownExtended{
 				}
 			}
 			if(strpos($url,$_SERVER["SERVER_NAME"])===false){
-				$el['attributes']['rel']='nofollow';
-				$el['attributes']['target']='_blank';
+				$Element['attributes']['rel']='nofollow';
+				$Element['attributes']['target']='_blank';
 			}
 		}
 	}
