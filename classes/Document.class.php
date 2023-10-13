@@ -447,7 +447,6 @@ final class Document{
 							// check for query word
 							if(stripos($buffer,$query_fe)!==false){
 								// highlight query word in buffer
-								//$buffer=str_ireplace($query_fe,"<mark>".$query_fe."</mark>",$buffer);
 								$buffer=self::highlighting($query_fe,$buffer);
 								$matches_array[$path_fe][$buffer_id]=$buffer;
 								// skip current file after 3 matches
