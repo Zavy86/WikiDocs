@@ -156,7 +156,20 @@
 			<div class="col s12 m10 offset-m1">
 				<?php if(MODE=="view"): ?>
 					<article>
-						<?= $PARSER->text($DOC->render())."\n" ?>
+						<?php
+							$source=$PARSER->text($DOC->render());
+							$source_array=preg_split("/((\r?\n)|(\r\n?))/",$source);
+							$source_final="\n";
+							// add anchor link to headers
+							foreach($source_array as $line){
+								if(in_array(substr($line,1,2),['h1','h2','h3','h4','h5','h6'])){
+									$anchor=substr($line,8,(strpos($line,'"',8)-8));
+									if($anchor){$line=substr($line,0,strpos($line,'>'))." title='#".$anchor."'><a href='#".$anchor."'></a".substr($line,strpos($line,'>',1));}
+								}
+								$source_final.=$line."\n";
+							}
+							echo $source_final;
+						?>
 					</article>
 				<?php endif; ?>
 				<?php if(MODE=="auth"): ?>
