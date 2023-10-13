@@ -347,7 +347,7 @@ final class Document{
 			// cycle all elements
 			foreach($elements as $element_fe){
 				// skip versioning and files
-				if(in_array($element_fe,array(".","..","versions","homepage"))){continue;}
+				if(in_array($element_fe,array(".","..","versions"))){continue;}
 				if(!is_dir($directory_path.$element_fe)){continue;}
 				// build directory
 				$document=new stdClass();
@@ -380,6 +380,7 @@ final class Document{
 		if(count($directories_array)){
 			// cycle all documents
 			foreach($directories_array as $document_fe){
+				if($document_fe->id=="homepage"){continue;}
 				// definitions
 				$document_url=$parent."/".$document_fe->id;
 				$document_label=Document::getTitle($document_url);
@@ -446,7 +447,8 @@ final class Document{
 							// check for query word
 							if(stripos($buffer,$query_fe)!==false){
 								// highlight query word in buffer
-								$buffer=str_ireplace($query_fe,"<mark>".$query_fe."</mark>",$buffer);
+								//$buffer=str_ireplace($query_fe,"<mark>".$query_fe."</mark>",$buffer);
+								$buffer=self::highlighting($query_fe,$buffer);
 								$matches_array[$path_fe][$buffer_id]=$buffer;
 								// skip current file after 3 matches
 								if(count($matches_array[$path_fe])>2){continue(3);}
@@ -458,6 +460,21 @@ final class Document{
 			}
 		}
 		return $matches_array;
+	}
+
+	private static function highlighting($search,$string){
+		$index=0;
+		$result="";
+		while($index<strlen($string)){
+			if(strtolower(substr($string,$index,strlen($search)))===strtolower($search)){
+				$result.="<mark>".substr($string,$index,strlen($search))."</mark>";
+				$index=$index+strlen($search);
+			}else{
+				$result.=substr($string,$index,1);
+				$index++;
+			}
+		}
+		return $result;
 	}
 
 }
