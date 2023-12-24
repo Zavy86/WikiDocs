@@ -65,53 +65,53 @@ if($g_act=="store"){
 				<div class="row">
 					<div class="input-field col s12 m5">
 						<input type="text" name="title" id="title" class="validate" value="<?= TITLE ?>" required>
-						<label for="title"><span class="green-text"><?= $TXT->SettingsTitle ?></span></label>
+						<label for="title"><span class="main-color-text"><?= $TXT->SettingsTitle ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
 						<input type="text" name="subtitle" id="subtitle" class="validate" value="<?= SUBTITLE ?>" required>
-						<label for="subtitle"><span class="green-text"><?= $TXT->SettingsSubtitle ?></span></label>
+						<label for="subtitle"><span class="main-color-text"><?= $TXT->SettingsSubtitle ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m5">
 						<input type="text" name="owner" id="owner" class="validate" placeholder="<?= $TXT->SettingsOwnerPlaceholder ?>" value="<?= OWNER ?>" required>
-						<label for="owner"><span class="green-text"><?= $TXT->SettingsOwner ?></span></label>
+						<label for="owner"><span class="main-color-text"><?= $TXT->SettingsOwner ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
 						<input type="text" name="notice" id="notice" class="validate" placeholder="<?= $TXT->SettingsNoticePlaceholder ?>" value="<?= NOTICE ?>" required>
-						<label for="notice"><span class="green-text"><?= $TXT->SettingsNotice ?></span></label>
+						<label for="notice"><span class="main-color-text"><?= $TXT->SettingsNotice ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m12">
 						<input type="text" name="privacy" id="privacy" class="validate" placeholder="<?= $TXT->SettingsPrivacyPlaceholder ?>" value="<?= PRIVACY ?>">
-						<label for="privacy"><span class="green-text"><?= $TXT->SettingsPrivacy ?></span></label>
+						<label for="privacy"><span class="main-color-text"><?= $TXT->SettingsPrivacy ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m5">
 						<input type="password" name="editcode" id="editcode" class="validate" placeholder="<?= $TXT->SettingsEditCodePlaceholder ?>.." value="<?= EDITCODE ?>" required>
-						<label for="editcode"><span class="green-text"><?= $TXT->SettingsEditCode ?></span></label>
+						<label for="editcode"><span class="main-color-textt"><?= $TXT->SettingsEditCode ?></span></label>
 					</div>
 					<div class="input-field col s12 m7">
 						<input type="password" name="viewcode" id="viewcode" class="validate" placeholder="<?= $TXT->SettingsViewCodePlaceholder ?>.." value="<?= VIEWCODE ?>">
-						<label for="viewcode"><span class="green-text"><?= $TXT->SettingsViewCode ?></span></label>
+						<label for="viewcode"><span class="main-color-text"><?= $TXT->SettingsViewCode ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s6 m3">
 						<input type="text" name="color" id="color" class="validate" placeholder="<?= $TXT->SettingsColorPlaceholder ?>.. (#4CAF50)" value="<?= COLOR ?>" required>
-						<label for="color"><span class="green-text"><?= $TXT->SettingsColor ?></span></label>
+						<label for="color"><span class="main-color-text"><?= $TXT->SettingsColor ?></span></label>
 					</div>
 					<div class="input-field col s6 m2">
 						<label for="check-dark">
-							<input type="checkbox" name="dark" id="check-dark"<?php if(DARK){echo " checked";}?>>
+							<input type="checkbox" name="dark" id="main-color-text"<?php if(DARK){echo " checked";}?>>
 							<span><?= $TXT->SettingsDark ?></span>
 						</label>
 					</div>
 					<div class="input-field col s12 m5">
 						<input type="text" name="gtag" id="gtag" class="validate" placeholder="<?= $TXT->SettingsGtagPlaceholder ?>.. (like UA-123456789-1)" value="<?= GTAG ?>">
-						<label for="gtag"><span class="green-text"><?= $TXT->SettingsGtag ?></span></label>
+						<label for="gtag"><span class="main-color-text"><?= $TXT->SettingsGtag ?></span></label>
 					</div>
 					<div class="input-field col s12 m2">
 						<select name="lang" id="lang" class="validate" value="<?= LANG ?>">
@@ -119,13 +119,13 @@ if($g_act=="store"){
 								<option value="<?= $value ?>"<?= ($value==LANG?" selected":null) ?>><?= $label ?></option>
 							<?php endforeach; ?>
 						</select>
-						<label for="lang"><span class="green-text"><?= $TXT->SettingsLanguage ?></span></label>
+						<label for="lang"><span class="main-color-text"><?= $TXT->SettingsLanguage ?></span></label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12 m12">
 						<button type="button" class="btn btn-block waves-effect waves-light grey left" onclick="location.href='<?= PATH ?>';"><?= $TXT->SettingsCancel ?><i class="material-icons left">keyboard_arrow_left</i></button>
-						<button type="submit" class="btn btn-block waves-effect waves-light green right"><?= $TXT->SettingsSubmit ?><i class="material-icons right">check</i></button>
+						<button type="submit" class="btn btn-block waves-effect waves-light main-color right"><?= $TXT->SettingsSubmit ?><i class="material-icons right">check</i></button>
 					</div>
 				</div>
 			</form>
