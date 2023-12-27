@@ -126,6 +126,7 @@ You can customize the default template by creating the file `styles/styles-custo
 - [kevwkev](https://github.com/kevwkev)
 - [Сергей Ворон](https://github.com/vorons)
 - [Nicolas Prenveille](https://github.com/nicolas35380)
+- [Antonio Rodrigues](https://github.com/aaadonai)
 
 ## License
 Code released under the MIT License
