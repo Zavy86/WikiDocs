@@ -62,6 +62,11 @@ img.polaroid{width:100%;height:auto;padding:9px;background-color:#ffffff;border:
 /* codes */
 code{background:#f0f0f0;padding:0 5px;}
 
+/* tables */
+table{width:0;}
+td{padding:9px;border:1px solid #999999;}
+th{padding:0 9px 0 9px;font-size:0.9rem;font-weight:bold;white-space:pre;color:var(--theme-color)}
+
 /* input colors */
 input:not([type]):focus:not([readonly]),
 input[type="text"]:not(.browser-default):focus:not([readonly]),
