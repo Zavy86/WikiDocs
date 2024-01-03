@@ -60,6 +60,7 @@
 	"SettingsGtag": "Google Analytics tag",
 	"SettingsGtagPlaceholder": "Inserisci il G-TAG",
 	"SettingsLanguage": "Lingua",
+	"SettingsTimezone": "Fuso orario",
 	"SettingsCancel": "Annulla",
 	"SettingsSubmit": "Salva",
 	"SubmitAuthSuccess": "Autenticazione completata!",
