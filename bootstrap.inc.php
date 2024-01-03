@@ -41,12 +41,16 @@ if(Session::getInstance()->isDebug()){$debug=true;}else{$debug=false;}
 
 // check debug from requests   @todo spostare in classe Session
 if(isset($_GET['debug'])){
-	if(DEBUGGABLE && $_GET['debug']==1){$debug=true;Session::getInstance()->setDebug(true);}
-	else{$debug=false;Session::getInstance()->setDebug(false);}
+  if(DEBUGGABLE && $_GET['debug']==1){$debug=true;Session::getInstance()->setDebug(true);}
+  else{$debug=false;Session::getInstance()->setDebug(false);}
 }
 
 // errors display for debug
 ini_set("display_errors",$debug);
+
+// set timezone
+if(!defined("TIMEZONE")){define("TIMEZONE","default");}
+elseif(TIMEZONE!="default"){date_default_timezone_set(TIMEZONE);}
 
 // get document id from rewrited url
 $g_doc=strtolower(str_replace(array(" "),"-",($_GET['doc'] ?? '')));
