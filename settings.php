@@ -21,6 +21,7 @@ if($g_act=="store"){
   $config.="define('DEBUGGABLE',".(DEBUGGABLE?"true":"false").");\n";
   $config.="define('PATH',\"".PATH."\");\n";
   $config.="define('LANG',\"".$_POST['lang']."\");\n";
+  $config.="define('TIMEZONE',".($_POST['timezone']?"\"".$_POST['timezone']."\"":"null").");\n";
   $config.="define('TITLE',\"".$_POST['title']."\");\n";
   $config.="define('SUBTITLE',\"".$_POST['subtitle']."\");\n";
   $config.="define('OWNER',\"".$_POST['owner']."\");\n";
@@ -109,17 +110,28 @@ if($g_act=="store"){
               <span><?= $TXT->SettingsDark ?></span>
             </label>
           </div>
-          <div class="input-field col s12 m5">
+          <div class="input-field col s12 m7">
             <input type="text" name="gtag" id="gtag" class="validate" placeholder="<?= $TXT->SettingsGtagPlaceholder ?>.. (like UA-123456789-1)" value="<?= GTAG ?>">
             <label for="gtag"><span class="main-color-text"><?= $TXT->SettingsGtag ?></span></label>
           </div>
-          <div class="input-field col s12 m2">
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m5">
             <select name="lang" id="lang" class="validate" value="<?= LANG ?>">
               <?php foreach(Localization::available() as $value=>$label): ?>
                 <option value="<?= $value ?>"<?= ($value==LANG?" selected":null) ?>><?= $label ?></option>
               <?php endforeach; ?>
             </select>
             <label for="lang"><span class="main-color-text"><?= $TXT->SettingsLanguage ?></span></label>
+          </div>
+          <div class="input-field col s12 m7">
+            <select name="timezone" id="timezone" class="validate" value="<?= TIMEZONE ?>">
+              <option value="default"<?= ("default"==TIMEZONE?" selected":null) ?>>Default</option>
+              <?php foreach(DateTimeZone::listIdentifiers() as $timezone):var_dump($timezone); ?>
+                <option value="<?= $timezone ?>"<?= ($timezone==TIMEZONE?" selected":null) ?>><?= $timezone ?></option>
+              <?php endforeach; ?>
+            </select>
+            <label for="timezone"><span class="main-color-text"><?= $TXT->SettingsTimezone ?></span></label>
           </div>
         </div>
         <div class="row">
