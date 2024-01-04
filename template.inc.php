@@ -280,7 +280,7 @@
 					<article>
 						<h1><?= $TXT->SearchResults ?></h1>
 						<?php foreach($matches_array=Document::search(SEARCH) as $document_fe=>$matches_fe): ?>
-							<hr><h5><a href="<?= URL.$document_fe ?>" target="_blank"><b><?= $document_fe ?></b></a></h5>
+							<hr><h5><a href="<?= URL.$document_fe ?>"><b><?= $document_fe ?></b></a></h5>
 							<?php foreach($matches_fe as $match_fe): ?>
 								<p><?= $match_fe ?></p>
 							<?php endforeach; ?>
