@@ -63,6 +63,7 @@
     "SettingsGtag": "Google Analytics标签",
     "SettingsGtagPlaceholder": "插入G-TAG",
     "SettingsLanguage": "语言",
+    "SettingsTimezone": "时区",
     "SettingsCancel": "取消",
     "SettingsSubmit": "保存",
     "SubmitAuthSuccess": "验证成功!",
