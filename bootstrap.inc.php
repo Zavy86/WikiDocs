@@ -76,3 +76,6 @@ define("DOC",$g_doc);
 
 // check for privacy agreement
 if(isset($_GET['privacy'])){Session::getInstance()->privacyAgreement($_GET['privacy']);}
+
+// regenerate sitemap
+if(!file_exists(DIR.'sitemap.xml')){wdf_regenerate_sitemap();}
