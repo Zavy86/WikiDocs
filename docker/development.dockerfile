@@ -8,18 +8,18 @@
 # docker run --name wikidocs-dev -d -p 80:80 -v ${PWD}:/var/www/localhost/htdocs wikidocs-dev
 #
 
-FROM alpine:3.15
+FROM alpine
 
 ARG DEPENDENCIES="\
 nano \
 curl \
 shadow \
 apache2 \
-php7 \
-php7-apache2 \
-php7-json \
-php7-mbstring \
-php7-session \
+php \
+php-apache2 \
+php-json \
+php-mbstring \
+php-session \
 "
 
 # installation
