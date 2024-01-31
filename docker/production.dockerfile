@@ -13,15 +13,15 @@
 # docker buildx build -f docker/production.dockerfile --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
 #
 
-FROM alpine:3.15
+FROM alpine
 
 ARG DEPENDENCIES="\
 apache2 \
-php7 \
-php7-apache2 \
-php7-json \
-php7-mbstring \
-php7-session \
+php82 \
+php82-apache2 \
+php82-json \
+php82-mbstring \
+php82-session \
 shadow \
 "
 
