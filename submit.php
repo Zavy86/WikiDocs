@@ -26,7 +26,6 @@ switch(ACT){
 	case "attachment_delete_ajax":attachment_delete_ajax();break;
 	// drafts
 	case "draft_save_ajax":draft_save_ajax();break;
-	/** @todo case "image_delete_ajax":image_delete_ajax();break; */
 	// default
 	default:
 		// alert and redirect
