@@ -63,7 +63,7 @@ function authentication(){
 		wdf_alert($TXT->SubmitAuthSuccess,"success");
 		wdf_redirect(PATH.$p_document);
 	}
-	// authenticatiojn error
+	// authentication error
 	if($_SESSION['wikidocs']['authenticated']==0){
 		// alert and redirect
 		wdf_alert($TXT->SubmitAuthInvalid,"danger");
