@@ -9,6 +9,13 @@
 require_once("bootstrap.inc.php");
 // get localization
 $TXT=Localization::getInstance();
+var_dump(Session::getInstance()->autenticationLevel());
+// check authentication
+if(Session::getInstance()->autenticationLevel()!=2){
+  // alert and redirect
+  wdf_alert($TXT->SubmitNotAuthenticated,"danger");
+  wdf_redirect(PATH);
+}
 // acquire variables
 $g_act=($_GET['act'] ?? '');
 // store action
