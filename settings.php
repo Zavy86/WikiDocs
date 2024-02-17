@@ -9,7 +9,6 @@
 require_once("bootstrap.inc.php");
 // get localization
 $TXT=Localization::getInstance();
-var_dump(Session::getInstance()->autenticationLevel());
 // check authentication
 if(Session::getInstance()->autenticationLevel()!=2){
   // alert and redirect
