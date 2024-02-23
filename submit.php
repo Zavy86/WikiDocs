@@ -47,7 +47,7 @@ function authentication(){
 	$p_document=strtolower($_POST['document']);
 	$p_password=$_POST['password'];
 	// check edit code
-	if(md5($p_password)===EDITCODE){
+	if(strtolower(md5($p_password))===strtolower(EDITCODE)){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=2;
 		// alert and redirect
@@ -55,7 +55,7 @@ function authentication(){
 		wdf_redirect(PATH.$p_document);
 	}
 	// check view code
-	if(md5($p_password)===VIEWCODE){
+	if(strtolower(md5($p_password))===strtolower(VIEWCODE)){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=1;
 		// alert and redirect
