@@ -634,12 +634,12 @@ class ParsedownExtended extends DynamicParent
             '/\(tm\)/i' => '&trade;',
             '/\(p\)/i' => '&para;',
             '/\+-/i' => '&plusmn;',
-            '/\.{4,}|\.{2}/i' => '...',
+            '/\.{4,}/i' => '...',
             '/\!\.{3,}/i' => '!..',
             '/\?\.{3,}/i' => '?..',
         ];
 
-        if (preg_match('/\+-|\(p\)|\(tm\)|\(r\)|\(c\)|\.{2,}|\!\.{3,}|\?\.{3,}/i', $excerpt['text'], $matches)) {
+        if (preg_match('/\+-|\(p\)|\(tm\)|\(r\)|\(c\)|\.{4,}|\!\.{3,}|\?\.{3,}/i', $excerpt['text'], $matches)) {
             return [
                 'extent' => strlen($matches[0]),
                 'element' => [
