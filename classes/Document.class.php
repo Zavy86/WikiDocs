@@ -413,6 +413,12 @@ final class Document{
 	 * @return array of results
 	 */
 	static function search(string $query,?string $parent=null):array{
+		// trim the query to remove leading and trailing spaces
+		$query = trim($query);
+		// return an empty array if the query is empty after trimming
+		if (empty($query)) {
+			return array();
+		}
 		// tree to array
 		function tree_to_array(&$array,$parent=null){
 			foreach(Document::list($parent) as $dir_fe){
