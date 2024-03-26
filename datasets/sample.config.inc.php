@@ -22,9 +22,9 @@ define('OWNER',"Owner");
 define('NOTICE',"Credits");
 // Privacy banner for GDPR-compliant
 define('PRIVACY',null);
-// MD5 encoded password for editing (default',password)
-define('EDITCODE',"5f4dcc3b5aa765d61d8327deb882cf99");
-// MD5 encoded password for reading (set null for public wiki)
+// Hashed password for editing (default',password)
+define('EDITCODE',"\$2y\$10\$r6OE5vLrPtnjvLZ2l8vFnO9JySb5TlwWLWZE6xTvWB9h8tUdVSsvK");
+// Hashed encoded password for reading (set null for public wiki)
 define('VIEWCODE',null);
 // Main theme color
 define('COLOR',"#4CAF50");

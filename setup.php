@@ -52,7 +52,7 @@ if($g_act=="conclude"){
 	$config.="define('OWNER',\"".$_SESSION['wikidocs']['setup']['owner']."\");\n";
 	$config.="define('NOTICE',\"".$_SESSION['wikidocs']['setup']['notice']."\");\n";
 	$config.="define('PRIVACY',null);\n";
-	$config.="define('EDITCODE',\"".md5($_SESSION['wikidocs']['setup']['editcode'])."\");\n";
+	$config.="define('EDITCODE',\"".str_replace("$", "\\$", password_hash($_SESSION['wikidocs']['setup']['editcode'],PASSWORD_DEFAULT))."\");\n";
 	$config.="define('VIEWCODE',null);\n";
 	$config.="define('COLOR',\"#4CAF50\");\n";
 	$config.="define('DARK',false);\n";
