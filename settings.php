@@ -20,8 +20,11 @@ $g_act=($_GET['act'] ?? '');
 // store action
 if($g_act=="store"){
   // sed codes
-  $EDITCODE=($_POST['editcode']===EDITCODE?EDITCODE:md5($_POST['editcode']));
-  $VIEWCODE=($_POST['viewcode']===VIEWCODE?VIEWCODE:(strlen($_POST['viewcode'])?md5($_POST['viewcode']):null));
+  $EDITCODE=($_POST['editcode']===EDITCODE?EDITCODE:password_hash($_POST['editcode'],PASSWORD_DEFAULT));
+  $VIEWCODE=($_POST['viewcode']===VIEWCODE?VIEWCODE:(strlen($_POST['viewcode'])?password_hash($_POST['viewcode'],PASSWORD_DEFAULT):null));
+  // replace $ with \$ for exporting as php code (with just $ it would be interpreted as variable)
+  $EDITCODE=str_replace("$", "\\$", $EDITCODE);
+  if($VIEWCODE!=null)$VIEWCODE=str_replace("$", "\\$", $VIEWCODE);
   // build configuration file
   $config="<?php\n";
   $config.="define('DEBUGGABLE',".(DEBUGGABLE?"true":"false").");\n";

@@ -47,7 +47,14 @@ function authentication(){
 	$p_document=strtolower($_POST['document']);
 	$p_password=$_POST['password'];
 	// check edit code
-	if(strtolower(md5($p_password))===strtolower(EDITCODE)){
+	if(strlen(EDITCODE)==32&&strtolower(md5($p_password))===strtolower(EDITCODE)) {
+		//TODO: update password hash in datasets/config.inc.php to password_hash() output
+		// update session
+		$_SESSION['wikidocs']['authenticated']=2;
+		// alert and redirect
+		wdf_alert($TXT->SubmitAuthSuccess,"success");
+		wdf_redirect(PATH.$p_document);
+	}else if(password_verify($p_password, EDITCODE)){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=2;
 		// alert and redirect
@@ -55,7 +62,14 @@ function authentication(){
 		wdf_redirect(PATH.$p_document);
 	}
 	// check view code
-	if(strtolower(md5($p_password))===strtolower(VIEWCODE)){
+	if(strlen(VIEWCODE)==32&&strtolower(md5($p_password))===strtolower(VIEWCODE)) {
+		//TODO: update password hash in datasets/config.inc.php to password_hash() output
+		// update session
+		$_SESSION['wikidocs']['authenticated']=1;
+		// alert and redirect
+		wdf_alert($TXT->SubmitAuthSuccess,"success");
+		wdf_redirect(PATH.$p_document);
+	}else if(password_verify($p_password, VIEWCODE)){
 		// update session
 		$_SESSION['wikidocs']['authenticated']=1;
 		// alert and redirect
