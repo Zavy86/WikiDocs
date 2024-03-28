@@ -47,41 +47,25 @@ function authentication(){
 	$p_document=strtolower($_POST['document']);
 	$p_password=$_POST['password'];
 	// check edit code
-	if(strlen(EDITCODE)==32&&strtolower(md5($p_password))===strtolower(EDITCODE)) {
-		//TODO: update password hash in datasets/config.inc.php to password_hash() output
-		// update session
-		$_SESSION['wikidocs']['authenticated']=2;
-		// alert and redirect
-		wdf_alert($TXT->SubmitAuthSuccess,"success");
-		wdf_redirect(PATH.$p_document);
-	}else if(password_verify($p_password, EDITCODE)){
-		// update session
-		$_SESSION['wikidocs']['authenticated']=2;
-		// alert and redirect
-		wdf_alert($TXT->SubmitAuthSuccess,"success");
-		wdf_redirect(PATH.$p_document);
-	}
-	// check view code
-	if(strlen(VIEWCODE)==32&&strtolower(md5($p_password))===strtolower(VIEWCODE)) {
-		//TODO: update password hash in datasets/config.inc.php to password_hash() output
-		// update session
-		$_SESSION['wikidocs']['authenticated']=1;
-		// alert and redirect
-		wdf_alert($TXT->SubmitAuthSuccess,"success");
-		wdf_redirect(PATH.$p_document);
-	}else if(password_verify($p_password, VIEWCODE)){
-		// update session
-		$_SESSION['wikidocs']['authenticated']=1;
-		// alert and redirect
-		wdf_alert($TXT->SubmitAuthSuccess,"success");
-		wdf_redirect(PATH.$p_document);
-	}
-	// authentication error
-	if($_SESSION['wikidocs']['authenticated']==0){
-		// alert and redirect
-		wdf_alert($TXT->SubmitAuthInvalid,"danger");
-		wdf_redirect(PATH.$p_document);
-	}
+  if(strlen(EDITCODE)==32 && strtolower(md5($p_password))===strtolower(EDITCODE)) {
+    $_SESSION['wikidocs']['authenticated']=2;
+  }elseif(password_verify($p_password,EDITCODE)) {
+    $_SESSION['wikidocs']['authenticated']=2;
+  }elseif(strlen(VIEWCODE)==32 && strtolower(md5($p_password))===strtolower(VIEWCODE)) {
+    $_SESSION['wikidocs']['authenticated']=1;
+  }elseif(password_verify($p_password, VIEWCODE)){
+    $_SESSION['wikidocs']['authenticated']=1;
+  }else{
+    $_SESSION['wikidocs']['authenticated']=0;
+  }
+  // check for authentication
+  if($_SESSION['wikidocs']['authenticated']) {
+    wdf_alert($TXT->SubmitAuthSuccess,"success");
+    wdf_redirect(PATH.$p_document);
+  }else{
+    wdf_alert($TXT->SubmitAuthInvalid,"danger");
+    wdf_redirect(PATH.$p_document);
+  }
 }
 
 /**
