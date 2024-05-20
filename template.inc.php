@@ -212,7 +212,7 @@
 											<input type="file" name="image" required>
 										</div><!-- /btn -->
 										<div class="file-path-wrapper">
-											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>.. (png, jpg, gif, svg)">
+											<input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>.. (png, jpg, gif, svg, webp)">
 										</div><!-- /file-path-wrapper -->
 									</div><!-- /input-field -->
 									<div class="input-field col s3">

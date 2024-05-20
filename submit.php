@@ -116,9 +116,9 @@ function content_save(){
 	// document path definition
 	define("DOC_PATH",$DOC->PATH."/");
 	// replace url in images
-	$p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg|.svg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+	$p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg|.svg|.webp)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
 	// replace url in images
-	$p_content=preg_replace_callback('/\[(.*)\]:\s?(.*)(.png|.gif|.jpg|.jpeg|.svg|)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+	$p_content=preg_replace_callback('/\[(.*)\]:\s?(.*)(.png|.gif|.jpg|.jpeg|.svg|.webp)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
 	// replace path in url
 	$p_content=preg_replace_callback('/\[(.*)\]\s?\((.*)\)/',function($match){return str_replace("(".PATH,"({{APP_PATH}}",$match[0]);},$p_content);
 	// debug
@@ -273,14 +273,14 @@ function image_upload_ajax(){
 		$image['name']=md5(date("YmdHisu")).".".$image['ext'];
 	}
 	// check extension
-	if(!in_array($image['ext'],array("png","jpg","jpeg","gif","svg"))){
+	if(!in_array($image['ext'],array("png","jpg","jpeg","gif","svg","webp"))){
 		// error
 		echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$image));
 		// return
 		return false;
 	}
 	// check file type
-	if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg","image/svg+xml"))){
+	if(!in_array($image["type"],array("image/png","image/gif","image/jpg","image/jpeg","image/svg+xml","image/webp"))){
 		// error
 		echo json_encode(array("error"=>1,"code"=>"file_not_allowed","file"=>$image));
 		// return
@@ -346,7 +346,7 @@ function image_drop_upload_ajax() {
 		$type = strtolower($type[1]); // jpg, png, gif
 
 		//check for valid image type
-		if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
+		if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png', 'webp' ])) {
 			echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$image_filename));
 			return false;
 		}

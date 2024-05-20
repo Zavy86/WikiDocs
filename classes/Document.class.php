@@ -173,7 +173,7 @@ final class Document{
 				if(is_dir($this->DIR."/".$element_fe)){continue;}
 				$file_extension=explode(".",$element_fe);
 				// check extensions
-				if(!in_array(end($file_extension),array("png","gif","jpg","jpeg","svg"))){continue;}
+				if(!in_array(end($file_extension),array("png","gif","jpg","jpeg","svg", "webp"))){continue;}
 				// add element to documents array
 				$images_array[]=$element_fe;
 			}
