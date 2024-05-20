@@ -6,6 +6,10 @@ styles/styles-custom.css
 datasets/config.inc.php
 datasets/documents/*
 datasets/trash/*
+content.md.view
+counter.txt
+filecount.txt
 !datasets/documents/.gitkeep
 !datasets/trash/.gitkeep
 !index.php
+!datasets/documents/homepage
