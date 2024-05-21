@@ -38,6 +38,8 @@
       gtag('config','<?= GTAG ?>');
 		</script>
 	<?php endif; ?>
+	<?php include "common.php"; include "nav.php"; include "pageview.php"; include "filecount.php"; include "counter.php"; include "recent.php"; ?>
+	<script src="<?= $APP->PATH ?>scripts/common.js"></script>
 </head>
 <body>
 <header>
@@ -295,15 +297,16 @@
 		<div class="divider"></div>
 		<div class="row">
 			<div class="col m5 offset-m1 hide-on-med-and-down">
-				<p class="left-align"><small><?= $TXT->LastUpdate ?> <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?></small></p>
+				<p class="left-align"><small><?= $TXT->LastUpdate ?> <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?>&nbsp;&nbsp;<?php if(Session::getInstance()->isAuthenticated()){echo $pageview.'&nbsp;&nbsp;'.$pagenumber.'<br>'.$wikistat.'&nbsp;&nbsp;&nbsp;&nbsp;';} ?>
+				<a href="<?= $APP->PATH ?>randpage.php" title="<?= $TXT->RandPage ?>">🔀</a>&nbsp;&nbsp;<?php echo $RecentLink; ?></small></p>
 			</div><!-- /col -->
 			<div class="col m5 hide-on-med-and-down">
 				<p class="right-align"><small><?= $TXT->PoweredBy ?> <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">".$TXT->Logout."</a>";} ?></small></p>
 			</div><!-- /col -->
 			<div class="col s12 hide-on-large-only">
-				<p class="center-align"><small>This page was last edited on <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?></small></p>
+				<p class="center-align"><small><?= $TXT->LastUpdate ?> <?= wdf_timestamp_format($DOC->TIMESTAMP,"Y-m-d H:i") ?><br><?php if(Session::getInstance()->isAuthenticated()){echo $pageview.'&nbsp;&nbsp;'.$pagenumber.'<br>'.$wikistat.'<br>';} ?><br><a href="<?= $APP->PATH ?>randpage.php" title="<?= $TXT->RandPage ?>">🔀</a>&nbsp;&nbsp;<?php echo $RecentLink; ?></small></p>
 				<p class="center-align"><small><b><?= $APP->OWNER ?></b><br><?= $APP->NOTICE ?></p></small></p>
-				<p class="center-align"><small><?= $TXT->PoweredBy ?> <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">".$TXT->Logout."</a>";} ?></small></p>
+				<p class="center-align"><small><?= $TXT->PoweredBy ?> <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a><?php if($APP->DEBUG){echo " ".$APP->VERSION;} if(Session::getInstance()->isAuthenticated()){echo " - <a href=\"".$DOC->URL."?exit\">".$TXT->Logout."</a>";} ?><br></small></p>
 			</div><!-- /col -->
 		</div><!-- /row -->
 		<?php if(!Session::getInstance()->privacyAgreeded()): ?>

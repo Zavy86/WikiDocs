@@ -136,3 +136,144 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
 
 /* debug */
 pre.debug{margin:9px;font-size:12px;}
+
+
+.logo-image {
+	position: relative;
+	transition: transform 0.4s; /* 添加过渡效果 */
+}
+
+.wikidocs_DiaryMotto {
+    text-align: center;
+    width: 100%;
+	font-size:1.5em;
+	color:#00C0FF;
+	text-shadow: 1px 1px 2px black;
+}
+
+.wikidocs_divDiaryMotto {
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.wikidocs_imageLibrary {
+    background-color: transparent;
+    border-radius: 0px;
+    border: 0px solid #transparent;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    margin: 8px;
+    width: 240px;
+    height: auto;
+    line-height: 28px;
+}
+
+.wikidocs_imageLibraryFileName {
+    background-color:transparent;
+    width: 240px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: msyh, Monaco, Courier New, Consolas, Menlo, monospace;
+    font-size: 1em;
+}
+
+.nowrap{
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.wikidocs_search_container {
+	width: 250px;
+	display: inline-block;
+	white-space: nowrap;
+	vertical-align: top;
+	margin: 10px 10px 0px 0px;
+}
+
+.wikidocs_search_Title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.wikidocs_search_category {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 10px 0px 0px 0px;
+}
+
+.wikidocs_search_input {
+    border: 1px solid #555555;
+    border-radius: 2px;
+    height: 1.5em;
+    width: 135px;
+}
+
+.wikidocs_search_button {
+    border: 1px solid #555555;
+    background-color:transparent;
+    border-radius: 3px;
+    width: 100px;
+    height: 1.5em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.wikidocs_nav_container {
+    width: 72px;
+    height: 16px;
+	display: inline-block;
+	white-space: nowrap;
+    text-align: left;
+    vertical-align: top;
+    font-size:14px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.wikidocs_nav_Title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.wikidocs_nav_category {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 72px;
+    color: #014BB5;
+    margin: 0px 8px 0px 0px;
+}
+
+.wikidocs_nav_link {
+    background-color:transparent;
+    width: 72px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size:14px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+
+a.wikidocs_nav_link {color: #039BE5;}
+a.wikidocs_nav_link:hover { color: #0303E5;text-decoration:none;}
+
+.wikidocs_nav_td{
+  vertical-align: top;
+  padding: 0;
+  border: none;
+}
+
+.no-border {
+  border: none;
+  vertical-align: top;
+}
