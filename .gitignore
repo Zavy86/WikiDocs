@@ -13,3 +13,4 @@ filecount.txt
 !datasets/trash/.gitkeep
 !index.php
 !datasets/documents/homepage
+datasets/documents/homepage/recent/content.md
