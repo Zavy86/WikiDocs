@@ -124,10 +124,10 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
 .editor-preview-side{z-index:307;}
 .CodeMirror-fullscreen{z-index:309;}
 .editor-toolbar.fullscreen{z-index:309;}
-.sidenav{z-index:2;}
+.sidenav{z-index:2; overflow-y: scroll; overflow-x: hidden; height: calc(100% - 60px); padding-bottom: 60px;}
 .sidenav-overlay{z-index:297;}
 @media only screen and (max-width:992px){
-	.sidenav{z-index:999;}
+	.sidenav{z-index:999; height: 100%; padding-bottom: 0;}
 	.sidenav-overlay{z-index:997;}
 }
 
@@ -136,3 +136,8 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
 
 /* debug */
 pre.debug{margin:9px;font-size:12px;}
+
+/* custom scrollbars */
+::-webkit-scrollbar{width:10px; height:10px;}
+::-webkit-scrollbar-thumb{background:var(--theme-color); border-radius: 10px;}
+::-webkit-scrollbar-thumb:hover{background: var(--theme-color);}

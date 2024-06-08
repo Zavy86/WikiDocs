@@ -55,3 +55,7 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 
 /* inputs */
 label{color:#ccc;}
+
+/* custom scrollbars */
+::-webkit-scrollbar-track{background:#222222; border-radius: 10px;}
+* {scrollbar-width: thin; scrollbar-color: var(--theme-color) #222222;}
