@@ -338,7 +338,7 @@
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/katex.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/auto-render.js"></script>
 <script>renderMathInElement(document.body);</script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script>hljs.highlightAll();</script>
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true,'theme': <?= ($APP->DARK?"'dark'":"'neutral'") ?>});</script>
 <script src="<?= $APP->PATH ?>scripts/initializations.js"></script>
