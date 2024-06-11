@@ -18,7 +18,7 @@
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/material-icons-1.13.6/css/material-icons.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/font-awesome-4.7.0/css/font-awesome.min.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.min.css" media="screen,projection">
+	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.9.0/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-<?= ($APP->DARK?"dark":"light") ?>.css" media="screen,projection"/>
@@ -334,11 +334,11 @@
 <script>var DOC=<?= json_encode($DOC->export()) ?>;</script>
 <script src="<?= $APP->PATH ?>helpers/jquery-3.7.0/js/jquery.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
-<script src="<?= $APP->PATH ?>helpers/highlightjs-11.7.0/js/highlight.min.js"></script>
+<script src="<?= $APP->PATH ?>helpers/highlightjs-11.9.0/js/highlight.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/katex.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/katex-0.16.7/js/auto-render.js"></script>
 <script>renderMathInElement(document.body);</script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script>hljs.highlightAll();</script>
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true,'theme': <?= ($APP->DARK?"'dark'":"'neutral'") ?>});</script>
 <script src="<?= $APP->PATH ?>scripts/initializations.js"></script>
