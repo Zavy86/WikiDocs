@@ -166,6 +166,9 @@
 									$anchor=substr($line,8,(strpos($line,'"',8)-8));
 									if($anchor){$line=substr($line,0,strpos($line,'>'))." title='#".$anchor."'><a href='#".$anchor."'></a".substr($line,strpos($line,'>',1));}
 								}
+                                if (strpos($line, '<pre><code') !== false) {
+                                    $line = '<div class="code-container"><button class="copy-btn" onclick="copyCode(this)">Copy</button>' . $line;
+                                }
 								$source_final.=$line."\n";
 							}
 							echo $source_final;
@@ -358,6 +361,26 @@
       new_path=new_path.replace(" ","-").toLowerCase()+"?edit";
       window.location.href=APP.URL+new_path;
     }
+  }
+  function copyCode(button) {
+    // find the nearest code block
+    var codeBlock = button.nextElementSibling;
+    // extract the text content from the code block
+    var codeText = codeBlock.textContent.trim();
+    // create a temporary textarea element to hold the text to be copied
+    var tempTextArea = document.createElement('textarea');
+    tempTextArea.value = codeText;
+    document.body.appendChild(tempTextArea);
+    // select the text in the textarea and copy it
+    tempTextArea.select();
+    document.execCommand('copy');
+    // remove the temporary textarea
+    document.body.removeChild(tempTextArea);
+    // optionally, provide feedback to the user
+    button.textContent = 'Copied!';
+    setTimeout(function() {
+        button.textContent = 'Copy';
+    }, 2000);
   }
 </script>
 <?php
