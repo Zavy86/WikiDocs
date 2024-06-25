@@ -28,7 +28,5 @@ define('EDITCODE',"\$2y\$10\$r6OE5vLrPtnjvLZ2l8vFnO9JySb5TlwWLWZE6xTvWB9h8tUdVSs
 define('VIEWCODE',null);
 // Main theme color
 define('COLOR',"#4CAF50");
-// Dark mode
-define('DARK',false);
 // Google Analytics Tag
 define('GTAG',null);

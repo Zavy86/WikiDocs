@@ -18,10 +18,21 @@
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/material-icons-1.13.6/css/material-icons.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/font-awesome-4.7.0/css/font-awesome.min.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/easymde-2.16.1/css/easymde.min.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.9.0/css/<?= ($APP->DARK?"monokai-sublime":"default") ?>.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/katex-0.16.7/css/katex.min.css" media="screen,projection">
 	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-<?= ($APP->DARK?"dark":"light") ?>.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>helpers/highlightjs-11.9.0/css/default.min.css" media="screen,projection" id="highlight-css">
+    <link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-light.css" media="screen,projection" id="theme-css"/>
+    <script>
+        const highlightCss = document.getElementById('highlight-css');
+        const themeCss = document.getElementById('theme-css');
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            themeCss.href = '<?= $APP->PATH ?>styles/styles-dark.css';
+            highlightCss.href = '<?= $APP->PATH ?>helpers/highlightjs-11.9.0/css/monokai-sublime.min.css';
+        } else {
+            themeCss.href = '<?= $APP->PATH ?>styles/styles-light.css';
+            highlightCss.href = '<?= $APP->PATH ?>helpers/highlightjs-11.9.0/css/default.min.css';
+        }
+    </script>
     <?php if(file_exists($APP->DIR."styles/styles-custom.css")): ?><link type="text/css" rel="stylesheet" href="<?= $APP->PATH ?>styles/styles-custom.css" media="screen,projection"/><?php echo "\n"; endif; ?>
     <link rel="icon" type="image/x-icon" href="<?= $APP->PATH ?>favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="512x512" href="<?= $APP->PATH ?>favicon-512x512.png">
@@ -346,7 +357,6 @@
 <script>renderMathInElement(document.body);</script>
 <script>hljs.highlightAll();</script>
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>
-<script>mermaid.initialize({ startOnLoad: true,'theme': <?= ($APP->DARK?"'dark'":"'neutral'") ?>});</script>
 <script src="<?= $APP->PATH ?>scripts/initializations.js"></script>
 <?php if(MODE=="edit"): ?>
 	<script src="<?= $APP->PATH ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
@@ -385,6 +395,18 @@
         button.textContent = 'Copy';
     }, 2000);
   }
+  // initialize mermaid with correct theme
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'neutral'
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (e.matches) {
+      mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    } else {
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    }
+  });
 </script>
 <?php
 // cycle all alerts
