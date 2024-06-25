@@ -15,6 +15,15 @@ jobs:
     steps:
       - name: Check out the source code
         uses: actions/checkout@v2
+      - name: Retrieve current version
+        run: |
+          VER=$(cat VERSION)
+          echo "VERSION=$VER" >> $GITHUB_ENV
+      - name: Add version Tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ env.VERSION }}
+          tag_exists_error: false
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: Setup Docker Buildx
