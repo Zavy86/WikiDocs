@@ -24,6 +24,7 @@ jobs:
         with:
           tag: ${{ env.VERSION }}
           tag_exists_error: false
+          force_push_tag: true
       - name: Create Release
         uses: actions/create-release@v1
         env:
