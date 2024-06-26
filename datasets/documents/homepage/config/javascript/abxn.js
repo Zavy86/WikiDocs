@@ -1,5 +1,7 @@
 /*
 
+Function formula:
+
   X(n+1) = A - B / X(n)
 
 */
@@ -115,5 +117,3 @@ function abxn(mode="RANDOM", A=1, B=100, X0=-11, color="rgba(200,0,0,0.4)", maxd
 }
 
 abxn();
-
-
