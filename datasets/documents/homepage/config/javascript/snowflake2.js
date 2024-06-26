@@ -1,18 +1,18 @@
 window.onload = function () {
-            var minSize = 3; //最小字体
-            var maxSize = 30;//最大字体
-            var newOne = 100; //生成雪花间隔
-            var flakColor = "#fff"; //雪花颜色
-            var flak = $("<div></div>").css({position:"absolute","top":"0px"}).html("❉");//定义一个雪花
-            var dhight = $(window).height(); //定义视图高度
-            var dw =$(window).width()-80; //定义视图宽度
+            var minSize = 3; //Minimum font size
+            var maxSize = 30;//Maximum font size
+            var newOne = 100; //snowflake intervals
+            var flakColor = "#fff"; //Snowflake color
+            var flak = $("<div></div>").css({position:"absolute","top":"0px"}).html("❉");//Define a snowflake
+            var dhight = $(window).height();
+            var dw =$(window).width()-80;
             setInterval(function(){
-            var sizeflak = minSize+Math.random()*maxSize; //产生大小不等的雪花
-            var startLeft = Math.random()*dw; //雪花生成是随机的left值
-            var startOpacity = 0.7+Math.random()*0.3; //随机透明度
-            var endTop= dhight-200; //雪花停止top的位置
-            var endLeft= Math.random()*dw; //雪花停止的left位置
-            var durationfull = 5000+Math.random()*5000; //雪花飘落速度不同
+            var sizeflak = minSize+Math.random()*maxSize; //Random snowflake size
+            var startLeft = Math.random()*dw; //Random location
+            var startOpacity = 0.7+Math.random()*0.3; //Random Transparency
+            var endTop= dhight-200; //The location where snowflakes stop
+            var endLeft= Math.random()*dw;
+            var durationfull = 5000+Math.random()*5000; //Random snowflake falling speed
             flak.clone().appendTo($("body")).css({
             "left":startLeft ,
             "opacity":startOpacity,
