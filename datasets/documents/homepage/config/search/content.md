@@ -1,7 +1,7 @@
 - common
     - google|https://www.google.com/search?q=
     - duckduckgo|https://duckduckgo.com/?q=
-    - bing|https://cn.bing.com/search?q=
+    - bing|https://bing.com/search?q=
     - yahoo|https://search.yahoo.com/search?p=
 	- emoji| https://emojis.wiki/search?s=
 	- slant| https://www.slant.co/search?query=| What are the best...| color:#325480;border:1px solid #325480;| border-color:#325480;background:transparent;color:#325480;font-weight:bold;
@@ -17,3 +17,6 @@
 	- gitee| https://search.gitee.com/?q=||color:red;border:1px solid red;| border-color:red;background:red;color:white;font-weight:bold;
 - buy
     - amazon|https://www.amazon.com/s?k=
+
+
+<script>WikiDocs_ShowSearch();</script>
