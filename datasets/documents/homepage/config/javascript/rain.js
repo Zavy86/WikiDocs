@@ -13,31 +13,28 @@ document.body.appendChild(rainDiv);
 const box=document.getElementById('rainBox');
 let boxHeight=box.clientHeight;
 let boxWidth=box.clientWidth;
-// 页面大小发生变化时，改变盒子大小
+// change the box size when the page size changes
 window.onresize=function(){
 	boxHeight=box.clientHeight;
 	boxWidth=box.clientWidth;
 };
-// 每隔一段时间,添加雨滴
+// Add raindrops every once in a while
 setInterval(()=>{
 const rain=document.createElement('div');
 rain.classList.add('rain');
 rain.style.top=0;
-// 随机刷新雨点位置
+// Randomly refresh raindrop positions
 rain.style.left=Math.random()*boxWidth+'px';
-// 随机雨点透明度
+// Random raindrop transparency
 rain.style.opacity=Math.random();
 box.appendChild(rain);
-// 每隔一段时间,雨水下落
+// Every once in a while, rainwater falls
 let race=1;
 const timer=setInterval(()=>{
-	// 判断“雨滴”元素的top属性是否超出“盒子”元素的高度来决定是否停止动画
 	if(parseInt(rain.style.top)>boxHeight){
 		clearInterval(timer);
 		box.removeChild(rain);
 	}
-	// 每次定时器执行时，“雨滴”元素的top值会逐渐增加，
-	//并且增加的速率会随着时间的推移而逐渐加快
 	race++;
 	rain.style.top=parseInt(rain.style.top)+race+'px'
 },20)
