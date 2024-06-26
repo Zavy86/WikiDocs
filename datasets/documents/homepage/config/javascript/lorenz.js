@@ -24,17 +24,16 @@ const ctxP = canvasP.getContext('2d');
 canvasP.width = window.innerWidth;
 canvasP.height = window.innerHeight;
 
-// 洛伦兹方程参数
+// default Lorentz attractor equation parameters
 let _sigma = 10.0;
 let _rho = 28.0;
 let _beta = 8.0 / 3.0;
-let _scale = 9; // 缩放因子，用于调整绘制的大小
+let _scale = 9; // Scale factor, used to adjust the size of the drawing
 let x = 1.0;
 let y = 1.0;
 let z = 1.0;
-let _dt = 0.01; // 时间步长
-let _pointInterval = 20; // 每隔多少毫秒绘制一个点
-let points = []; // 保存绘制的点
+let _dt = 0.01; // Step distance
+let points = []; // point array
 let _MAXDOT = 3000;
 let _color1 = 'red';
 let _color2 = 'blue';
@@ -115,7 +114,7 @@ function resizeCanvas() {
 }
 
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); // 初始化Canvas大小
+resizeCanvas(); // Initialize Canvas size
 
 function reset() {
     if( _mode == "RANDOM" )
