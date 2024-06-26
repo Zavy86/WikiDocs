@@ -12,7 +12,6 @@ WikiDocs_ShowDailyMotto();
 
 <hr size="1">
 
-- 千里之行始于足下
 - For man is man and master of his fate.|人就是人，是自己命运的主人
 - A lazy youth, a lousy age.| 少壮不努力，老大徒伤悲。
 - Do one thing at a time, and do well.|一次只做一件事，做到最好！
