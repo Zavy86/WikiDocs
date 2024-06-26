@@ -15,19 +15,8 @@ $filename = str_replace('\\','/',urldecode($base_path.$url.'/content.md.view'));
 
 
 if (file_exists($filename)){
-    $fp = fopen($filename, "r");
 
-	if ($fp) {
-		$canWrite = false;
-		while (!$canWrite)
-			$canWrite = flock($fp, LOCK_EX);
-
-		while (!feof($fp)) {
-			$line = trim(fgets($fp, 128));
-		}
-		flock($fp, LOCK_UN);
-		fclose ($fp);
-	}
+	$line = file_get_contents($filename);
 
 	$arr = explode('||', $line);
 	$count = isset($arr[0]) ? $arr[0]:0;
@@ -42,16 +31,7 @@ if(($ct-$lt)>2) {
 
     $count++;
 
-    $fp = fopen($filename, "w+");
-    if ($fp) {
-        $canWrite = false;
-        while (!$canWrite)
-            $canWrite = flock($fp, LOCK_EX);
-
-        fwrite($fp, $count.'||'.$ct);
-        flock($fp, LOCK_UN);
-        fclose($fp);
-    }
+    file_put_contents($filename, $count.'||'.$ct, LOCK_EX);
 }
 
 $pageview = $TXT->ViewCount.": <b>".$count."</b>";

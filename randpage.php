@@ -14,6 +14,5 @@ $items = $dom->getElementsByTagName('loc');
 
 $n = rand(0, count($items)-1);
 
-//echo $items[$n]->nodeValue;
 header("Location: ".$items[$n]->nodeValue);
 ?>

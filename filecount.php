@@ -1,6 +1,6 @@
 <?php
 
-$datafile = str_replace('\\','/',dirname(__FILE__)."/datasets/documents/homepage/filecount.txt");
+$datafile = str_replace('\\','/',dirname(__FILE__)."/datasets/documents/homepage/statistics.txt");
 
 $updatecount = false;
 
@@ -23,8 +23,7 @@ else {
     }
 }
 
-if(!$updatecount)
-    $pagenumber = '📝 <b>'.$arr[0].'</b> 🖼️ <b>'.$arr[1].'</b>';
+$pagenumber = '📝 <b>'.$arr[0].'</b> 🖼️ <b>'.$arr[1].'</b>';
 
 if( $updatecount || (!isset($arr[2])) || ((time() - $arr[2])>300))
     $updatefilecount = 1;

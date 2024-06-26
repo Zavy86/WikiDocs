@@ -25,7 +25,7 @@ function statistics($dir, &$doc, &$img){
 }
 
 $basedir = str_replace('\\','/',dirname(__FILE__));
-$datafile = $basedir."/datasets/documents/homepage/filecount.txt";
+$datafile = $basedir."/datasets/documents/homepage/statistics.txt";
 
 $ct = time();
 $update = false;
@@ -57,17 +57,7 @@ if($update) {
 
     statistics($basedir."/datasets/documents/*", $doc, $img);
 
-    $fp = fopen($datafile, "w+");
-    if ($fp) {
-        $canWrite = false;
-        while (!$canWrite)
-            $canWrite = flock($fp, LOCK_EX);
-
-        fwrite($fp, $doc.'||'.$img.'||'.$ct);
-
-        flock($fp, LOCK_UN);
-        fclose($fp);
-    }
+    file_put_contents($datafile, $doc.'||'.$img.'||'.$ct, LOCK_EX);
     
     clearstatcache();
 }
