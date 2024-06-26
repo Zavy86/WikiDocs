@@ -1,8 +1,8 @@
 /*
-大圆半径: R
-小圆半径: r
-笔距离小圆圆心: d
-大圆转动角度: a
+R: big circle radius
+r: Small circle radius
+d: The length from the pen to the center of the small circle
+a: Small circle rotation angle
 
 (R-r)*a+(360-a*R/r)*(r-d)
 
