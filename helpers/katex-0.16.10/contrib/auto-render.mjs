@@ -1,94 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("katex"));
-	else if(typeof define === 'function' && define.amd)
-		define(["katex"], factory);
-	else if(typeof exports === 'object')
-		exports["renderMathInElement"] = factory(require("katex"));
-	else
-		root["renderMathInElement"] = factory(root["katex"]);
-})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__771__) {
-return /******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+import katex from '../katex.mjs';
 
-/***/ 771:
-/***/ (function(module) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__771__;
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": function() { return /* binding */ auto_render; }
-});
-
-// EXTERNAL MODULE: external "katex"
-var external_katex_ = __webpack_require__(771);
-var external_katex_default = /*#__PURE__*/__webpack_require__.n(external_katex_);
-;// CONCATENATED MODULE: ./contrib/auto-render/splitAtDelimiters.js
 /* eslint no-constant-condition:0 */
 var findEndOfMath = function findEndOfMath(delimiter, text, startIndex) {
   // Adapted from
@@ -125,9 +36,7 @@ var amsRegex = /^\\begin{/;
 var splitAtDelimiters = function splitAtDelimiters(text, delimiters) {
   var index;
   var data = [];
-  var regexLeft = new RegExp("(" + delimiters.map(function (x) {
-    return escapeRegex(x.left);
-  }).join("|") + ")");
+  var regexLeft = new RegExp("(" + delimiters.map(x => escapeRegex(x.left)).join("|") + ")");
 
   while (true) {
     index = text.search(regexLeft);
@@ -145,9 +54,7 @@ var splitAtDelimiters = function splitAtDelimiters(text, delimiters) {
     } // ... so this always succeeds:
 
 
-    var i = delimiters.findIndex(function (delim) {
-      return text.startsWith(delim.left);
-    });
+    var i = delimiters.findIndex(delim => text.startsWith(delim.left));
     index = findEndOfMath(delimiters[i].right, text, delimiters[i].left.length);
 
     if (index === -1) {
@@ -159,7 +66,7 @@ var splitAtDelimiters = function splitAtDelimiters(text, delimiters) {
     data.push({
       type: "math",
       data: math,
-      rawData: rawData,
+      rawData,
       display: delimiters[i].display
     });
     text = text.slice(index + delimiters[i].right.length);
@@ -175,17 +82,13 @@ var splitAtDelimiters = function splitAtDelimiters(text, delimiters) {
   return data;
 };
 
-/* harmony default export */ var auto_render_splitAtDelimiters = (splitAtDelimiters);
-;// CONCATENATED MODULE: ./contrib/auto-render/auto-render.js
 /* eslint no-console:0 */
-
-
 /* Note: optionsCopy is mutated by this method. If it is ever exposed in the
  * API, we should copy it before mutating.
  */
 
 var renderMathInText = function renderMathInText(text, optionsCopy) {
-  var data = auto_render_splitAtDelimiters(text, optionsCopy.delimiters);
+  var data = splitAtDelimiters(text, optionsCopy.delimiters);
 
   if (data.length === 1 && data[0].type === 'text') {
     // There is no formula in the text.
@@ -211,9 +114,9 @@ var renderMathInText = function renderMathInText(text, optionsCopy) {
           math = optionsCopy.preProcess(math);
         }
 
-        external_katex_default().render(math, span, optionsCopy);
+        katex.render(math, span, optionsCopy);
       } catch (e) {
-        if (!(e instanceof (external_katex_default()).ParseError)) {
+        if (!(e instanceof katex.ParseError)) {
           throw e;
         }
 
@@ -267,9 +170,7 @@ var renderElem = function renderElem(elem, optionsCopy) {
       (function () {
         // Element node
         var className = ' ' + childNode.className + ' ';
-        var shouldRender = optionsCopy.ignoredTags.indexOf(childNode.nodeName.toLowerCase()) === -1 && optionsCopy.ignoredClasses.every(function (x) {
-          return className.indexOf(' ' + x + ' ') === -1;
-        });
+        var shouldRender = optionsCopy.ignoredTags.indexOf(childNode.nodeName.toLowerCase()) === -1 && optionsCopy.ignoredClasses.every(x => className.indexOf(' ' + x + ' ') === -1);
 
         if (shouldRender) {
           renderElem(childNode, optionsCopy);
@@ -303,7 +204,7 @@ var renderMathInElement = function renderMathInElement(elem, options) {
     right: "\\)",
     display: false
   }, // LaTeX uses $…$, but it ruins the display of normal `$` in text:
-   {left: "$", right: "$", display: false},
+  // {left: "$", right: "$", display: false},
   // $ must come after $$
   // Render AMS environments even if outside $$…$$ delimiters.
   {
@@ -340,10 +241,4 @@ var renderMathInElement = function renderMathInElement(elem, options) {
   renderElem(elem, optionsCopy);
 };
 
-/* harmony default export */ var auto_render = (renderMathInElement);
-}();
-__webpack_exports__ = __webpack_exports__["default"];
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
-});
+export { renderMathInElement as default };
