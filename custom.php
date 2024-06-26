@@ -72,29 +72,43 @@ switch($cmd) {
         return;
     case "IMAGE_OF_BING":
     case "IMAGE_OF_BING_AUTOSAVE":
+        if(file_exists($CFG_PATH.'images/BING_OF_DAY.txt')){
+            $d = file_get_contents($CFG_PATH.'images/BING_OF_DAY.txt');
+            $t = explode("|", $d);
+            if(($t[0]==intdiv(time()+8*3600,24*3600))&&(file_exists($t[1]))) {
+                echo basename($t[1]);
+                return;
+            }
+        }
         for($i=0; $i<3; $i++) {
             $url = get_bing_today_imageurl();
             if($url != "") break;
         }
-        for($i=0; $i<3; $i++) {
-            $v1 = parse_url($url);
-            parse_str($v1['query'], $v2);
-            $imgfile = $CFG_PATH.'images/'.$v2['id'];
-            if (file_exists($imgfile) && (filesize($imgfile)>30000) ){
-                echo $v2['id'];
-                return;
-            }
-            else {               
-                if ($cmd == "IMAGE_OF_BING_AUTOSAVE") {
+        $v1 = parse_url($url);
+        parse_str($v1['query'], $v2);
+        $imgfile = $CFG_PATH.'images/'.$v2['id'];
+        if (file_exists($imgfile) && (filesize($imgfile)>30000) ){
+            echo $v2['id'];
+            return;
+        }
+        else {
+            if ($cmd == "IMAGE_OF_BING_AUTOSAVE") {
+                $bG = false;
+                for($i=0; $i<3; $i++) {
                     // get image and save to file
                     $image_data = file_get_contents($url);
-                    file_put_contents($imgfile, $image_data);
+                    if(strlen($image_data)>50000){
+                        $bG = true;
+                        break;
+                    }
                 }
-                else {
-                    echo $url;
-                    return;
+                if($bG) {
+                    file_put_contents($imgfile, $image_data, LOCK_EX);
+                    $v = intdiv(time()+8*3600,24*3600);
+                    file_put_contents($CFG_PATH.'images/BING_OF_DAY.txt', $v.'|'.$imgfile, LOCK_EX);
                 }
             }
+            echo $url;
         }
         return;
     case "IMAGE_LIBRARY":
