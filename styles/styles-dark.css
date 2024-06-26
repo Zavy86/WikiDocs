@@ -11,6 +11,7 @@ body,.sidenav,.sidebar-footer,.modal,.modal-footer{background-color:#333 !import
 .search-wrapper{border-color:#222 !important;}
 .sidenav a{color:#bbb !important;}
 input{color:#bbb;}
+#nav-mobile li.search .search-wrapper input#search{color:#bbb;}
 
 /* footer */
 footer{color:#666666;font-size:12px;}
@@ -55,3 +56,7 @@ ul.sidenav.sidenav-fixed li.subsub_index.active{background-color:#555 !important
 
 /* inputs */
 label{color:#ccc;}
+
+/* custom scrollbars */
+::-webkit-scrollbar-track{background:#222222; border-radius: 10px;}
+* {scrollbar-width: thin; scrollbar-color: var(--theme-color) #222222;}

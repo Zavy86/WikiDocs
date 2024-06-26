@@ -124,10 +124,10 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
 .editor-preview-side{z-index:307;}
 .CodeMirror-fullscreen{z-index:309;}
 .editor-toolbar.fullscreen{z-index:309;}
-.sidenav{z-index:2;}
+.sidenav{z-index:2; overflow-y: scroll; overflow-x: hidden; height: calc(100% - 60px); padding-bottom: 60px;}
 .sidenav-overlay{z-index:297;}
 @media only screen and (max-width:992px){
-	.sidenav{z-index:999;}
+	.sidenav{z-index:999; height: 100%; padding-bottom: 0;}
 	.sidenav-overlay{z-index:997;}
 }
 
@@ -137,12 +137,17 @@ ul.sidenav.sidenav-fixed li.sub_index.active{background-color:#e9e9e9 !important
 /* debug */
 pre.debug{margin:9px;font-size:12px;}
 
+/* custom scrollbars */
+::-webkit-scrollbar{width:10px; height:10px;}
+::-webkit-scrollbar-thumb{background:var(--theme-color); border-radius: 10px;}
+::-webkit-scrollbar-thumb:hover{background: var(--theme-color);}
 
-.logo-image {
-	position: relative;
-	transition: transform 0.4s; /* 添加过渡效果 */
-}
+/* code block copy button */
+.copy-btn {position: absolute; top: 5px; right: 5px; padding: 2px 5px; font-size: 12px; cursor: pointer; background-color: var(--theme-color); color: white; border: none; border-radius: 3px;}
+.copy-btn:focus {outline: none;}
+.code-container {position: relative; background: none;}
 
+/* Diary Motto */
 .wikidocs_DiaryMotto {
     text-align: center;
     width: 100%;
@@ -157,6 +162,7 @@ pre.debug{margin:9px;font-size:12px;}
     padding: 5px;
 }
 
+/* image library */
 .wikidocs_imageLibrary {
     background-color: transparent;
     border-radius: 0px;
@@ -182,11 +188,7 @@ pre.debug{margin:9px;font-size:12px;}
     font-size: 1em;
 }
 
-.nowrap{
-  display: inline-block;
-  white-space: nowrap;
-}
-
+/* search */
 .wikidocs_search_container {
 	width: 250px;
 	display: inline-block;
@@ -223,6 +225,7 @@ pre.debug{margin:9px;font-size:12px;}
     overflow: hidden;
 }
 
+/* web navigator */
 .wikidocs_nav_container {
     width: 72px;
     height: 16px;
@@ -276,4 +279,9 @@ a.wikidocs_nav_link:hover { color: #0303E5;text-decoration:none;}
 .no-border {
   border: none;
   vertical-align: top;
+}
+
+.nowrap{
+  display: inline-block;
+  white-space: nowrap;
 }

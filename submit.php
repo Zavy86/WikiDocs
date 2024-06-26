@@ -504,6 +504,13 @@ function attachment_upload_ajax(){
 		// return
 		return false;
 	}
+	// check file size (limit to 10 MB)
+	if($attachment['size'] > 10 * 1024 * 1024) {
+		// error
+		echo json_encode(array("error"=>1,"code"=>"file_too_large","size"=>$attachment['size']));
+		// return
+		return false;
+	}
 	// make file name
 	$file_name=strtolower(str_replace(" ","-",$attachment['name']));
 	// move temporary file
