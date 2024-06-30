@@ -26,7 +26,7 @@ $APP=new WikiDocs();
 // initialize document
 $DOC=new Document(DOC);
 // initialize markdown parser
-$PARSER=new ParsedownFilter([
+$PARSER=new ParsedownPlus([
 	'typographer' => true,
 	'toc' => true,
 	'sup' => true,

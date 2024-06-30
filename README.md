@@ -91,12 +91,16 @@ services:
 - Use this as Nginx configuration for WikiDocs:
   ```
   ...
-          location /wikidocs/ {
-                  if (!-e $request_filename){
-                  rewrite ^/(.*)$ /index.php?doc=$1 last;
-                  }
-                  try_files $uri $uri/ =404;
-          }
+    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=3600";
+    }
+    location / {
+        if (!-e $request_filename){
+            rewrite ^/(.*)$ /index.php?doc=$1 last;
+        }
+        try_files $uri $uri/ =404;
+    }
   ```
 - Copy the configuration sample file `cp datasets/config.sample.inc.php datasets/config.inc.php`
 - Edit the configuration file `nano datasets/config.inc.php`
