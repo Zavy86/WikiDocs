@@ -20,7 +20,7 @@ class ParsedownPlus extends ParsedownFilter
         parent::__construct($params);
 
         // Ensure the parent class version is compatible
-        if (version_compare(parent::version, '0.8.0-beta-1') < 0) {
+        if (version_compare(\Parsedown::version, '1.7.4') < 0) {
             throw new Exception('ParsedownPlus requires a later version of Parsedown');
         }
 
@@ -44,7 +44,7 @@ class ParsedownPlus extends ParsedownFilter
         }
     }
 
-    public function text($text)
+    public function text($text): string
     {
         if (!$this->cssAdded) {
             $text = $this->addCss($text);
@@ -243,6 +243,7 @@ class ParsedownPlus extends ParsedownFilter
             $text
         );
     }
+
     protected function processCollapsibleSections($text)
     {
         $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);

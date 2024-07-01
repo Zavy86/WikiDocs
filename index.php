@@ -26,11 +26,49 @@ $APP=new WikiDocs();
 // initialize document
 $DOC=new Document(DOC);
 // initialize markdown parser
-$PARSER=new ParsedownPlus([
-	'typographer' => true,
-	'toc' => true,
-	'sup' => true,
-	'sub' => true
+$PARSER = new ParsedownPlus([
+    'typographer' => true,
+    'toc' => [
+        'enabled' => true
+    ],
+    'emphasis' => [
+        'enabled' => true,
+        'superscript' => true,
+        'subscript' => true
+    ],
+    'markup' => true,
+    'diagrams' => [
+        'enabled' => true,
+        'chartjs' => true,
+        'mermaid' => true,
+    ],
+    'math' => [
+        'enabled' => true,
+        'inline' => [
+            'enabled' => true,
+            'delimiters' => [
+                ['left' => '\\(', 'right' => '\\)'],
+            ],
+        ],
+        'block' => [
+            'enabled' => true,
+            'delimiters' => [
+                ['left' => '$$', 'right' => '$$'],
+            ],
+        ],
+    ],
+    'emphasis' => [
+        'enabled' => true,
+        'bold' => true,
+        'italic' => true,
+        'strikethroughs' => true,
+        // this must be off for collapsible section to work
+        'insertions' => false,
+        'subscript' => true,
+        'superscript' => true,
+        'keystrokes' => true,
+        'marking' => true,
+    ],
 ]);
 // include web or print template
 if(MODE=='print'){require_once(BASE.'print.inc.php');}else{require_once(BASE.'template.inc.php');}

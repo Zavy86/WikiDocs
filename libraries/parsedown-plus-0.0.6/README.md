@@ -11,12 +11,12 @@ ParsedownPlus is an extension of Parsedown that adds support for custom tags suc
 
 ```php
 <?php
-// include parsedown libraries
-require_once(BASE."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
+// require external libraries
+require_once(BASE."libraries/parsedown-1.7.4/Parsedown.php");
 require_once(BASE."libraries/parsedown-extra-0.8.1/ParsedownExtra.php");
-require_once(BASE."libraries/parsedown-extended-1.1.2-modified/ParsedownExtended.php");
+require_once(BASE."libraries/parsedown-extended-1.2.9/ParsedownExtended.php");
 require_once(BASE."libraries/parsedown-filter-0.0.1/ParsedownFilter.php");
-require_once(BASE."libraries/parsedown-plus-0.0.1/ParsedownPlus.php");
+require_once(BASE."libraries/parsedown-plus-0.0.6/ParsedownPlus.php");
 
 // initialize markdown parser
 $PARSER=new ParsedownPlus([
@@ -108,7 +108,7 @@ This is the content for the collapsible section. If title is not defined, it wil
 
 ## License
 
-ParsedownPlus is licensed under the GPLv3 License. See the `LICENSE` file for more details.
+ParsedownPlus is freeware and open source. Feel free to modify and distribute it under the terms of the [MIT](LICENSE) License.
 
 ## Contributions
 Contributions are welcome! If you have suggestions, bug reports, or feature requests, please open an issue or submit a pull request on the repository. Make sure to follow the project's code of conduct and contribution guidelines. Thank you for helping improve ParsedownPlus!
