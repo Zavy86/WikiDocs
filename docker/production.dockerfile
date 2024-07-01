@@ -19,9 +19,11 @@ ARG DEPENDENCIES="\
 apache2 \
 php7 \
 php7-apache2 \
+php7-dom \
 php7-json \
 php7-mbstring \
 php7-session \
+php7-xml \
 shadow \
 "
 
