@@ -164,12 +164,14 @@ function WikiDocs_ShowNav(Title=''){
         if(wikidocs_ArrayNav[i].length > 3)
             style = wikidocs_ArrayNav[i][3];
 
-        if((wikidocs_ArrayNav[i].length < 2)||(i == 0)||(link.indexOf('://')==-1)){
+        if((wikidocs_ArrayNav[i].length < 2)||(i == 0)||(link.indexOf('/')==-1)){
             if((style=='')&&(tip=='')&&(link!=''))
                 style=link;
             nav_str = '</div></td></tr><tr class="no-border"><td class="wikidocs_nav_td"><span class="wikidocs_nav_category" title="'+tip+'" style="'+style+'">'+text+'</span></td><td class="wikidocs_nav_td"><div style="display: flex;">';
         }
         else{
+            link = link.replace('{{APP_PATH}}', APP_PATH());
+            link = link.replace('{{DOC_PATH}}', DOC_PATH());
             v = '<a class="wikidocs_nav_link" href="'+link+'" onclick="openUrlWithNewWindow(\''+link+'\');return false;" title="'+tip+'" style="'+style+'">'+text+'</a>';
             nav_str = '<div class="wikidocs_nav_container">'+v+'</div> ';
         }
