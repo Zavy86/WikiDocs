@@ -134,3 +134,60 @@ EOS;
   }
   return $sitemap;
 }
+
+/**
+ * Parse inline text for custom tags like [recentedits]
+ *
+ * @param string $text The text to parse
+ * @return string Parsed text
+ */
+function parseInlineText($text) {
+    if (preg_match('/\[recentedits(?::(\d+))?\]/', $text, $matches)) {
+        $limit = isset($matches[1]) ? (int)$matches[1] : 7;
+        $html = renderRecentEdits($limit);
+        $text = str_replace($matches[0], $html, $text);
+    }
+    return $text;
+}
+
+/**
+ * Render the recent edits
+ *
+ * @param int $limit Number of recent edits to show
+ * @return string HTML of the recent edits
+ */
+function renderRecentEdits($limit = 7) {
+    $docs = Document::getLastEditedDocs($limit);
+    $html = "<ul>\n";
+
+    foreach ($docs as $doc) {
+        $path = rtrim($doc['path'], '/');
+        $title = getDocumentTitle($path);
+        $html .= '<li><a href="' . URL . $path . '">' . $title . '</a> - ' . date('Y-m-d H:i', $doc['timestamp']) . "</li>\n";
+    }
+
+    $html .= "</ul>\n";
+    return $html;
+}
+
+/**
+ * Get the title of a document from the first line of its content.md file
+ *
+ * @param string $path The path to the document
+ * @return string The title of the document
+ */
+function getDocumentTitle($path) {
+    // Construct the full path to the content.md file
+    $fullPath = realpath(__DIR__ . '/../public_html/datasets/documents/' . $path . '/content.md');
+    if ($fullPath && file_exists($fullPath)) {
+        $file = fopen($fullPath, 'r');
+        if ($file) {
+            $firstLine = fgets($file);
+            fclose($file);
+            if ($firstLine !== false && strpos($firstLine, '# ') === 0) {
+                return trim(substr($firstLine, 2));
+            }
+        }
+    }
+    return $path; // fallback to the path if title not found
+}
