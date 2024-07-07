@@ -356,6 +356,7 @@
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true,'theme': <?= ($APP->DARK?"'dark'":"'neutral'") ?>});</script>
 <script src="<?= $APP->PATH ?>scripts/initializations.js"></script>
+<script src="<?= $APP->PATH ?>scripts/editor-shortcuts.js"></script>
 <?php if(MODE=="edit"): ?>
 	<script src="<?= $APP->PATH ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
 	<script src="<?= $APP->PATH ?>scripts/editor.js"></script>

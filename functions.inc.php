@@ -136,18 +136,35 @@ EOS;
 }
 
 /**
- * Parse inline text for custom tags like [recentedits]
+ * Parse inline text for custom tags while ignoring code blocks and inline code
  *
  * @param string $text The text to parse
+ * @param array $tags The tags to process
  * @return string Parsed text
  */
-function parseInlineText($text) {
-    if (preg_match('/\[recentedits(?::(\d+))?\]/', $text, $matches)) {
-        $limit = isset($matches[1]) ? (int)$matches[1] : 7;
-        $html = renderRecentEdits($limit);
-        $text = str_replace($matches[0], $html, $text);
+function parseCustomTags($text, $tags) {
+    // Regular expression to match inline code (`code`) and code blocks (```code```)
+    $codeBlockPattern = '/(```.*?```|`[^`]*`)/s';
+
+    // Split text by code blocks
+    $segments = preg_split($codeBlockPattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    // Process only non-code segments
+    foreach ($segments as &$segment) {
+        // If the segment is not a code block, process for custom tags
+        if (!preg_match($codeBlockPattern, $segment)) {
+            foreach ($tags as $tag => $callback) {
+                if (preg_match('/\[' . $tag . '(?::(\d+))?\]/', $segment, $matches)) {
+                    $param = isset($matches[1]) ? (int)$matches[1] : 7; // Default limit is 7
+                    $html = call_user_func($callback, $param);
+                    $segment = str_replace($matches[0], $html, $segment);
+                }
+            }
+        }
     }
-    return $text;
+
+    // Join the segments back together
+    return implode('', $segments);
 }
 
 /**
@@ -190,4 +207,34 @@ function getDocumentTitle($path) {
         }
     }
     return $path; // fallback to the path if title not found
+}
+
+/**
+ * Render the total number of content.md files
+ *
+ * @return string The total number of content.md files
+ */
+function renderTotalContent() {
+    $total = Document::getTotalContentCount();
+    return (string)$total;
+}
+
+/**
+ * Parse inline text for custom tags like [wd-recentedits] and [wd-total]
+ *
+ * @param string $text The text to parse
+ * @return string Parsed text
+ */
+function parseInlineText($text) {
+    // Define the tags and their respective callbacks
+    $tags = [
+        'wd-recentedits' => function($limit = 7) {
+            return renderRecentEdits($limit);
+        },
+        'wd-total' => function() {
+            return renderTotalContent();
+        }
+    ];
+
+    return parseCustomTags($text, $tags);
 }
