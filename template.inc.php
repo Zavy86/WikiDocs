@@ -160,9 +160,9 @@
 				<?php if(MODE=="view"): ?>
 					<article>
 						<?php
-							$source=$PARSER->text($DOC->render());
-							$source_array=preg_split("/((\r?\n)|(\r\n?))/",$source);
-							$source_final="\n";
+                            $source = $PARSER->text(parseInlineText($DOC->render()));
+                            $source_array = preg_split("/((\r?\n)|(\r\n?))/", $source);
+                            $source_final = "\n";
 							// add anchor link to headers
 							foreach($source_array as $line){
 								if(in_array(substr($line,1,2),['h1','h2','h3','h4','h5','h6'])){
@@ -356,6 +356,7 @@
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true,'theme': <?= ($APP->DARK?"'dark'":"'neutral'") ?>});</script>
 <script src="<?= $APP->PATH ?>scripts/initializations.js"></script>
+<script src="<?= $APP->PATH ?>scripts/editor-shortcuts.js"></script>
 <?php if(MODE=="edit"): ?>
 	<script src="<?= $APP->PATH ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
 	<script src="<?= $APP->PATH ?>scripts/editor.js"></script>

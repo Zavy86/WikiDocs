@@ -134,3 +134,107 @@ EOS;
   }
   return $sitemap;
 }
+
+/**
+ * Parse inline text for custom tags while ignoring code blocks and inline code
+ *
+ * @param string $text The text to parse
+ * @param array $tags The tags to process
+ * @return string Parsed text
+ */
+function parseCustomTags($text, $tags) {
+    // Regular expression to match inline code (`code`) and code blocks (```code```)
+    $codeBlockPattern = '/(```.*?```|`[^`]*`)/s';
+
+    // Split text by code blocks
+    $segments = preg_split($codeBlockPattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    // Process only non-code segments
+    foreach ($segments as &$segment) {
+        // If the segment is not a code block, process for custom tags
+        if (!preg_match($codeBlockPattern, $segment)) {
+            foreach ($tags as $tag => $callback) {
+                if (preg_match('/\[' . $tag . '(?::(\d+))?\]/', $segment, $matches)) {
+                    $param = isset($matches[1]) ? (int)$matches[1] : 7; // Default limit is 7
+                    $html = call_user_func($callback, $param);
+                    $segment = str_replace($matches[0], $html, $segment);
+                }
+            }
+        }
+    }
+
+    // Join the segments back together
+    return implode('', $segments);
+}
+
+/**
+ * Render the recent edits
+ *
+ * @param int $limit Number of recent edits to show
+ * @return string HTML of the recent edits
+ */
+function renderRecentEdits($limit = 7) {
+    $docs = Document::getLastEditedDocs($limit);
+    $html = "<ul>\n";
+
+    foreach ($docs as $doc) {
+        $path = rtrim($doc['path'], '/');
+        $title = getDocumentTitle($path);
+        $html .= '<li><a href="' . URL . $path . '">' . $title . '</a> - ' . date('Y-m-d H:i', $doc['timestamp']) . "</li>\n";
+    }
+
+    $html .= "</ul>\n";
+    return $html;
+}
+
+/**
+ * Get the title of a document from the first line of its content.md file
+ *
+ * @param string $path The path to the document
+ * @return string The title of the document
+ */
+function getDocumentTitle($path) {
+    // Construct the full path to the content.md file
+    $fullPath = realpath(__DIR__ . '/../public_html/datasets/documents/' . $path . '/content.md');
+    if ($fullPath && file_exists($fullPath)) {
+        $file = fopen($fullPath, 'r');
+        if ($file) {
+            $firstLine = fgets($file);
+            fclose($file);
+            if ($firstLine !== false && strpos($firstLine, '# ') === 0) {
+                return trim(substr($firstLine, 2));
+            }
+        }
+    }
+    return $path; // fallback to the path if title not found
+}
+
+/**
+ * Render the total number of content.md files
+ *
+ * @return string The total number of content.md files
+ */
+function renderTotalContent() {
+    $total = Document::getTotalContentCount();
+    return (string)$total;
+}
+
+/**
+ * Parse inline text for custom tags like [wd-recentedits] and [wd-total]
+ *
+ * @param string $text The text to parse
+ * @return string Parsed text
+ */
+function parseInlineText($text) {
+    // Define the tags and their respective callbacks
+    $tags = [
+        'wd-recentedits' => function($limit = 7) {
+            return renderRecentEdits($limit);
+        },
+        'wd-total' => function() {
+            return renderTotalContent();
+        }
+    ];
+
+    return parseCustomTags($text, $tags);
+}

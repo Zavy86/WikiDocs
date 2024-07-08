@@ -483,4 +483,60 @@ final class Document{
 		return $result;
 	}
 
+    /**
+     * Get the list of last edited documents
+     *
+     * @param int $limit Number of documents to return
+     * @return array List of last edited documents
+     */
+    public static function getLastEditedDocs($limit = 7) {
+        $documentsDir = realpath(dirname(__FILE__)) . '/../datasets/documents/';
+        $docs = [];
+
+        // Scan the documents directory
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($documentsDir));
+        foreach ($iterator as $file) {
+            if ($file->isFile() && strtolower($file->getFilename()) === 'content.md') {
+                // Ignore homepage
+                if (strpos($file->getPathname(), 'homepage/content.md') === false) {
+                    $docs[] = [
+                        'path' => str_replace([$documentsDir, 'content.md'], '', $file->getPathname()),
+                        'timestamp' => $file->getMTime()
+                    ];
+                }
+            }
+        }
+
+        // Sort documents by modification time
+        usort($docs, function ($a, $b) {
+            return $b['timestamp'] - $a['timestamp'];
+        });
+
+        // Limit the number of documents
+        return array_slice($docs, 0, $limit);
+    }
+
+    /**
+     * Get the total number of content.md files
+     *
+     * @return int Total number of content.md files
+     */
+    public static function getTotalContentCount() {
+        $documentsDir = realpath(dirname(__FILE__)) . '/../datasets/documents/';
+        $count = 0;
+
+        // Scan the documents directory
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($documentsDir));
+        foreach ($iterator as $file) {
+            if ($file->isFile() && strtolower($file->getFilename()) === 'content.md') {
+                // Ignore homepage
+                if (strpos($file->getPathname(), 'homepage/content.md') === false) {
+                    $count++;
+                }
+            }
+        }
+
+        return $count;
+    }
+
 }
