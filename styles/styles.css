@@ -153,3 +153,6 @@ pre.debug{margin:9px;font-size:12px;}
 .copy-btn {position: absolute; top: 5px; right: 5px; padding: 2px 5px; font-size: 12px; cursor: pointer; background-color: var(--theme-color); color: white; border: none; border-radius: 3px;}
 .copy-btn:focus {outline: none;}
 .code-container {position: relative; background: none;}
+
+.table-picker { position: absolute; padding: 3px; z-index: 1000;}
+.table-picker .cell { width: 20px; height: 20px; display: inline-block; margin: 3px; cursor: pointer;}

@@ -40,3 +40,7 @@ label{color:#000;}
 /* custom scrollbars */
 ::-webkit-scrollbar-track{background:#f1f1f1; border-radius: 10px;}
 * {scrollbar-width: thin; scrollbar-color: var(--theme-color) #f1f1f1;}
+
+.table-picker {background: white; border: 1px solid #ddd;}
+.table-picker .cell {border: 1px solid #ddd;}
+.table-picker .cell.active {background-color: var(--theme-color);}
