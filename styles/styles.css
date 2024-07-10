@@ -18,6 +18,13 @@ input:-moz-placeholder{unicode-bidi: plaintext;text-align:start;}
 input:-ms-input-placeholder{unicode-bidi: plaintext;text-align:start;}
 input::-webkit-input-placeholder{unicode-bidi: plaintext;text-align:start;}
 
+/* fixes long strings making side menu freeze */
+h1, h2, h3, h4, p, article ul li, article ol li, td {overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto;}
+/* based on markdown rules, tables should be 100% */
+table{width:100%;}
+/* font must be defined for international langs to display in monospace */
+code, pre {font-family: Consolas, 'Courier New', Courier, monospace;}
+
 /* headers */
 h1,h2,h3,h4,h5,h6{color:var(--theme-color);font-weight:300;line-height:110%;}
 h1{font-size:3.5rem;margin:1.75rem 0 1.0rem 0;}
