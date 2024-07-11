@@ -60,3 +60,8 @@ label{color:#ccc;}
 /* custom scrollbars */
 ::-webkit-scrollbar-track{background:#222222; border-radius: 10px;}
 * {scrollbar-width: thin; scrollbar-color: var(--theme-color) #222222;}
+
+
+.table-picker {background: #333; border: 1px solid #ddd;}
+.table-picker .cell {border: 1px solid #ddd;}
+.table-picker .cell.active {background-color: var(--theme-color);}
