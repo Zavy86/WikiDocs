@@ -23,13 +23,15 @@
         /* these are set too small */
         code, pre, blockquote, .mono {font-family: Consolas, 'Courier New', Courier, monospace; font-size: 11pt !important;}
         /* fixes long strings making side menu freeze */
-        h1, h2, h3, h4, p, article ul li, article ol li, td {overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto;}
+        h1, h2, h3, h4, p, article ul li, article ol li, td {overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto; clear: both;}
         /* based on markdown rules, tables should be 100% */
         table{width:100%;}
         /* font must be defined for international langs to display in monospace */
         code, pre {font-family: Consolas, 'Courier New', Courier, monospace;}
         /* hide video elements */
         .video-responsive, .video-responsive iframe {display:none;}
+        /* adjust image and text alignment */
+        img {display: block;margin: 1em auto;max-width: 100%;height: auto;float: none;}
     </style>
     <!-- start with details open -->
     <script>
