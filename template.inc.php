@@ -115,6 +115,9 @@
         if($DOC->ID=="homepage"){
           echo $APP->TITLE;
         }else{
+          // Home Url
+          $link_address21 = PATH;
+          echo "<a href='".$link_address21. "'>Δ Home</a> / ";
           foreach($DOC->hierarchy() as $element){
             // check for current document
             if($DOC->ID==$element->path){
