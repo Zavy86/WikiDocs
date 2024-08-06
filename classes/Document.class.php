@@ -206,7 +206,7 @@ final class Document{
 				// make element
 				$attachment=new stdClass();
 				$attachment->label=$element_fe;
-				$attachment->url=substr(URL,0,-1).$this->PATH."/".$element_fe;
+				$attachment->url=PATH."datasets/documents/".$this->ID."/".$element_fe;
 				// add element to documents array
 				$attachments_array[]=$attachment;
 			}
