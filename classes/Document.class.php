@@ -6,6 +6,63 @@
  * @repository https://github.com/Zavy86/wikidocs
  */
 
+// More or less comprehensive list of html js events, which will be escaped during document display to prevent XSS.
+const HTML_EVENTS = [
+    "onactivate",
+    "onbeforeactivate",
+    "onbeforecut",
+    "onbeforeeditfocus",
+    "onbeforeupdate",
+    "onclick",
+    "oncontrolselect",
+    "oncut",
+    "ondeactivate",
+    "ondragend",
+    "ondragleave",
+    "ondragstart",
+    "onerrorupdate",
+    "onfocus",
+    "onfocusout",
+    "onkeydown",
+    "onkeyup",
+    "onmousedown",
+    "onmouseleave",
+    "onmouseout",
+    "onmouseup",
+    "onmove",
+    "onmovestart",
+    "onpropertychange",
+    "onresize",
+    "onresizestart",
+    "ontimeerror",
+    "onafterupdate",
+    "onbeforecopy",
+    "onbeforedeactivate",
+    "onbeforepaste",
+    "onblur",
+    "oncontextmenu",
+    "oncopy",
+    "ondblclick",
+    "ondrag",
+    "ondragenter",
+    "ondragover",
+    "ondrop",
+    "onfilterchange",
+    "onfocusin",
+    "onhelp",
+    "onkeypress",
+    "onlosecapture",
+    "onmouseenter",
+    "onmousemove",
+    "onmouseover",
+    "onmousewheel",
+    "onmoveend",
+    "onpaste",
+    "onreadystatechange",
+    "onresizeend",
+    "onselectstart",
+];
+
 final class Document{
 
 	protected string $ID;
@@ -17,11 +74,12 @@ final class Document{
 	protected ?string $FILE;
 	protected ?int $TIMESTAMP;
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $id Document ID (examples: homepage, samples/typography )
-	 */
+    /**
+     * Constructor
+     *
+     * @param string $id Document ID (examples: homepage, samples/typography )
+     * @throws Exception
+     */
 	public function __construct(string $id){
 		// definitions
 		$this->ID=$id;
@@ -35,6 +93,11 @@ final class Document{
 		// check if file exist
 		if(!file_exists($this->FILE)){$this->FILE=null;}
 		if(file_exists($this->FILE ?? '')){$this->TIMESTAMP=filemtime($this->FILE);}
+
+        if (substr_count($this->ID, "..") > 0 ||
+            substr_count($this->ID, ':') > 0 || strpos($this->ID, '/') == 0) { // These 2 checks are to detect when the user uses a windows or unix absolute path; I'm not sure they are necessary, but they shouldn't do any harm either.
+            throw new Exception("The user is probably trying to create the document outside of the documents dataset"); // TODO: handle the error gracefully.
+        }
 	}
 
 	/**
@@ -77,13 +140,45 @@ final class Document{
 		$content=file_get_contents($file_path);
 		// replace path placeholders
 		switch(strtoupper(trim($paths))){
-			case "WEB":$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(PATH,$this->PATH."/"),$content);break;
+			case "WEB":
+                // I also escape the script tags to prevent XSS.
+                $source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(PATH,$this->PATH."/"),$content);
+                $source = $this->sanitizeHtml($source);
+                break;
 			case "FS":$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),array(URL,$this->DIR."/"),$content);break;
 			default:$source=str_replace(array("{{APP_PATH}}","{{DOC_PATH}}"),"",$content);
 		}
 		// return
 		return $source;
 	}
+
+    /**
+     * If I find an event in the code, I sanitize some dangerous html tags and attributes by replacing some character with the corresponding escape code, so that the event handler is not executed, but the code is displayed instead.
+     * The replacement is performed only outside of Markdown code blocks, because inside those it's already performed.
+     * @param $string
+     * @return string
+     */
+    public function sanitizeHtml($string) {
+        // Regular expression to split by <pre>...</pre> or <code>...</code> blocks
+        $parts = preg_split('/(```.*?```|`.*?`)/is', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        // Iterate over the parts
+        foreach ($parts as &$part) {
+            // Only modify parts that are outside <pre>...</pre> or <code>...</code>
+            if (!preg_match('/^```.*```$|^`.*`$/is', $part)) {
+                // Sanitize HTML events
+                foreach (HTML_EVENTS as $event) {
+                    $replacement = '&#111;' . substr($event, 1);
+                    $part = str_replace($event, $replacement, $part);
+                }
+                // Sanitize script tags.
+                $part=str_replace(array("<script","script>"),array("&lt;script","script&gt;"),$part);
+            }
+        }
+
+        // Rejoin the parts and return the result
+        return implode('', $parts);
+    }
 
 	/**
 	 * Document render
