@@ -74,12 +74,11 @@ final class Document{
 	protected ?string $FILE;
 	protected ?int $TIMESTAMP;
 
-    /**
-     * Constructor
-     *
-     * @param string $id Document ID (examples: homepage, samples/typography )
-     * @throws Exception
-     */
+  /**
+   * Constructor
+   *
+   * @param string $id Document ID (examples: homepage, samples/typography )
+   */
 	public function __construct(string $id){
 		// definitions
 		$this->ID=$id;
@@ -93,11 +92,6 @@ final class Document{
 		// check if file exist
 		if(!file_exists($this->FILE)){$this->FILE=null;}
 		if(file_exists($this->FILE ?? '')){$this->TIMESTAMP=filemtime($this->FILE);}
-
-        if (substr_count($this->ID, "..") > 0 ||
-            substr_count($this->ID, ':') > 0 || strpos($this->ID, '/') == 0) { // These 2 checks are to detect when the user uses a windows or unix absolute path; I'm not sure they are necessary, but they shouldn't do any harm either.
-            throw new Exception("The user is probably trying to create the document outside of the documents dataset"); // TODO: handle the error gracefully.
-        }
 	}
 
 	/**
