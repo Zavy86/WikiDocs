@@ -63,6 +63,8 @@ if($g_act=="conclude"){
 	$htaccess="<IfModule mod_rewrite.c>\n";
 	$htaccess.="\tRewriteEngine On\n";
 	$htaccess.="\tRewriteBase ".$_SESSION['wikidocs']['setup']['path']."\n";
+	$htaccess.="\tRewriteCond %{REQUEST_URI} \.md$ [NC]\n";
+	$htaccess.="\tRewriteRule ^.*$ / [R=301,L]\n";
 	$htaccess.="\tRewriteCond %{REQUEST_FILENAME} !-f\n";
 	$htaccess.="\tRewriteRule ^(.*)$ index.php?doc=$1 [NC,L,QSA]\n";
 	$htaccess.="</IfModule>\n";
