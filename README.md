@@ -79,6 +79,8 @@ services:
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+	RewriteCond %{REQUEST_URI} \.md$ [NC]
+	RewriteRule ^.*$ / [R=301,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(.*)$ index.php?doc=$1 [NC,L,QSA]
 </IfModule>
@@ -94,6 +96,9 @@ services:
     location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
         try_files $uri =404;
         add_header Cache-Control "public, max-age=3600";
+    }
+    location ~* \.md$ {
+        return 301 /;
     }
     location / {
         if (!-e $request_filename){
