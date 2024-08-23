@@ -138,23 +138,15 @@ function content_save(){
 	// save content file
     $bytes = file_put_contents($DOC->DIR . "content.md", $p_content);
     // alerts
-    if ($bytes > 0) {
+    if($bytes>0){
         // delete draft if exist
-        if (file_exists($DOC->DIR . "draft.md")) {
-            unlink($DOC->DIR . "draft.md");
-        }
+        if(file_exists($DOC->DIR."draft.md")){unlink($DOC->DIR."draft.md");}
         // sum size of all images
-        foreach ($DOC->images() as $image_fe) {
-            $bytes += filesize($DOC->DIR . $image_fe);
-        }
-        if ($bytes < 1000000) {
-            $size = number_format($bytes / 1000, 2, ",", ".") . " KB";
-        } else {
-            $size = number_format($bytes / 1000000, 2, ",", ".") . " MB";
-        }
-        wdf_alert($TXT->SubmitDocumentSaved . " [" . $size . "]", "success");
-    } else {
-        wdf_alert($TXT->SubmitDocumentError, "danger");
+        foreach($DOC->images() as $image_fe){$bytes+=filesize($DOC->DIR.$image_fe);}
+        if($bytes<1000000){$size=number_format($bytes/1000,2,",",".")." KB";}else{$size=number_format($bytes/1000000,2,",",".")." MB";}
+        wdf_alert($TXT->SubmitDocumentSaved." [".$size."]","success");
+    }else{
+        wdf_alert($TXT->SubmitDocumentError,"danger");
     }
 	// regenerate sitemap
 	wdf_regenerate_sitemap();
