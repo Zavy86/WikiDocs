@@ -102,6 +102,18 @@ function content_save(){
 	$DOC=new Document($p_document);
 	// debug
 	wdf_dump($DOC,"DOCUMENT");
+    // check if file path is ok.
+    if (substr_count($DOC->ID, "..") > 0 ||
+        substr_count($DOC->ID, ':') > 0 || strpos($DOC->ID, '/') === 0) { // These 2 checks are to detect when the user uses a windows or unix absolute path; I'm not sure they are necessary, but they shouldn't do any harm either.
+        // the file path is not ok, so I short circuit and exit, showing an error to the user.
+        wdf_alert($TXT->SubmitDocumentError, "danger");
+        // regenerate sitemap
+        wdf_regenerate_sitemap();
+        // redirect
+        wdf_redirect(PATH.$p_document);
+        return;
+    }
+    // file path is ok.
 	// check for directory or make it
 	if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
 	// check revision
@@ -124,18 +136,26 @@ function content_save(){
 	// debug
 	wdf_dump($p_content,"content");
 	// save content file
-	$bytes=file_put_contents($DOC->DIR."content.md",$p_content);
-	// alerts
-	if($bytes>0){
-		// delete draft if exist
-		if(file_exists($DOC->DIR."draft.md")){unlink($DOC->DIR."draft.md");}
-		// sum size of all images
-		foreach($DOC->images() as $image_fe){$bytes+=filesize($DOC->DIR.$image_fe);}
-		if($bytes<1000000){$size=number_format($bytes/1000,2,",",".")." KB";}else{$size=number_format($bytes/1000000,2,",",".")." MB";}
-		wdf_alert($TXT->SubmitDocumentSaved." [".$size."]","success");
-	}else{
-		wdf_alert($TXT->SubmitDocumentError,"danger");
-	}
+    $bytes = file_put_contents($DOC->DIR . "content.md", $p_content);
+    // alerts
+    if ($bytes > 0) {
+        // delete draft if exist
+        if (file_exists($DOC->DIR . "draft.md")) {
+            unlink($DOC->DIR . "draft.md");
+        }
+        // sum size of all images
+        foreach ($DOC->images() as $image_fe) {
+            $bytes += filesize($DOC->DIR . $image_fe);
+        }
+        if ($bytes < 1000000) {
+            $size = number_format($bytes / 1000, 2, ",", ".") . " KB";
+        } else {
+            $size = number_format($bytes / 1000000, 2, ",", ".") . " MB";
+        }
+        wdf_alert($TXT->SubmitDocumentSaved . " [" . $size . "]", "success");
+    } else {
+        wdf_alert($TXT->SubmitDocumentError, "danger");
+    }
 	// regenerate sitemap
 	wdf_regenerate_sitemap();
 	// redirect
