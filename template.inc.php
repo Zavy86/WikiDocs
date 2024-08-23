@@ -113,8 +113,9 @@
       <span>
         <?php
         if($DOC->ID=="homepage"){
-          echo $APP->TITLE;
+          echo "<span class=\"nowrap\">".$APP->TITLE."</span>";
         }else{
+          echo "<a href='".PATH."'>".$APP->TITLE."</a> / ";
           foreach($DOC->hierarchy() as $element){
             // check for current document
             if($DOC->ID==$element->path){
@@ -377,7 +378,7 @@
   function new_document(){
     var new_path=prompt("<?= str_replace(["'",'"'],"\'",$TXT->PromptNewDocument) ?>",DOC.ID+"/");
     if(new_path!==DOC.ID+"/"){
-      new_path=new_path.replace(" ","-").toLowerCase()+"?edit";
+      new_path=new_path.replace(/\s+/g,'-').toLowerCase()+"?edit";
       window.location.href=APP.URL+new_path;
     }
   }

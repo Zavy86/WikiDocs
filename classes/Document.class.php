@@ -74,12 +74,11 @@ final class Document{
 	protected ?string $FILE;
 	protected ?int $TIMESTAMP;
 
-    /**
-     * Constructor
-     *
-     * @param string $id Document ID (examples: homepage, samples/typography )
-     * @throws Exception
-     */
+  /**
+   * Constructor
+   *
+   * @param string $id Document ID (examples: homepage, samples/typography )
+   */
 	public function __construct(string $id){
 		// definitions
 		$this->ID=$id;
@@ -296,7 +295,7 @@ final class Document{
 				// make element
 				$attachment=new stdClass();
 				$attachment->label=$element_fe;
-				$attachment->url=substr(URL,0,-1).$this->PATH."/".$element_fe;
+				$attachment->url=PATH."datasets/documents/".$this->ID."/".$element_fe;
 				// add element to documents array
 				$attachments_array[]=$attachment;
 			}
