@@ -102,6 +102,18 @@ function content_save(){
 	$DOC=new Document($p_document);
 	// debug
 	wdf_dump($DOC,"DOCUMENT");
+    // check if file path is ok.
+    if (substr_count($DOC->ID, "..") > 0 ||
+        substr_count($DOC->ID, ':') > 0 || strpos($DOC->ID, '/') === 0) { // These 2 checks are to detect when the user uses a windows or unix absolute path; I'm not sure they are necessary, but they shouldn't do any harm either.
+        // the file path is not ok, so I short circuit and exit, showing an error to the user.
+        wdf_alert($TXT->SubmitDocumentError, "danger");
+        // regenerate sitemap
+        wdf_regenerate_sitemap();
+        // redirect
+        wdf_redirect(PATH.$p_document);
+        return;
+    }
+    // file path is ok.
 	// check for directory or make it
 	if(!is_dir($DOC->DIR)){mkdir($DOC->DIR,0755,true);}
 	// check revision
