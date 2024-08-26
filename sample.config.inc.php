@@ -8,7 +8,7 @@
 
 // Enable debug
 define('DEBUGGABLE',false);
-// Localization language (availables: en, it)
+// Localization [ en, de, es, fa, fr, it, nl, pt, ru, zh-hans, zh-hant ]
 define('LANG',"en");
 // Application title
 define('PATH',"/");
@@ -22,7 +22,7 @@ define('OWNER',"Owner");
 define('NOTICE',"Credits");
 // Privacy banner for GDPR-compliant
 define('PRIVACY',null);
-// Hashed password for editing (default',password)
+// Hashed password for editing (default:password)
 define('EDITCODE',"\$2y\$10\$r6OE5vLrPtnjvLZ2l8vFnO9JySb5TlwWLWZE6xTvWB9h8tUdVSsvK");
 // Hashed encoded password for reading (set null for public wiki)
 define('VIEWCODE',null);

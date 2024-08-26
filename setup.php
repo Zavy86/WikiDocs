@@ -19,7 +19,7 @@ $checks_array=array();
 $g_act=($_GET['act'] ?? '');
 if(!$g_act){$g_act="setup";}
 // include configuration sample
-include("datasets/sample.config.inc.php");
+include("sample.config.inc.php");
 // defines constants
 define('PATH_URI',explode("setup.php",$_SERVER['REQUEST_URI'])[0]);
 // die if configuration already exist
