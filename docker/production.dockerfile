@@ -44,9 +44,8 @@ COPY . /var/www/localhost/htdocs/
 # make a link for datasets volume
 RUN ln -s /var/www/localhost/htdocs/datasets /
 
-# copy configuration and htacess files from samples
-#COPY ./sample.config.inc.php /var/www/localhost/htdocs/datasets/config.inc.php
-#COPY ./sample.htaccess /var/www/localhost/htdocs/.htaccess
+# copy htaccess files from samples
+COPY ./sample.htaccess /var/www/localhost/htdocs/.htaccess
 
 # start script to override apache user's uid/gid
 RUN echo -e \
