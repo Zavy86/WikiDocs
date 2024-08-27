@@ -1,0 +1,17 @@
+
+services:
+  wikidocs:
+    build:
+      context: .
+      dockerfile: ./development.dockerfile
+      args:
+        - NO_CACHE=true
+    container_name: wiki-docs
+    ports:
+      - '8009:80'
+    volumes:
+      - ./:/var/www/localhost/htdocs
+      - ./datasets:/datasets
+    restart: unless-stopped
+    command: echo "Container running successfully!"
+
