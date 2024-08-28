@@ -45,7 +45,7 @@ COPY . /var/www/localhost/htdocs/
 RUN ln -s /var/www/localhost/htdocs/datasets /
 
 # copy htaccess files from samples
-COPY ./sample.htaccess /var/www/localhost/htdocs/.htacces
+COPY ./sample.htaccess /var/www/localhost/htdocs/.htaccess
 
 # start script to override apache user's uid/gid
 RUN echo -e \
@@ -54,7 +54,6 @@ RUN echo -e \
 'usermod -o -u ${PUID:-1000} apache\n'\
 'chown -R apache:apache /var/www/localhost/htdocs\n'\
 'exec httpd -D FOREGROUND' > /start.sh
-
 RUN chmod +x /start.sh
 
 WORKDIR /var/www/localhost/htdocs
