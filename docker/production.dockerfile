@@ -13,18 +13,18 @@
 # docker buildx build -f docker/production.dockerfile --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
 #
 
-FROM alpine:3.15
+FROM alpine:3.20
 
 ARG DEPENDENCIES="\
-apache2 \
-php7 \
-php7-apache2 \
-php7-dom \
-php7-json \
-php7-mbstring \
-php7-session \
-php7-xml \
 shadow \
+apache2 \
+php \
+php-apache2 \
+php-dom \
+php-json \
+php-mbstring \
+php-session \
+php-xml \
 "
 
 # installation
@@ -63,3 +63,4 @@ ENTRYPOINT ["/start.sh"]
 VOLUME /datasets
 
 EXPOSE 80
+
