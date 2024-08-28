@@ -12,7 +12,7 @@ ini_set('display_errors',(isset($_GET['debug']) && $_GET['debug']==1));
 
 // base directory
 define('BASE',str_replace(['/','\\'],DIRECTORY_SEPARATOR,__DIR__.'/'));
-if(version_compare(PHP_VERSION,'8.3.0')<0){die('Required at least PHP version 8.3.0, current version: '.PHP_VERSION);}
+if(version_compare(PHP_VERSION,'7.4.0')<0){die('Required at least PHP version 7.4.0, current version: '.PHP_VERSION);}
 
 // require functions and classes
 require_once(BASE.'functions.inc.php');

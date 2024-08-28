@@ -7,8 +7,6 @@
 # Run command:
 # docker run --name wikidocs-dev -d -p 80:80 -v ${PWD}:/var/www/localhost/htdocs wikidocs-dev
 #
-# Docker compose rebuild:
-# docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up --build -d
 
 FROM alpine:3.20
 
@@ -52,3 +50,4 @@ WORKDIR /var/www/localhost/htdocs
 ENTRYPOINT ["/start.sh"]
 
 EXPOSE 80
+
