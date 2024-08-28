@@ -12,7 +12,7 @@
 $('body').on('click','.image-picker',function(){
 	image_tag=$(this).attr("image");
 	simplemde.codemirror.replaceSelection('![]('+DOC.PATH+'/'+image_tag+')');
-	$("#modal_uploader").modal("close");
+	$("#modal_image_uploader").modal("close");
 });
 
 
@@ -22,6 +22,8 @@ $('body').on('click','.image-picker',function(){
 document.querySelectorAll('.image-delete').forEach(item => {
 	item.addEventListener('click', event => {
 		let image_name = item.attributes.image.value;
+
+		if(!confirm('confermi?')){return;}
 
 		$.ajax({
 			url: APP.PATH+"submit.php?act=image_delete_ajax",
