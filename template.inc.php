@@ -231,7 +231,7 @@
                 <?php foreach($DOC->images() as $image): ?>
                   <div class="col s6 m3">
                     <a href="#" class="image-picker waves-effect waves-light" image="<?= $image ?>"><img class="polaroid" src="<?= $DOC->PATH."/".$image ?>"/></a>
-                    <a href="#" class="image-delete" image="<?= $image ?>" style="display: block; text-align: center"><span class="fa fa-trash-o" aria-hidden="true"></span> &nbsp; <?= $TXT->ImageDeleteText ?></a>
+                    <a href="#" class="image-delete" image="<?= $image ?>" style="display: block; text-align: center"><span class="fa fa-trash-o" aria-hidden="true"></span> &nbsp; <?= $TXT->ImageDelete ?></a>
                   </div><!-- /col -->
                 <?php endforeach; ?>
               </div><!-- /row -->
@@ -360,8 +360,9 @@
 <?php if(MODE=="edit"): ?>
   <script src="<?= $APP->PATH ?>helpers/easymde-2.16.1/js/easymde.min.js"></script>
   <script src="<?= $APP->PATH ?>scripts/editor.js"></script>
-  <script src="<?= $APP->PATH ?>scripts/images.js"></script>
   <script src="<?= $APP->PATH ?>scripts/attachments.js"></script>
+  <script src="<?= $APP->PATH ?>scripts/images.js"></script>
+  <script>var confirm_image_delete="<?= str_replace(["'",'"'],"\'",$TXT->ImageDeleteConfirm) ?>";</script>
 <?php endif; ?>
 <?php if(MODE=="edit" && !($_GET['draft'] ?? '') && file_exists($DOC->DIR."draft.md")): ?>
   <script>if(confirm("<?= str_replace(["'",'"'],"\'",$TXT->ConfirmLoadDraft) ?>")){window.location.replace(window.location+"&draft=1");}</script>
