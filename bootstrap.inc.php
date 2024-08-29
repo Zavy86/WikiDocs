@@ -32,7 +32,7 @@ require_once(BASE."libraries/parsedown-plus-0.0.5/ParsedownPlus.php");
 if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']=='https'){$_SERVER['HTTPS']='on';}
 
 // check for configuration file
-if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){header("location:setup.php");}
+if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){header("location:setup.php?act=preliminary_check");}
 
 // include configuration file
 require_once("datasets/config.inc.php");
