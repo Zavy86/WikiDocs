@@ -140,6 +140,7 @@ You can customize the default template by creating the file `styles/styles-custo
 - [Alain Martini](https://github.com/inalto)
 - [Davide Visentin](https://github.com/dvisentin-freelance)
 - [Christian Weber](https://github.com/pce-consulting)
+- [Petr Husák](https://github.com/petrhusak)
 
 ## License
 Code released under the MIT License
