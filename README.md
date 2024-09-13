@@ -6,7 +6,7 @@ Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_
 
-[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.it/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://www.youtube.com/watch?v=NFILGeozt7k "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
+[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.it/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
 ## Features
 - Open source
@@ -91,22 +91,22 @@ services:
 
 ### Manual
 - Use this as Nginx configuration for WikiDocs:
-  ```
-  ...
-    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
-        try_files $uri =404;
-        add_header Cache-Control "public, max-age=3600";
-    }
-    location ~* \.md$ {
-        return 301 /;
-    }
-    location / {
-        if (!-e $request_filename){
-            rewrite ^/(.*)$ /index.php?doc=$1 last;
-        }
-        try_files $uri $uri/ =404;
-    }
-  ```
+```
+location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
+  try_files $uri =404;
+  add_header Cache-Control "public, max-age=3600";
+}
+location ~* \.md$ {
+  return 301 /;
+}
+location / {
+  if (!-e $request_filename){
+    rewrite ^/(.*)$ /index.php?doc=$1 last;
+  }
+  try_files $uri $uri/ =404;
+}
+```
+
 - Copy the configuration sample file `cp config.sample.inc.php datasets/config.inc.php`
 - Edit the configuration file `nano datasets/config.inc.php`
 
@@ -139,6 +139,8 @@ You can customize the default template by creating the file `styles/styles-custo
 - [Miguel Renato](https://github.com/MiguelRenato)
 - [Alain Martini](https://github.com/inalto)
 - [Davide Visentin](https://github.com/dvisentin-freelance)
+- [Christian Weber](https://github.com/pce-consulting)
+- [Petr Husák](https://github.com/petrhusak)
 
 ## License
 Code released under the MIT License
