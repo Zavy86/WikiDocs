@@ -32,7 +32,7 @@ RUN apk update && apk add --no-cache $DEPENDENCIES
 RUN rm /etc/nginx/nginx.conf
 
 # Copy custom Nginx configuration
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/development.nginx.conf /etc/nginx/nginx.conf
 
 # Remove default index.html
 RUN rm -rf /var/lib/nginx/html/*
