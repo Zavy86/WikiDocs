@@ -41,8 +41,9 @@ $root_dir=substr($original_dir,0,strrpos($original_dir,($_POST['path'] ?? ''))).
 
 if($g_act=="preliminary_check") {	
 	$softwares = [];
+	$installed['nginx'] = isNginx();
 
-	$installed['apache'] = isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false;
+	$installed['apache'] = isApache();
 	//if apache_get_modules() is not available, we can't check for the required modules
 	if (function_exists('apache_get_modules')) {
 		$required_modules = ['mod_rewrite','mod_mime'];
@@ -132,6 +133,13 @@ if($g_act=="conclude"){
     $configured = file_exists($configPath) && file_exists($htaccessPath);
 }
 
+function isNginx() {
+    return (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
+}
+function isApache() {
+    return (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,24 +162,25 @@ if($g_act=="conclude"){
 			<p>Just a databaseless markdown flat-file wiki engine..</p>
 		</div><!-- /col -->
 
-
 		<?php
 		if($g_act=="preliminary_check"){
 			// define checks
 			$check_ok="<span class='secondary-content'><i class='material-icons green-text'>check_circle</i></span>";
 			$check_ko="<span class='secondary-content'><i class='material-icons red-text'>cancel</i></span>";
+			$check_nd="<span class='secondary-content'><i class='material-icons grey-text'>cancel</i></span>";
 			?>
 			<div class="col s12">
 				<h2>Checking apache and modules</h2>
-				<p>Apache and modules</p>
+				<p>Webserver</p>
 				<ul class="collection">
 				<?php foreach ($installed as $key => $extension): ?>
 					<li class="collection-item">
 						<?= $key ?>: <?= $extension ? 'Installed' : 'Not installed' ?>
-						<?= $extension ? $check_ok : $check_ko ?>
+						<?= $extension ? $check_ok : $check_nd ?>
 					</li>
 				<?php endforeach; ?>
 				</ul>
+				
 				<h2>Checking installed modules</h2>
 				<p>Php modules and versions</p>
 				<ul class="collection">
