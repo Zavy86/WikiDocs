@@ -24,6 +24,8 @@ class ParsedownExtended extends DynamicParent
     public const ID_ATTRIBUTE_DEFAULT = 'toc';
     protected $tagToc = '[toc]';
 
+    protected $options;
+
     protected $contentsListArray = [];
     protected $contentsListString = '';
     protected $firstHeadLevel = 0;
