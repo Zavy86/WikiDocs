@@ -6,7 +6,6 @@
  * @repository https://github.com/Zavy86/wikidocs
  */
 session_start();
-// errors configuration
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",true);
 function getSetting($key,$default=''){return (string)($_SESSION['wikidocs']['setup'][$key]??$default);}
@@ -91,8 +90,8 @@ if($g_act=="conclude"){
     }
   }
   // Write configuration file
-  $configPath=$root_dir . "datasets/config.inc.php";
-  file_put_contents($configPath, $config);
+  if(!is_dir($root_dir."datasets/")){mkdir($root_dir."datasets/",0755,true);}
+  file_put_contents($root_dir."datasets/config.inc.php",$config);
   // Generate .htaccess
   $htaccess="<IfModule mod_rewrite.c>\n";
   $htaccess.="\tRewriteEngine On\n";
