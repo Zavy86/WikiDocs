@@ -17,7 +17,7 @@ FROM alpine:3.20
 
 ARG DEPENDENCIES="\
 shadow \
-apache2 \
+apache2-http2 \
 php \
 php-apache2 \
 php-dom \
@@ -34,7 +34,6 @@ RUN apk add --no-cache $DEPENDENCIES
 RUN sed -ri \
     -e 's!^#(LoadModule rewrite_module .*)$!\1!g' \
     -e 's!^#(LoadModule deflate_module .*)$!\1!g' \
-    -e 's!^#(LoadModule http2_module .*)$!\1!g' \
     -e 's!^(\s*AllowOverride) None.*$!\1 All!g' \
     "/etc/apache2/httpd.conf"
 RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
