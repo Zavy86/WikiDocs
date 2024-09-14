@@ -91,7 +91,8 @@ if($g_act=="conclude"){
   }
   // Write configuration file
   if(!is_dir($root_dir."datasets/")){mkdir($root_dir."datasets/",0755,true);}
-  file_put_contents($root_dir."datasets/config.inc.php",$config);
+  $configPath=$root_dir."datasets/config.inc.php";
+  file_put_contents($configPath,$config);
   // Generate .htaccess
   $htaccess="<IfModule mod_rewrite.c>\n";
   $htaccess.="\tRewriteEngine On\n";
