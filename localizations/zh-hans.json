@@ -31,7 +31,7 @@
     "ImagesSelect": "选择要上传的图片",
     "ImagesSubmit": "上传",
     "ImageDelete": "删除图片",
-    "ImageDeleteConfirm": "Do you really want to delete this image?",
+    "ImageDeleteConfirm": "您真的要删除此图片吗？",
     "Attachments": "附件",
     "AttachmentsBrowse": "浏览",
     "AttachmentsSelect": "选择要上传的文件",
