@@ -7,7 +7,8 @@ class ParsedownPlus extends ParsedownFilter
     protected $predefinedColors = [];
     protected $monospaceFont = 'monospace';
 
-    const CODE_BLOCK_PATTERN = '/(```.*?```|<pre>.*?<\/pre>)/s';
+    // patterns
+    const CODE_BLOCK_PATTERN = '/(```[\s\S]*?```|~~~[\s\S]*?~~~|<pre>[\s\S]*?<\/pre>)/';
     const VIDEO_TAG_PATTERN = '/\[video.*src="([^"]*)".*\]/';
     const COLOR_TAG_PATTERN = '/\[color=([^\]]+)\](.*?)\[\/color\]/s';
     const RTL_TAG_PATTERN = '/\[rtl\](.*?)\[\/rtl\]/s';
@@ -15,16 +16,12 @@ class ParsedownPlus extends ParsedownFilter
     const MONO_TAG_PATTERN = '/\[mono\](.*?)\[\/mono\]/s';
     const COLLAPSIBLE_SECTION_PATTERN = '/\+\+\+(.*?)\n(.*?)\n\+\+\+/s';
 
-    function __construct(array $params = null)
+    public function __construct(array $params = null)
     {
         parent::__construct($params);
-
-        // Ensure the parent class version is compatible
         if (version_compare(parent::version, '0.8.0-beta-1') < 0) {
             throw new Exception('ParsedownPlus requires a later version of Parsedown');
         }
-
-        // Load predefined colors and fonts from config.php if it exists
         $this->loadConfig();
     }
 
@@ -50,19 +47,11 @@ class ParsedownPlus extends ParsedownFilter
             $text = $this->addCss($text);
             $this->cssAdded = true;
         }
-
-        // Process custom tags outside code blocks, except for color tags
+        $text = $this->processSpecialQuotesOutsideCode($text);
         $text = $this->processCustomTagsOutsideCode($text, false);
-
-        // Parse the Markdown
         $text = parent::text($text);
-
-        // Process collapsible sections
         $text = $this->processCollapsibleSections($text);
-
-        // Now process the color tags
         $text = $this->processColorTags($text);
-
         return $text;
     }
 
@@ -118,6 +107,48 @@ class ParsedownPlus extends ParsedownFilter
                 border-bottom: 1px solid #aaa;
                 margin-bottom: 0.5em;
             }
+            blockquote.special-quote p {
+                margin: 0 0 10px;
+            }
+            .special-quote-header {
+                font-weight: bold;
+                color: inherit;
+                display: flex;
+                align-items: center;
+            }
+            .special-quote-header i {
+                margin-right: 5px;
+            }
+            blockquote.special-quote.caution {
+                border-left-color: #dc3545;
+            }
+            blockquote.special-quote.caution .special-quote-header {
+                color: #dc3545;
+            }
+            blockquote.special-quote.important {
+                border-left-color: #007bff;
+            }
+            blockquote.special-quote.important .special-quote-header {
+                color: #007bff;
+            }
+            blockquote.special-quote.warning {
+                border-left-color: #ffc107;
+            }
+            blockquote.special-quote.warning .special-quote-header {
+                color: #ffc107;
+            }
+            blockquote.special-quote.tip {
+                border-left-color: #28a745;
+            }
+            blockquote.special-quote.tip .special-quote-header {
+                color: #28a745;
+            }
+            blockquote.special-quote.question {
+                border-left-color: #17a2b8;
+            }
+            blockquote.special-quote.question .special-quote-header {
+                color: #17a2b8;
+            }
             </style>\n";
         return $css . $text;
     }
@@ -125,13 +156,11 @@ class ParsedownPlus extends ParsedownFilter
     protected function processCustomTagsOutsideCode($text, $includeColor = true)
     {
         $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-
         foreach ($parts as &$part) {
             if (!preg_match(self::CODE_BLOCK_PATTERN, $part)) {
                 $part = $this->processCustomTags($part, $includeColor);
             }
         }
-
         return implode('', $parts);
     }
 
@@ -154,23 +183,21 @@ class ParsedownPlus extends ParsedownFilter
             function ($matches) {
                 $url = $matches[1];
                 $type = '';
-
-                $needles = array('youtube', 'vimeo');
+                $needles = ['youtube', 'vimeo'];
                 foreach ($needles as $needle) {
                     if (strpos($url, $needle) !== false) {
                         $type = $needle;
                     }
                 }
-
                 switch ($type) {
                     case 'youtube':
                         $src = preg_replace('/.*\?v=([^\&\]]*).*/', 'https://www.youtube.com/embed/$1', $url);
-                        return '<div class="video-responsive"><iframe src="' . $src . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+                        return '<div class="video-responsive"><iframe src="' . $src . '" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>';
                     case 'vimeo':
                         $src = preg_replace('/(?:https?:\/\/(?:[\w]{3}\.|player\.)*vimeo\.com(?:[\/\w:]*(?:\/videos)?)?\/([0-9]+)[^\s]*)/', 'https://player.vimeo.com/video/$1', $url);
-                        return '<div class="video-responsive"><iframe src="' . $src . '" title="Vimeo video player" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms"></iframe></div>';
+                        return '<div class="video-responsive"><iframe src="' . $src . '" title="Vimeo video player" frameborder="0" allowfullscreen></iframe></div>';
                     default:
-                        return $matches[0]; // Return the original if no match
+                        return $matches[0]; // return the original if no match
                 }
             },
             $text
@@ -180,7 +207,6 @@ class ParsedownPlus extends ParsedownFilter
     protected function processColorTags($text)
     {
         $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-
         foreach ($parts as &$part) {
             if (!preg_match(self::CODE_BLOCK_PATTERN, $part)) {
                 $part = preg_replace_callback(
@@ -193,7 +219,7 @@ class ParsedownPlus extends ParsedownFilter
                             $color = htmlspecialchars($color);
                         }
                         $content = $matches[2];
-                        // Check if the content contains block-level elements
+                        // check if the content contains block-level elements
                         if (preg_match('/<(?:p|div|h[1-6]|ul|ol|li|blockquote|pre|table|dl|address)/i', $content)) {
                             return "<div style=\"color:$color;\">$content</div>";
                         } else {
@@ -204,7 +230,6 @@ class ParsedownPlus extends ParsedownFilter
                 );
             }
         }
-
         return implode('', $parts);
     }
 
@@ -243,10 +268,10 @@ class ParsedownPlus extends ParsedownFilter
             $text
         );
     }
+
     protected function processCollapsibleSections($text)
     {
         $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-
         foreach ($parts as &$part) {
             if (!preg_match(self::CODE_BLOCK_PATTERN, $part)) {
                 $part = preg_replace_callback(
@@ -254,20 +279,91 @@ class ParsedownPlus extends ParsedownFilter
                     function ($matches) {
                         $summary = trim($matches[1]);
                         $content = $this->text(trim($matches[2]));
-
                         if (empty($summary)) {
                             $summary = "Click to expand";
                         } else {
                             $summary = trim($summary, '"');
                         }
-
                         return "<details><summary>{$summary}</summary>{$content}</details>";
                     },
                     $part
                 );
             }
         }
-
         return implode('', $parts);
+    }
+
+    protected function getSpecialQuoteIconClass($tag)
+    {
+        $icons = [
+            'caution'   => 'fa-exclamation-triangle',
+            'important' => 'fa-info-circle',
+            'warning'   => 'fa-exclamation-circle',
+            'tip'       => 'fa-sticky-note',
+            'question'  => 'fa-question-circle',
+        ];
+        return $icons[$tag] ?? 'fa-info-circle'; // default to info-circle if tag not found
+    }
+
+    protected function processSpecialQuotesOutsideCode($text)
+    {
+        $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+        foreach ($parts as &$part) {
+            if (!preg_match(self::CODE_BLOCK_PATTERN, $part)) {
+                $part = $this->processSpecialQuotes($part);
+            }
+        }
+        return implode('', $parts);
+    }
+
+    protected function processSpecialQuotes($text)
+    {
+        $lines = explode("\n", $text);
+        $outputLines = [];
+        $inSpecialQuote = false;
+        $specialQuoteTag = '';
+        $specialQuoteHeader = '';
+        $specialQuoteContent = [];
+        foreach ($lines as $line) {
+            if (preg_match('/^> \[!(CAUTION|IMPORTANT|WARNING|TIP|QUESTION)\](.*)/i', $line, $matches)) {
+                // start of a special blockquote
+                if ($inSpecialQuote) {
+                    // close any previously opened blockquote
+                    $outputLines[] = $this->generateSpecialBlockquote($specialQuoteTag, $specialQuoteHeader, $specialQuoteContent);
+                    $specialQuoteContent = []; // reset content
+                }
+                $inSpecialQuote = true;
+                $specialQuoteTag = strtolower($matches[1]);
+                $specialQuoteHeader = trim($matches[2]);
+            } elseif ($inSpecialQuote && preg_match('/^> ?(.*)/', $line, $matches)) {
+                // continuation of a special blockquote
+                $specialQuoteContent[] = trim($matches[1]);
+            } else {
+                // end of special blockquote
+                if ($inSpecialQuote) {
+                    $outputLines[] = $this->generateSpecialBlockquote($specialQuoteTag, $specialQuoteHeader, $specialQuoteContent);
+                    $inSpecialQuote = false;
+                    $specialQuoteTag = '';
+                    $specialQuoteHeader = '';
+                    $specialQuoteContent = [];
+                }
+                // output non-blockquote lines as they are
+                $outputLines[] = $line;
+            }
+        }
+        // handle unclosed blockquote at the end
+        if ($inSpecialQuote) {
+            $outputLines[] = $this->generateSpecialBlockquote($specialQuoteTag, $specialQuoteHeader, $specialQuoteContent);
+        }
+        return implode("\n", $outputLines);
+    }
+
+    protected function generateSpecialBlockquote($tag, $header, $content)
+    {
+        $iconClass = $this->getSpecialQuoteIconClass($tag);
+        $parsedHeader = parent::line($header);
+        // join the content, let the parent markdown parser process it properly (so lists are parsed as lists)
+        $parsedContent = parent::text(implode("\n", $content));
+        return "<blockquote class=\"special-quote {$tag}\"><p class=\"special-quote-header\"><i class=\"fa {$iconClass}\"></i> {$parsedHeader}</p>{$parsedContent}</blockquote>";
     }
 }
