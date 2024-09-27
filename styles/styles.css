@@ -20,8 +20,6 @@ input::-webkit-input-placeholder{unicode-bidi: plaintext;text-align:start;}
 
 /* fixes long strings making side menu freeze */
 h1, h2, h3, h4, p, article ul li, article ol li, td {overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto;}
-/* based on markdown rules, tables should be 100% */
-table{width:100%;}
 /* font must be defined for international langs to display in monospace */
 code, pre {font-family: Consolas, 'Courier New', Courier, monospace;}
 
@@ -70,9 +68,10 @@ img.polaroid{width:100%;height:auto;padding:9px;background-color:#ffffff;border:
 code{background:#f0f0f0;padding:0 5px;}
 
 /* tables */
-table{width:100%;}
-td{padding:9px;border:1px solid #999999;}
-th{padding:0 9px 0 9px;font-size:0.9rem;font-weight:bold;color:var(--theme-color)}
+/* based on markdown rules, tables should be 100% */
+table{width:100%;margin:1rem 0 1rem 0;;}
+td{padding: 9px; border:1px solid #999999;}
+th{padding: 9px; border:1px solid #999999;font-weight:bold;color:var(--theme-color)}
 
 /* input colors */
 input:not([type]):focus:not([readonly]),
