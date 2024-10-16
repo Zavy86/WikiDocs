@@ -104,6 +104,7 @@
   </div>
 </header>
 <main>
+  <button class="top" id="backToTop">&#8679;</button>
   <div class="container">
     <div class="row breadcrumbs" style="padding-top:18px">
       <div class="col s2 m1 offset-m1 hide-on-large-only">
@@ -338,7 +339,6 @@
 </main>
 <script>var APP=<?= json_encode($APP->export()) ?>;</script>
 <script>var DOC=<?= json_encode($DOC->export()) ?>;</script>
-<button onclick="topFunction()" id="myBtn" title="Go to top" style="display: none; position: fixed;bottom: 15px;right: 30px;z-index: 99;font-size: 12px;border: none;outline: none;background-color: #4caf50;color: white;cursor: pointer;padding: 15px;border-radius: 4px;">Top</button>
 <script src="<?= $APP->PATH ?>helpers/jquery-3.7.0/js/jquery.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/materialize-1.0.0/js/materialize.min.js"></script>
 <script src="<?= $APP->PATH ?>helpers/highlightjs-11.9.0/js/highlight.min.js"></script>
@@ -377,24 +377,12 @@
   </script>
 <?php endif; ?>
 <script>
-// Get the button Top
-let mybutton = document.getElementById("myBtn");
-
-// When the user scrolls down 30px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
- if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-   mybutton.style.display = "block";
- } else {
-   mybutton.style.display = "none";
- }
-}
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
- document.body.scrollTop = 0;
- document.documentElement.scrollTop = 0;
-}
+  document.getElementById("backToTop").addEventListener("click",function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  window.addEventListener("scroll",function(){
+   document.getElementById("backToTop").style.display=(window.scrollY>40?"block":"none");
+  });
 </script>
 <script>
   function new_document(){
