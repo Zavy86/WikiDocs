@@ -158,5 +158,4 @@ pre.debug{margin:9px;font-size:12px;}
 
 /* back to top button */
 .top{display:none;position:fixed;bottom:15px;left:240px;z-index:99;font-size:12px;border:none;outline:none;background-color:#4caf50;color:white;cursor:pointer;padding:15px;border-radius:4px;}
-
 @media only screen and (max-width:992px){.top{left:30px;}}
