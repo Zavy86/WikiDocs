@@ -47,10 +47,14 @@ class ParsedownPlus extends ParsedownFilter
             $text = $this->addCss($text);
             $this->cssAdded = true;
         }
+        // process special quotes first (which now handles collapsible sections within them)
         $text = $this->processSpecialQuotesOutsideCode($text);
+        // then process top-level collapsible sections
+        $text = $this->processCollapsibleSections($text);
+        // process the rest as before
+        $text = $this->processDetailsTags($text);
         $text = $this->processCustomTagsOutsideCode($text, false);
         $text = parent::text($text);
-        $text = $this->processCollapsibleSections($text);
         $text = $this->processColorTags($text);
         return $text;
     }
@@ -269,28 +273,130 @@ class ParsedownPlus extends ParsedownFilter
         );
     }
 
+    protected function processDetailsTags($text)
+    {
+        $pattern = '/<details\b(.*?)>(.*?)<\/details>/is';
+        return preg_replace_callback($pattern, function ($matches) {
+            $attributes = $matches[1];
+            $content = $matches[2];
+            // process the content inside <summary> tags separately
+            if (preg_match('/<summary>(.*?)<\/summary>/is', $content, $summaryMatches)) {
+                $summary = $summaryMatches[0];
+                $summaryContent = $summaryMatches[1];
+                // remove the <summary> from content
+                $contentWithoutSummary = str_replace($summary, '', $content);
+                // process the summary content as inline markdown
+                $processedSummaryContent = parent::line(trim($summaryContent));
+                $processedSummary = "<summary>{$processedSummaryContent}</summary>";
+                // process the content
+                $processedContent = $this->processIndentedContent($contentWithoutSummary);
+            } else {
+                $processedSummary = '';
+                $processedContent = $this->processIndentedContent($content);
+            }
+            return "<details{$attributes}>{$processedSummary}{$processedContent}</details>";
+        }, $text);
+    }
+
     protected function processCollapsibleSections($text)
     {
         $parts = preg_split(self::CODE_BLOCK_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ($parts as &$part) {
-            if (!preg_match(self::CODE_BLOCK_PATTERN, $part)) {
-                $part = preg_replace_callback(
-                    self::COLLAPSIBLE_SECTION_PATTERN,
-                    function ($matches) {
-                        $summary = trim($matches[1]);
-                        $content = $this->text(trim($matches[2]));
-                        if (empty($summary)) {
-                            $summary = "Click to expand";
-                        } else {
-                            $summary = trim($summary, '"');
-                        }
-                        return "<details><summary>{$summary}</summary>{$content}</details>";
-                    },
-                    $part
-                );
+        $result = '';
+        $inCollapsible = false;
+        $currentSummary = '';
+        $currentContent = '';
+        foreach ($parts as $part) {
+            // if this is a code block, preserve it as-is
+            if (preg_match(self::CODE_BLOCK_PATTERN, $part)) {
+                if ($inCollapsible) {
+                    $currentContent .= $part;
+                } else {
+                    $result .= $part;
+                }
+                continue;
+            }
+            $lines = explode("\n", $part);
+            foreach ($lines as $line) {
+                if (preg_match('/^\+\+\+(.*)$/', $line, $matches)) {
+                    if ($inCollapsible) {
+                        // close previous collapsible section
+                        $processedContent = $this->processIndentedContent($currentContent);
+                        $result .= "<details><summary>" . ($currentSummary ?: "Click to expand") . "</summary>{$processedContent}</details>";
+                        $inCollapsible = false;
+                        $currentContent = '';
+                    } else {
+                        $currentSummary = trim($matches[1]);
+                        $inCollapsible = true;
+                    }
+                } else if ($inCollapsible) {
+                    $currentContent .= $line . "\n";
+                } else {
+                    $result .= $line . "\n";
+                }
             }
         }
-        return implode('', $parts);
+        // handle any remaining collapsible section
+        if ($inCollapsible) {
+            $processedContent = $this->processIndentedContent($currentContent);
+            $result .= "<details><summary>" . ($currentSummary ?: "Click to expand") . "</summary>{$processedContent}</details>";
+        }
+        return $result;
+    }
+
+    protected function processIndentedContent($content)
+    {
+        // split content into lines
+        $lines = explode("\n", $content);
+        $processedLines = [];
+        $inCodeBlock = false;
+        $codeBlockContent = '';
+        $currentIndent = '';
+        foreach ($lines as $line) {
+            $trimmedLine = trim($line);
+            // handle code block markers
+            if (preg_match('/^(```|~~~)(.*)$/', $trimmedLine, $matches)) {
+                if ($inCodeBlock) {
+                    // end of code block
+                    $inCodeBlock = false;
+                    $processedLines[] = $codeBlockContent . "\n" . $line;
+                    $codeBlockContent = '';
+                } else {
+                    // start of code block
+                    $inCodeBlock = true;
+                    $codeBlockContent = $line;
+                }
+                continue;
+            }
+            if ($inCodeBlock) {
+                // preserve code block content exactly as is
+                $codeBlockContent .= "\n" . $line;
+                continue;
+            }
+            // handle non-code-block content
+            if ($trimmedLine === '') {
+                // preserve empty lines
+                $processedLines[] = '';
+                continue;
+            }
+            // remove only the common indentation at the start of the line
+            if (preg_match('/^(\s+)/', $line, $indentMatches)) {
+                $lineIndent = $indentMatches[1];
+                if ($currentIndent === '') {
+                    $currentIndent = $lineIndent;
+                }
+                // remove only the common indent
+                if (strpos($line, $currentIndent) === 0) {
+                    $line = substr($line, strlen($currentIndent));
+                }
+            }
+            $processedLines[] = $line;
+        }
+        // join the lines back together
+        $processedContent = implode("\n", $processedLines);
+        // process special quotes first
+        $specialQuotesProcessed = $this->processSpecialQuotesOutsideCode($processedContent);
+        // finally process as markdown
+        return parent::text($specialQuotesProcessed);
     }
 
     protected function getSpecialQuoteIconClass($tag)
@@ -324,6 +430,8 @@ class ParsedownPlus extends ParsedownFilter
         $specialQuoteTag = '';
         $specialQuoteHeader = '';
         $specialQuoteContent = [];
+        $inCollapsible = false;
+        $collapsibleContent = '';
         foreach ($lines as $line) {
             if (preg_match('/^> \[!(CAUTION|IMPORTANT|WARNING|TIP|QUESTION)\](.*)/i', $line, $matches)) {
                 // start of a special blockquote
@@ -336,23 +444,65 @@ class ParsedownPlus extends ParsedownFilter
                 $specialQuoteTag = strtolower($matches[1]);
                 $specialQuoteHeader = trim($matches[2]);
             } elseif ($inSpecialQuote && preg_match('/^> ?(.*)/', $line, $matches)) {
-                // continuation of a special blockquote
-                $specialQuoteContent[] = trim($matches[1]);
+                $content = trim($matches[1]);
+                // handle collapsible section markers within special quotes
+                if (preg_match('/^\+\+\+(.*)$/', $content, $collapsibleMatches)) {
+                    if ($inCollapsible) {
+                        // close current collapsible section
+                        $processedCollapsible = sprintf(
+                            '<details><summary>%s</summary>%s</details>',
+                            $currentSummary ?: 'Click to expand',
+                            parent::text($collapsibleContent)
+                        );
+                        $specialQuoteContent[] = $processedCollapsible;
+                        $inCollapsible = false;
+                        $collapsibleContent = '';
+                    } else {
+                        // start new collapsible section
+                        $currentSummary = trim($collapsibleMatches[1]);
+                        $inCollapsible = true;
+                    }
+                } elseif ($inCollapsible) {
+                    // add content to current collapsible section
+                    $collapsibleContent .= $content . "\n";
+                } else {
+                    // regular special quote content
+                    $specialQuoteContent[] = $content;
+                }
             } else {
-                // end of special blockquote
+                // line is not part of the special quote
                 if ($inSpecialQuote) {
+                    if ($inCollapsible) {
+                        // close current collapsible section if any
+                        $processedCollapsible = sprintf(
+                            '<details><summary>%s</summary>%s</details>',
+                            $currentSummary ?: 'Click to expand',
+                            parent::text($collapsibleContent)
+                        );
+                        $specialQuoteContent[] = $processedCollapsible;
+                        $inCollapsible = false;
+                    }
+                    // close the special quote
                     $outputLines[] = $this->generateSpecialBlockquote($specialQuoteTag, $specialQuoteHeader, $specialQuoteContent);
                     $inSpecialQuote = false;
                     $specialQuoteTag = '';
                     $specialQuoteHeader = '';
                     $specialQuoteContent = [];
                 }
-                // output non-blockquote lines as they are
                 $outputLines[] = $line;
             }
         }
-        // handle unclosed blockquote at the end
+        // handle any unclosed blockquote at the end
         if ($inSpecialQuote) {
+            if ($inCollapsible) {
+                // close any remaining collapsible section
+                $processedCollapsible = sprintf(
+                    '<details><summary>%s</summary>%s</details>',
+                    $currentSummary ?: 'Click to expand',
+                    parent::text($collapsibleContent)
+                );
+                $specialQuoteContent[] = $processedCollapsible;
+            }
             $outputLines[] = $this->generateSpecialBlockquote($specialQuoteTag, $specialQuoteHeader, $specialQuoteContent);
         }
         return implode("\n", $outputLines);
