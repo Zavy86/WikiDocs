@@ -331,7 +331,7 @@ class ParsedownExtra extends Parsedown
     #
     # Setext
 
-    protected function blockSetextHeader($Line, array $Block = null)
+    protected function blockSetextHeader($Line, ?array $Block = null)
     {
         $Block = parent::blockSetextHeader($Line, $Block);
 
@@ -625,8 +625,8 @@ class ParsedownExtra extends Parsedown
         $DOMDocument = new DOMDocument;
 
         # http://stackoverflow.com/q/11309194/200145
-        $elementMarkup = html_entity_decode($elementMarkup, ENT_COMPAT | ENT_HTML5, 'UTF-8');
-    
+        $elementMarkup = mb_convert_encoding($elementMarkup, 'HTML-ENTITIES', 'UTF-8');
+
         # http://stackoverflow.com/q/4879946/200145
         $DOMDocument->loadHTML($elementMarkup);
         $DOMDocument->removeChild($DOMDocument->doctype);
