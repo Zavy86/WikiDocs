@@ -5,6 +5,10 @@
  * @package WikiDocs
  * @repository https://github.com/Zavy86/wikidocs
  */
+// additional security headers
+header("X-Content-Type-Options: nosniff");
+header("X-XSS-Protection: 1; mode=block");
+
 require_once('bootstrap.inc.php');
 // mode definition
 $mode='view';
@@ -27,6 +31,7 @@ $APP=new WikiDocs();
 $DOC=new Document(DOC);
 // initialize markdown parser
 $PARSER=new ParsedownPlus([
+	'safemode' => true,    // enable parsedown's built-in safe mode
 	'typographer' => true,
 	'toc' => true,
 	'sup' => true,

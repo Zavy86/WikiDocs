@@ -20,6 +20,7 @@ require_once(BASE.'classes/WikiDocs.class.php');
 require_once(BASE.'classes/Localization.class.php');
 require_once(BASE.'classes/Document.class.php');
 require_once(BASE.'classes/Session.class.php');
+require_once(BASE.'classes/SecurityFilters.class.php');
 
 // require external libraries
 require_once(BASE."libraries/parsedown-1.8.0-beta-6/Parsedown.php");
