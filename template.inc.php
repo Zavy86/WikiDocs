@@ -347,11 +347,16 @@
 <script>renderMathInElement(document.body, {
     delimiters: [
       {left: '$$', right: '$$', display: true}, // math block using $$math$$
-      {left: '\\[', right: '\\]', display: true}, // math block using \[math\]
       {left: '$', right: '$', display: false}, // math inline using $math$
-      {left: '\\(', right: '\\)', display: false} // math inline using \(math\)
     ],
-    throwOnError : false
+    throwOnError: false,
+    trust: false, // disable html extension
+    strict: true, // strict mode
+    maxSize: 500, // limit size of expressions
+    maxExpand: 100, // limit macro expansion
+    errorCallback: function(msg) {
+        console.warn('KaTeX error:', msg);
+    }
   });</script>
 <script>hljs.highlightAll();</script>
 <script src="<?= $APP->PATH ?>helpers/mermaid-9.4.3/mermaid.min.js"></script>

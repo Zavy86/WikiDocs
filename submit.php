@@ -98,6 +98,8 @@ function content_save(){
 		wdf_alert($TXT->SubmitDocumentContentCannotBeEmpty,"danger");
 		wdf_redirect(PATH.$p_document."?edit");
 	}
+	// apply security filters
+	$p_content = SecurityFilters::filterContent($p_content);
 	// initialize document
 	$DOC=new Document($p_document);
 	// debug

@@ -22,6 +22,14 @@ final class Session{
 	}
 
 	function start(){
+		// set secure session cookie parameters
+		session_set_cookie_params([
+			'lifetime' => 0,
+			'path' => '/',
+			'domain' => $_SERVER['HTTP_HOST'],
+			'httponly' => true,                   // prevent javascript access
+			'samesite' => 'Strict'                // restrict to same-site requests
+		]);
 		// start php session
 		session_start();
 		// check for application session array
@@ -30,6 +38,14 @@ final class Session{
 		if(!isset($_SESSION['wikidocs']['debug'])){$this->setDebug(false);}
 		// check for application session alerts array
 		if(!isset($_SESSION['wikidocs']['alerts']) || !is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
+		// periodically regenerate session id to prevent fixation attacks
+		if (!isset($_SESSION['last_regeneration'])) {
+			$_SESSION['last_regeneration'] = time();
+		}
+		if (time() - $_SESSION['last_regeneration'] > 300) { // regenerate every 5 minutes
+			session_regenerate_id(true);
+			$_SESSION['last_regeneration'] = time();
+		}
 	}
 
 	public function destroy(){
@@ -57,9 +73,15 @@ final class Session{
 		return boolval($_SESSION['wikidocs']['debug']);
 	}
 
-	public function privacyAgreement(bool $value){
-		setcookie('privacy',$value,time()+(60*60*24*30),'/');
-		header('Location:'.PATH.DOC);
+	public function privacyAgreement(bool $value) {
+		setcookie('privacy', $value, [
+			'expires' => time() + (60 * 60 * 24 * 30),
+			'path' => '/',
+			'domain' => $_SERVER['HTTP_HOST'],
+			'httponly' => true,
+			'samesite' => 'Strict'
+		]);
+		header('Location:' . PATH . DOC);
 	}
 
 	public function privacyAgreeded():bool{
