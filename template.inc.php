@@ -162,21 +162,30 @@
         <?php if(MODE=="view"): ?>
           <article>
             <?php
-            $source=$PARSER->text(parseInlineText($DOC->render()));
-            $source_array=preg_split("/((\r?\n)|(\r\n?))/",$source);
-            $source_final="\n";
-            // add anchor link to headers
-            foreach($source_array as $line){
-              if(in_array(substr($line,1,2),['h1','h2','h3','h4','h5','h6'])){
-                $anchor=substr($line,8,(strpos($line,'"',8)-8));
-                if($anchor){$line=substr($line,0,strpos($line,'>'))." title='#".$anchor."'><a href='#".$anchor."'></a".substr($line,strpos($line,'>',1));}
-              }
-              if(strpos($line, '<pre><code')!==false){
-                $line='<div class="code-container"><button class="copy-btn" onclick="copyCode(this)">Copy</button>'.$line;
-              }
-              $source_final.=$line."\n";
-            }
-            echo $source_final;
+              $source = $PARSER->text(parseInlineText($DOC->render()));
+              // add anchor links to headers
+              $source = preg_replace_callback('/<h([1-6])([^>]*)>(.*?)<\/h\1>/', function ($matches) {
+                $hLevel = $matches[1];
+                $hAttributes = $matches[2];
+                $hContent = $matches[3];
+                // extract the id attribute
+                if (preg_match('/id="([^"]+)"/', $hAttributes, $idMatch)) {
+                  $id = $idMatch[1];
+                  $title = "title='#$id'";
+                  $anchorLink = "<a href='#$id'></a>";
+                } else {
+                  $title = '';
+                  $anchorLink = '';
+                }
+                return "<h$hLevel$hAttributes $title>$anchorLink$hContent</h$hLevel>";
+              }, $source);
+              // wrap code blocks with code-container and copy button
+              $source = preg_replace(
+                '/(<pre><code.*?>)(.*?)(<\/code><\/pre>)/s',
+                '<div class="code-container"><button class="copy-btn" onclick="copyCode(this)">Copy</button>$1$2$3</div>',
+                $source
+              );
+              echo $source;
             ?>
           </article>
         <?php endif; ?>
