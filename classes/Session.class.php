@@ -42,7 +42,7 @@ final class Session{
 		if (!isset($_SESSION['last_regeneration'])) {
 			$_SESSION['last_regeneration'] = time();
 		}
-		if (time() - $_SESSION['last_regeneration'] > 300) { // regenerate every 5 minutes
+		if (time() - $_SESSION['last_regeneration'] > 3600) { // regenerate every 1 hour
 			session_regenerate_id(true);
 			$_SESSION['last_regeneration'] = time();
 		}
