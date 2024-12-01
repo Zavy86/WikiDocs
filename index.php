@@ -31,6 +31,9 @@ $APP=new WikiDocs();
 $DOC=new Document(DOC);
 // initialize markdown parser
 $PARSER=new ParsedownPlus([
+	'tables' => [
+		'tablespan' => true,
+	],
 	'safemode' => true,    // enable parsedown's built-in safe mode
 	'typographer' => true,
 	'toc' => true,
