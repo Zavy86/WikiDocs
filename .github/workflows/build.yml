@@ -19,6 +19,8 @@ jobs:
         run: |
           VER=$(cat VERSION)
           echo "VERSION=$VER" >> $GITHUB_ENV
+          echo "V_MAJOR=$(echo $VER | cut -d'.' -f1)" >> $GITHUB_ENV
+          echo "V_MINOR=$(echo $VER | cut -d'.' -f1,2)" >> $GITHUB_ENV
       - name: Add version Tag
         uses: rickstaa/action-create-tag@v1
         with:
@@ -48,5 +50,9 @@ jobs:
         with:
           file: ./docker/production.dockerfile
           platforms: linux/amd64,linux/arm64
-          tags: zavy86/wikidocs:latest
+          tags:
+            - zavy86/wikidocs:latest
+            - zavy86/wikidocs:${{ env.VERSION }}
+            - zavy86/wikidocs:${{ env.V_MAJOR }}
+            - zavy86/wikidocs:${{ env.V_MINOR }}
           push: true
