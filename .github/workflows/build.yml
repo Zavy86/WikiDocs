@@ -53,10 +53,10 @@ jobs:
             zavy86/wikidocs
 #            ghcr.io/username/app
           tags: |  
-            type=raw,value=latest,
-            type=raw,value=${{ env.VERSION }},
-            type=raw,value=${{ env.V_MAJOR }},
-            type=raw,value=${{ env.V_MINOR }},
+            type=raw,value=latest
+            type=raw,value=${{ env.VERSION }}
+            type=raw,value=${{ env.V_MAJOR }}
+            type=raw,value=${{ env.V_MINOR }}
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
