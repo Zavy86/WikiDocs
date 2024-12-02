@@ -41,6 +41,16 @@
       gtag('config','<?= GTAG ?>');
     </script>
   <?php endif; ?>
+  <?php if(MODE=="view"): ?>
+    <script>
+      function onDocumentKeyDown(e) {
+        if(e.key = 'e') {
+          window.open(window.location.href + "?edit", target = "_self");
+        }
+      }
+      document.onkeydown = onDocumentKeyDown;
+  </script>
+<?php endif; ?>
 </head>
 <body>
 <header>
