@@ -44,7 +44,7 @@
   <?php if(MODE=="view"): ?>
     <script>
       function onDocumentKeyDown(e) {
-        if(e.key = 'e') {
+        if(e.key == 'e') {
           window.open(window.location.href + "?edit", target = "_self");
         }
       }
