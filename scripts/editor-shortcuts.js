@@ -18,9 +18,10 @@ document.addEventListener('keydown', function(event) {
         event.preventDefault(); // Prevent the default behavior
 
         // Check if the URL does not contain '?edit' or '&edit' to confirm we are not in edit mode
+        // Any present anchor gets removed additionally to make the edit-URL work
         if (!window.location.href.includes('?edit') && !window.location.href.includes('&edit')) {
             // Redirect to edit mode
-            var currentUrl = window.location.href;
+            var currentUrl = window.location.href.split('#')[0];
             var editUrl = currentUrl.includes('?') ? currentUrl + '&edit' : currentUrl + '?edit';
             window.location.href = editUrl;
         }
