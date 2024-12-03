@@ -141,6 +141,7 @@ You can customize the default template by creating the file `styles/styles-custo
 - [Davide Visentin](https://github.com/dvisentin-freelance)
 - [Christian Weber](https://github.com/pce-consulting)
 - [Petr Husák](https://github.com/petrhusak)
+- [Oliver Lehmann](https://github.com/OlliL)
 
 ## License
 Code released under the MIT License
