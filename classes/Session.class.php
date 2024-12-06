@@ -26,7 +26,6 @@ final class Session{
 		session_set_cookie_params([
 			'lifetime' => 0,
 			'path' => '/',
-			'domain' => $_SERVER['HTTP_HOST'],
 			'httponly' => true,                   // prevent javascript access
 			'samesite' => 'Strict'                // restrict to same-site requests
 		]);
@@ -77,7 +76,6 @@ final class Session{
 		setcookie('privacy', $value, [
 			'expires' => time() + (60 * 60 * 24 * 30),
 			'path' => '/',
-			'domain' => $_SERVER['HTTP_HOST'],
 			'httponly' => true,
 			'samesite' => 'Strict'
 		]);
