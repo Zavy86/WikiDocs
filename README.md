@@ -2,11 +2,11 @@
 
 Just a databaseless markdown flat-file wiki engine.
 
-Project homepage: [https://www.wikidocs.it](https://www.wikidocs.it)
+Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_
 
-[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.it/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
+[![Wiki|Docs presentation and contributors recruitment on YouTube](https://wikidocs.app/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
 ## Features
 - Open source
@@ -28,7 +28,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - and many more...
 
 ## Demo
-Try the demo playground at: [http://demo.wikidocs.it](http://demo.wikidocs.it)
+Try the demo playground at: [http://demo.wikidocs.app](http://demo.wikidocs.app)
 
 Authentication code is: `demo`
 
