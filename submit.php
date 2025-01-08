@@ -303,7 +303,7 @@ function image_upload_ajax(){
 	// make file name
 	$file_name=strtolower(str_replace(" ","-",$image['name']));
 	// check for posted image
-	if($image['tmp_name']){
+	if(isset($image['tmp_name']) && $image['tmp_name']){
 		if(move_uploaded_file($image['tmp_name'],$DOC->DIR.$file_name)){$uploaded=true;}
 		// check for pasted image
 	}elseif(strlen($image['base64'])){
