@@ -331,7 +331,7 @@
           <p><?= PRIVACY ?></p>
         </div>
         <div class="modal-footer">
-          <a href="https://www.google.com" class="modal-close btn btn-small waves-effect waves-light grey white-text"><?= $TXT->CookieButtonDisagree ?></a>
+          <a href="https://duckduckgo.com/" class="modal-close btn btn-small waves-effect waves-light grey white-text"><?= $TXT->CookieButtonDisagree ?></a>
           <a href="?privacy=1" class="modal-close btn btn-small waves-effect waves-light main-color white-text"><?= $TXT->CookieButtonAgree ?></a>
         </div>
       </div>
