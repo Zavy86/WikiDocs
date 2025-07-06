@@ -426,7 +426,7 @@ function image_drop_upload_ajax() {
 function image_delete_ajax() {
 
 	$document       = $_POST['document'];
-	$image_filename = $_POST['image_name'];
+	$image_filename = basename($_POST['image_name']); // added basename()
 
 	if (Session::getInstance()->autenticationLevel() != 2) {
 		// error
@@ -434,6 +434,20 @@ function image_delete_ajax() {
 		// return
 		return false;
 	}
+
+	// reject if $document contains .. or any slash/backslash
+	if (
+		strpos($document, '..')  !== false ||
+		strpos($document, '/')   !== false ||
+		strpos($document, '\\')  !== false
+	) {
+		echo json_encode([
+			"error" => 1,
+			"code"  => "invalid_document"
+		]);
+		return false;
+	}
+
 
 	// initialize document
 	$DOC = new Document($document);
@@ -460,7 +474,6 @@ function image_delete_ajax() {
 		return false;
 	}
 }
-
 
 /**
  * Atachment Upload (AJAX)
