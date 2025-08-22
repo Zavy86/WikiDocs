@@ -3,6 +3,7 @@
 .htaccess
 robots.txt
 sitemap.xml
+info.php
 datasets/config.inc.php
 datasets/documents/*
 datasets/trash/*
