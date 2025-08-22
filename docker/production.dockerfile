@@ -29,6 +29,11 @@ php-xml \
 
 # installation
 RUN apk add --no-cache $DEPENDENCIES
+RUN php --ini
+RUN php -i | grep "Loaded Configuration File"
+# increase upload file size
+RUN sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 256M/' /etc/php83/php.ini && \
+    sed -i 's/^post_max_size = .*/post_max_size = 256M/' /etc/php83/php.ini
 
 # configure apache
 RUN sed -ri \
@@ -41,6 +46,7 @@ RUN rm /var/www/localhost/htdocs/index.html
 
 # copy application files
 COPY . /var/www/localhost/htdocs/
+
 
 # make a link for datasets volume
 RUN ln -s /var/www/localhost/htdocs/datasets /

@@ -473,7 +473,7 @@ function attachment_upload_ajax(){
     return false;
   }
   // check file size (limit to 10 MB)
-  if($attachment['size'] > 10 * 1024 * 1024) {
+  if($attachment['size'] > 256 * 1024 * 1024) {
     echo json_encode(array("error"=>1,"code"=>"file_too_large","size"=>$attachment['size']));
     return false;
   }
