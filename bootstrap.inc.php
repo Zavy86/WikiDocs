@@ -61,7 +61,7 @@ $g_doc=strtolower(str_replace(array(" "),"-",($_GET['doc'] ?? '')));
 if(substr($g_doc,-1)=="/"){$g_doc=substr($g_doc,0,-1);}
 
 // XSS prevention
-$g_doc = htmlspecialchars($g_doc);
+$g_doc = htmlspecialchars($g_doc, ENT_QUOTES, 'UTF-8');
 
 // set homepage as default if no request
 if(!strlen($g_doc)){$g_doc="homepage";}
