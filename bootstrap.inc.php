@@ -60,6 +60,9 @@ $g_doc=strtolower(str_replace(array(" "),"-",($_GET['doc'] ?? '')));
 // remove trailing slashes
 if(substr($g_doc,-1)=="/"){$g_doc=substr($g_doc,0,-1);}
 
+// XSS prevention
+$g_doc = htmlspecialchars($g_doc, ENT_QUOTES, 'UTF-8');
+
 // set homepage as default if no request
 if(!strlen($g_doc)){$g_doc="homepage";}
 
@@ -81,3 +84,4 @@ if(isset($_GET['privacy'])){Session::getInstance()->privacyAgreement($_GET['priv
 
 // regenerate sitemap
 if(!file_exists(DIR.'sitemap.xml')){wdf_regenerate_sitemap();}
+
