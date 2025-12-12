@@ -85,7 +85,7 @@
               foreach($subsub_index_array as $third_index_fe){
                 echo "<li class=\"subsub_index";
                 if($third_index_fe->url==substr($DOC->ID,0,strlen($third_index_fe->url))){echo " active";}
-                echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$third_index_fe->url."\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;".$third_index_fe->label."</a></li>\n";
+                echo "\"><a class=\"waves-effect waves-light\" href=\"".$APP->PATH.$third_index_fe->url."\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$third_index_fe->label."</a></li>\n";
               }
               echo "</ul>";
             }
@@ -445,3 +445,4 @@ foreach($_SESSION['wikidocs']['alerts'] as $index=>$alert){
 ?>
 </body>
 </html>
+
