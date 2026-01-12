@@ -291,11 +291,11 @@ final class Document{
 				if(is_dir($this->DIR."/".$element_fe)){continue;}
 				$file_extension=explode(".",$element_fe);
 				// check extensions
-				if(!in_array(end($file_extension),array("pdf","doc","docx","xls","xlsx","ppt","pptx"))){continue;}
+				if(!in_array(end($file_extension),array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx"))){continue;}
 				// make element
 				$attachment=new stdClass();
 				$attachment->label=$element_fe;
-				$attachment->url=PATH."datasets/documents/".$this->ID."/".$element_fe;
+        $attachment->url=PATH."datasets/documents/".$this->ID."/".rawurlencode($element_fe);
 				// add element to documents array
 				$attachments_array[]=$attachment;
 			}
