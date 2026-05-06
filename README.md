@@ -127,10 +127,11 @@ You can customize the default template by creating the file `styles/styles-custo
 
 ### Contributors
 - [Amin Persia](https://github.com/leomoon)
+- [ffiesta](https://github.com/ffiesta)
 - [Alex Meyer](https://github.com/reyemxela)
 - [Micha](https://github.com/serial)
 - [Bo Allen](https://github.com/bitwisecreative)
-- [Jv3ga](https://github.com/jv3ga)
+- [Joel Vega](https://github.com/jv3ga)
 - [Sam](https://github.com/sam-6174)
 - [kevwkev](https://github.com/kevwkev)
 - [Сергей Ворон](https://github.com/vorons)
@@ -142,6 +143,7 @@ You can customize the default template by creating the file `styles/styles-custo
 - [Christian Weber](https://github.com/pce-consulting)
 - [Petr Husák](https://github.com/petrhusak)
 - [Oliver Lehmann](https://github.com/OlliL)
+- [Prabal Khare](https://github.com/00PrabalK00)
 
 ## License
 Code released under the MIT License
