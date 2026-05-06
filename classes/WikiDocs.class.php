@@ -66,6 +66,7 @@ final class WikiDocs{
 		foreach($this as $key => $value){
 			$properties_array[$key]=$value;
 		}
+		$properties_array['token']=Session::getInstance()->token();
 		return $properties_array;
 	}
 

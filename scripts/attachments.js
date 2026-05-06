@@ -59,7 +59,7 @@ document.querySelectorAll('.attachment-delete').forEach(item => {
 			url: APP.PATH+"submit.php?act=attachment_delete_ajax",
 			type: "post",
 			dataType: "html",
-			data: "document="+DOC.ID+"&attachment_name="+attachment_name,
+			data: "token="+APP.token+"&document="+DOC.ID+"&attachment_name="+attachment_name,
 			cache: false,
 			processData: false,
 			success: function( response ) {

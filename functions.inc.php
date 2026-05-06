@@ -69,6 +69,31 @@ function wdf_alert(string $message,string $class="info"):bool{
 }
 
 /**
+ * CSRF Check
+ *
+ * @return bool
+ */
+function wdf_csrf_check():bool{
+  if(!isset($_POST['token']) || $_POST['token'] !== Session::getInstance()->token()){
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Document ID Check
+ *
+ * @param string $id Document ID
+ * @return bool
+ */
+function wdf_document_id_check(string $id):bool{
+  if (substr_count($id, "..") > 0 || substr_count($id, ':') > 0 || strpos($id, '/') === 0) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Timestamp Format
  *
  * @param ?int $timestamp Unix timestamp
