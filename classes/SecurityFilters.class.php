@@ -12,9 +12,30 @@ class SecurityFilters {
      * @return string Filtered content
      */
     public static function filterContent($content) {
-        // apply katex filter
+        $codeBlocks = [];
+
+        // Protect fenced code blocks (``` ... ```)
+        $content = preg_replace_callback('/```[\s\S]*?```/', function($m) use (&$codeBlocks) {
+            $placeholder = "\x00CODE" . count($codeBlocks) . "\x00";
+            $codeBlocks[$placeholder] = $m[0];
+            return $placeholder;
+        }, $content);
+
+        // Protect inline code (` ... `)
+        $content = preg_replace_callback('/`[^`\n]+`/', function($m) use (&$codeBlocks) {
+            $placeholder = "\x00CODE" . count($codeBlocks) . "\x00";
+            $codeBlocks[$placeholder] = $m[0];
+            return $placeholder;
+        }, $content);
+
+        // Apply KaTeX filter only to content outside code blocks
         $content = self::filterKaTeX($content);
-        // add additional filters here as needed
+
+        // Restore original code blocks
+        foreach ($codeBlocks as $placeholder => $original) {
+            $content = str_replace($placeholder, $original, $content);
+        }
+
         return $content;
     }
 

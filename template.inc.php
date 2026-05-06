@@ -214,7 +214,7 @@
             if($_GET['draft'] ?? '' && file_exists($DOC->DIR."draft.md")){$source=file_get_contents($DOC->DIR."draft.md");}
             if(!strlen($source ?? '')){$source=$DOC->loadContent();}
             ?>
-            <textarea id="simplemde" name="content"><?= (strlen($source)?$source:"# ".$DOC->TITLE) ?></textarea>
+            <textarea id="simplemde" name="content"><?= htmlspecialchars(strlen($source)?$source:"# ".$DOC->TITLE) ?></textarea>
           </form>
         <?php endif; ?>
         <?php if(MODE=="edit"): ?>
