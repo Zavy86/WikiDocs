@@ -214,6 +214,7 @@ setInterval(function(){
 			url:APP.URL+"submit.php?act=draft_save_ajax",
 			type:"POST",
 			data:{
+				token:APP.token,
 				document:DOC.ID,
 				content:$("textarea[name='content']").val()
 			},

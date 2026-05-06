@@ -37,6 +37,10 @@ final class Session{
 		if(!isset($_SESSION['wikidocs']['debug'])){$this->setDebug(false);}
 		// check for application session alerts array
 		if(!isset($_SESSION['wikidocs']['alerts']) || !is_array($_SESSION['wikidocs']['alerts'])){$_SESSION['wikidocs']['alerts']=array();}
+		// check for CSRF token
+		if(!isset($_SESSION['wikidocs']['token'])){
+			$_SESSION['wikidocs']['token']=bin2hex(random_bytes(32));
+		}
 		// periodically regenerate session id to prevent fixation attacks
 		if (!isset($_SESSION['last_regeneration'])) {
 			$_SESSION['last_regeneration'] = time();
@@ -70,6 +74,10 @@ final class Session{
 
 	public function isDebug():bool{
 		return boolval($_SESSION['wikidocs']['debug']);
+	}
+
+	public function token():string{
+		return $_SESSION['wikidocs']['token'];
 	}
 
 	public function privacyAgreement(bool $value) {

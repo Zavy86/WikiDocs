@@ -27,7 +27,7 @@ document.querySelectorAll('.image-delete').forEach(item => {
 			url: APP.PATH+"submit.php?act=image_delete_ajax",
 			type: "post",
 			dataType: "html",
-			data: "document="+DOC.ID+"&image_name="+image_name,
+			data: "token="+APP.token+"&document="+DOC.ID+"&image_name="+image_name,
 			cache: false,
 			processData: false,
 			success: function( response ) {
@@ -138,7 +138,7 @@ window.addEventListener("paste",function(e){
 				url:APP.PATH+"submit.php?act=image_upload_ajax",
 				type:"post",
 				dataType:"html",
-				data:"document="+DOC.ID+"&image_base64="+imageDataBase64,
+				data:"token="+APP.token+"&document="+DOC.ID+"&image_base64="+imageDataBase64,
 				cache:false,
 				processData:false,
 				success:function(response){
@@ -188,7 +188,7 @@ document.addEventListener("drop",function(event) {
 				url: APP.PATH+"submit.php?act=image_drop_upload_ajax",
 				type: "post",
 				dataType: "html",
-				data: "document="+DOC.ID+"&image_base64="+data+"&image_name="+file.name+"&directory="+DOC,
+				data: "token="+APP.token+"&document="+DOC.ID+"&image_base64="+data+"&image_name="+file.name+"&directory="+DOC,
 				cache: false,
 				processData: false,
 				success: function( response ) {

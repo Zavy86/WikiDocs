@@ -6,6 +6,13 @@
  * @repository https://github.com/Zavy86/wikidocs
  */
 session_start();
+if(!isset($_SESSION['wikidocs']['setup']['token'])){$_SESSION['wikidocs']['setup']['token']=bin2hex(random_bytes(32));}
+function checkCSRF(){
+  if(!isset($_POST['token']) || $_POST['token'] !== $_SESSION['wikidocs']['setup']['token']){
+    return false;
+  }
+  return true;
+}
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",true);
 function getSetting($key,$default=''){return (string)($_SESSION['wikidocs']['setup'][$key]??$default);}
@@ -46,6 +53,7 @@ if($g_act=="preliminary_check"){
 }
 // check action
 if($g_act=="check"){
+  if(!checkCSRF()){die("CSRF token invalid");}
   $required_fields=['path','title','subtitle','owner','notice','editcode'];
   $_SESSION['wikidocs']['setup']=[];
   foreach($required_fields as $field){
@@ -63,6 +71,7 @@ if($g_act=="check"){
 }
 // conclude action
 if($g_act=="conclude"){
+  if(!checkCSRF()){die("CSRF token invalid");}
   $config="<?php\n";
   $config_items=[
     'DEBUGGABLE'=>'false',
@@ -173,6 +182,7 @@ if($g_act=="conclude"){
         <h2>Configuration</h2>
         <p>Setup your wiki engine..</p>
         <form action="setup.php?act=check" method="post">
+          <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['setup']['token'] ?>">
           <div class="row">
             <div class="input-field col s12">
               <input type="text" name="path" id="path" class="validate" value="<?= sanitizeInput(PATH_URI) ?>" required>
@@ -242,7 +252,10 @@ if($g_act=="conclude"){
           <?php if($errors){ ?>
             <button onClick="window.history.back();" class="btn btn-block waves-effect waves-light green lighten-2">Edit configuration<i class="material-icons left">keyboard_arrow_left</i></button>
           <?php }else{ ?>
-            <a href="setup.php?act=conclude" class="waves-effect waves-light btn green white-text right">Continue<i class="material-icons right">keyboard_arrow_right</i></a>
+            <form action="setup.php?act=conclude" method="post">
+              <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['setup']['token'] ?>">
+              <button type="submit" class="waves-effect waves-light btn green white-text right">Continue<i class="material-icons right">keyboard_arrow_right</i></button>
+            </form>
           <?php } ?>
         </div>
       </div><!-- /col -->

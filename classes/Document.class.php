@@ -542,6 +542,8 @@ final class Document{
 						foreach($queries_array as $query_fe){
 							// check for query word
 							if(stripos($buffer,$query_fe)!==false){
+								// escape buffer for security
+								$buffer=htmlspecialchars($buffer);
 								// highlight query word in buffer
 								$buffer=self::highlighting($query_fe,$buffer);
 								$matches_array[$path_fe][$buffer_id]=$buffer;

@@ -71,6 +71,11 @@ function authentication(){
  * Content Save
  */
 function content_save(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    wdf_alert("CSRF protection triggered!","danger");
+    wdf_redirect(PATH);
+  }
   // get localization
   $TXT=Localization::getInstance();
   wdf_dump($_REQUEST,"_REQUEST");
@@ -85,9 +90,9 @@ function content_save(){
     wdf_redirect(PATH.$p_document);
   }
   // check document path
-  if(!strlen($p_document)){
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
     // alert and redirect
-    wdf_alert($TXT->SubmitDocumentPathCannotBeEmpty,"danger");
+    wdf_alert($TXT->SubmitDocumentError,"danger");
     wdf_redirect(PATH);
   }
   // check content
@@ -154,11 +159,22 @@ function content_save(){
  * Content Restore
  */
 function content_restore(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    wdf_alert("CSRF protection triggered!","danger");
+    wdf_redirect(PATH);
+  }
   // get localization
   $TXT=Localization::getInstance();
   wdf_dump($_REQUEST,"_REQUEST");
   // acquire variables
-  $p_document=strtolower($_GET['document']);
+  $p_document=strtolower($_REQUEST['document']);
+  // check document path
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
+    // alert and redirect
+    wdf_alert($TXT->SubmitDocumentError,"danger");
+    wdf_redirect(PATH);
+  }
   // check authentication
   if(Session::getInstance()->autenticationLevel()!=2){
     // alert and redirect
@@ -200,11 +216,22 @@ function content_restore(){
  * Content Delete
  */
 function content_delete(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    wdf_alert("CSRF protection triggered!","danger");
+    wdf_redirect(PATH);
+  }
   // get localization
   $TXT=Localization::getInstance();
   wdf_dump($_REQUEST,"_REQUEST");
   // acquire variables
-  $p_document=strtolower($_GET['document']);
+  $p_document=strtolower($_REQUEST['document']);
+  // check document path
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
+    // alert and redirect
+    wdf_alert($TXT->SubmitDocumentError,"danger");
+    wdf_redirect(PATH);
+  }
   // check authentication
   if(Session::getInstance()->autenticationLevel()!=2){
     // alert and redirect
@@ -238,8 +265,18 @@ function content_delete(){
  * Image Upload (AJAX)
  */
 function image_upload_ajax(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   // acquire variables
   $p_document=strtolower($_POST['document']);
+  // check document path
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   // check authentication
   if(Session::getInstance()->autenticationLevel()!=2){
     echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
@@ -286,15 +323,37 @@ function image_upload_ajax(){
   $file_name=strtolower(str_replace(" ","-",$image['name']));
   // check for posted image
   if(isset($image['tmp_name']) && $image['tmp_name']){
+    // sanitization for SVG
+    if($image['ext']==="svg"){
+      $svg_content=file_get_contents($image['tmp_name']);
+      $sanitized_svg=SecurityFilters::sanitizeSVG($svg_content);
+      if($sanitized_svg===false){
+        echo json_encode(array("error"=>1,"code"=>"invalid_svg"));
+        return false;
+      }
+      file_put_contents($image['tmp_name'],$sanitized_svg);
+      $image['size']=filesize($image['tmp_name']);
+    }
     if(move_uploaded_file($image['tmp_name'],$DOC->DIR.$file_name)){$uploaded=true;}
     // check for pasted image
-  }elseif(strlen($image['base64'])){
-    $bytes=file_put_contents($DOC->DIR.$file_name,base64_decode($image['base64']));
+  }elseif(isset($image['base64']) && strlen($image['base64'])){
+    $image_data=base64_decode($image['base64']);
+    // sanitization for SVG
+    if($image['ext']==="svg"){
+      $sanitized_svg=SecurityFilters::sanitizeSVG($image_data);
+      if($sanitized_svg===false){
+        echo json_encode(array("error"=>1,"code"=>"invalid_svg"));
+        return false;
+      }
+      $image_data=$sanitized_svg;
+    }
+    $bytes=file_put_contents($DOC->DIR.$file_name,$image_data);
     if($bytes>0){
       $image['size']=$bytes;
       $uploaded=true;
     }
   }
+
   // check for uploaded
   if($uploaded){
     echo json_encode(array("error"=>null,"code"=>"image_uploaded","name"=>$file_name,"path"=>$DOC->PATH."/".$file_name,"size"=>$image['size']));
@@ -309,7 +368,17 @@ function image_upload_ajax(){
  * Image Upload - drag-n-drop (AJAX)
  */
 function image_drop_upload_ajax() {
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $document = $_POST['document'];
+  // check document path
+  if(!strlen($document) || !wdf_document_id_check($document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $image_base64 = $_POST['image_base64'];
   $image_filename = $_POST['image_name'];
   if(Session::getInstance()->autenticationLevel()!=2){
@@ -386,22 +455,20 @@ function image_drop_upload_ajax() {
  * Image Delete (AJAX)
  */
 function image_delete_ajax() {
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $document = $_POST['document'];
+  // check document path
+  if(!strlen($document) || !wdf_document_id_check($document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $image_filename = basename($_POST['image_name']); // added basename()
   if(Session::getInstance()->autenticationLevel() != 2) {
     echo json_encode(array("error" => 1, "code" => "not_authenticated"));
-    return false;
-  }
-  // reject if $document contains .. or any slash/backslash
-  if(
-    strpos($document, '..')  !== false ||
-    strpos($document, '/')   !== false ||
-    strpos($document, '\\')  !== false
-  ) {
-    echo json_encode([
-      "error" => 1,
-      "code" => "invalid_document"
-    ]);
     return false;
   }
   // initialize document
@@ -430,8 +497,18 @@ function image_delete_ajax() {
  * Atachment Upload (AJAX)
  */
 function attachment_upload_ajax(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   // acquire variables
   $p_document=strtolower($_POST['document']);
+  // check document path
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   // check authentication
   if(Session::getInstance()->autenticationLevel()!=2){
     echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
@@ -495,7 +572,17 @@ function attachment_upload_ajax(){
  * Attachment Delete (AJAX)
  */
 function attachment_delete_ajax() {
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $document = $_POST['document'];
+  // check document path
+  if(!strlen($document) || !wdf_document_id_check($document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $attachment_filename = $_POST['attachment_name'];
   if(Session::getInstance()->autenticationLevel() != 2) {
     echo json_encode(array("error" => 1, "code" => "not_authenticated"));
@@ -527,8 +614,18 @@ function attachment_delete_ajax() {
  * Draft Save (AJAX)
  */
 function draft_save_ajax(){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   // acquire variables
   $p_document=strtolower($_POST['document']);
+  // check document path
+  if(!strlen($p_document) || !wdf_document_id_check($p_document)){
+    echo json_encode(array("error"=>1,"code"=>"csrf_error"));
+    return false;
+  }
   $p_content=$_POST['content'];
   // check authentication
   if(Session::getInstance()->autenticationLevel()!=2){

@@ -19,6 +19,11 @@ if(Session::getInstance()->autenticationLevel()!=2){
 $g_act=($_GET['act'] ?? '');
 // store action
 if($g_act=="store"){
+  // check CSRF token
+  if(!wdf_csrf_check()){
+    wdf_alert("CSRF protection triggered!","danger");
+    wdf_redirect(PATH);
+  }
   // sed codes
   $EDITCODE=($_POST['editcode']===EDITCODE?EDITCODE:password_hash($_POST['editcode'],PASSWORD_DEFAULT));
   $VIEWCODE=($_POST['viewcode']===VIEWCODE?VIEWCODE:(strlen($_POST['viewcode'])?password_hash($_POST['viewcode'],PASSWORD_DEFAULT):null));
@@ -72,6 +77,7 @@ if($g_act=="store"){
       <h2><?= $TXT->Settings ?></h2>
       <p><?= $TXT->SettingsConfigure ?>..</p>
       <form action="settings.php?act=store" method="post">
+        <input type="hidden" name="token" value="<?= Session::getInstance()->token() ?>">
         <div class="row">
           <div class="input-field col s12 m5">
             <input type="text" name="title" id="title" class="validate" value="<?= TITLE ?>" required>

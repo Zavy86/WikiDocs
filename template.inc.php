@@ -191,6 +191,7 @@
         <?php endif; ?>
         <?php if(MODE=="auth"): ?>
           <form id="auth-form" method="post" action="<?= $APP->PATH ?>submit.php?act=authentication">
+            <input type="hidden" name="token" value="<?= Session::getInstance()->token() ?>">
             <input type="hidden" name="document" value="<?= $DOC->ID ?>">
             <div class="row" style="margin-top:36px">
               <div class="input-field col s9">
@@ -205,6 +206,7 @@
         <?php endif; ?>
         <?php if(MODE=="edit"): ?>
           <form id="editor-form" method="post" action="<?= $APP->PATH ?>submit.php?act=content_save">
+            <input type="hidden" name="token" value="<?= Session::getInstance()->token() ?>">
             <input type="hidden" name="revision" value="1">
             <input type="hidden" name="document" value="<?= $DOC->ID ?>">
             <?php
@@ -221,6 +223,7 @@
             <div class="modal-content">
               <h4><?= $TXT->Images ?></h4>
               <form id="images-uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=image_upload_ajax" enctype="multipart/form-data">
+                <input type="hidden" name="token" value="<?= Session::getInstance()->token() ?>">
                 <input type="hidden" name="document" value="<?= $DOC->ID ?>">
                 <div class="row" style="margin-top:36px">
                   <div class="input-field file-field col s9">
@@ -255,6 +258,7 @@
             <div class="modal-content">
               <h4><?= $TXT->Attachments ?></h4>
               <form id="attachments-uploader-form" method="post" action="<?= $APP->PATH ?>submit.php?act=attachment_upload_ajax" enctype="multipart/form-data">
+                <input type="hidden" name="token" value="<?= Session::getInstance()->token() ?>">
                 <input type="hidden" name="document" value="<?= $DOC->ID ?>">
                 <div class="row" style="margin-top:36px">
                   <div class="input-field file-field col s9">
