@@ -6,15 +6,10 @@
  * @repository https://github.com/Zavy86/wikidocs
  */
 session_start();
-if(!isset($_SESSION['wikidocs']['setup']['token'])){$_SESSION['wikidocs']['setup']['token']=bin2hex(random_bytes(32));}
-function checkCSRF(){
-  if(!isset($_POST['token']) || $_POST['token'] !== $_SESSION['wikidocs']['setup']['token']){
-    return false;
-  }
-  return true;
-}
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors",true);
+if(!isset($_SESSION['wikidocs']['csfr']['token'])){$_SESSION['wikidocs']['csfr']['token']=bin2hex(random_bytes(32));}
+function checkCSRF(){return !(!isset($_POST['token']) || $_POST['token'] !== $_SESSION['wikidocs']['csfr']['token']);}
 function getSetting($key,$default=''){return (string)($_SESSION['wikidocs']['setup'][$key]??$default);}
 function sanitizeInput($input){return htmlspecialchars(trim($input),ENT_COMPAT,'UTF-8');}
 function checkWebServer(){
@@ -182,7 +177,7 @@ if($g_act=="conclude"){
         <h2>Configuration</h2>
         <p>Setup your wiki engine..</p>
         <form action="setup.php?act=check" method="post">
-          <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['setup']['token'] ?>">
+          <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['csfr']['token'] ?>">
           <div class="row">
             <div class="input-field col s12">
               <input type="text" name="path" id="path" class="validate" value="<?= sanitizeInput(PATH_URI) ?>" required>
@@ -253,7 +248,7 @@ if($g_act=="conclude"){
             <button onClick="window.history.back();" class="btn btn-block waves-effect waves-light green lighten-2">Edit configuration<i class="material-icons left">keyboard_arrow_left</i></button>
           <?php }else{ ?>
             <form action="setup.php?act=conclude" method="post">
-              <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['setup']['token'] ?>">
+              <input type="hidden" name="token" value="<?= $_SESSION['wikidocs']['csfr']['token'] ?>">
               <button type="submit" class="waves-effect waves-light btn green white-text right">Continue<i class="material-icons right">keyboard_arrow_right</i></button>
             </form>
           <?php } ?>
