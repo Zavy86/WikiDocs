@@ -34,12 +34,16 @@ $PARSER=new ParsedownPlus([
 	'tables' => [
 		'tablespan' => true,
 	],
-	'safemode' => true,    // enable parsedown's built-in safe mode
 	'typographer' => true,
 	'toc' => true,
 	'sup' => true,
 	'sub' => true
 ]);
-$PARSER->setSafeMode(true);
+// NOTE: Parsedown safe mode intentionally NOT enabled — it strips inline HTML
+// (e.g. <span style="color:..."> spans, simple Mermaid/KaTeX) breaking core
+// use cases (see issue #293). XSS protection is provided in layers by
+// Document::sanitizeHtml() (escapes <script>, dangerous tags, on* events,
+// javascript:/data: URLs) and SecurityFilters (KaTeX command/tag blocklist,
+// SVG sanitizer).
 // include web or print template
 if(MODE=='print'){require_once(BASE.'print.inc.php');}else{require_once(BASE.'template.inc.php');}

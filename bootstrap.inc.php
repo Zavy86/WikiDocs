@@ -54,6 +54,16 @@ ini_set("display_errors",$debug);
 if(!defined("TIMEZONE")){define("TIMEZONE","default");}
 elseif(TIMEZONE!="default"){date_default_timezone_set(TIMEZONE);}
 
+// iframe host allowlist (comma-separated). Author content may embed iframes
+// whose src host matches one of these entries (https only). Sensible
+// defaults cover common video providers; admins can add internal/SaaS
+// hosts (e.g. Google Docs, Figma, Draw.io, internal dashboards) by adding
+// a single line to datasets/config.inc.php:
+//   define('ALLOWED_IFRAME_HOSTS', 'www.youtube.com,docs.google.com,...');
+if(!defined("ALLOWED_IFRAME_HOSTS")){
+  define("ALLOWED_IFRAME_HOSTS","www.youtube.com,www.youtube-nocookie.com,player.vimeo.com");
+}
+
 // get document id from rewrited url
 $g_doc=strtolower(str_replace(array(" "),"-",($_GET['doc'] ?? '')));
 

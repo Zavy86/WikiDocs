@@ -8,59 +8,28 @@
 
 // More or less comprehensive list of html js events, which will be escaped during document display to prevent XSS.
 const HTML_EVENTS = [
-    "onactivate",
-    "onbeforeactivate",
-    "onbeforecut",
-    "onbeforeeditfocus",
-    "onbeforeupdate",
-    "onclick",
-    "oncontrolselect",
-    "oncut",
-    "ondeactivate",
-    "ondragend",
-    "ondragleave",
-    "ondragstart",
-    "onerrorupdate",
-    "onfocus",
-    "onfocusout",
-    "onkeydown",
-    "onkeyup",
-    "onmousedown",
-    "onmouseleave",
-    "onmouseout",
-    "onmouseup",
-    "onmove",
-    "onmovestart",
-    "onpropertychange",
-    "onresize",
-    "onresizestart",
-    "ontimeerror",
-    "onafterupdate",
-    "onbeforecopy",
-    "onbeforedeactivate",
-    "onbeforepaste",
-    "onblur",
-    "oncontextmenu",
-    "oncopy",
-    "ondblclick",
-    "ondrag",
-    "ondragenter",
-    "ondragover",
-    "ondrop",
-    "onfilterchange",
-    "onfocusin",
-    "onhelp",
-    "onkeypress",
-    "onlosecapture",
-    "onmouseenter",
-    "onmousemove",
-    "onmouseover",
-    "onmousewheel",
-    "onmoveend",
-    "onpaste",
-    "onreadystatechange",
-    "onresizeend",
-    "onselectstart",
+    // Critical XSS surface
+    "onerror", "onload", "onunload", "onbeforeunload",
+    "onclick", "onauxclick", "ondblclick", "oncontextmenu",
+    "onsubmit", "onreset", "onchange", "oninput", "oninvalid", "onselect", "onsearch",
+    "onfocus", "onblur", "onfocusin", "onfocusout",
+    "onkeydown", "onkeypress", "onkeyup",
+    "onmousedown", "onmouseenter", "onmouseleave", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel", "onwheel",
+    "onpointerdown", "onpointerup", "onpointermove", "onpointerover", "onpointerout", "onpointerenter", "onpointerleave", "onpointercancel", "ongotpointercapture", "onlostpointercapture",
+    "ontouchstart", "ontouchend", "ontouchmove", "ontouchcancel",
+    "ondrag", "ondragend", "ondragenter", "ondragleave", "ondragover", "ondragstart", "ondrop", "ondragexit",
+    "oncopy", "oncut", "onpaste",
+    "ontoggle", "onbeforetoggle", "onformdata", "onslotchange",
+    "onanimationstart", "onanimationend", "onanimationiteration", "ontransitionend", "ontransitionstart", "ontransitionrun", "ontransitioncancel",
+    "onplay", "onplaying", "onpause", "onended", "onvolumechange", "ontimeupdate", "ondurationchange", "oncanplay", "oncanplaythrough", "onratechange", "onloadstart", "onloadeddata", "onloadedmetadata", "onprogress", "onwaiting", "onabort", "onemptied", "onseeked", "onseeking", "onstalled", "onsuspend",
+    "onhashchange", "onpopstate", "onstorage", "onmessage", "ononline", "onoffline", "onpageshow", "onpagehide", "onafterprint", "onbeforeprint", "onresize", "onscroll", "onscrollend",
+    "onopen", "onclose", "oncuechange", "onsecuritypolicyviolation",
+    // Legacy / IE-era events kept from original list
+    "onactivate", "onbeforeactivate", "onbeforecut", "onbeforeeditfocus", "onbeforeupdate",
+    "oncontrolselect", "ondeactivate", "onerrorupdate", "onmove", "onmovestart", "onmoveend",
+    "onpropertychange", "onresizestart", "onresizeend", "ontimeerror", "onafterupdate",
+    "onbeforecopy", "onbeforedeactivate", "onbeforepaste", "onfilterchange", "onhelp",
+    "onlosecapture", "onreadystatechange", "onselectstart",
 ];
 
 final class Document{
@@ -153,6 +122,17 @@ final class Document{
      * @return string
      */
     public function sanitizeHtml($string) {
+        // Tags that can execute scripts, load remote content, or change page
+        // behavior — neutralized outside fenced/inline code blocks.
+        // <iframe> is handled separately by sanitizeIframes() so the
+        // YouTube/Vimeo allowlist can run before the generic blocker.
+        static $dangerousTags = [
+            'script', 'object', 'embed', 'form',
+            'meta', 'link', 'base', 'frame', 'frameset', 'applet',
+            'svg', 'math', 'style',
+            'template', 'textarea', 'noscript'
+        ];
+
         // Regular expression to split by <pre>...</pre> or <code>...</code> blocks
         $parts = preg_split('/(```.*?```|`.*?`)/is', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -160,18 +140,208 @@ final class Document{
         foreach ($parts as &$part) {
             // Only modify parts that are outside <pre>...</pre> or <code>...</code>
             if (!preg_match('/^```.*```$|^`.*`$/is', $part)) {
-                // Sanitize HTML events
+                // Allowlist iframes from trusted video providers, escape the rest.
+                $part = self::sanitizeIframes($part);
+                // Sanitize HTML events (case-insensitive)
                 foreach (HTML_EVENTS as $event) {
                     $replacement = '&#111;' . substr($event, 1);
-                    $part = str_replace($event, $replacement, $part);
+                    $part = str_ireplace($event, $replacement, $part);
                 }
-                // Sanitize script tags.
-                $part=str_replace(array("<script","script>"),array("&lt;script","script&gt;"),$part);
+                // Sanitize dangerous tags (open + close)
+                foreach ($dangerousTags as $tag) {
+                    $part = str_ireplace(
+                        array("<".$tag, "</".$tag),
+                        array("&lt;".$tag, "&lt;/".$tag),
+                        $part
+                    );
+                }
+                // Neutralize javascript:/vbscript:/data: URL schemes in attributes.
+                // Browsers ignore whitespace/control chars and HTML entities
+                // inside a URL scheme (`java&Tab;script:` still fires), so we
+                // strip them, decode entities, then check the leading scheme.
+                //
+                // Exception: data:image/(png|jpeg|gif|webp);base64,... is
+                // allowed in `src` attributes only (covers inline base64
+                // images, e.g. <img src="data:image/png;base64,...">).
+                // svg+xml is NOT allowed because SVG can contain <script>.
+                $part = preg_replace_callback(
+                    '/((href|src|action|formaction|xlink:href|poster|background)\s*=\s*)(["\'])(.*?)\3/is',
+                    function($m) {
+                        $attrName = strtolower($m[2]);
+                        $normalized = html_entity_decode($m[4], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        $normalized = preg_replace('/[\s\x00-\x1F\x7F]/', '', $normalized);
+                        if (self::isDangerousUrl($normalized, $attrName)) {
+                            return $m[1] . $m[3] . 'blocked:' . $m[3];
+                        }
+                        return $m[0];
+                    },
+                    $part
+                );
+                // Unquoted attribute form: href=javascript:...
+                $part = preg_replace_callback(
+                    '/((href|src|action|formaction|xlink:href|poster|background)\s*=\s*)([^\s"\'<>]+)/i',
+                    function($m) {
+                        $attrName = strtolower($m[2]);
+                        $normalized = html_entity_decode($m[3], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        $normalized = preg_replace('/[\s\x00-\x1F\x7F]/', '', $normalized);
+                        if (self::isDangerousUrl($normalized, $attrName)) {
+                            return $m[1] . 'blocked:';
+                        }
+                        return $m[0];
+                    },
+                    $part
+                );
             }
         }
 
         // Rejoin the parts and return the result
         return implode('', $parts);
+    }
+
+    /**
+     * Decide whether a URL value (already normalized: entity-decoded,
+     * whitespace/control chars stripped) is dangerous for the given
+     * attribute. Returns true if it should be replaced with `blocked:`.
+     *
+     * Policy:
+     *   - javascript: / vbscript: — always blocked (any attribute)
+     *   - data:image/(png|jpeg|gif|webp);base64,... — allowed in `src` only
+     *     (covers inline base64 images). svg+xml NOT allowed: SVG can
+     *     embed <script>.
+     *   - data: anything else — blocked
+     *
+     * @param string $url       Normalized URL value
+     * @param string $attrName  Lowercase attribute name (e.g. "src", "href")
+     * @return bool
+     */
+    private static function isDangerousUrl($url, $attrName) {
+        if (preg_match('/^(javascript|vbscript)\s*:/i', $url)) {
+            return true;
+        }
+        if (preg_match('/^data\s*:/i', $url)) {
+            // Allow safe base64 image MIME types in src attributes only
+            if ($attrName === 'src' && preg_match(
+                '#^data:image/(png|jpeg|jpg|gif|webp)\s*;\s*base64,[A-Za-z0-9+/=]+$#i',
+                $url
+            )) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Iframe allowlist sanitizer.
+     *
+     * Iframes whose src host is on the ALLOWED_IFRAME_HOSTS allowlist
+     * (https only) are rebuilt with a fixed set of safe attributes. All
+     * other iframes (and any iframe-like fragments) are escaped to text so
+     * the generic dangerous-tag escape in sanitizeHtml() neutralizes them.
+     *
+     * The host allowlist is configured via the ALLOWED_IFRAME_HOSTS
+     * constant (comma-separated, set in datasets/config.inc.php, with
+     * defaults in bootstrap.inc.php). Defaults cover YouTube,
+     * YouTube-nocookie, Vimeo. Admins can add internal/SaaS providers
+     * (docs.google.com, www.figma.com, embed.diagrams.net, etc.).
+     *
+     * Host comparison is exact (anchored), so `www.youtube.com.evil.tld`
+     * does NOT match `www.youtube.com`.
+     *
+     * Risky attributes (srcdoc, on*, sandbox overrides, arbitrary styling)
+     * are dropped — only src/width/height/title are carried over, plus a
+     * hard-coded set of safe rendering attributes.
+     *
+     * @param string $part Content fragment (already outside code blocks)
+     * @return string Sanitized fragment
+     */
+    private static function sanitizeIframes($part) {
+        $allowedHosts = self::allowedIframeHosts();
+        return preg_replace_callback(
+            '#<iframe\b([^>]*?)(?:/\s*>|>\s*(.*?)</iframe\s*>)#is',
+            function($m) use ($allowedHosts) {
+                $attrs = $m[1];
+                $inner = isset($m[2]) ? $m[2] : '';
+                // extract src
+                if (!preg_match('/\bsrc\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|([^\s>]+))/i', $attrs, $sm)) {
+                    return self::escapeIframe($attrs, $inner);
+                }
+                $src = trim(html_entity_decode($sm[1] !== '' ? $sm[1] : ($sm[2] !== '' ? $sm[2] : $sm[3]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+                $normalized = preg_replace('/[\s\x00-\x1F\x7F]/', '', $src);
+                if (!self::iframeSrcAllowed($normalized, $allowedHosts)) {
+                    return self::escapeIframe($attrs, $inner);
+                }
+                // rebuild with safe attributes only
+                $safeAttrs = ' src="' . htmlspecialchars($normalized, ENT_QUOTES) . '"';
+                if (preg_match('/\bwidth\s*=\s*"?(\d{1,4})"?/i', $attrs, $w)) {
+                    $safeAttrs .= ' width="' . $w[1] . '"';
+                }
+                if (preg_match('/\bheight\s*=\s*"?(\d{1,4})"?/i', $attrs, $h)) {
+                    $safeAttrs .= ' height="' . $h[1] . '"';
+                }
+                if (preg_match('/\btitle\s*=\s*"([^"<>]{0,200})"/i', $attrs, $t)) {
+                    $safeAttrs .= ' title="' . htmlspecialchars($t[1], ENT_QUOTES) . '"';
+                }
+                // Note: referrerpolicy is intentionally NOT set to "no-referrer".
+                // YouTube validates the Referer header against the video's
+                // embed allowlist and refuses playback (Error 153) when it is
+                // missing. Browser default (strict-origin-when-cross-origin)
+                // sends only the origin cross-site, which is private enough
+                // and keeps compatibility with major video providers.
+                return '<iframe' . $safeAttrs
+                    . ' frameborder="0" allowfullscreen loading="lazy"'
+                    . ' allow="accelerometer; autoplay; clipboard-write;'
+                    .   ' encrypted-media; gyroscope; picture-in-picture; web-share"'
+                    . '></iframe>';
+            },
+            $part
+        );
+    }
+
+    /**
+     * Escape an iframe-like fragment so the generic dangerous-tag escape
+     * neutralizes it. Inner content is preserved as text.
+     */
+    private static function escapeIframe($attrs, $inner) {
+        return '&lt;iframe' . htmlspecialchars($attrs, ENT_QUOTES) . '&gt;'
+            . $inner . '&lt;/iframe&gt;';
+    }
+
+    /**
+     * Parse ALLOWED_IFRAME_HOSTS into a normalized lowercase host list.
+     * Hosts are matched exactly (no wildcard, no subdomain inheritance).
+     *
+     * @return string[]
+     */
+    private static function allowedIframeHosts() {
+        if (!defined('ALLOWED_IFRAME_HOSTS')) { return []; }
+        $hosts = [];
+        foreach (explode(',', (string)ALLOWED_IFRAME_HOSTS) as $h) {
+            $h = strtolower(trim($h));
+            if ($h === '') { continue; }
+            // basic host syntax: letters/digits/dots/hyphens, no slashes/schemes
+            if (preg_match('/^[a-z0-9.\-]+$/', $h)) {
+                $hosts[] = $h;
+            }
+        }
+        return $hosts;
+    }
+
+    /**
+     * Check if an iframe src URL is allowed by the host allowlist. Requires
+     * https scheme and exact host match (anchored, so look-alike attacks
+     * like `youtube.com.evil.tld` are rejected).
+     */
+    private static function iframeSrcAllowed($src, array $allowedHosts) {
+        if (!$allowedHosts) { return false; }
+        if (!preg_match('~^https://([^/?#]+)(?:[/?#]|$)~i', $src, $m)) {
+            return false;
+        }
+        $host = strtolower($m[1]);
+        // strip optional userinfo (user@host) and port (host:443)
+        if (($at = strrpos($host, '@')) !== false) { $host = substr($host, $at + 1); }
+        if (($colon = strrpos($host, ':')) !== false) { $host = substr($host, 0, $colon); }
+        return in_array($host, $allowedHosts, true);
     }
 
 	/**
