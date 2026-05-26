@@ -402,6 +402,7 @@ final class Document{
 					// document not found
 					$source="# Error 404\n";
 					$source.="We are sorry but the page you are looking for does not exist.\n\n";
+                    http_response_code(404);
 					// check for edit authorization
 					if(Session::getInstance()->autenticationLevel()==2){
 						// document can be created
