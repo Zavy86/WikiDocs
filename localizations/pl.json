@@ -63,6 +63,8 @@
 	"SettingsDark": "Tryb ciemny",
 	"SettingsGtag": "Tag Google Analytics",
 	"SettingsGtagPlaceholder": "Wprowadź G-TAG",
+	"SettingsAttachmentExtension": "Dopuszczalne rozszerzenia plików załączników",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "Język",
 	"SettingsTimezone": "Strefa czasowa",
 	"SettingsCancel": "Anuluj",

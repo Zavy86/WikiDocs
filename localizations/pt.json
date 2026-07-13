@@ -63,6 +63,8 @@
 	"SettingsDark": "Dark Mode",
 	"SettingsGtag": "Google Analytics tag",
 	"SettingsGtagPlaceholder": "Inserir G-TAG",
+	"SettingsAttachmentExtension": "Extensões permitidas para os anexos",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "Linguagem",
 	"SettingsTimezone": "Timezone",
 	"SettingsCancel": "Cancelar",

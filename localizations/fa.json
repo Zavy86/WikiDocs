@@ -63,6 +63,8 @@
 	"SettingsDark": "حالت تاریک",
 	"SettingsGtag": "Google Analytics tag",
 	"SettingsGtagPlaceholder": "Insert G-TAG",
+	"SettingsAttachmentExtension": "پسوندهای مجاز برای فایل‌های پیوست",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "زبان",
 	"SettingsTimezone": "منطقه زمانی",
 	"SettingsCancel": "لغو",

@@ -63,6 +63,8 @@
 	"SettingsDark": "Donkere modus",
 	"SettingsGtag": "Google Analytics tag",
 	"SettingsGtagPlaceholder": "Voer G-TAG in",
+	"SettingsAttachmentExtension": "Toegestane bestandsextensies voor bijlagen",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "Taal",
 	"SettingsTimezone": "Tijdzone",
 	"SettingsCancel": "Annuleren",

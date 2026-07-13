@@ -63,6 +63,8 @@
 	"SettingsDark": "Tmavý režim",
 	"SettingsGtag": "Google Analytics tag",
 	"SettingsGtagPlaceholder": "Vložte G-TAG",
+	"SettingsAttachmentExtension": "Povolené přípony příloh",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "Jazyk",
 	"SettingsTimezone": "Časové pásmo",
 	"SettingsCancel": "Zrušit",

@@ -63,6 +63,8 @@
     "SettingsDark": "ダークモード",
     "SettingsGtag": "Googleアナリティクスタグ",
     "SettingsGtagPlaceholder": "G-TAGを挿入",
+	"SettingsAttachmentExtension": "添付ファイルで許可されている拡張子",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
     "SettingsLanguage": "言語",
     "SettingsTimezone": "タイムゾーン",
     "SettingsCancel": "キャンセル",

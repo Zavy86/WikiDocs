@@ -267,7 +267,7 @@
                       <input type="file" name="attachment" required>
                     </div><!-- /btn -->
                     <div class="file-path-wrapper">
-                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>.. (pdf, doc/x, xls/x, ppt/x)">
+                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>.. <?= implode(", ",ATTACHMENTEXTENSION) ?>">
                     </div><!-- /file-path-wrapper -->
                   </div><!-- /input-field -->
                   <div class="input-field col s3">
