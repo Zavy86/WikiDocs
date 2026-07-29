@@ -1,0 +1,27 @@
+<main class="page-main">
+  <section class="content-wrapper" [class.content-wrapper-edit]="mode() === 'edit'">
+    @if (mode() === 'view') {
+      @if (document(); as currentDocument) {
+        @if (currentDocument.exists === false) {
+          <app-document-exists [canWrite]="canWrite()"/>
+        } @else {
+          <app-document-viewer
+            [metadata]="currentDocument.metadata"
+            [content]="currentDocument.content"
+            [attachments]="currentDocument.attachments"
+          />
+        }
+      } @else {
+        <p>Loading document...</p>
+      }
+    }
+    @if (mode() === 'edit') {
+      <app-document-editor
+        [raw]="editorRaw()"
+        [insertRequest]="editorInsertRequest()"
+        (rawChanged)="onEditorRawChange($event)"
+        (insertRequestApplied)="onEditorInsertRequestApplied($event)"
+      />
+    }
+  </section>
+</main>

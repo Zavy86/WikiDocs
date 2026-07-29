@@ -1,0 +1,108 @@
+<main class="page-main">
+  <section class="content-wrapper">
+    <h1>Settings</h1>
+    <p>Configure your wiki engine</p>
+    @if (loading()) {
+      <p class="loading">Loading settings...</p>
+    } @else {
+      <form class="settings-form" [formGroup]="form" (ngSubmit)="save()">
+        <div class="layout-grid layout-grid-5-7" [class.layout-grid-mobile-stack]="isMobile()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Title</mat-label>
+            <input
+              matInput
+              id="title"
+              name="title"
+              type="text"
+              formControlName="title"
+              maxlength="32"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Subtitle</mat-label>
+            <input
+              matInput
+              id="subtitle"
+              name="subtitle"
+              type="text"
+              formControlName="subtitle"
+              maxlength="64"
+            />
+          </mat-form-field>
+        </div>
+        <div class="layout-grid layout-grid-4-8" [class.layout-grid-mobile-stack]="isMobile()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Owner</mat-label>
+            <input
+              matInput
+              id="owner"
+              name="owner"
+              type="text"
+              formControlName="owner"
+              maxlength="64"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notice</mat-label>
+            <input
+              matInput
+              id="notice"
+              name="notice"
+              type="text"
+              formControlName="notice"
+              maxlength="128"
+            />
+          </mat-form-field>
+        </div>
+        @if (!isLocalMode()) {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Privacy banner</mat-label>
+            <textarea
+              matInput
+              id="privacy"
+              name="privacy"
+              formControlName="privacy"
+              maxlength="1024"
+              placeholder="Leave empty to disable the privacy modal"
+            ></textarea>
+          </mat-form-field>
+        }
+        <div class="layout-grid layout-grid-4" [class.layout-grid-mobile-stack]="isMobile()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Language</mat-label>
+            <mat-select id="localization" name="localization" formControlName="localization">
+              <mat-option value="en">English</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Timezone</mat-label>
+            <mat-select id="timezone" name="timezone" formControlName="timezone">
+              <mat-option value="UTC">UTC</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Template</mat-label>
+            <mat-select id="template" name="template" formControlName="template">
+              <mat-option value="light">Light</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Color</mat-label>
+            <input
+              matInput
+              id="color"
+              name="color"
+              type="text"
+              formControlName="color"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <div class="actions">
+          <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
+        </div>
+      </form>
+    }
+  </section>
+</main>

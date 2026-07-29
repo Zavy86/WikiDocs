@@ -1,0 +1,13 @@
+@if (error()) {
+  <div class="startup-error-page">
+    <section class="startup-error-card">
+      <h2>Startup error</h2>
+      <p>{{ error() }}</p>
+      <button mat-flat-button type="button" class="retry-button" (click)="retry()">Retry</button>
+    </section>
+  </div>
+} @else {
+  <div class="startup-loading" role="status" aria-live="polite">
+    <mat-spinner diameter="90" strokeWidth="4" aria-hidden="true"/>
+  </div>
+}

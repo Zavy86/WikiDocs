@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "name": "wikidocs-frontend",
+  "title": "Wiki|Docs Frontend",
+  "description": "Just a databaseless markdown flat-file wiki spa",
+  "author": "Manuel Zavatta <manuel.zavatta@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "ng": "ng",
+    "build": "ng build",
+    "start": "ng serve",
+    "test": "ng test"
+  },
+  "packageManager": "npm",
+  "dependencies": {
+    "@angular/cdk": "^22.0.3",
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/material": "^22.0.3",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "date-fns": "^4.4.0",
+    "easymde": "^2.21.0",
+    "emoji-toolkit": "^10.0.0",
+    "katex": "^0.16.25",
+    "marked": "^18.0.0",
+    "marked-katex-extension": "^5.0.0",
+    "material-symbols": "^0.45.5",
+    "mermaid": "^11.12.0",
+    "ngx-markdown": "^22.0.0",
+    "clipboard": "^2.0.11",
+    "prismjs": "^1.30.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.0.4",
+    "@angular/cli": "^22.0.4",
+    "@angular/compiler-cli": "^22.0.0",
+    "dotenv": "^17.4.2",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}

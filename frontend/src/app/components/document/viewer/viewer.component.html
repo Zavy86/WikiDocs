@@ -1,0 +1,25 @@
+<article>
+  @if (metadata()) {
+    <h1>{{ metadata().title }}</h1>
+    @if (metadata().tags && metadata().tags.length > 0) {
+      <div class="tags">
+        <mat-chip-set class="tags-set" aria-label="Document tags">
+          @for (tag of metadata().tags; track tag) {
+            <mat-chip class="tag-chip">{{ tag }}</mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    }
+  }
+  @if (content()) {
+    <markdown
+      class="document-content"
+      [data]="markdown()"
+      (click)="onMarkdownClick($event)"
+      [emoji]="true"
+      [katex]="true"
+      [mermaid]="true"
+      [clipboard]="true"
+    ></markdown>
+  }
+</article>

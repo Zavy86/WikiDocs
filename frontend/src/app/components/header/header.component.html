@@ -1,0 +1,72 @@
+<header>
+  <div class="header-inner">
+    <div class="breadcrumbs">
+      @if (showSidebarToggle()) {
+        <div class="nav-toggle">
+          <button
+            class="icon-circle-button"
+            mat-icon-button
+            type="button"
+            (click)="onNavigationToggle()"
+            aria-controls="nav-mobile"
+            aria-label="Toggle sidebar"
+          >
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+      }
+      <div class="breadcrumb-content">
+        <strong>
+          <a class="main-color-text nowrap" [routerLink]="'/'">{{ title() }}</a>
+        </strong>
+        @if (! isRoot()) {
+          <span> / </span>
+          @for (crumb of breadcrumbs(); track $index) {
+            @if (crumb.isCurrent || ! crumb.path) {
+              <span class="nowrap">{{ crumb.label }}</span>
+            } @else {
+              <a class="main-color-text nowrap" [routerLink]="crumb.path">{{ crumb.label }}</a>
+            }
+            @if (! $last) {
+              <span> / </span>
+            }
+          }
+        }
+      </div>
+      <div class="toolbar-actions">
+        @if (isMobile()) {
+          @if (hasActiveActions()) {
+            <button
+              class="icon-circle-button"
+              mat-icon-button
+              type="button"
+              (click)="onMobileActionsToggle()"
+              aria-label="Toggle actions"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            @if (showMobileActions()) {
+              <div class="toolbar-actions-menu">
+                @for (action of activeActions(); track action.key) {
+                  <app-action
+                    [action]="action"
+                    (clicked)="onActionClick($event)"
+                  />
+                }
+              </div>
+            }
+          }
+        } @else {
+          <div class="toolbar-actions-group nowrap">
+            @for (action of activeActions(); track action.key) {
+              <app-action
+                [action]="action"
+                (clicked)="onActionClick($event)"
+              />
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</header>

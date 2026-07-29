@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Settings</title>
+  </head>
+  <body>
+    <main class="settings">
+      <h1>Desktop Settings</h1>
+
+      <section class="settings-section">
+        <h2>Local Runtime</h2>
+
+        <label for="datasetsPath">Datasets directory</label>
+        <div class="inline-row">
+          <input id="datasetsPath" type="text" autocomplete="off" />
+          <button id="browseDatasets" type="button">Browse</button>
+        </div>
+
+        <label for="secret">Secret</label>
+        <input id="secret" type="text" autocomplete="off" />
+
+        <div class="actions">
+          <button id="saveAndRelaunch" type="button">Save and relaunch</button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Remote Dataset Synchronization</h2>
+
+        <label for="serverUrl">Remote Server URL</label>
+        <input id="serverUrl" type="url" placeholder="https://wikidocs.example.com" autocomplete="off" />
+
+        <label for="serverAccount">Account</label>
+        <input id="serverAccount" type="text" placeholder="admin" autocomplete="off" />
+
+        <label for="serverPassword">Password</label>
+        <input id="serverPassword" type="password" autocomplete="current-password" spellcheck="false" />
+
+        <div class="checkbox-row">
+          <input id="autoSyncEnabled" type="checkbox" />
+          <label for="autoSyncEnabled">Enable periodic automatic background sync</label>
+        </div>
+
+        <label for="autoSyncIntervalMinutes">Auto-sync interval (minutes)</label>
+        <input id="autoSyncIntervalMinutes" type="number" min="1" max="1440" value="15" />
+
+        <div class="actions inline-actions">
+          <button id="saveSyncConfig" type="button">Save sync settings</button>
+          <button id="syncNow" type="button">Sync dataset now</button>
+        </div>
+
+        <div class="sync-status-box">
+          <strong>Sync Status:</strong>
+          <span id="syncStatus">Idle</span>
+          <p id="syncMessage"></p>
+          <small id="lastSyncTime"></small>
+        </div>
+      </section>
+
+      <p id="status" data-status="info" aria-live="polite"></p>
+    </main>
+  </body>
+</html>

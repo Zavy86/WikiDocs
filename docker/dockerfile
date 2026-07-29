@@ -1,0 +1,41 @@
+# frontend build
+FROM node:22-alpine AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci
+COPY frontend ./
+COPY shared ../shared
+RUN npm run build
+# backend build
+FROM node:22-alpine AS backend-build
+RUN apk add --no-cache libc6-compat
+WORKDIR /app/backend
+RUN npm config set maxsockets 5 && \
+    npm config set fetch-retries 5 && \
+    npm config set fetch-timeout 600000 && \
+    npm config set fetch-retry-maxtimeout 120000
+COPY backend/package*.json ./
+RUN npm ci
+COPY backend ./
+COPY shared ../shared
+RUN npm run build
+RUN npm prune --omit=dev
+# runtime
+FROM node:22-alpine AS runtime
+ENV NODE_ENV=production
+ENV MODE=public
+ENV PORT=3000
+ENV FRONTEND=/app/frontend
+ENV SECRET=wikidocs-insecure-secret-to-be-changed
+ENV DATASETS=/var/lib/wikidocs/datasets
+RUN apk add --no-cache wget
+RUN mkdir -p /var/lib/wikidocs/datasets /app/frontend && \
+    touch /var/lib/wikidocs/datasets/.init && \
+    chown -R node:node /var/lib/wikidocs /app/frontend
+WORKDIR /app/backend
+COPY --from=backend-build /app/backend/node_modules ./node_modules
+COPY --from=backend-build /app/backend/dist ./dist
+COPY --from=frontend-build /app/frontend/dist/wikidocs-frontend/browser/ /app/frontend/
+EXPOSE 3000
+USER node
+CMD ["node", "/app/backend/dist/backend/src/main.js"]

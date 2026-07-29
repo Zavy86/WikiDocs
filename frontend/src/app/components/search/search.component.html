@@ -1,0 +1,30 @@
+<main class="page-search">
+  <section class="content-wrapper">
+    <h1>Search results</h1>
+    @if (!query()) {
+      <p>Enter a search term.</p>
+    } @else {
+      @if (loading()) {
+        <div class="search-loading" role="status" aria-live="polite">
+          <mat-spinner diameter="48" strokeWidth="4" aria-hidden="true"/>
+        </div>
+      } @else if (results().length === 0) {
+        <p>No results.</p>
+      } @else {
+        <div class="search-results">
+          @for (result of results(); track result.metadata.path) {
+            <a class="search-result" [routerLink]="result.metadata.path">
+              <h2>{{ result.metadata.title }}</h2>
+              <p class="search-result-path">{{ result.metadata.path }}</p>
+              <div class="search-highlights">
+                @for (highlight of result.highlights; track $index) {
+                  <markdown class="search-highlight" [data]="highlight"></markdown>
+                }
+              </div>
+            </a>
+          }
+        </div>
+      }
+    }
+  </section>
+</main>

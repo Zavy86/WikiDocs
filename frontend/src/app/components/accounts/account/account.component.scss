@@ -1,0 +1,27 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  > span {
+    flex: 1 1 auto;
+    text-align: left;
+  }
+}
+
+.dialog-form {
+  margin-top: 0.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.delete-button {
+  margin-right: auto;
+
+  &:not([disabled]) {
+    background-color: #d32f2f;
+    color: #ffffff;
+  }
+}

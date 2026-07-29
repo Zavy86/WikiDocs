@@ -1,0 +1,62 @@
+@if (showStartup()) {
+  <app-startup
+    [loading]="startupLoading()"
+    [error]="startupError()"
+    (retryRequested)="retryStartupInformation()"
+  />
+} @else if (showInitialization()) {
+  <app-initialization/>
+} @else {
+  <mat-drawer-container class="app-shell">
+    <mat-drawer
+      class="app-drawer"
+      [mode]="isMobile() ? 'over' : 'side'"
+      [opened]="isMobile() ? isSidebarOpen() : true"
+      [disableClose]="!isMobile()"
+      (openedChange)="isSidebarOpen.set($event)"
+    >
+      <app-sidebar
+        [settings]="settings()"
+        [search]="search()"
+        [pinned]="pinnedDocuments()"
+        [document]="currentDocument()"
+        [path]="currentPath()"
+        [opened]="isSidebarOpen()"
+        [canClose]="isMobile()"
+        (openedChange)="isSidebarOpen.set($event)"
+      />
+    </mat-drawer>
+    <mat-drawer-content class="app-content">
+      <app-header
+        [mode]="mode()"
+        [settings]="settings()"
+        [isMobile]="isMobile()"
+        [document]="currentDocument()"
+        [genericActions]="genericActions()"
+        [viewActions]="viewActions()"
+        [editActions]="editActions()"
+        (actionClicked)="onHeaderActionClick($event)"
+        (navigationToggled)="onNavigationToggle()"
+      />
+      <app-divider/>
+      <main class="route-content">
+        <router-outlet
+          [routerOutletData]="documentPageData()"
+        />
+      </main>
+      <app-divider/>
+      <app-footer
+        [settings]="settings()"
+        [document]="currentDocument()"
+        [isAuthenticated]="isAuthenticated()"
+        [isMobile]="isMobile()"
+      />
+      @if (showTop()) {
+        <app-back-to-top/>
+      }
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <app-privacy
+    [settings]="settings()"
+  />
+}

@@ -1,0 +1,49 @@
+.content-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.table-wrapper {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
+.accounts-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+.accounts-table th,
+.accounts-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #dddddd;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.accounts-table th {
+  font-weight: 600;
+}
+
+.actions-header,
+.row-actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right !important;
+}
+
+.table-action-button {
+  border: 1px solid #dddddd;
+  border-radius: 999px;
+  background-color: #ffffff;
+}
+
+.empty-state {
+  color: #777777;
+  text-align: center !important;
+}
+
+.loading {
+  margin-top: 1rem;
+}

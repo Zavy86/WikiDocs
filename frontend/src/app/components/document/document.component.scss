@@ -1,0 +1,166 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Document-specific styles moved from global styles.scss */
+
+.page-main {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.content-wrapper-edit {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.content-wrapper-edit app-document-editor {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Code blocks */
+code,
+pre {
+  font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+code {
+  background: #f0f0f0;
+  padding: 0 5px;
+}
+
+/* Article / lists */
+article ul,
+article ol {
+  padding-left: 30px !important;
+  margin-top: 10px !important;
+  margin-bottom: 15px !important;
+}
+
+article ul p,
+article ol p {
+  margin: 0 !important;
+}
+
+article ul li {
+  list-style-type: initial !important;
+}
+
+article ul ol {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+article ul ol li {
+  display: list-item !important;
+  list-style-type: decimal !important;
+}
+
+article ol ul,
+article ol ol {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+article ul ul {
+  padding-left: 30px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Mark highlight */
+mark {
+  background-color: #fcf8e3;
+}
+
+/* Polaroid images inside documents */
+img.polaroid {
+  width: 100%;
+  height: auto;
+  padding: 9px;
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+  background-color: #ffffff;
+  display: inline-block;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+td {
+  padding: 9px;
+  border: 1px solid #999999;
+}
+
+th {
+  padding: 9px;
+  border: 1px solid #999999;
+  font-weight: bold;
+  color: var(--theme-color);
+}
+
+/* Debug pre */
+pre.debug {
+  margin: 9px;
+  font-size: 12px;
+}
+
+/* Code UI buttons/pickers used in document editor/viewer */
+.copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 2px 5px;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: var(--theme-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.copy-btn:focus {
+  outline: none;
+}
+
+.code-container {
+  position: relative;
+  background: none;
+}
+
+.table-picker {
+  position: absolute;
+  padding: 3px;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #ddd;
+}
+
+.table-picker .cell {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 3px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.table-picker .cell.active {
+  background-color: var(--theme-color);
+}

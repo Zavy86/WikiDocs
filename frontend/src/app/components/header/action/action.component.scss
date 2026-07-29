@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  margin-left: 6px;
+}
+
+:host(:first-child) {
+  margin-left: 0;
+}
+
+.action-button {
+  background-color: var(--theme-color);
+  color: #ffffff;
+}
+
+.action-button-grey {
+  background-color: #757575;
+  color: #ffffff;
+}
+
+.action-button-red {
+  background-color: #b3261e;
+  color: #ffffff;
+}
+
+.action-button-yellow {
+  background-color: #fdd835;
+  color: #ffffff;
+}
+
+.action-button-blue {
+  background-color: #0288d1;
+  color: #ffffff;
+}
+
+.action-button-purple {
+  background-color: #7e57c2;
+  color: #ffffff;
+}

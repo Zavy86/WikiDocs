@@ -1,0 +1,393 @@
+@use '@angular/material' as mat;
+
+@import 'material-symbols/outlined.css';
+@import 'easymde/dist/easymde.min.css';
+@import 'prismjs/themes/prism.css';
+@import 'katex/dist/katex.min.css';
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$green-palette,
+      tertiary: mat.$green-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+:root {
+  --theme-color: #4caf50;
+  --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+.main-color {
+  background-color: var(--theme-color) !important;
+}
+
+.main-color-text {
+  color: var(--theme-color) !important;
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: var(--app-font-family);
+  -webkit-font-smoothing: antialiased;
+  background: #ffffff;
+}
+
+body * {
+  font-family: inherit;
+}
+
+app-document-editor .EasyMDEContainer {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  margin: 8px 0 0;
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar {
+  flex: 0 0 auto;
+}
+
+app-document-editor .EasyMDEContainer .CodeMirror {
+  flex: 1 1 auto;
+  min-height: 0 !important;
+  height: clamp(260px, calc(100dvh - 340px), 900px) !important;
+  max-height: clamp(260px, calc(100dvh - 340px), 900px) !important;
+  border-radius: 6px;
+  font-family: var(--app-monospace-font-family);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+app-document-editor .EasyMDEContainer .CodeMirror-scroll {
+  min-height: 0 !important;
+  max-height: inherit !important;
+}
+
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-1,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-2,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-3,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-4,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-5,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-6,
+app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-hr {
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar i.fa::before,
+app-document-editor .EasyMDEContainer .editor-toolbar i.fas::before {
+  font-family: 'Material Symbols Outlined' !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'liga';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-bold::before {
+  content: 'format_bold';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-italic::before {
+  content: 'format_italic';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-strikethrough::before {
+  content: 'strikethrough_s';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-header::before {
+  content: 'title';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-quote-left::before {
+  content: 'format_quote';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-code::before {
+  content: 'code';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-table::before {
+  content: 'table_chart';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-list-ul::before {
+  content: 'format_list_bulleted';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-list-ol::before {
+  content: 'format_list_numbered';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-check-square-o::before {
+  content: 'checklist';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-link::before {
+  content: 'link';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-picture-o::before {
+  content: 'image';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-image::before {
+  content: 'image';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-file-image-o::before {
+  content: 'image';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-photo::before {
+  content: 'image';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-cloud-upload::before {
+  content: 'upload';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-eraser::before {
+  content: 'format_clear';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-minus::before {
+  content: 'horizontal_rule';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-undo::before {
+  content: 'undo';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-repeat::before {
+  content: 'redo';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-eye::before {
+  content: 'visibility';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-columns::before {
+  content: 'view_column';
+}
+
+app-document-editor .EasyMDEContainer .editor-toolbar .fa-question-circle::before {
+  content: 'help';
+}
+
+@media only screen and (max-width: 992px) {
+  app-document-editor .EasyMDEContainer .CodeMirror {
+    height: clamp(220px, calc(100dvh - 290px), 720px) !important;
+    max-height: clamp(220px, calc(100dvh - 290px), 720px) !important;
+  }
+}
+
+pre,
+code {
+  font-family: var(--app-monospace-font-family);
+}
+
+.app-shell,
+.app-shell .mat-drawer-container,
+.app-shell .mat-drawer,
+.app-shell .mat-drawer-content {
+  border-radius: 0 !important;
+}
+
+.app-shell .mat-drawer {
+  box-shadow: none !important;
+}
+
+.app-shell .mat-drawer-inner-container {
+  overflow-x: hidden !important;
+}
+
+.layout-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.layout-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.layout-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.layout-grid-5-7 {
+  grid-template-columns: 5fr 7fr;
+}
+
+.layout-grid-4-8 {
+  grid-template-columns: 4fr 8fr;
+}
+
+.layout-grid-mobile-stack {
+  grid-template-columns: 1fr;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+code,
+th,
+td,
+div,
+input {
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+input::placeholder {
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+article ul li,
+article ol li,
+td {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--theme-color);
+  font-weight: 300;
+  line-height: 110%;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin: 1.75rem 0 1rem;
+}
+
+h2 {
+  font-size: 3rem;
+  margin: 1.5rem 0 1rem;
+}
+
+h3 {
+  font-size: 2.5rem;
+  margin: 1.75rem 0 1rem;
+}
+
+h4 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+h5 {
+  font-size: 1.5rem;
+  margin: 0.75rem 0 1rem;
+}
+
+h6 {
+  font-size: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+a,
+a:visited {
+  color: var(--theme-color);
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+main {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-color);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-color) #f1f1f1;
+}
+
+.mat-mdc-snack-bar-container.app-alert-error .mdc-snackbar__surface {
+  background-color: #b3261e;
+  color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.mat-mdc-snack-bar-container.app-alert-warning .mdc-snackbar__surface {
+  background-color: #f9a825;
+  color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.mat-mdc-snack-bar-container.app-alert-success .mdc-snackbar__surface {
+  background-color: #2e7d32;
+  color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.mat-mdc-snack-bar-container.app-alert-info .mdc-snackbar__surface {
+  background-color: #1e5aa5;
+  color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}

@@ -1,0 +1,41 @@
+:host .page-main {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  width: min(980px, 100%);
+}
+
+.initialization-form {
+  margin-top: 1.5rem;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+}

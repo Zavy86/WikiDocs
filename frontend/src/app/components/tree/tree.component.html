@@ -1,0 +1,71 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span>{{ data.title }}</span>
+  <button mat-icon-button type="button" [attr.aria-label]="data.closeAriaLabel" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+<mat-dialog-content>
+  <p class="dialog-description">{{ data.description }}</p>
+  @if (isInitializing()) {
+    <p class="status">Loading paths...</p>
+  } @else {
+    <mat-tree
+        #tree
+        class="tree"
+        [dataSource]="dataSource()"
+        [childrenAccessor]="childrenAccessor"
+    >
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="tree-node">
+        <div class="tree-node-row">
+          <button mat-icon-button type="button" disabled aria-hidden="true"></button>
+          <button
+            type="button"
+            class="node-button"
+            [class.node-button-selected]="isSelected(node)"
+            [disabled]="!isSelectable(node.path)"
+            (click)="selectNode(node)"
+          >
+            <span class="node-title">{{ node.title }}</span>
+            <span class="node-path">{{ node.path }}</span>
+          </button>
+        </div>
+      </mat-tree-node>
+      <mat-tree-node
+        class="tree-node"
+        matTreeNodeToggle
+        matTreeNodePadding
+        *matTreeNodeDef="let node; when: hasChild"
+        [cdkTreeNodeTypeaheadLabel]="node.title"
+        (expandedChange)="onNodeExpanded(node, $event)"
+      >
+        <div class="tree-node-row">
+          <button mat-icon-button type="button" [attr.aria-label]="'Toggle ' + node.path" matTreeNodeToggle>
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <button
+            type="button"
+            class="node-button"
+            [class.node-button-selected]="isSelected(node)"
+            [disabled]="!isSelectable(node.path)"
+            (click)="selectNode(node)"
+          >
+            <span class="node-title">{{ node.title }}</span>
+            <span class="node-path">{{ node.path }}</span>
+          </button>
+        </div>
+        @if (node.loading) {
+          <mat-progress-bar mode="indeterminate" class="tree-progress-bar"/>
+        }
+        @if (node.error) {
+          <div class="status status-error">{{ node.error }}</div>
+        }
+      </mat-tree-node>
+    </mat-tree>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="!selectedPath()" (click)="submitSelection()">{{ data.submitLabel }}</button>
+</mat-dialog-actions>

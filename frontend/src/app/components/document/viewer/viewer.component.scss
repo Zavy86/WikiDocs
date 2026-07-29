@@ -1,0 +1,267 @@
+.tags {
+  margin: 0 0 1rem 0;
+}
+
+.tags-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.document-content {
+  --md-block-gap: 1rem;
+  --md-inline-code-bg: color-mix(in srgb, currentColor 12%, transparent);
+  --md-inline-code-border: color-mix(in srgb, currentColor 18%, transparent);
+  --md-table-border: color-mix(in srgb, currentColor 18%, transparent);
+  --md-table-stripe: color-mix(in srgb, currentColor 4%, transparent);
+  --md-blockquote-accent: #f97316;
+  --md-code-block-bg: color-mix(in srgb, currentColor 6%, transparent);
+
+  line-height: 1.65;
+  color: inherit;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    margin: 1.5rem 0 0.75rem;
+    line-height: 1.3;
+    scroll-margin-top: 1rem;
+  }
+
+  :where(h1) {
+    margin-top: 0.25rem;
+  }
+
+  :where(h2) {
+    margin-top: 1.8rem;
+  }
+
+  :where(p, ul, ol, dl, blockquote, table, pre, hr) {
+    margin: 0 0 var(--md-block-gap);
+  }
+
+  :where(dl) {
+    display: grid;
+    gap: 0.35rem 1rem;
+    margin-left: 0;
+  }
+
+  :where(dt) {
+    font-weight: 600;
+  }
+
+  :where(dd) {
+    margin: 0 0 0.4rem 0;
+  }
+
+  :where(ul, ol) {
+    padding-left: 1.4rem;
+  }
+
+  :where(li + li) {
+    margin-top: 0.35rem;
+  }
+
+  :where(li > ul, li > ol) {
+    margin-top: 0.45rem;
+    margin-bottom: 0.1rem;
+  }
+
+  :where(hr) {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    margin-block: 1.5rem;
+  }
+
+  blockquote {
+    margin-left: 0;
+    padding: 0.2rem 0 0.2rem 1rem;
+    border-left: 4px solid #f97316;
+    border-radius: 0 8px 8px 0;
+    background: transparent;
+  }
+
+  blockquote blockquote {
+    margin-top: 0.75rem;
+    border-left-width: 3px;
+    border-left-color: #fb923c;
+    background: transparent;
+  }
+
+  :where(table) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  :where(th, td) {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--md-table-border);
+    text-align: left;
+    vertical-align: top;
+    min-width: 110px;
+  }
+
+  :where(thead th) {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  :where(tbody tr:nth-child(even)) {
+    background: var(--md-table-stripe);
+  }
+
+  :where(pre) {
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    background: var(--md-code-block-bg);
+    border: 1px solid var(--md-inline-code-border);
+    line-height: 1.55;
+  }
+
+  :where(pre code) {
+    display: block;
+    min-width: max-content;
+  }
+
+  :where(code):not(pre code) {
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    border: 1px solid var(--md-inline-code-border);
+    background: var(--md-inline-code-bg);
+    font-size: 0.9em;
+    white-space: break-spaces;
+  }
+
+  :where(kbd) {
+    padding: 0.1rem 0.35rem;
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    font-size: 0.85em;
+    font-family: var(--app-monospace-font-family);
+  }
+
+  :where(sub, sup) {
+    font-size: 0.78em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  :where(sup) {
+    top: -0.5em;
+  }
+
+  :where(sub) {
+    bottom: -0.2em;
+  }
+
+  :where(a[href]) {
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  :where(a[href]:hover, a[href]:focus-visible) {
+    text-decoration-thickness: 2px;
+  }
+
+  :where(img, video, iframe) {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto var(--md-block-gap);
+    border-radius: 8px;
+  }
+
+  :where(iframe) {
+    width: min(100%, 960px);
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+
+  :where(mark) {
+    padding: 0.05rem 0.2rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, #facc15 45%, transparent);
+    color: inherit;
+  }
+
+  :where(.toc, .table-of-contents, nav[aria-label='Table of contents']) {
+    margin: 0 0 1.25rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, currentColor 4%, transparent);
+  }
+
+  :where(.toc ul, .table-of-contents ul, nav[aria-label='Table of contents'] ul) {
+    margin: 0.4rem 0;
+    padding-left: 1.1rem;
+  }
+
+  :where(.toc li, .table-of-contents li, nav[aria-label='Table of contents'] li) {
+    margin: 0.2rem 0;
+  }
+
+  :where(.katex-display) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.35rem 0;
+  }
+
+  :where(.katex) {
+    max-width: 100%;
+  }
+}
+
+:host ::ng-deep .document-content blockquote {
+  margin-left: 0;
+  padding: 0.2rem 0 0.2rem 1rem;
+  border-left: 4px solid #f97316 !important;
+  border-radius: 0 8px 8px 0;
+  background: transparent !important;
+}
+
+:host ::ng-deep .document-content blockquote blockquote {
+  margin-top: 0.75rem;
+  border-left-width: 3px;
+  border-left-color: #fb923c !important;
+  background: transparent !important;
+}
+
+@media print {
+  .document-content :where(pre, code, blockquote, table) {
+    color: #000000 !important;
+    background: transparent !important;
+    border-color: #000000 !important;
+  }
+
+  .document-content :where(pre, blockquote, table, tr, img, figure, .mermaid, pre.mermaid) {
+    break-inside: avoid-page;
+  }
+
+  .document-content :where(.mermaid, pre.mermaid) {
+    overflow: visible !important;
+  }
+
+  .document-content :where(.mermaid, pre.mermaid) svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+}

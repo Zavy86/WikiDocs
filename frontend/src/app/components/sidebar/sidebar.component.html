@@ -1,0 +1,56 @@
+<aside class="sidebar">
+  <div class="search-wrapper">
+    <form class="search-form" (submit)="goToSearch(searchInput.value); $event.preventDefault()">
+      <input
+          #searchInput
+          id="search"
+          class="search-input"
+          name="search"
+          autocomplete="off"
+          placeholder="Search in wiki.."
+          [value]="search()"
+      />
+      <button class="search-button" mat-icon-button type="submit" aria-label="Search wiki">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+  </div>
+  <nav class="sidebar-nav" aria-label="Wiki navigation">
+    <ul class="nav-list">
+      @if (pinned()?.length) {
+        <li class="nav-section-label">Pinned</li>
+      }
+      @for (entry of pinned(); track entry.path) {
+        <li class="nav-item">
+          <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+        </li>
+      }
+      @if (pinned()?.length && document()?.exists === true) {
+        <li class="nav-divider"></li>
+      }
+      @if (document()?.exists === true) {
+        <li class="nav-section-label">Document</li>
+        <li class="nav-item active">
+          <strong>
+            <a [routerLink]="document()?.metadata?.path" (click)="onNavLinkClick()">{{ document()?.metadata?.title }}</a>
+          </strong>
+        </li>
+        @if (document()?.children?.length) {
+          @for (child of document()?.children ?? []; track child.path) {
+            <li class="nav-item sub-index" [class.active]="isActive(child)">
+              <a [routerLink]="child.path"
+                 (click)="onNavLinkClick()">{{ child.title }}</a>
+            </li>
+          }
+        }
+      }
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <div id="sidebar-footer-content">
+      <span class="owner">{{ owner() }}</span>
+      <br/>
+      <span class="notice">{{ notice() }}</span>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,62 @@
+<main class="page-main">
+  <section class="content-wrapper">
+    <h1>Trash</h1>
+    @if (loading()) {
+      <p class="loading" role="status" aria-live="polite">Loading trash...</p>
+    } @else if (entries().length === 0) {
+      <p class="empty-state">Trash is empty</p>
+    } @else {
+      <div class="trash-cards">
+        @for (entry of entries(); track entry.metadata.path) {
+          <article class="trash-card">
+            <div class="card-heading">
+              <h2>{{ entry.metadata.title }}</h2>
+              <div class="row-actions">
+                <button
+                  class="card-action-button recover-action-button"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Recover"
+                  [attr.aria-label]="'Recover ' + entry.fileName"
+                  [disabled]="processing()"
+                  (click)="recover(entry)"
+                >
+                  <mat-icon>restore</mat-icon>
+                </button>
+                <button
+                  class="card-action-button delete-action-button"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Permanently delete"
+                  [attr.aria-label]="'Permanently delete ' + entry.fileName"
+                  [disabled]="processing()"
+                  (click)="confirmRemoval(entry)"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </div>
+            </div>
+            <dl class="card-details">
+              <div>
+                <dt>Author</dt>
+                <dd>{{ entry.metadata.author }}</dd>
+              </div>
+              <div>
+                <dt>Updated</dt>
+                <dd>{{ entry.metadata.timestamp | date:'yyyy-MM-dd HH:mm':timezone() }}</dd>
+              </div>
+              <div>
+                <dt>Path</dt>
+                <dd>{{ entry.metadata.path }}</dd>
+              </div>
+              <div>
+                <dt>Deleted</dt>
+                <dd>{{ entry.deletedAt ? (entry.deletedAt | date:'yyyy-MM-dd HH:mm':timezone()) : 'Unknown' }}</dd>
+              </div>
+            </dl>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</main>

@@ -1,0 +1,9 @@
+.git/
+.idea/
+docker/
+!docker/dockerfile
+backend/node_modules
+backend/dist
+frontend/node_modules
+frontend/.angular
+frontend/dist

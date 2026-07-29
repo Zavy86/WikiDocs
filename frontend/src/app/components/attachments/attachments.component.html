@@ -1,0 +1,63 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span>Attachments</span>
+  <button mat-icon-button type="button" class="dialog-close-button" [disabled]="isUploading() || isRefreshing()" (click)="close()" aria-label="Close attachments dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+<mat-dialog-content class="dialog-content">
+  <div class="upload-row">
+    <label class="file-picker">
+      <input type="file" [disabled]="isUploading() || isRefreshing()" (change)="onFileSelected($event)"/>
+      <span>{{ selectedFileName() || 'Choose file' }}</span>
+    </label>
+    <button mat-flat-button color="primary" type="button" [disabled]="! selectedFileName() || isUploading() || isRefreshing()" (click)="uploadSelectedFile()">
+      Upload
+    </button>
+  </div>
+  @if (isUploading() || isRefreshing()) {
+    <mat-progress-bar mode="indeterminate"/>
+  }
+  <div class="attachments-section">
+    @if (attachments().length === 0) {
+      <p class="empty-message">No attachments available for this document.</p>
+    } @else {
+      <mat-list>
+        @for (attachment of attachments(); track attachment.file) {
+          <mat-list-item class="attachment-list-item">
+            <div class="attachment-row">
+              <div class="attachment-left">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [disabled]="isUploading() || isRefreshing()"
+                  (click)="insertAttachment(attachment)"
+                  aria-label="Insert attachment"
+                >
+                  <mat-icon>{{ isImageAttachment(attachment.file) ? 'add_photo_alternate' : 'add_link' }}</mat-icon>
+                </button>
+                <div class="attachment-main">
+                  @if (isImageAttachment(attachment.file)) {
+                    <img [src]="getPreviewUrl(attachment)" [alt]="attachment.file" class="attachment-preview"/>
+                  }
+                  <span class="attachment-file">{{ attachment.file }}</span>
+                </div>
+              </div>
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                class="attachment-delete-button"
+                [disabled]="isUploading() || isRefreshing() || isDeletingAttachment(attachment.file)"
+                (click)="requestDeleteAttachment(attachment)"
+                aria-label="Delete attachment"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+    }
+  </div>
+</mat-dialog-content>

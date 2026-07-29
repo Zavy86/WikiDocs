@@ -1,0 +1,66 @@
+.page-search {
+  padding: 0 16px 18px;
+}
+
+.content-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.search-loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.search-results {
+  display: grid;
+  gap: 16px;
+}
+
+.search-result {
+  display: block;
+  padding: 18px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.search-result:hover,
+.search-result:focus-visible {
+  border-color: var(--theme-color);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  text-decoration: none;
+}
+
+.search-result h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.search-result-path {
+  margin: 6px 0 12px;
+  color: #777777;
+  font-family: var(--app-monospace-font-family);
+  font-size: 0.85rem;
+}
+
+.search-highlights {
+  display: grid;
+  gap: 8px;
+}
+
+.search-highlight {
+  display: block;
+}
+
+.search-highlight ::ng-deep p {
+  margin: 0;
+}
+
+.search-highlight ::ng-deep mark {
+  padding: 0 2px;
+  background-color: #fff3a0;
+}

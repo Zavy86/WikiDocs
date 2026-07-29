@@ -1,0 +1,39 @@
+.startup-loading {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.startup-error-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.startup-error-card {
+  width: min(520px, 100%);
+  border: 1px solid #dddddd;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: #ffffff;
+
+  h2 {
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    margin: 0 0 1.25rem;
+    color: #d32f2f;
+    word-break: break-word;
+  }
+
+  .retry-button {
+    --mdc-filled-button-container-color: var(--theme-color);
+    --mdc-filled-button-label-text-color: #ffffff;
+    --mdc-filled-button-container-shape: 9999px;
+  }
+}

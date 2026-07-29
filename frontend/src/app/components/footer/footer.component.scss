@@ -1,0 +1,51 @@
+footer {
+  color: #666666;
+  font-size: 13px;
+}
+
+footer small {
+  font-size: 12px;
+}
+
+.footer-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+footer a {
+  color: #666666;
+}
+
+footer a:hover,
+footer a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+.footer-desktop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-powered.full-width {
+  grid-column: 1 / -1;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.left-text {
+  text-align: left;
+}
+
+.right-text {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
+}

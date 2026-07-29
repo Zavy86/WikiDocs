@@ -1,0 +1,80 @@
+<main class="page-main">
+  <section class="content-wrapper">
+    <h1>Wiki|Docs</h1>
+    <p>Initialize datasets for this new instance</p>
+    <form class="initialization-form" [formGroup]="form" (ngSubmit)="submitInitialization()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput id="title" type="text" formControlName="title" maxlength="32"/>
+        @if (form.controls.title.touched && form.controls.title.hasError('required')) {
+          <mat-error>Title is required</mat-error>
+        }
+        @if (form.controls.title.touched && form.controls.title.hasError('maxlength')) {
+          <mat-error>Title must be at most 32 characters</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Account</mat-label>
+        <input matInput id="account" type="email" formControlName="account" maxlength="256" autocomplete="username"/>
+        @if (form.controls.account.touched && form.controls.account.hasError('required')) {
+          <mat-error>Account is required</mat-error>
+        }
+        @if (form.controls.account.touched && form.controls.account.hasError('email')) {
+          <mat-error>Account must be a valid email</mat-error>
+        }
+        @if (form.controls.account.touched && form.controls.account.hasError('maxlength')) {
+          <mat-error>Account must be at most 256 characters</mat-error>
+        }
+      </mat-form-field>
+      <div class="layout-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Firstname</mat-label>
+          <input matInput id="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="given-name"/>
+          @if (form.controls.firstname.touched && form.controls.firstname.hasError('required')) {
+            <mat-error>Firstname is required</mat-error>
+          }
+          @if (form.controls.firstname.touched && form.controls.firstname.hasError('maxlength')) {
+            <mat-error>Firstname must be at most 32 characters</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lastname</mat-label>
+          <input matInput id="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="family-name"/>
+          @if (form.controls.lastname.touched && form.controls.lastname.hasError('required')) {
+            <mat-error>Lastname is required</mat-error>
+          }
+          @if (form.controls.lastname.touched && form.controls.lastname.hasError('maxlength')) {
+            <mat-error>Lastname must be at most 32 characters</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      @if (!isLocalMode()) {
+        <div class="layout-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput id="password" type="password" formControlName="password" maxlength="256" autocomplete="new-password"/>
+            @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+              <mat-error>Password is required</mat-error>
+            }
+            @if (form.controls.password.touched && form.controls.password.hasError('maxlength')) {
+              <mat-error>Password must be at most 256 characters</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirm password</mat-label>
+            <input matInput id="confirm" type="password" formControlName="confirm" maxlength="256" autocomplete="new-password"/>
+            @if (form.controls.confirm.touched && form.controls.confirm.hasError('required')) {
+              <mat-error>Password confirmation is required</mat-error>
+            }
+            @if (form.controls.confirm.touched && form.controls.confirm.hasError('maxlength')) {
+              <mat-error>Password confirmation must be at most 256 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      }
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Initializing...' : 'Initialize' }}
+      </button>
+    </form>
+  </section>
+</main>

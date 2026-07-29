@@ -1,0 +1,56 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span>{{ title() }}</span>
+  <button mat-icon-button type="button" aria-label="Close account dialog" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+<mat-dialog-content>
+  <form class="dialog-form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Account</mat-label>
+      <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="isEditMode" autocomplete="off"/>
+      @if (form.controls.account.touched && form.controls.account.hasError('required')) {
+        <mat-error>Account is required</mat-error>
+      }
+      @if (form.controls.account.touched && form.controls.account.hasError('email')) {
+        <mat-error>Account must be a valid email</mat-error>
+      }
+    </mat-form-field>
+    <div class="layout-grid layout-grid-2">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Firstname</mat-label>
+        <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="off"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Lastname</mat-label>
+        <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="off"/>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Role</mat-label>
+      <mat-select id="role" name="role" formControlName="role">
+        <mat-option value="administrator">administrator</mat-option>
+        <mat-option value="author">author</mat-option>
+        <mat-option value="user">user</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="layout-grid layout-grid-2">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput id="password" name="password" type="password" formControlName="password" maxlength="256"
+               [placeholder]="isEditMode ? 'Leave blank to keep current password.' : ''" autocomplete="new-password"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Check password</mat-label>
+        <input matInput id="password-check" name="password-check" type="password" formControlName="confirm" maxlength="256" autocomplete="new-password"/>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (isEditMode) {
+    <button mat-flat-button color="warn" class="delete-button" type="button" (click)="remove()" [disabled]="isSelfAccount">Delete</button>
+  }
+  <button mat-stroked-button type="button" (click)="reset()">Reset</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()">{{ submitLabel() }}</button>
+</mat-dialog-actions>

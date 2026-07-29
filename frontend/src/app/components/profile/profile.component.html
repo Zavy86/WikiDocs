@@ -1,0 +1,75 @@
+<main class="page-main">
+  <section class="content-wrapper">
+    <h1>Profile</h1>
+    <p>Update your personal account information</p>
+    <form class="profile-form" [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Account</mat-label>
+        <input
+          matInput
+          id="account"
+          name="account"
+          type="email"
+          formControlName="account"
+          [readonly]="true"
+          autocomplete="off"
+        />
+      </mat-form-field>
+      <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Firstname</mat-label>
+          <input
+            matInput
+            id="firstname"
+            name="firstname"
+            type="text"
+            formControlName="firstname"
+            maxlength="32"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lastname</mat-label>
+          <input
+            matInput
+            id="lastname"
+            name="lastname"
+            type="text"
+            formControlName="lastname"
+            maxlength="32"
+          />
+        </mat-form-field>
+      </div>
+      @if (!isLocalUser()) {
+        <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>New password</mat-label>
+            <input
+              matInput
+              id="password-new"
+              name="password-new"
+              type="password"
+              formControlName="password"
+              maxlength="256"
+              placeholder="Leave fields blank to keep your current password."
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Check password</mat-label>
+            <input
+              matInput
+              id="password-check"
+              name="password-check"
+              type="password"
+              formControlName="confirm"
+              maxlength="256"
+            />
+          </mat-form-field>
+        </div>
+      }
+      <div class="actions">
+        <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
+      </div>
+    </form>
+  </section>
+</main>

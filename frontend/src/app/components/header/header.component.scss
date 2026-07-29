@@ -1,0 +1,91 @@
+.nowrap {
+  white-space: nowrap;
+}
+
+.header-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.breadcrumb-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  line-height: 1;
+}
+
+.breadcrumb-content a,
+.breadcrumb-content a:visited,
+.breadcrumb-content a:hover,
+.breadcrumb-content a:active {
+  text-decoration: none;
+}
+
+.toolbar-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  width: max-content;
+  flex: 0 0 auto;
+}
+
+.toolbar-actions-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.toolbar-actions-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+  z-index: 10;
+}
+
+.toolbar-actions-menu app-action {
+  margin: 0 0 6px;
+}
+
+.toolbar-actions-menu app-action:last-child {
+  margin-bottom: 0;
+}
+
+.toolbar-actions .nowrap {
+  display: flex;
+  align-items: center;
+}
+
+.icon-circle-button {
+  background-color: var(--theme-color);
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 992px) {
+
+  .header-inner {
+    padding: 0 8px;
+  }
+
+}

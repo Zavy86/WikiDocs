@@ -1,0 +1,14 @@
+<h2 mat-dialog-title class="dialog-title">{{ data.title }}</h2>
+<mat-dialog-content>
+  <p class="dialog-message">{{ data.message }}</p>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ data.label }}</mat-label>
+      <input matInput id="value" name="value" type="text" formControlName="value" autocomplete="off"/>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="cancel()">{{ data.cancelLabel }}</button>
+  <button mat-flat-button color="primary" type="button" (click)="submit()">{{ data.confirmLabel }}</button>
+</mat-dialog-actions>

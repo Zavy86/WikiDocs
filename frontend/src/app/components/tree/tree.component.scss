@@ -1,0 +1,88 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+
+  > span {
+    flex: 1 1 auto;
+    text-align: left;
+  }
+}
+
+.dialog-description {
+  margin: 0 0 0.75rem;
+}
+
+.tree {
+  max-height: 52vh;
+  overflow: auto;
+  border: 1px solid #d0d7de;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.tree-node {
+  display: block;
+  min-height: 44px;
+}
+
+.tree-node-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.node-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 40px;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: rgba(2, 136, 209, 0.12);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.node-button-selected {
+  background: rgba(2, 136, 209, 0.2);
+}
+
+.node-title {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.node-path {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  line-height: 1.1;
+}
+
+.status {
+  margin: 0.25rem 0.5rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.status-error {
+  color: #b3261e;
+}
+
+.tree-progress-bar {
+  width: calc(100% - 2.75rem);
+  margin: 0.15rem 0 0.35rem 2.75rem;
+}

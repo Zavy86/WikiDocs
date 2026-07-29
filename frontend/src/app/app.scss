@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  height: auto;
+  overflow: visible;
+}
+
+.app-shell {
+  min-height: 100vh;
+  height: auto;
+  background-color: #ffffff;
+}
+
+.app-drawer {
+  width: 300px;
+  border-right: 1px solid #dddddd;
+  background-color: #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.app-content {
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.route-content {
+  display: block;
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .route-content .page-main {
+  padding: 0 16px 18px;
+}
+
+@media only screen and (max-width: 992px) {
+  :host {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .app-shell {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .app-content {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .app-drawer {
+    border-right: 0;
+  }
+}
+
+@media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  :host,
+  .app-shell,
+  .app-content,
+  .route-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .app-shell > :not(.app-content),
+  .app-content > :not(.route-content),
+  .route-content > :not(app-document),
+  app-document .content-wrapper > :not(app-document-viewer),
+  app-privacy,
+  .copy-btn {
+    display: none !important;
+  }
+
+  app-document .content-wrapper {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+}
