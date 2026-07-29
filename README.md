@@ -1,3 +1,7 @@
+> Checkout the new **Version 2** beta!
+>
+> https://github.com/Zavy86/WikiDocs/tree/v2
+
 # Wiki|Docs
 
 Just a databaseless markdown flat-file wiki engine.
