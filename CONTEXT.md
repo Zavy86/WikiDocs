@@ -24,6 +24,7 @@ The codebase is organized into a small set of top-level contexts:
 
 - dataset — the on-disk collection of wiki pages the engine serves (directory pointed at by `DATASETS`).
 - document / page — a single wiki page within a dataset; stored as a file containing frontmatter + body.
+- version snapshot — a pre-save copy of an existing document's `content.md`, stored internally under its `_versions` directory.
 - trash entry — a deleted document node retained in the dataset's trash.
 - contract — a type definition in `shared/contracts` used across layers.
 - artifact — build outputs (frontend bundles, desktop packages) — not part of the dataset.

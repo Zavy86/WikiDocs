@@ -3,7 +3,7 @@ import { basename, join } from "node:path";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createInterface, Interface } from "node:readline";
 import { constants, createReadStream, Dirent, ReadStream, Stats } from "node:fs";
-import { access, mkdir, readdir, readFile, rename, rm, stat, unlink, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readdir, readFile, rename, rm, stat, unlink, writeFile } from "node:fs/promises";
 import {
   BadRequestException,
   ConflictException,
@@ -263,6 +263,15 @@ export class DocumentService {
       await access(directoryPath, constants.W_OK);
       const documentStats:Stats | null = await stat(documentPath).catch(():null => null);
       if ( documentStats?.isFile() ) { await access(documentPath, constants.W_OK); }
+      if ( content.versioning === true && documentStats?.isFile() ) {
+        const versionsDirectoryPath:string = join(directoryPath, EnvironmentService.VERSIONS_DIRECTORY);
+        const versionPath:string = join(versionsDirectoryPath, `${ Date.now() }.md`);
+        await mkdir(versionsDirectoryPath, { recursive: true });
+        await access(versionsDirectoryPath, constants.W_OK);
+        await access(documentPath, constants.R_OK);
+        await copyFile(documentPath, versionPath);
+        this.logger.debug(`Document <${ documentPath }> versioned to <${ versionPath }>`);
+      }
       const { data, content: body } = matter(content.raw.replace(/\r\n?/g, '\n'));
       if ( ! data.title || typeof data.title !== 'string' || ! data.title.trim() ) {
         const heading:RegExpMatchArray | null = body.match(/^#\s+(.+)$/m);

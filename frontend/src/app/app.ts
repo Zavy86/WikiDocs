@@ -104,6 +104,8 @@ export class App implements AfterViewInit {
 
   protected readonly editorInitialRaw:WritableSignal<string> = signal('');
 
+  protected readonly versioning:WritableSignal<boolean> = signal(false);
+
   protected readonly pendingEditorInsertRequest:WritableSignal<EditorInsertRequest | null> = signal<EditorInsertRequest | null>(null);
 
   protected readonly isSavingDocument:WritableSignal<boolean> = signal(false);
@@ -214,14 +216,21 @@ export class App implements AfterViewInit {
 
   protected readonly editActions:Signal<ReadonlyArray<ActionItem>> = computed<ReadonlyArray<ActionItem>>(():ActionItem[] => [
     this.createAction('cancel', 'cancel', 'Cancel editing', this.isSavingDocument(), 'grey'),
-    ...( this.canMoveDocument()
-      ? [ this.createAction('move', 'drive_file_move', 'Move document', false, 'blue') ]
+    this.createAction(
+      'versioning',
+      this.versioning() ? 'check_box' : 'check_box_outline_blank',
+      this.versioning() ? 'Create version before saving' : 'Do not create version before saving',
+      this.isSavingDocument() || this.currentDocument()?.exists !== true,
+      'yellow'
+    ),
+    ...( this.hasWriteAuthorization()
+      ? [ this.createAction('move', 'drive_file_move', 'Move document', ! this.canMoveDocument(), 'blue') ]
       : [] ),
-    ...( this.canOpenAttachments()
-      ? [ this.createAction('attachments', 'attach_file', 'Attachments', false, 'purple') ]
+    ...( this.hasWriteAuthorization()
+      ? [ this.createAction('attachments', 'attach_file', 'Attachments', ! this.canOpenAttachments(), 'purple') ]
       : [] ),
-    ...( this.canDeleteDocument()
-      ? [ this.createAction('delete', 'delete', 'Delete document', false, 'red') ]
+    ...( this.hasDeleteAuthorization()
+      ? [ this.createAction('delete', 'delete', 'Delete document', ! this.canDeleteDocument(), 'red') ]
       : [] ),
     this.createAction('save', 'save', 'Save', ! this.canSaveDocument()),
   ]);
@@ -361,6 +370,7 @@ export class App implements AfterViewInit {
     const raw:string = ( document.content?.raw ?? '' );
     this.editorInitialRaw.set(raw);
     this.setEditorRaw(raw);
+    this.versioning.set(document.exists);
     this.mode.set('edit');
   }
 
@@ -425,7 +435,10 @@ export class App implements AfterViewInit {
   private saveDocument():void {
     if ( ! this.canSaveDocument() ) { return; }
     this.isSavingDocument.set(true);
-    this.httpService.POST<void>(`/document?path=${ encodeURIComponent(this.currentPath()) }`, { raw: this.editorRaw() }).subscribe({
+    this.httpService.POST<void>(`/document?path=${ encodeURIComponent(this.currentPath()) }`, {
+      raw: this.editorRaw(),
+      versioning: this.versioning()
+    }).subscribe({
       next: ():void => {
         this.mode.set('view');
         this.isSavingDocument.set(false);
@@ -705,6 +718,7 @@ export class App implements AfterViewInit {
     if ( action.key === 'new' ) { return this.startAddingPage(); }
     if ( action.key === 'edit' ) { return this.startEditing(); }
     if ( action.key === 'cancel' ) { return this.cancelEditing(); }
+    if ( action.key === 'versioning' ) { return this.versioning.update((enabled:boolean):boolean => ! enabled); }
     if ( action.key === 'attachments' ) { return this.openAttachmentsDialog(); }
     if ( action.key === 'move' ) { return this.openMoveDialog(); }
     if ( action.key === 'delete' ) { return this.deleteDocument(); }
