@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span>Document versions</span>
+  <button mat-icon-button type="button" class="dialog-close-button" [disabled]="isLoading() || deletingTimestamp() !== null" (click)="close()" aria-label="Close versions dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+<mat-dialog-content class="dialog-content">
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"/>
+  }
+  @if (versions().length === 0) {
+    <p class="empty-message">No versions available for this document.</p>
+  } @else {
+    <mat-list>
+      @for (timestamp of versions(); track timestamp) {
+        <mat-list-item class="version-list-item">
+          <div class="version-row">
+            <button mat-button color="primary" type="button" [disabled]="isLoading() || deletingTimestamp() !== null" (click)="loadVersion(timestamp)">
+              {{ formatTimestamp(timestamp) }}
+            </button>
+            @if (data.canDelete) {
+              <button mat-icon-button color="warn" type="button" [disabled]="isLoading() || deletingTimestamp() !== null" (click)="requestDeleteVersion(timestamp)" aria-label="Delete version">
+                <mat-icon>delete</mat-icon>
+              </button>
+            }
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+</mat-dialog-content>

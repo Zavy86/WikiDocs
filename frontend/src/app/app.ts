@@ -33,7 +33,10 @@ import {
   StartupComponent,
   TopComponent,
   TreeComponent,
-  TreeData
+  TreeData,
+  VersionsComponent,
+  VersionsDialogData,
+  VersionsDialogResult
 } from 'src/app/components';
 
 @Component({
@@ -146,6 +149,16 @@ export class App implements AfterViewInit {
       && ( this.currentDocument()?.exists ?? false );
   });
 
+  protected readonly canOpenVersions:Signal<boolean> = computed(():boolean => {
+    const document:DocumentType | null = this.currentDocument();
+    return this.mode() === 'edit'
+      && ! this.isSavingDocument()
+      && ! this.isEditorDirty()
+      && this.hasWriteAuthorization()
+      && document?.exists === true
+      && document.versions.length > 0;
+  });
+
   protected readonly isEditorDirty:Signal<boolean> = computed(():boolean => this.editorRaw() !== this.editorInitialRaw());
 
   protected readonly canSaveDocument:Signal<boolean> = computed(():boolean => {
@@ -216,18 +229,19 @@ export class App implements AfterViewInit {
 
   protected readonly editActions:Signal<ReadonlyArray<ActionItem>> = computed<ReadonlyArray<ActionItem>>(():ActionItem[] => [
     this.createAction('cancel', 'cancel', 'Cancel editing', this.isSavingDocument(), 'grey'),
+    this.createAction('versions', 'history', 'Document versions', ! this.canOpenVersions(), 'yellow'),
     this.createAction(
       'versioning',
       this.versioning() ? 'check_box' : 'check_box_outline_blank',
       this.versioning() ? 'Create version before saving' : 'Do not create version before saving',
       this.isSavingDocument() || this.currentDocument()?.exists !== true,
-      'yellow'
+      'orange'
     ),
     ...( this.hasWriteAuthorization()
-      ? [ this.createAction('move', 'drive_file_move', 'Move document', ! this.canMoveDocument(), 'blue') ]
+      ? [ this.createAction('attachments', 'attach_file', 'Attachments', ! this.canOpenAttachments(), 'blue') ]
       : [] ),
     ...( this.hasWriteAuthorization()
-      ? [ this.createAction('attachments', 'attach_file', 'Attachments', ! this.canOpenAttachments(), 'purple') ]
+      ? [ this.createAction('move', 'drive_file_move', 'Move document', ! this.canMoveDocument(), 'purple') ]
       : [] ),
     ...( this.hasDeleteAuthorization()
       ? [ this.createAction('delete', 'delete', 'Delete document', ! this.canDeleteDocument(), 'red') ]
@@ -284,6 +298,27 @@ export class App implements AfterViewInit {
         if ( ! result ) { return; }
         this.syncCurrentDocumentAttachments(result.attachments);
         if ( result.markdown ) { this.queueEditorInsertRequest(result.markdown); }
+      });
+  }
+
+  private openVersionsDialog():void {
+    if ( ! this.canOpenVersions() ) { return; }
+    const document:DocumentType | null = this.currentDocument();
+    if ( ! document ) { return; }
+    const data:VersionsDialogData = {
+      path: this.currentPath(),
+      versions: [ ...document.versions ],
+      canDelete: this.hasDeleteAuthorization(),
+    };
+    this.dialog
+      .open(VersionsComponent, { width: '90vw', maxWidth: '640px', disableClose: true, data })
+      .afterClosed()
+      .subscribe((result:VersionsDialogResult | undefined):void => {
+        if ( ! result ) { return; }
+        this.currentDocument.update((current:DocumentType | null):DocumentType | null => {
+          return ( current ? { ...current, versions: [ ...result.versions ] } : null );
+        });
+        if ( result.raw !== null ) { this.setEditorRaw(result.raw); }
       });
   }
 
@@ -719,6 +754,7 @@ export class App implements AfterViewInit {
     if ( action.key === 'edit' ) { return this.startEditing(); }
     if ( action.key === 'cancel' ) { return this.cancelEditing(); }
     if ( action.key === 'versioning' ) { return this.versioning.update((enabled:boolean):boolean => ! enabled); }
+    if ( action.key === 'versions' ) { return this.openVersionsDialog(); }
     if ( action.key === 'attachments' ) { return this.openAttachmentsDialog(); }
     if ( action.key === 'move' ) { return this.openMoveDialog(); }
     if ( action.key === 'delete' ) { return this.deleteDocument(); }
