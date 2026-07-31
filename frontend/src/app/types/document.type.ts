@@ -9,6 +9,7 @@ export type DocumentType = {
   metadata:MetadataType;
   children:MetadataType[];
   attachments:AttachmentType[];
+  versions:string[];
   content:ContentType;
 };
 

@@ -8,7 +8,7 @@ export type ActionItem = {
   readonly icon:string;
   readonly tooltip:string;
   readonly disabled?:boolean;
-  readonly variant?:'default' | 'grey' | 'red' | 'yellow' | 'blue' | 'purple';
+  readonly variant?:'default' | 'grey' | 'red' | 'yellow' | 'orange' | 'blue' | 'purple';
 };
 
 @Component({

@@ -3,7 +3,7 @@ import { basename, join } from "node:path";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createInterface, Interface } from "node:readline";
 import { constants, createReadStream, Dirent, ReadStream, Stats } from "node:fs";
-import { access, mkdir, readdir, readFile, rename, rm, stat, unlink, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readdir, readFile, rename, rm, stat, unlink, writeFile } from "node:fs/promises";
 import {
   BadRequestException,
   ConflictException,
@@ -232,6 +232,46 @@ export class DocumentService {
     }
   }
 
+  private getVersionPath(path:string, timestamp:string):string {
+    if ( ! /^(?:0|[1-9]\d*)$/.test(timestamp) ) {
+      throw new NotFoundException(`Version <${ timestamp }> not found`);
+    }
+    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
+    return join(
+      this.environmentService.getDocumentDirectoryPath(sanitizedPath),
+      EnvironmentService.VERSIONS_DIRECTORY,
+      `${ timestamp }.md`
+    );
+  }
+
+  private async retrieveVersions(path:string):Promise<string[]> {
+    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
+    const versionsDirectoryPath:string = join(
+      this.environmentService.getDocumentDirectoryPath(sanitizedPath),
+      EnvironmentService.VERSIONS_DIRECTORY
+    );
+    let entries:Dirent[];
+    try {
+      entries = await readdir(versionsDirectoryPath, { withFileTypes: true });
+    } catch ( error ) {
+      const code:string | undefined = ( error as NodeJS.ErrnoException )?.code;
+      if ( code === 'ENOENT' ) { return []; }
+      this.handleFsError(error);
+    }
+    const timestamps:string[] = [];
+    for ( const entry of entries ) {
+      const match:RegExpMatchArray | null = ( entry.isFile() ? entry.name.match(/^(0|[1-9]\d*)\.md$/) : null );
+      if ( ! match ) {
+        console.warn(`Ignoring invalid document version entry <${ entry.name }> for <${ sanitizedPath }>`);
+        continue;
+      }
+      timestamps.push(match[ 1 ]);
+    }
+    return timestamps.sort((first:string, second:string):number => (
+      second.length - first.length || second.localeCompare(first)
+    ));
+  }
+
   public async tree(path:string):Promise<TreeSchema> {
     const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
     if ( ! await this.checkIfDirectoryExists(path) ) {
@@ -249,9 +289,10 @@ export class DocumentService {
     const metadata:MetadataSchema = await this.buildDocumentMetadata(path);
     const children:MetadataSchema[] = ( exists ? await this.retriveChildren(path) : [] );
     const attachments:AttachmentSchema[] = ( exists ? await this.retrieveAttachments(path) : [] );
+    const versions:string[] = ( exists ? await this.retrieveVersions(path) : [] );
     const content:ContentSchema = ( exists ? await this.loadDocumentFullContent(path) : { raw: '' } );
     this.logger.debug(`Document <${ path }> ${ exists ? 'retrieved' : 'not exists' }`);
-    return { exists, pinned, metadata, children, attachments, content };
+    return { exists, pinned, metadata, children, attachments, versions, content };
   }
 
   public async document_store(path:string, token:TokenSchema, content:ContentSchema):Promise<void> {
@@ -263,6 +304,15 @@ export class DocumentService {
       await access(directoryPath, constants.W_OK);
       const documentStats:Stats | null = await stat(documentPath).catch(():null => null);
       if ( documentStats?.isFile() ) { await access(documentPath, constants.W_OK); }
+      if ( content.versioning === true && documentStats?.isFile() ) {
+        const versionsDirectoryPath:string = join(directoryPath, EnvironmentService.VERSIONS_DIRECTORY);
+        const versionPath:string = join(versionsDirectoryPath, `${ Date.now() }.md`);
+        await mkdir(versionsDirectoryPath, { recursive: true });
+        await access(versionsDirectoryPath, constants.W_OK);
+        await access(documentPath, constants.R_OK);
+        await copyFile(documentPath, versionPath);
+        this.logger.debug(`Document <${ documentPath }> versioned to <${ versionPath }>`);
+      }
       const { data, content: body } = matter(content.raw.replace(/\r\n?/g, '\n'));
       if ( ! data.title || typeof data.title !== 'string' || ! data.title.trim() ) {
         const heading:RegExpMatchArray | null = body.match(/^#\s+(.+)$/m);
@@ -309,12 +359,6 @@ export class DocumentService {
     }
   }
 
-  public async document_remove(path:string, allowRoot:boolean = false, recursive:boolean = true):Promise<void> {
-    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
-    if ( ! sanitizedPath && ! allowRoot ) { throw new BadRequestException(`Root document cannot be deleted`); }
-    await this.moveDocumentToTrash(sanitizedPath, recursive);
-  }
-
   private async moveDocumentToTrash(sanitizedPath:string, recursive:boolean):Promise<void> {
     const trashRoot:string = this.environmentService.getTrashRoot();
     const sourceDirectoryName:string = ( sanitizedPath ? basename(sanitizedPath) : 'index' );
@@ -344,6 +388,36 @@ export class DocumentService {
       }
       this.logger.debug(`Document <${ sourceDirectoryPath }> removed to <${ destinationDirectoryPath }>`);
     } catch ( error ) {
+      this.handleFsError(error);
+    }
+  }
+
+  public async document_remove(path:string, allowRoot:boolean = false, recursive:boolean = true):Promise<void> {
+    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
+    if ( ! sanitizedPath && ! allowRoot ) { throw new BadRequestException(`Root document cannot be deleted`); }
+    await this.moveDocumentToTrash(sanitizedPath, recursive);
+  }
+
+  public async version_retrieve(path:string, timestamp:string):Promise<ContentSchema> {
+    const versionPath:string = this.getVersionPath(path, timestamp);
+    try {
+      const raw:string = await readFile(versionPath, 'utf-8');
+      return { raw: raw.replace(/\r\n?/g, '\n') };
+    } catch ( error ) {
+      const code:string | undefined = ( error as NodeJS.ErrnoException )?.code;
+      if ( code === 'ENOENT' ) { throw new NotFoundException(`Version <${ timestamp }> not found`); }
+      this.handleFsError(error);
+    }
+  }
+
+  public async version_remove(path:string, timestamp:string):Promise<void> {
+    const versionPath:string = this.getVersionPath(path, timestamp);
+    try {
+      await unlink(versionPath);
+      this.logger.debug(`Document version <${ versionPath }> removed`);
+    } catch ( error ) {
+      const code:string | undefined = ( error as NodeJS.ErrnoException )?.code;
+      if ( code === 'ENOENT' ) { throw new NotFoundException(`Version <${ timestamp }> not found`); }
       this.handleFsError(error);
     }
   }

@@ -337,7 +337,9 @@ attachments, child document directories, and `_versions`. A directory without `c
 │         ├── content.md                  │
 │         ├── map.jpg                     │
 │         ├── milan/                      │
-│         └── rome/                       │
+│         ├── rome/                       │
+│         └── _versions/                  │
+│             └── 1780000000000.md        │
 └─────────────────────────────────────────┘
 ```
 
@@ -358,7 +360,11 @@ This is the document body.
 ```
 
 On store, the backend assigns the current timestamp, fills a missing title from the final path segment, fills a missing
-author from the session token, and defaults missing tags to an empty array.
+author from the session token, and defaults missing tags to an empty array. When the optional `versioning` request flag
+is `true` and `content.md` already exists, the backend first copies the current file to
+`_versions/<unixTimestampMilliseconds>.md`. The snapshot copy must succeed before the document is overwritten; a failed
+copy fails the store operation. New documents never create a version. `_versions` is an internal archive and is not
+exposed through document APIs.
 
 ```
 ┌─────────────────────────────────────────┐
@@ -385,7 +391,8 @@ author from the session token, and defaults missing tags to an empty array.
 │ ContentContract                         │
 ├─────────────────────────────────────────┤
 │ Properties:                             │
-│ └── raw: string                         │
+│ ├── raw: string                         │
+│ └── versioning?: boolean                 │
 └─────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────┐

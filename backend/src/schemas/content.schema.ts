@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
-import { IsNotEmpty, IsString } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { ContentContract } from "@shared/contracts";
 
 export class ContentSchema implements ContentContract {
@@ -10,5 +10,11 @@ export class ContentSchema implements ContentContract {
   @IsNotEmpty()
   @ApiProperty({ example: 'Document source code' })
   raw:string;
+
+  @Expose()
+  @IsBoolean()
+  @IsOptional()
+  @ApiPropertyOptional({ example: true, description: 'Create a snapshot before overwriting an existing document.' })
+  versioning?:boolean;
 
 }

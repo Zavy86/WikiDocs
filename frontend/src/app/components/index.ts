@@ -22,4 +22,5 @@ export * from 'src/app/components/startup/startup.component';
 export * from 'src/app/components/top/top.component';
 export * from 'src/app/components/trash/trash.component';
 export * from 'src/app/components/tree/tree.component';
+export * from 'src/app/components/versions/versions.component';
 export * from 'src/app/components/wait/wait.component';

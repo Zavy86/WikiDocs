@@ -2,6 +2,7 @@ import type { ContentContract } from '@shared/contracts';
 
 export type ContentType = {
   raw:string;
+  versioning?:boolean;
 };
 
 type ContentShapeGuard = [ ContentContract ] extends [ ContentType ]

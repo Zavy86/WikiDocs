@@ -10,6 +10,11 @@
 .action-button {
   background-color: var(--theme-color);
   color: #ffffff;
+
+  &:disabled {
+    filter: saturate(0.5);
+    opacity: 0.5;
+  }
 }
 
 .action-button-grey {
@@ -24,6 +29,11 @@
 
 .action-button-yellow {
   background-color: #fdd835;
+  color: #ffffff;
+}
+
+.action-button-orange {
+  background-color: #fb8c00;
   color: #ffffff;
 }
 
