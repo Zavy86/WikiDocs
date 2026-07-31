@@ -8,5 +8,6 @@ export type DocumentContract = {
   metadata:MetadataContract;
   children:MetadataContract[];
   attachments:AttachmentContract[];
+  versions:string[];
   content:ContentContract;
 };
