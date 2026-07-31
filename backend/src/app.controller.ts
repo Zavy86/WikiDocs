@@ -286,6 +286,34 @@ export class AppController {
     return this.documentService.document_remove(path);
   }
 
+  @ApiBearerAuth()
+  @Authorizations('write')
+  @Get('version')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Retrieve a document version' })
+  @ApiQuery({ name: 'path', required: true })
+  @ApiQuery({ name: 'timestamp', required: true })
+  version_retrieve(
+    @Query('path') path:string,
+    @Query('timestamp') timestamp:string
+  ):Promise<ContentSchema> {
+    return this.documentService.version_retrieve(path, timestamp);
+  }
+
+  @ApiBearerAuth()
+  @Authorizations('delete')
+  @Delete('version')
+  @HttpCode(204)
+  @ApiOperation({ summary: 'Remove a document version' })
+  @ApiQuery({ name: 'path', required: true })
+  @ApiQuery({ name: 'timestamp', required: true })
+  version_remove(
+    @Query('path') path:string,
+    @Query('timestamp') timestamp:string
+  ):Promise<void> {
+    return this.documentService.version_remove(path, timestamp);
+  }
+
   @Public()
   @Get('attachment')
   @HttpCode(200)

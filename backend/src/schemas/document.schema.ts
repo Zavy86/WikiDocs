@@ -31,6 +31,10 @@ export class DocumentSchema implements DocumentContract {
   attachments:AttachmentSchema[];
 
   @Expose()
+  @ApiProperty({ type: [ String ], example: [ '1750000000000' ] })
+  versions:string[];
+
+  @Expose()
   @Type(() => ContentSchema)
   @ApiProperty({ type: () => ContentSchema })
   content:ContentSchema;
