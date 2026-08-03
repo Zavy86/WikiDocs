@@ -3,12 +3,13 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
+import { AppModule } from 'src/app.module';
+import { AppLogger } from 'src/app.logger';
 
 const logger:Logger = new Logger('Bootstrap');
 
-async function bootstrap() {
-  const app:INestApplication = await NestFactory.create(AppModule);
+async function bootstrap():Promise<void> {
+  const app:INestApplication = await NestFactory.create(AppModule, { logger: new AppLogger() });
   const expressApp:NestExpressApplication = app as NestExpressApplication;
   app.enableCors();
   SwaggerModule.setup('/', app,
@@ -29,4 +30,4 @@ async function bootstrap() {
   logger.log(`Pulse is listening on ${await app.getUrl()}`);
 }
 
-bootstrap();
+void bootstrap();
