@@ -12,6 +12,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { SessionService } from 'src/app/services/session.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ProfileType } from 'src/app/types';
+import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
 
 @Component({
   standalone: true,
@@ -32,14 +33,18 @@ export class ProfileComponent {
   protected readonly saving:WritableSignal<boolean> = signal(false);
   protected readonly isMobile:Signal<boolean> = toSignal(this.breakpointObserver.observe('(max-width: 992px)').pipe(map((state:BreakpointState):boolean => state.matches)), { initialValue: false });
   protected readonly isLocalUser:Signal<boolean> = this.sessionService.isLocalUser;
+  protected readonly passwordErrorStateMatcher = matchingFieldsErrorStateMatcher;
 
-  protected readonly form = this.formBuilder.nonNullable.group({
-    account: [ this.sessionService.account() ?? '', [ Validators.required, Validators.email ] ],
-    firstname: [ this.sessionService.firstname() ?? '', [ Validators.required, Validators.maxLength(32) ] ],
-    lastname: [ this.sessionService.lastname() ?? '', [ Validators.required, Validators.maxLength(32) ] ],
-    password: [ '', [ Validators.maxLength(256) ] ],
-    confirm: [ '', [ Validators.maxLength(256) ] ],
-  }); // @todo add password match validator
+  protected readonly form = this.formBuilder.nonNullable.group(
+    {
+      account: [ this.sessionService.account() ?? '', [ Validators.required, Validators.email ] ],
+      firstname: [ this.sessionService.firstname() ?? '', [ Validators.required, Validators.maxLength(32) ] ],
+      lastname: [ this.sessionService.lastname() ?? '', [ Validators.required, Validators.maxLength(32) ] ],
+      password: [ '', [ Validators.maxLength(256) ] ],
+      confirm: [ '', [ Validators.maxLength(256) ] ],
+    },
+    { validators: [ matchingFieldsValidator('password', 'confirm') ] }
+  );
 
   constructor() {
     this.form.controls.account.disable({ emitEvent: false });
@@ -57,23 +62,12 @@ export class ProfileComponent {
 
   protected save():void {
     if ( this.saving() ) { return; }
-    if ( this.form.controls.firstname.invalid || this.form.controls.lastname.invalid ) {
-      this.form.controls.firstname.markAsTouched();
-      this.form.controls.lastname.markAsTouched();
+    if ( this.form.invalid ) {
+      this.form.markAllAsTouched();
       return;
     }
-    const { firstname, lastname, password, confirm } = this.form.getRawValue();
-    const hasPasswordUpdate:boolean = ! this.isLocalUser() && [ password, confirm ].some((value):boolean => value.trim().length > 0);
-    if ( hasPasswordUpdate ) {
-      if ( ! password.trim() || ! confirm.trim() ) {
-        this.alertService.error('To change your password, fill all password fields');
-        return;
-      }
-      if ( password !== confirm ) {
-        this.alertService.error('New password and check password must match');
-        return;
-      }
-    }
+    const { firstname, lastname, password } = this.form.getRawValue();
+    const hasPasswordUpdate:boolean = ! this.isLocalUser() && password.length > 0;
     const request:ProfileType = { firstname: firstname.trim(), lastname: lastname.trim() };
     if ( hasPasswordUpdate ) { request.password = password; }
     this.saving.set(true);

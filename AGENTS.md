@@ -39,6 +39,7 @@ All code, comments, commit messages, branch names, PR titles, and documentation 
 3. **No runtime logic** in `shared/contracts` — pure contract definitions only.
 4. Any change to a shared contract is a **breaking contract change**: update every consuming layer in the same PR.
 5. Export everything through `shared/contracts/index.ts`; do not import from individual contract files directly.
+6. If you no longer see any changes in the working tree, I likely made a safety commit while you were working.
 
 ## TypeScript Best Practices
 
