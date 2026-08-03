@@ -11,6 +11,7 @@ import { map, Observable } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { AccountType } from 'src/app/types';
 import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
+import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
 
 export type AccountMode = 'create' | 'edit';
 
@@ -49,15 +50,19 @@ export class AccountComponent {
   protected readonly submitLabel:Signal<string> = computed(():string => this.data.mode === 'create' ? 'Create' : 'Save');
   protected readonly isEditMode:boolean = ( this.data.mode === 'edit' );
   protected readonly isSelfAccount:boolean = ( this.isEditMode && this.data.account?.account === this.data.selfAccount );
+  protected readonly passwordErrorStateMatcher = matchingFieldsErrorStateMatcher;
 
-  protected readonly form = this.formBuilder.nonNullable.group({
-    account: [ this.data.account?.account ?? '', [ Validators.required, Validators.email, Validators.maxLength(256) ] ],
-    firstname: [ this.data.account?.firstname ?? '', [ Validators.required, Validators.maxLength(32) ] ],
-    lastname: [ this.data.account?.lastname ?? '', [ Validators.required, Validators.maxLength(32) ] ],
-    role: [ ( this.data.account?.role ?? 'user' ) as AccountType['role'], [ Validators.required ] ],
-    password: [ '', [ Validators.maxLength(256) ] ],
-    confirm: [ '', [ Validators.maxLength(256) ] ]
-  });
+  protected readonly form = this.formBuilder.nonNullable.group(
+    {
+      account: [ this.data.account?.account ?? '', [ Validators.required, Validators.email, Validators.maxLength(256) ] ],
+      firstname: [ this.data.account?.firstname ?? '', [ Validators.required, Validators.maxLength(32) ] ],
+      lastname: [ this.data.account?.lastname ?? '', [ Validators.required, Validators.maxLength(32) ] ],
+      role: [ ( this.data.account?.role ?? 'user' ) as AccountType['role'], [ Validators.required ] ],
+      password: [ '', this.data.mode === 'create' ? [ Validators.required, Validators.maxLength(256) ] : [ Validators.maxLength(256) ] ],
+      confirm: [ '', this.data.mode === 'create' ? [ Validators.required, Validators.maxLength(256) ] : [ Validators.maxLength(256) ] ]
+    },
+    { validators: [ matchingFieldsValidator('password', 'confirm') ] }
+  );
 
   constructor() {
     if ( this.isEditMode ) { this.form.controls.account.disable({ emitEvent: false }); }
@@ -111,23 +116,7 @@ export class AccountComponent {
     }
     const value = this.form.getRawValue();
     const password:string = value.password;
-    const confirm:string = value.confirm;
     const passwordFilled:boolean = ( password.length > 0 );
-
-    if ( this.data.mode === 'create' && ! passwordFilled ) {
-      this.alertService.error('Password is required for new accounts.');
-      return;
-    }
-    if ( passwordFilled ) {
-      if ( confirm.length === 0 ) {
-        this.alertService.error('Fill both password fields to update the password.');
-        return;
-      }
-      if ( password !== confirm ) {
-        this.alertService.error('Password and confirm password must match.');
-        return;
-      }
-    }
     const account:AccountType = {
       account: value.account.trim(),
       firstname: value.firstname.trim(),

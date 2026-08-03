@@ -52,22 +52,31 @@
         <div class="layout-grid">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput id="password" type="password" formControlName="password" maxlength="256" autocomplete="new-password"/>
+            <input matInput id="password" name="password" type="password" formControlName="password" maxlength="256" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
             @if (form.controls.password.touched && form.controls.password.hasError('required')) {
               <mat-error>Password is required</mat-error>
             }
             @if (form.controls.password.touched && form.controls.password.hasError('maxlength')) {
               <mat-error>Password must be at most 256 characters</mat-error>
             }
+            @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
+              <mat-error>Fill both password fields</mat-error>
+            }
           </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Confirm password</mat-label>
-            <input matInput id="confirm" type="password" formControlName="confirm" maxlength="256" autocomplete="new-password"/>
+            <input matInput id="confirm" name="confirm" type="password" formControlName="confirm" maxlength="256" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
             @if (form.controls.confirm.touched && form.controls.confirm.hasError('required')) {
               <mat-error>Password confirmation is required</mat-error>
             }
             @if (form.controls.confirm.touched && form.controls.confirm.hasError('maxlength')) {
               <mat-error>Password confirmation must be at most 256 characters</mat-error>
+            }
+            @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
+              <mat-error>Fill both password fields</mat-error>
+            }
+            @if (form.controls.confirm.touched && form.hasError('fieldsMismatch')) {
+              <mat-error>Passwords must match</mat-error>
             }
           </mat-form-field>
         </div>

@@ -1,7 +1,7 @@
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,7 @@ import { InitializationType } from 'src/app/types';
 import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ export class InitializationComponent implements OnInit {
 
   protected readonly loading:WritableSignal<boolean> = signal(false);
   protected readonly isLocalMode:WritableSignal<boolean> = signal(false);
+  protected readonly passwordErrorStateMatcher = matchingFieldsErrorStateMatcher;
 
   protected readonly form = this.formBuilder.nonNullable.group(
     {
@@ -37,7 +39,7 @@ export class InitializationComponent implements OnInit {
       password: [ '', [ Validators.required, Validators.maxLength(256) ] ],
       confirm: [ '', [ Validators.required, Validators.maxLength(256) ] ],
     },
-    { validators: [ this.passwordsMatchValidator() ] }
+    { validators: [ matchingFieldsValidator('password', 'confirm') ] }
   );
 
   public ngOnInit():void {
@@ -47,6 +49,7 @@ export class InitializationComponent implements OnInit {
     }
     this.isLocalMode.set(this.informationService.retrieve()?.mode === 'local');
     if ( this.isLocalMode() ) {
+      this.form.clearValidators();
       this.form.controls.password.clearValidators();
       this.form.controls.password.updateValueAndValidity({ emitEvent: false });
       this.form.controls.confirm.clearValidators();
@@ -59,7 +62,6 @@ export class InitializationComponent implements OnInit {
     if ( this.loading() ) { return; }
     if ( this.form.invalid ) {
       this.form.markAllAsTouched();
-      if ( ! this.isLocalMode() && this.form.hasError('passwordMismatch') ) { this.alertService.error('Passwords must match'); }
       return;
     }
     this.loading.set(true);
@@ -83,18 +85,6 @@ export class InitializationComponent implements OnInit {
           this.alertService.error(error.message || 'Initialization failed.');
         },
       });
-  }
-
-  private passwordsMatchValidator():ValidatorFn { // @todo farne uno generico e usarlo anche in accounts account form
-    return (control:AbstractControl):ValidationErrors | null => {
-      if ( this.isLocalMode() ) { return null; }
-      const password = control.get('password')?.value;
-      const confirm = control.get('confirm')?.value;
-      if ( typeof password !== 'string' || typeof confirm !== 'string' ) {
-        return null;
-      }
-      return password === confirm ? null : { passwordMismatch: true };
-    };
   }
 
 }

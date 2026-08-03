@@ -45,24 +45,35 @@
             <mat-label>New password</mat-label>
             <input
               matInput
-              id="password-new"
-              name="password-new"
+              id="password"
+              name="password"
               type="password"
               formControlName="password"
+              [errorStateMatcher]="passwordErrorStateMatcher"
               maxlength="256"
               placeholder="Leave fields blank to keep your current password."
             />
+            @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
+              <mat-error>Fill both password fields</mat-error>
+            }
           </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Check password</mat-label>
             <input
               matInput
-              id="password-check"
-              name="password-check"
+              id="confirm"
+              name="confirm"
               type="password"
               formControlName="confirm"
+              [errorStateMatcher]="passwordErrorStateMatcher"
               maxlength="256"
             />
+            @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
+              <mat-error>Fill both password fields</mat-error>
+            }
+            @if (form.controls.confirm.touched && form.hasError('fieldsMismatch')) {
+              <mat-error>Passwords must match</mat-error>
+            }
           </mat-form-field>
         </div>
       }
