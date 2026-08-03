@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-/generated
+/src/generated
 /data/*.db
 /data/*.db-*
 
