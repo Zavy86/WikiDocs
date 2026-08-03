@@ -1,8 +1,32 @@
+process.env.TZ = 'UTC';
+import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
+const logger:Logger = new Logger('Bootstrap');
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  const app:INestApplication = await NestFactory.create(AppModule);
+  const expressApp:NestExpressApplication = app as NestExpressApplication;
+  app.enableCors();
+  SwaggerModule.setup('/', app,
+    SwaggerModule.createDocument(app,
+      new DocumentBuilder()
+        .setTitle('Wiki|Docs Pulse')
+        .setVersion('1.0.0')
+        .setDescription('Metrics & Release service')
+        .addTag('Endpoints', 'Available endpoints')
+        .addBearerAuth().build(),
+    ),
+    {
+      customSiteTitle: 'Wiki|Docs Pulse',
+      swaggerOptions: { persistAuthorization: true },
+    },
+  );
+  await app.listen(process.env.PORT ?? 3001);
+  logger.log(`Pulse is listening on ${await app.getUrl()}`);
 }
+
 bootstrap();
