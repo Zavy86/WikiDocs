@@ -2,7 +2,9 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { AppService } from 'src/app.service';
 
-const INTERVAL = ( 15 * 60 * 1000 );
+const VERSION_INTERVAL = ( 15 * 60 * 1000 );
+const DAILY_METRICS_INTERVAL = ( 60 * 60 * 1000 );
+const WEEKLY_METRICS_INTERVAL = ( 60 * 60 * 1000 );
 const VERSION_URL = 'https://raw.githubusercontent.com/Zavy86/WikiDocs/master/VERSION';
 
 @Injectable()
@@ -18,9 +20,11 @@ export class AppSchedules implements OnModuleInit {
 
   public async onModuleInit():Promise<void> {
     await this.refreshLatestVersion();
+    await this.refreshDailyMetrics();
+    await this.refreshWeeklyMetrics();
   }
 
-  @Interval(INTERVAL)
+  @Interval(VERSION_INTERVAL)
   public async refreshLatestVersion():Promise<void> {
     if (this.isRefreshing) { return; }
     this.isRefreshing = true;
@@ -35,6 +39,26 @@ export class AppSchedules implements OnModuleInit {
       this.logger.error(`Unable to refresh latest version: ${message}`);
     } finally {
       this.isRefreshing = false;
+    }
+  }
+
+  @Interval(DAILY_METRICS_INTERVAL)
+  public async refreshDailyMetrics():Promise<void> {
+    try {
+      await this.appService.aggregateDailyMetrics();
+    } catch (error:unknown) {
+      const message:string = ( error instanceof Error ? error.message : String(error) );
+      this.logger.error(`Unable to refresh daily metrics: ${message}`);
+    }
+  }
+
+  @Interval(WEEKLY_METRICS_INTERVAL)
+  public async refreshWeeklyMetrics():Promise<void> {
+    try {
+      await this.appService.aggregateWeeklyMetrics();
+    } catch (error:unknown) {
+      const message:string = ( error instanceof Error ? error.message : String(error) );
+      this.logger.error(`Unable to refresh weekly metrics: ${message}`);
     }
   }
 
