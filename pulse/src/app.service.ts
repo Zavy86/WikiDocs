@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
@@ -13,13 +14,17 @@ export class AppService {
     this.version = version;
   }
 
-  public latest(version?:string, mode?:string):string {
+  public latest(ip:string, version?:string, mode?:string): string {
     this.validateVersion(version);
     this.validateMode(mode);
     if (version && mode) {
-      this.logger.debug(`Client pulse received: version=${version}, mode=${mode}`);
+      this.logger.debug(`Client pulse received from ${ this.hashIp(ip) } v${ version } ${ mode }`);
     }
     return this.version;
+  }
+
+  private hashIp(ip:string):string {
+    return createHash('sha1').update(ip).digest('hex');
   }
 
   private validateVersion(version?:string):void {
@@ -29,9 +34,8 @@ export class AppService {
   }
 
   private validateMode(mode?:string):void {
-    if (mode !== undefined &&  mode !== 'local' && mode !== 'private' && mode !== 'public') {
+    if (mode !== undefined && mode !== 'local' && mode !== 'private' && mode !== 'public') {
       throw new BadRequestException('Mode must be local, private, or public');
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, HttpCode, Ip, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AppService } from 'src/app.service';
 
@@ -7,7 +7,7 @@ import { AppService } from 'src/app.service';
 export class AppController {
 
   constructor(
-    private readonly appService: AppService
+    private readonly appService:AppService
   ) {}
 
   @Get('latest')
@@ -16,11 +16,11 @@ export class AppController {
   @ApiQuery({ name: 'version', required: false })
   @ApiQuery({ name: 'mode', required: false })
   latest(
-    @Query('version') version?: string,
-    @Query('mode')
-    mode?: string,
-  ): string {
-    return this.appService.latest(version, mode);
+    @Ip() ip:string,
+    @Query('version') version?:string,
+    @Query('mode') mode?:string
+  ):string {
+    return this.appService.latest(ip, version, mode);
   }
 
 }
