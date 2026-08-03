@@ -2,6 +2,9 @@
 /dist
 /node_modules
 /build
+/generated
+/data/*.db
+/data/*.db-*
 
 # Logs
 logs

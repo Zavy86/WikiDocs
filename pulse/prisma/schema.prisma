@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Client {
+  clientHash String   @id @map("client_hash")
+  configMode String   @map("config_mode")
+  appVersion String   @map("app_version")
+  createdAt  DateTime @default(now()) @map("created_at")
+  lastSeenAt DateTime @map("last_seen_at")
+
+  @@index([lastSeenAt])
+  @@map("clients")
+}
+
+model DailyMetric {
+  date               DateTime @map("date")
+  configMode         String   @map("config_mode")
+  appVersion         String   @map("app_version")
+  activeClientsCount Int      @map("active_clients_count")
+
+  @@id([date, configMode, appVersion])
+  @@map("daily_metrics")
+}
+
+model WeeklyMetric {
+  yearWeek           String @map("year_week")
+  configMode         String @map("config_mode")
+  appVersion         String @map("app_version")
+  activeClientsCount Int    @map("active_clients_count")
+
+  @@id([yearWeek, configMode, appVersion])
+  @@map("weekly_metrics")
+}
