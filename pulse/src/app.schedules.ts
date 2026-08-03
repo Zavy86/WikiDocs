@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
-import { AppService } from './app.service';
+import { AppService } from 'src/app.service';
 
 const INTERVAL = ( 15 * 60 * 1000 );
 const VERSION_URL = 'https://raw.githubusercontent.com/Zavy86/WikiDocs/master/VERSION';

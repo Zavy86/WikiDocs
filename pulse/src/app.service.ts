@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
@@ -13,8 +13,25 @@ export class AppService {
     this.version = version;
   }
 
-  public latest():string {
+  public latest(version?:string, mode?:string):string {
+    this.validateVersion(version);
+    this.validateMode(mode);
+    if (version && mode) {
+      this.logger.debug(`Client pulse received: version=${version}, mode=${mode}`);
+    }
     return this.version;
+  }
+
+  private validateVersion(version?:string):void {
+    if (version !== undefined && ! /^\d+\.\d+\.\d+$/.test(version)) {
+      throw new BadRequestException('Version must be a valid semantic version');
+    }
+  }
+
+  private validateMode(mode?:string):void {
+    if (mode !== undefined &&  mode !== 'local' && mode !== 'private' && mode !== 'public') {
+      throw new BadRequestException('Mode must be local, private, or public');
+    }
   }
 
 }
