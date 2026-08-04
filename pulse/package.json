@@ -22,6 +22,7 @@
     "@prisma/client": "^7.9.1",
     "better-sqlite3": "^13.0.2",
     "date-fns": "^4.4.0",
+    "prisma": "^7.9.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -41,7 +42,6 @@
     "globals": "^17.0.0",
     "jest": "^30.0.0",
     "prettier": "^3.4.2",
-    "prisma": "^7.9.1",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
