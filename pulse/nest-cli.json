@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin",
+        "options": {
+          "classValidatorShim": true,
+          "dtoFileNameSuffix": [
+            ".type.ts",
+            ".types.ts",
+            ".schema.ts",
+            ".schemas.ts"
+          ]
+        }
+      }
+    ]
+  }
+}

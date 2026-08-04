@@ -7,3 +7,7 @@ backend/dist
 frontend/node_modules
 frontend/.angular
 frontend/dist
+pulse/src/generated
+pulse/node_modules
+pulse/dist
+pulse/data/
