@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { PrismaClient } from './generated/prisma/client';
+import { DailyMetricSchema, LatestSchema, StatsSchema, WeeklyMetricSchema } from './app.schemas';
 
 @Injectable()
 export class AppService {
@@ -13,21 +14,63 @@ export class AppService {
 
   private version: string = '0.0.0';
 
-  public latest(ip:string, version?:string, mode?:string):string {
+  public async latest(ip:string, version?:string, mode?:string):Promise<LatestSchema> {
     this.validateVersion(version);
     this.validateMode(mode);
     if (version && mode) {
-      const clientHash:string = this.hashIp(ip);
+      const clientHash: string = this.hashIp(ip);
       this.logger.debug(`Client pulse received from ${clientHash} v${version} ${mode}`);
       void this.recordClient(clientHash, version, mode).catch((error: unknown): void => {
-        const message:string = ( error instanceof Error ? error.message : String(error) );
+        const message: string = error instanceof Error ? error.message : String(error);
         this.logger.error(`Unable to record client pulse: ${message}`);
       });
     }
-    return this.version;
+    return { version: this.version };
   }
 
-  public setVersion(version: string):void {
+  public async stats():Promise<StatsSchema> {
+    const startOfToday:Date = this.startOfDay(new Date());
+    const dailyStart:Date = new Date(startOfToday);
+    dailyStart.setUTCDate(dailyStart.getUTCDate() - 30);
+    const dailyEnd:Date = new Date(startOfToday);
+    dailyEnd.setUTCMilliseconds(dailyEnd.getUTCMilliseconds() - 1);
+    const startOfCurrentWeek:Date = this.startOfWeek(startOfToday);
+    const weeklyStart:Date = new Date(startOfCurrentWeek);
+    weeklyStart.setUTCDate(weeklyStart.getUTCDate() - 54 * 7);
+    const weeklyEnd:Date = new Date(startOfCurrentWeek);
+    weeklyEnd.setUTCDate(weeklyEnd.getUTCDate() - 7);
+    const [ dailyMetrics, weeklyMetrics ] = await Promise.all([
+      this.prisma.dailyMetric.findMany({
+        where: { date: { gte: dailyStart, lte: dailyEnd } },
+        orderBy: [{ date: 'asc' }, { appVersion: 'asc' }, { configMode: 'asc' }],
+      }),
+      this.prisma.weeklyMetric.findMany({
+        where: {
+          yearWeek: {
+            gte: this.yearWeek(weeklyStart),
+            lte: this.yearWeek(weeklyEnd),
+          },
+        },
+        orderBy: [{ yearWeek: 'asc' }, { appVersion: 'asc' }, { configMode: 'asc' }],
+      })
+    ]);
+    return {
+      daily: dailyMetrics.map((metric):DailyMetricSchema => ({
+        date: metric.date.toISOString().slice(0, 10),
+        version: metric.appVersion,
+        mode: metric.configMode,
+        count: metric.activeClientsCount,
+      })),
+      weekly: weeklyMetrics.map((metric):WeeklyMetricSchema => ({
+        week: metric.yearWeek,
+        version: metric.appVersion,
+        mode: metric.configMode,
+        count: metric.activeClientsCount,
+      }))
+    };
+  }
+
+  public setVersion(version:string):void {
     if (version === this.version) { return; }
     this.logger.log(`Latest version updated to: ${version}`);
     this.version = version;

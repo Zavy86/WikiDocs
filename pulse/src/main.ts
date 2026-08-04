@@ -10,9 +10,10 @@ const logger:Logger = new Logger('Bootstrap');
 
 async function bootstrap():Promise<void> {
   const app:INestApplication = await NestFactory.create(AppModule, { logger: new AppLogger() });
-  const expressApp:NestExpressApplication = app as NestExpressApplication;
+  const express: NestExpressApplication = app as NestExpressApplication;
+  app.setGlobalPrefix('/api');
   app.enableCors();
-  SwaggerModule.setup('/', app,
+  SwaggerModule.setup('/api', app,
     SwaggerModule.createDocument(app,
       new DocumentBuilder()
         .setTitle('Wiki|Docs Pulse')
@@ -22,9 +23,8 @@ async function bootstrap():Promise<void> {
         .addBearerAuth().build(),
     ),
     {
-      customSiteTitle: 'Wiki|Docs Pulse',
-      swaggerOptions: { persistAuthorization: true },
-    },
+      customSiteTitle: 'Wiki|Docs Pulse'
+    }
   );
   await app.listen(process.env.PORT ?? 3001);
   logger.log(`Pulse is listening on ${await app.getUrl()}`);
