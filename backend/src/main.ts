@@ -92,4 +92,4 @@ async function bootstrap():Promise<void> {
   logger.log(`Wiki|Docs is listening on ${ await app.getUrl() }`);
 }
 
-bootstrap();
+void bootstrap();
