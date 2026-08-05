@@ -17,20 +17,21 @@ import {
 } from '@nestjs/common';
 import { PinnedService } from "src/services/pinned.service";
 import { EnvironmentService } from "src/services/environment.service";
-import { AttachmentSchema, ContentSchema, DocumentSchema, MetadataSchema, TokenSchema, TrashSchema, TreeSchema } from "src/schemas";
+import { SettingsService } from 'src/services/settings.service';
+import { AttachmentSchema, ContentSchema, DocumentSchema, MetadataSchema, SettingsSchema, TokenSchema, TrashSchema, TreeSchema } from 'src/schemas';
+
+interface FrontMatterInterface {
+  title: string;
+  timestamp: string;
+  author: string;
+  tags: string[];
+}
 
 export type AttachmentStream = {
   stream:ReadStream;
   fileType:string;
   fileName:string;
   contentLength:number;
-};
-
-interface FrontMatterInterface {
-  title:string;
-  timestamp:string;
-  author:string;
-  tags:string[];
 };
 
 @Injectable()
@@ -40,6 +41,7 @@ export class DocumentService {
 
   constructor(
     private readonly environmentService:EnvironmentService,
+    private readonly settingsService:SettingsService,
     @Inject(forwardRef(() => PinnedService))
     private readonly pinnedService:PinnedService
   ) {}
@@ -142,13 +144,8 @@ export class DocumentService {
   }
 
   public async buildDocumentMetadata(path:string, deleted:boolean = false):Promise<MetadataSchema> {
-    const document:MetadataSchema = {
-      path: '/' + this.environmentService.sanitizeDocumentPath(path),
-      title: '',
-      author: '',
-      timestamp: '',
-      tags: []
-    }
+    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
+    const document:MetadataSchema = { path: '/' + sanitizedPath, title: '', author: '', timestamp: '', tags: [] }
     if ( await this.checkIfDocumentExists(path, deleted) ) {
       const parsedFrontMatter:FrontMatterInterface | null = await this.loadDocumentFrontMatter(path, deleted);
       if ( parsedFrontMatter ) {
@@ -158,7 +155,16 @@ export class DocumentService {
         document.tags = parsedFrontMatter.tags;
       }
     }
+    document.title = await this.resolveMetadataTitle(sanitizedPath, document.title);
     return document;
+  }
+
+  private async resolveMetadataTitle(sanitizedPath:string, title:string):Promise<string> {
+    const normalizedTitle:string = title.trim();
+    if ( normalizedTitle.length > 0 ) { return normalizedTitle; }
+    if ( sanitizedPath ) { return ( sanitizedPath.split('/').at(-1) ?? sanitizedPath ); }
+    const settings:SettingsSchema = await this.settingsService.retrieve();
+    return settings.title.trim();
   }
 
   private async loadDocumentFrontMatter(path:string, deleted:boolean = false):Promise<FrontMatterInterface | null> {
