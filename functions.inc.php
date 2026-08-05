@@ -87,10 +87,34 @@ function wdf_csrf_check():bool{
  * @return bool
  */
 function wdf_document_id_check(string $id):bool{
-  if (substr_count($id, "..") > 0 || substr_count($id, ':') > 0 || strpos($id, '/') === 0) {
+  // reject control characters, null bytes, backslashes and drive/scheme colons
+  if (preg_match('/[\x00-\x1F\x7F\\\\:]/', $id)) {
+    return false;
+  }
+  // reject parent traversal and absolute paths
+  if (substr_count($id, "..") > 0 || strpos($id, '/') === 0) {
     return false;
   }
   return true;
+}
+
+/**
+ * Safe File Name
+ *
+ * Reduce a user supplied file name to a single path component so it can never
+ * escape the document directory it is joined to.
+ *
+ * @param string $name File name
+ * @return string Sanitized file name (empty string if nothing usable remains)
+ */
+function wdf_safe_filename(string $name):string{
+  // normalize windows separators, then keep the last path component only
+  $name = basename(str_replace("\\", "/", $name));
+  // strip control characters and null bytes
+  $name = preg_replace('/[\x00-\x1F\x7F]/', '', $name);
+  // drop leading dots so "." and ".." cannot survive
+  $name = ltrim($name, ".");
+  return $name;
 }
 
 /**
