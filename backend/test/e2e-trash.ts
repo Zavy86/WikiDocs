@@ -79,4 +79,35 @@ describe('trash', ():void => {
       .expect(404);
   });
 
+  it('rejects restoration into an occupied destination', async ():Promise<void> => {
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/guides/getting-started' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Getting started' })
+      .expect(204);
+    await testApp.http
+      .delete('/api/document')
+      .query({ path: '/guides/getting-started' })
+      .set(bearer(adminToken))
+      .expect(204);
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/restored/getting-started' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Existing document' })
+      .expect(204);
+    const trash = await testApp.http
+      .get('/api/trash')
+      .set(bearer(adminToken))
+      .expect(200);
+    const trashPath:string = trash.body.documents
+      .find((document:{ path:string }):boolean => document.path.endsWith('getting-started')).path as string;
+    await testApp.http
+      .patch('/api/trash')
+      .query({ path: trashPath, destination: '/restored' })
+      .set(bearer(adminToken))
+      .expect(409);
+  });
+
 });

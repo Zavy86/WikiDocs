@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createE2eApp, E2e, initialize, initializer } from './e2e';
 
-describe('local-mode system initialization', (): void => {
+describe('system initialization (local mode)', (): void => {
   let testApp: E2e;
 
   beforeEach(async (): Promise<void> => {
@@ -12,7 +12,7 @@ describe('local-mode system initialization', (): void => {
     await testApp.close();
   });
 
-  it('requires no password during initialization', async (): Promise<void> => {
+  it('initializes a system without a password', async (): Promise<void> => {
     await testApp.http
       .get('/api/information')
       .expect(200)
@@ -30,7 +30,7 @@ describe('local-mode system initialization', (): void => {
   });
 });
 
-describe('public-mode system initialization', (): void => {
+describe('system initialization (public mode)', (): void => {
   let testApp: E2e;
 
   beforeEach(async (): Promise<void> => {
@@ -41,7 +41,7 @@ describe('public-mode system initialization', (): void => {
     await testApp.close();
   });
 
-  it('reports an uninitialized public system', async (): Promise<void> => {
+  it('reports an uninitialized system', async (): Promise<void> => {
     await testApp.http
       .get('/api/information')
       .expect(200)
@@ -49,9 +49,22 @@ describe('public-mode system initialization', (): void => {
         expect(body).toMatchObject({ mode: 'public', initialized: false });
       });
   });
+
+  it('initializes a system with a password', async ():Promise<void> => {
+    await initialize(testApp);
+    await testApp.http
+      .head('/api/health')
+      .expect(204);
+    await testApp.http
+      .get('/api/information')
+      .expect(200)
+      .expect(({ body }):void => {
+        expect(body).toMatchObject({ mode: 'public', initialized: true });
+      });
+  });
 });
 
-describe('private-mode system initialization', ():void => {
+describe('system initialization (private mode)', ():void => {
   let testApp:E2e;
 
   beforeEach(async ():Promise<void> => {
@@ -62,7 +75,7 @@ describe('private-mode system initialization', ():void => {
     await testApp.close();
   });
 
-  it('initializes an empty dataset once and creates the default files', async ():Promise<void> => {
+  it('initializes a system with a password and creates the default files', async ():Promise<void> => {
     await testApp.http
       .get('/api/information')
       .expect(200)

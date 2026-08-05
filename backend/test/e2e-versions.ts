@@ -57,4 +57,17 @@ describe('document versions', ():void => {
       .expect(404);
   });
 
+  it('rejects malformed timestamps and missing version documents', async ():Promise<void> => {
+    await testApp.http
+      .get('/api/version')
+      .query({ path: '/missing', timestamp: 'not-a-timestamp' })
+      .set(bearer(adminToken))
+      .expect(404);
+    await testApp.http
+      .delete('/api/version')
+      .query({ path: '/missing', timestamp: '1' })
+      .set(bearer(adminToken))
+      .expect(404);
+  });
+
 });

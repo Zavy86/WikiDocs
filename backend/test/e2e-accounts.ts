@@ -1,6 +1,6 @@
 import { authenticate, bearer, createE2eApp, E2e, initialize, initializer } from './e2e';
 
-describe('local-mode accounts', ():void => {
+describe('accounts (local mode)', ():void => {
 
   let testApp:E2e;
 
@@ -52,7 +52,7 @@ describe('local-mode accounts', ():void => {
   });
 });
 
-describe('public-mode accounts', (): void => {
+describe('accounts (public mode)', (): void => {
 
   let testApp: E2e;
 
@@ -92,7 +92,7 @@ describe('public-mode accounts', (): void => {
 
 });
 
-describe('private-mode accounts', (): void => {
+describe('accounts (private mode)', (): void => {
 
   let testApp: E2e;
 
@@ -211,6 +211,16 @@ describe('private-mode accounts', (): void => {
       .query({ path: '/author-document' })
       .set(bearer(authorToken))
       .send({ raw: '# Written by an author' })
+      .expect(204);
+    await testApp.http
+      .delete('/api/document')
+      .query({ path: '/author-document' })
+      .set(bearer(readerToken))
+      .expect(401);
+    await testApp.http
+      .delete('/api/document')
+      .query({ path: '/author-document' })
+      .set(bearer(authorToken))
       .expect(204);
     await testApp.http
       .put('/api/settings')

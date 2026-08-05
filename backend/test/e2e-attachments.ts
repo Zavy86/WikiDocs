@@ -56,4 +56,29 @@ describe('attachments', ():void => {
       .expect(404);
   });
 
+  it('rejects invalid attachment uploads and removals', async ():Promise<void> => {
+    await testApp.http
+      .post('/api/attachment')
+      .query({ path: '/missing', file: 'note.txt' })
+      .set(bearer(adminToken))
+      .attach('file', Buffer.from('attachment content'), 'note.txt')
+      .expect(404);
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/attachment-document' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Attachment document' })
+      .expect(204);
+    await testApp.http
+      .post('/api/attachment')
+      .query({ path: '/attachment-document', file: 'note.txt' })
+      .set(bearer(adminToken))
+      .expect(400);
+    await testApp.http
+      .delete('/api/attachment')
+      .query({ path: '/attachment-document', file: 'missing.txt' })
+      .set(bearer(adminToken))
+      .expect(404);
+  });
+
 });

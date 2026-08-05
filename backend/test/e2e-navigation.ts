@@ -71,6 +71,38 @@ describe('navigation', ():void => {
       .expect(400);
   });
 
+  it('returns no results for an unmatched query and validates pinned documents', async ():Promise<void> => {
+    await testApp.http
+      .get('/api/search')
+      .query({ query: 'unmatched-query' })
+      .set(bearer(adminToken))
+      .expect(200)
+      .expect(({ body }):void => {
+        expect(body.results).toEqual([]);
+      });
+    await testApp.http
+      .post('/api/pinned')
+      .query({ path: '/missing' })
+      .set(bearer(adminToken))
+      .expect(400);
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/pinned-document' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Pinned document' })
+      .expect(204);
+    await testApp.http
+      .post('/api/pinned')
+      .query({ path: '/pinned-document' })
+      .set(bearer(adminToken))
+      .expect(204);
+    await testApp.http
+      .patch('/api/pinned')
+      .query({ path: '/pinned-document', sorting: 'first' })
+      .set(bearer(adminToken))
+      .expect(400);
+  });
+
   it('sorts and unpins documents while rejecting duplicate and absent pins', async ():Promise<void> => {
     await testApp.http
       .post('/api/document')

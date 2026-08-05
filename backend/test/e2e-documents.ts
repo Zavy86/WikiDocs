@@ -83,4 +83,29 @@ describe('documents', ():void => {
       .expect(400);
   });
 
+  it('rejects unsafe paths and invalid document deletions', async ():Promise<void> => {
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/guides/../escape' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Escape' })
+      .expect(400);
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/guides/_versions/history' })
+      .set(bearer(adminToken))
+      .send({ raw: '# History' })
+      .expect(400);
+    await testApp.http
+      .delete('/api/document')
+      .query({ path: '/' })
+      .set(bearer(adminToken))
+      .expect(400);
+    await testApp.http
+      .delete('/api/document')
+      .query({ path: '/missing' })
+      .set(bearer(adminToken))
+      .expect(404);
+  });
+
 });
