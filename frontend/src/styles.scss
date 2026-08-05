@@ -45,6 +45,8 @@ html {
   --app-surface-color: #ffffff;
   --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
   --app-shell-background: linear-gradient(145deg, #ffffff 0%, var(--app-shell-accent-tint) 100%);
+  --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 9%);
+  --app-control-shadow: 0 3px 6px rgb(0 0 0 / 9%);
   --app-divider-color: #dddddd;
   --app-shell-min-height: 100vh;
   --app-sidebar-width: 300px;
@@ -348,36 +350,44 @@ h6 {
   color: var(--theme-color);
   font-weight: 300;
   line-height: 110%;
+  text-shadow: var(--app-heading-shadow);
 }
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
   margin: 1.75rem 0 1rem;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 1.5rem 0 1rem;
 }
 
 h3 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 1.75rem 0 1rem;
 }
 
 h4 {
-  font-size: 2rem;
+  font-size: 1.65rem;
   margin: 1rem 0;
 }
 
 h5 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   margin: 0.75rem 0 1rem;
 }
 
 h6 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin: 0.5rem 0 1rem;
+}
+
+button.mat-mdc-unelevated-button,
+button.mat-mdc-raised-button,
+button.mat-mdc-outlined-button,
+button.mat-mdc-icon-button {
+  box-shadow: var(--app-control-shadow);
 }
 
 a,
