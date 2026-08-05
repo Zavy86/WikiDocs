@@ -290,15 +290,16 @@ export class DocumentService {
   }
 
   public async document_retrive(path:string):Promise<DocumentSchema> {
-    const exists:boolean = await this.checkIfDocumentExists(path);
+    const documentExists:boolean = await this.checkIfDocumentExists(path);
+    const directoryExists:boolean = await this.checkIfDirectoryExists(path);
     const pinned:boolean = await this.pinnedService.isPinned(path);
-    const metadata:MetadataSchema = await this.buildDocumentMetadata(path);
-    const children:MetadataSchema[] = ( exists ? await this.retriveChildren(path) : [] );
-    const attachments:AttachmentSchema[] = ( exists ? await this.retrieveAttachments(path) : [] );
-    const versions:string[] = ( exists ? await this.retrieveVersions(path) : [] );
-    const content:ContentSchema = ( exists ? await this.loadDocumentFullContent(path) : { raw: '' } );
-    this.logger.debug(`Document <${ path }> ${ exists ? 'retrieved' : 'not exists' }`);
-    return { exists, pinned, metadata, children, attachments, versions, content };
+    const metadata: MetadataSchema = await this.buildDocumentMetadata(path);
+    const children: MetadataSchema[] = directoryExists ? await this.retriveChildren(path) : [];
+    const attachments:AttachmentSchema[] = ( documentExists ? await this.retrieveAttachments(path) : [] );
+    const versions: string[] = documentExists ? await this.retrieveVersions(path) : [];
+    const content:ContentSchema = ( documentExists ? await this.loadDocumentFullContent(path) : { raw: '' } );
+    this.logger.debug(`Document <${ path }> ${ ( documentExists ? 'retrieved' : ( directoryExists ? 'traversed' : 'not exists' ) ) }`);
+    return { exists: documentExists, pinned, metadata, children, attachments, versions, content };
   }
 
   public async document_store(path:string, token:TokenSchema, content:ContentSchema):Promise<void> {

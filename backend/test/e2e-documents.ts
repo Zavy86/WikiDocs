@@ -66,6 +66,29 @@ describe('documents', ():void => {
     });
   });
 
+  it('represents a directory with child documents and no content as a hierarchy page', async ():Promise<void> => {
+    const documentsPath:string = join(testApp.datasetsPath, 'documents');
+    await mkdir(join(documentsPath, 'guides', 'hierarchy', 'child'), { recursive: true });
+    await writeFile(join(documentsPath, 'guides', 'hierarchy', 'child', 'content.md'), '# Child', 'utf-8');
+    await testApp.http
+      .get('/api/document')
+      .query({ path: '/guides/hierarchy' })
+      .set(bearer(adminToken))
+      .expect(200)
+      .expect(({ body }):void => {
+        expect(body).toMatchObject({
+          exists: false,
+          metadata: { path: '/guides/hierarchy', title: 'hierarchy' },
+          content: { raw: '' },
+          attachments: [],
+          versions: []
+        });
+        expect(body.children).toEqual(expect.arrayContaining([
+          expect.objectContaining({ path: '/guides/hierarchy/child', title: 'child' })
+        ]));
+      });
+  });
+
   it('uses fallback titles for documents without a title', async ():Promise<void> => {
     const documentsPath:string = join(testApp.datasetsPath, 'documents');
     await mkdir(join(documentsPath, 'guides', 'without-content'), { recursive: true });

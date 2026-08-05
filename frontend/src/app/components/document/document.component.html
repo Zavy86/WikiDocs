@@ -3,7 +3,11 @@
     @if (mode() === 'view') {
       @if (document(); as currentDocument) {
         @if (currentDocument.exists === false) {
-          <app-document-exists [canWrite]="canWrite()"/>
+          <app-document-exists
+            [canWrite]="canWrite()"
+            [hasChildren]="currentDocument.children.length > 0"
+            [metadata]="currentDocument.metadata"
+          />
         } @else {
           <app-document-viewer
             [metadata]="currentDocument.metadata"
