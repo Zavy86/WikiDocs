@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, computed, ElementRef, inject, Signal, signal, viewChild, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +20,7 @@ import { SettingsType } from 'src/app/types';
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
-  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
+  imports: [ ReactiveFormsModule, MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
 })
 export class SettingsComponent {
 
@@ -35,6 +36,15 @@ export class SettingsComponent {
 
   protected readonly loading:WritableSignal<boolean> = signal(true);
   protected readonly saving:WritableSignal<boolean> = signal(false);
+  protected readonly timezoneLoadError:WritableSignal<string | null> = signal<string | null>(null);
+  protected readonly timezoneOptions:WritableSignal<ReadonlyArray<string>> = signal<ReadonlyArray<string>>([]);
+  protected readonly timezoneSearch:WritableSignal<string> = signal<string>('');
+  protected readonly filteredTimezones:Signal<ReadonlyArray<string>> = computed(():ReadonlyArray<string> => {
+    const query:string = this.timezoneSearch().trim().toLocaleLowerCase();
+    return query.length === 0
+      ? this.timezoneOptions()
+      : this.timezoneOptions().filter((timezone:string):boolean => timezone.toLocaleLowerCase().includes(query));
+  });
   protected readonly isMobile:Signal<boolean> = toSignal(this.breakpointObserver.observe('(max-width: 992px)').pipe(map((state:BreakpointState):boolean => state.matches)), { initialValue: false });
   protected readonly isLocalMode:Signal<boolean> = computed(():boolean => this.informationService.retrieve()?.mode === 'local');
   protected readonly colorPicker:Signal<ElementRef<HTMLInputElement>> = viewChild.required<ElementRef<HTMLInputElement>>('colorPicker');
@@ -52,6 +62,7 @@ export class SettingsComponent {
   });
 
   constructor() {
+    this.loadTimezones();
     this.loadSettings();
   }
 
@@ -61,7 +72,7 @@ export class SettingsComponent {
   }
 
   protected save():void {
-    if ( this.loading() || this.saving() ) { return; }
+    if ( this.loading() || this.saving() || this.timezoneLoadError() !== null ) { return; }
     if ( this.form.invalid ) {
       this.form.markAllAsTouched();
       return;
@@ -125,6 +136,14 @@ export class SettingsComponent {
       template: settings.template,
       color: settings.color,
     });
+  }
+
+  private loadTimezones():void {
+    if ( typeof Intl.supportedValuesOf !== 'function' ) {
+      this.timezoneLoadError.set('Timezone selection is not supported by this browser.');
+      return;
+    }
+    this.timezoneOptions.set([ 'UTC', ...Intl.supportedValuesOf('timeZone') ].sort((first:string, second:string):number => first.localeCompare(second)));
   }
 
   protected colorPickerValue():string {

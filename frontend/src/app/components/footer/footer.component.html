@@ -5,7 +5,7 @@
         @if (document()?.exists === true) {
           <div class="footer-meta">
             <p class="left-text">
-              <small>Last update {{ timestamp() }} by {{ author() }}</small>
+              <small>Last update {{ document()?.metadata?.timestamp | timezone: 'yyyy-MM-dd HH:mm' }} by {{ author() }}</small>
             </p>
           </div>
         }

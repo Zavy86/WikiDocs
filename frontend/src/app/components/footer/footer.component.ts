@@ -1,6 +1,6 @@
-import { format, isValid, parseISO } from 'date-fns';
 import { Component, computed, input, InputSignal, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TimeZonePipe } from 'src/app/app.pipes';
 import { DocumentType, SettingsType } from 'src/app/types';
 
 @Component({
@@ -8,7 +8,7 @@ import { DocumentType, SettingsType } from 'src/app/types';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
-  imports: [ RouterLink ],
+  imports: [ RouterLink, TimeZonePipe ],
 })
 export class FooterComponent {
 
@@ -28,15 +28,5 @@ export class FooterComponent {
   });
 
   protected readonly author:Signal<string> = computed(():string => this.document()?.metadata?.author ?? '');
-
-  protected readonly timestamp:Signal<string> = computed(():string => this.parseTimestamp() ?? '');
-
-  private parseTimestamp():string | null {
-    const timestamp:string | undefined = this.document()?.metadata?.timestamp;
-    if ( ! timestamp ) { return null; }
-    const date:Date = parseISO(timestamp);
-    if ( ! isValid(date) ) { return null; }
-    return format(date, 'yyyy-MM-dd HH:mm');
-  }
 
 }

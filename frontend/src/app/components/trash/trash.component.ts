@@ -1,5 +1,4 @@
 import { finalize } from 'rxjs';
-import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,9 +8,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { TreeComponent, TreeData } from 'src/app/components/tree/tree.component';
 import { AlertService } from 'src/app/services/alert.service';
-import { HttpService } from 'src/app/services/http.service';
 import { TrashService } from 'src/app/services/trash.service';
-import { MetadataType, SettingsType } from 'src/app/types';
+import { MetadataType } from 'src/app/types';
+import { TimeZonePipe } from 'src/app/app.pipes';
 
 type TrashEntry = {
   readonly metadata:MetadataType;
@@ -29,18 +28,16 @@ type TrashPath = {
   selector: 'app-trash',
   templateUrl: './trash.component.html',
   styleUrl: './trash.component.scss',
-  imports: [ DatePipe, MatButtonModule, MatIconModule, MatTooltipModule ],
+  imports: [ TimeZonePipe, MatButtonModule, MatIconModule, MatTooltipModule ],
 })
 export class TrashComponent {
 
   private readonly alertService:AlertService = inject(AlertService);
   private readonly dialog:MatDialog = inject(MatDialog);
-  private readonly httpService:HttpService = inject(HttpService);
   private readonly trashService:TrashService = inject(TrashService);
 
   protected readonly loading:WritableSignal<boolean> = signal(true);
   protected readonly processing:WritableSignal<boolean> = signal(false);
-  protected readonly timezone:WritableSignal<string | undefined> = signal<string | undefined>(undefined);
   private readonly documents:WritableSignal<ReadonlyArray<MetadataType>> = signal<ReadonlyArray<MetadataType>>([]);
 
   protected readonly entries:Signal<ReadonlyArray<TrashEntry>> = computed(():ReadonlyArray<TrashEntry> => {
@@ -55,7 +52,6 @@ export class TrashComponent {
   });
 
   constructor() {
-    this.loadSettings();
     this.loadTrash();
   }
 
@@ -108,17 +104,6 @@ export class TrashComponent {
           this.alertService.error(error.message || 'Unable to load trash.');
         },
       });
-  }
-
-  private loadSettings():void {
-    this.httpService.GET<SettingsType>('/settings').subscribe({
-      next: (settings:SettingsType):void => {
-        this.timezone.set(settings.timezone);
-      },
-      error: (error:HttpErrorResponse):void => {
-        this.alertService.error(error.message || 'Unable to load settings for trash timestamps.');
-      },
-    });
   }
 
   private recoverToDestination(path:string, destination:string):void {
