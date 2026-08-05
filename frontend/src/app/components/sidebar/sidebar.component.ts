@@ -35,6 +35,11 @@ export class SidebarComponent {
     return ( notice.length > 0 ? notice : `Copyright ${ new Date().getFullYear() } All Rights Reserved` );
   });
 
+  protected readonly showDocument:Signal<boolean> = computed(():boolean => {
+    const document:DocumentType | null = this.document();
+    return !! document && ( document.exists === true || document.children.length > 0 );
+  });
+
   private normalizePath(url:string):string {
     const [ pathWithoutQuery ] = url.split('?');
     if ( ! pathWithoutQuery || pathWithoutQuery === '/' ) { return '/'; }
