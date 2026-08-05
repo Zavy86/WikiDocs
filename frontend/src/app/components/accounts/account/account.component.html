@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="dialog-title">
+<h2 mat-dialog-title class="dialog-title app-dialog-title">
   <span>{{ title() }}</span>
   <button mat-icon-button type="button" aria-label="Close account dialog" (click)="close()">
     <mat-icon>close</mat-icon>
@@ -6,9 +6,9 @@
 </h2>
 <mat-dialog-content>
   <form class="dialog-form" [formGroup]="form" (ngSubmit)="save()">
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="app-form-control-full-width">
       <mat-label>Account</mat-label>
-      <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="isEditMode" autocomplete="off"/>
+      <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="isEditMode" autocomplete="off" />
       @if (form.controls.account.touched && form.controls.account.hasError('required')) {
         <mat-error>Account is required</mat-error>
       }
@@ -17,16 +17,16 @@
       }
     </mat-form-field>
     <div class="layout-grid layout-grid-2">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Firstname</mat-label>
-        <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="off"/>
+        <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="off" />
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Lastname</mat-label>
-        <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="off"/>
+        <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="off" />
       </mat-form-field>
     </div>
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="app-form-control-full-width">
       <mat-label>Role</mat-label>
       <mat-select id="role" name="role" formControlName="role">
         <mat-option value="administrator">administrator</mat-option>
@@ -35,10 +35,19 @@
       </mat-select>
     </mat-form-field>
     <div class="layout-grid layout-grid-2">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Password</mat-label>
-        <input matInput id="password" name="password" type="password" formControlName="password" maxlength="256"
-               [placeholder]="isEditMode ? 'Leave blank to keep current password.' : ''" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
+        <input
+          matInput
+          id="password"
+          name="password"
+          type="password"
+          formControlName="password"
+          maxlength="256"
+          [placeholder]="isEditMode ? 'Leave blank to keep current password.' : ''"
+          [errorStateMatcher]="passwordErrorStateMatcher"
+          autocomplete="new-password"
+        />
         @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
           <mat-error>Fill both password fields</mat-error>
         }
@@ -46,9 +55,18 @@
           <mat-error>Password is required</mat-error>
         }
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Check password</mat-label>
-        <input matInput id="confirm" name="confirm" type="password" formControlName="confirm" maxlength="256" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
+        <input
+          matInput
+          id="confirm"
+          name="confirm"
+          type="password"
+          formControlName="confirm"
+          maxlength="256"
+          [errorStateMatcher]="passwordErrorStateMatcher"
+          autocomplete="new-password"
+        />
         @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
           <mat-error>Fill both password fields</mat-error>
         }

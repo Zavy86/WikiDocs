@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0;
 
   > span {
     flex: 1 1 auto;
@@ -15,6 +14,7 @@
 }
 
 .tree {
+  --mat-tree-container-background-color: var(--app-surface-color);
   max-height: 52vh;
   overflow: auto;
   border: 1px solid #d0d7de;

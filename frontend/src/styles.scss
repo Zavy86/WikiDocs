@@ -24,15 +24,17 @@
 @import 'katex/dist/katex.min.css';
 
 html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$green-palette,
-      tertiary: mat.$green-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$green-palette,
+        tertiary: mat.$green-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 :root {
@@ -40,6 +42,19 @@ html {
   --mat-sys-primary: var(--theme-color);
   --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
+  --app-surface-color: #ffffff;
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
+  --app-shell-background: linear-gradient(145deg, #ffffff 0%, var(--app-shell-accent-tint) 100%);
+  --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 9%);
+  --app-control-shadow: 0 3px 6px rgb(0 0 0 / 9%);
+  --app-divider-color: #dddddd;
+  --app-shell-min-height: 100vh;
+  --app-sidebar-width: 300px;
+  --app-header-height: 70px;
+  --app-content-max-width: 980px;
+  --app-page-horizontal-padding: 16px;
+  --app-page-bottom-padding: 18px;
+  --mat-dialog-container-color: var(--app-surface-color);
 }
 
 .main-color {
@@ -56,7 +71,7 @@ body {
   line-height: 1.6;
   font-family: var(--app-font-family);
   -webkit-font-smoothing: antialiased;
-  background: #ffffff;
+  background: var(--app-surface-color);
 }
 
 body * {
@@ -241,6 +256,31 @@ code {
   overflow-x: hidden !important;
 }
 
+.app-page-content {
+  max-width: var(--app-content-max-width);
+  margin: 0 auto;
+}
+
+.app-form-control-full-width {
+  width: 100%;
+}
+
+.app-form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+h2.app-dialog-title {
+  margin-bottom: 0;
+}
+
+.app-dialog-close-button {
+  margin-right: -0.25rem;
+  margin-left: auto;
+}
+
 .layout-grid {
   display: grid;
   gap: 16px;
@@ -310,36 +350,44 @@ h6 {
   color: var(--theme-color);
   font-weight: 300;
   line-height: 110%;
+  text-shadow: var(--app-heading-shadow);
 }
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
   margin: 1.75rem 0 1rem;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 1.5rem 0 1rem;
 }
 
 h3 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 1.75rem 0 1rem;
 }
 
 h4 {
-  font-size: 2rem;
+  font-size: 1.65rem;
   margin: 1rem 0;
 }
 
 h5 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   margin: 0.75rem 0 1rem;
 }
 
 h6 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin: 0.5rem 0 1rem;
+}
+
+button.mat-mdc-unelevated-button,
+button.mat-mdc-raised-button,
+button.mat-mdc-outlined-button,
+button.mat-mdc-icon-button {
+  box-shadow: var(--app-control-shadow);
 }
 
 a,

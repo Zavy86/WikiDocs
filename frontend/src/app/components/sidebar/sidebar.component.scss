@@ -6,15 +6,15 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: var(--app-sidebar-width);
   height: 100%;
-  background-color: #ffffff;
+  background-color: var(--app-surface-color);
   overflow: hidden;
 }
 
 .search-wrapper {
   flex: 0 0 auto;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--app-divider-color);
   overflow: hidden;
   margin-bottom: 6px;
 }
@@ -103,7 +103,7 @@
 }
 
 .nav-divider {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid var(--app-divider-color);
   height: 0;
   margin: 0 0 8px;
   padding: 0;
@@ -122,8 +122,8 @@
 .sidebar-footer {
   flex: 0 0 auto;
   padding: 15px 30px 20px;
-  border-top: solid 1px #dddddd;
-  background-color: #ffffff;
+  border-top: solid 1px var(--app-divider-color);
+  background-color: var(--app-surface-color);
   font-size: 14px;
   line-height: 1.5;
 }

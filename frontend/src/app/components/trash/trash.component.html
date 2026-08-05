@@ -1,5 +1,5 @@
 <main class="page-main">
-  <section class="content-wrapper">
+  <section class="app-page-content">
     <h1>Trash</h1>
     @if (loading()) {
       <p class="loading" role="status" aria-live="polite">Loading trash...</p>
@@ -43,7 +43,7 @@
               </div>
               <div>
                 <dt>Updated</dt>
-                <dd>{{ entry.metadata.timestamp | date:'yyyy-MM-dd HH:mm':timezone() }}</dd>
+                <dd>{{ entry.metadata.timestamp | date: 'yyyy-MM-dd HH:mm' : timezone() }}</dd>
               </div>
               <div>
                 <dt>Path</dt>
@@ -51,7 +51,7 @@
               </div>
               <div>
                 <dt>Deleted</dt>
-                <dd>{{ entry.deletedAt ? (entry.deletedAt | date:'yyyy-MM-dd HH:mm':timezone()) : 'Unknown' }}</dd>
+                <dd>{{ entry.deletedAt ? (entry.deletedAt | date: 'yyyy-MM-dd HH:mm' : timezone()) : 'Unknown' }}</dd>
               </div>
             </dl>
           </article>
