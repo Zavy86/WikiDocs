@@ -12,6 +12,7 @@ import { InformationService } from 'src/app/services/information.service';
 import { PrivacyService } from 'src/app/services/privacy.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { AttachmentType, DocumentType, InformationType, MetadataType, PinnedType, SettingsType } from 'src/app/types';
 import {
   ActionItem,
@@ -52,6 +53,7 @@ export class App implements AfterViewInit {
   private readonly alertService:AlertService = inject(AlertService);
   private readonly themeService:ThemeService = inject(ThemeService);
   private readonly httpService:HttpService = inject(HttpService);
+  private readonly settingsService:SettingsService = inject(SettingsService);
   private readonly informationService:InformationService = inject(InformationService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly privacyService:PrivacyService = inject(PrivacyService);
@@ -81,7 +83,7 @@ export class App implements AfterViewInit {
     return ! this.showStartup() && !! information && ! information.initialized;
   });
 
-  protected readonly settings:WritableSignal<SettingsType | null> = signal<SettingsType | null>(null);
+  protected readonly settings:Signal<SettingsType | null> = this.settingsService.settings;
 
   protected readonly search:WritableSignal<string> = signal('');
 
@@ -345,7 +347,7 @@ export class App implements AfterViewInit {
 
   private loadInformationBoundState():void {
     if ( ! this.informationService.isInitialized() ) {
-      this.settings.set(null);
+      this.settingsService.clear();
       this.pinnedDocuments.set([]);
       this.isAuthenticated.set(false);
       this.isGuestUser.set(false);
@@ -554,9 +556,8 @@ export class App implements AfterViewInit {
   }
 
   private loadSettings():void {
-    this.httpService.GET<SettingsType>('/settings').subscribe({
+    this.settingsService.load().subscribe({
       next: (settings:SettingsType):void => {
-        this.settings.set(settings);
         this.themeService.applyColor(settings.color);
       },
       error: (error:HttpErrorResponse):void => {

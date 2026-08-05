@@ -41,9 +41,24 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>Timezone</mat-label>
-            <mat-select id="timezone" name="timezone" formControlName="timezone">
-              <mat-option value="UTC">UTC</mat-option>
-            </mat-select>
+            <input
+              matInput
+              id="timezone"
+              name="timezone"
+              type="text"
+              formControlName="timezone"
+              [matAutocomplete]="timezoneAutocomplete"
+              [disabled]="timezoneLoadError() !== null"
+              (input)="timezoneSearch.set(form.controls.timezone.value)"
+            />
+            <mat-autocomplete #timezoneAutocomplete="matAutocomplete" (optionSelected)="timezoneSearch.set($event.option.value)">
+              @for (timezone of filteredTimezones(); track timezone) {
+                <mat-option [value]="timezone">{{ timezone }}</mat-option>
+              }
+            </mat-autocomplete>
+            @if (timezoneLoadError(); as error) {
+              <mat-hint>{{ error }}</mat-hint>
+            }
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>Template</mat-label>
@@ -67,7 +82,7 @@
         </div>
         <div class="app-form-actions">
           <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
-          <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving() || timezoneLoadError() !== null">{{ saving() ? 'Saving...' : 'Save' }}</button>
         </div>
       </form>
     }

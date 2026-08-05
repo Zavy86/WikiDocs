@@ -10,6 +10,7 @@ import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confir
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
 import { ContentType, DocumentType } from 'src/app/types';
+import { TimeZonePipe } from 'src/app/app.pipes';
 
 export type VersionsDialogData = {
   readonly path:string;
@@ -28,6 +29,7 @@ export type VersionsDialogResult = {
   templateUrl: './versions.component.html',
   styleUrl: './versions.component.scss',
   imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule ],
+  providers: [ TimeZonePipe ],
 })
 export class VersionsComponent {
 
@@ -35,6 +37,7 @@ export class VersionsComponent {
   private readonly httpService:HttpService = inject(HttpService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly dialogRef:MatDialogRef<VersionsComponent, VersionsDialogResult> = inject(MatDialogRef<VersionsComponent, VersionsDialogResult>);
+  private readonly timeZonePipe:TimeZonePipe = inject(TimeZonePipe);
 
   protected readonly data:VersionsDialogData = inject<VersionsDialogData>(MAT_DIALOG_DATA);
   protected readonly versions:WritableSignal<ReadonlyArray<string>> = signal<ReadonlyArray<string>>([ ...this.data.versions ]);
@@ -48,8 +51,7 @@ export class VersionsComponent {
 
   protected formatTimestamp(timestamp:string):string {
     const date:Date = new Date(Number(timestamp));
-    const pad = (value:number):string => value.toString().padStart(2, '0');
-    return `${ date.getFullYear() }-${ pad(date.getMonth() + 1) }-${ pad(date.getDate()) } ${ pad(date.getHours()) }:${ pad(date.getMinutes()) }:${ pad(date.getSeconds()) }`;
+    return this.timeZonePipe.transform(date, 'yyyy-MM-dd HH:mm:ss') ?? 'Unknown';
   }
 
   protected loadVersion(timestamp:string):void {
