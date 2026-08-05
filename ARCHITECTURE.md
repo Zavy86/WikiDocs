@@ -327,6 +327,8 @@ name, last name, and optionally password.
 
 A document node is a slug-normalized directory under `documents/`. Each directory may contain `content.md`, direct file
 attachments, child document directories, and `_versions`. A directory without `content.md` is an index-only node.
+It is returned with `exists: false` and its direct `children`; the frontend renders it as a hierarchy page. A path with
+neither content nor children remains a missing page.
 
 ```
 ┌─────────────────────────────────────────┐
