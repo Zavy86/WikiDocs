@@ -11,6 +11,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
 import { PrivacyService } from 'src/app/services/privacy.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import { AttachmentType, DocumentType, InformationType, MetadataType, PinnedType, SettingsType } from 'src/app/types';
 import {
   ActionItem,
@@ -49,6 +50,7 @@ import {
 export class App implements AfterViewInit {
 
   private readonly alertService:AlertService = inject(AlertService);
+  private readonly themeService:ThemeService = inject(ThemeService);
   private readonly httpService:HttpService = inject(HttpService);
   private readonly informationService:InformationService = inject(InformationService);
   private readonly dialog:MatDialog = inject(MatDialog);
@@ -555,6 +557,7 @@ export class App implements AfterViewInit {
     this.httpService.GET<SettingsType>('/settings').subscribe({
       next: (settings:SettingsType):void => {
         this.settings.set(settings);
+        this.themeService.applyColor(settings.color);
       },
       error: (error:HttpErrorResponse):void => {
         console.error(error.message || 'Unable to load settings');

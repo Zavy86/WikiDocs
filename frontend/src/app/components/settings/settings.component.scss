@@ -11,6 +11,37 @@
   width: 100%;
 }
 
+.color-field {
+  --mat-form-field-outlined-input-text-color: #ffffff;
+  --mat-form-field-outlined-caret-color: #ffffff;
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    background-color: var(--color-field-background);
+  }
+
+  ::ng-deep .mat-mdc-floating-label {
+    padding: 0 4px;
+    background-color: #ffffff;
+  }
+
+  input {
+    color: #ffffff;
+    caret-color: #ffffff;
+  }
+
+  button {
+    color: #ffffff;
+  }
+}
+
+.native-color-picker {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .actions {
   margin-top: 2rem;
   display: flex;
