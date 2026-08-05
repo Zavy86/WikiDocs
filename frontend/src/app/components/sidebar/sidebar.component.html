@@ -25,10 +25,10 @@
           <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
         </li>
       }
-      @if (pinned()?.length && document()?.exists === true) {
+      @if (pinned()?.length && showDocument()) {
         <li class="nav-divider"></li>
       }
-      @if (document()?.exists === true) {
+      @if (showDocument()) {
         <li class="nav-section-label">Document</li>
         <li class="nav-item active">
           <strong>

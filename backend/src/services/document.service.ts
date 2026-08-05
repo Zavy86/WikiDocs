@@ -17,20 +17,21 @@ import {
 } from '@nestjs/common';
 import { PinnedService } from "src/services/pinned.service";
 import { EnvironmentService } from "src/services/environment.service";
-import { AttachmentSchema, ContentSchema, DocumentSchema, MetadataSchema, TokenSchema, TrashSchema, TreeSchema } from "src/schemas";
+import { SettingsService } from 'src/services/settings.service';
+import { AttachmentSchema, ContentSchema, DocumentSchema, MetadataSchema, SettingsSchema, TokenSchema, TrashSchema, TreeSchema } from 'src/schemas';
+
+interface FrontMatterInterface {
+  title: string;
+  timestamp: string;
+  author: string;
+  tags: string[];
+}
 
 export type AttachmentStream = {
   stream:ReadStream;
   fileType:string;
   fileName:string;
   contentLength:number;
-};
-
-interface FrontMatterInterface {
-  title:string;
-  timestamp:string;
-  author:string;
-  tags:string[];
 };
 
 @Injectable()
@@ -40,6 +41,7 @@ export class DocumentService {
 
   constructor(
     private readonly environmentService:EnvironmentService,
+    private readonly settingsService:SettingsService,
     @Inject(forwardRef(() => PinnedService))
     private readonly pinnedService:PinnedService
   ) {}
@@ -142,13 +144,8 @@ export class DocumentService {
   }
 
   public async buildDocumentMetadata(path:string, deleted:boolean = false):Promise<MetadataSchema> {
-    const document:MetadataSchema = {
-      path: '/' + this.environmentService.sanitizeDocumentPath(path),
-      title: '',
-      author: '',
-      timestamp: '',
-      tags: []
-    }
+    const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
+    const document:MetadataSchema = { path: '/' + sanitizedPath, title: '', author: '', timestamp: '', tags: [] }
     if ( await this.checkIfDocumentExists(path, deleted) ) {
       const parsedFrontMatter:FrontMatterInterface | null = await this.loadDocumentFrontMatter(path, deleted);
       if ( parsedFrontMatter ) {
@@ -158,7 +155,16 @@ export class DocumentService {
         document.tags = parsedFrontMatter.tags;
       }
     }
+    document.title = await this.resolveMetadataTitle(sanitizedPath, document.title);
     return document;
+  }
+
+  private async resolveMetadataTitle(sanitizedPath:string, title:string):Promise<string> {
+    const normalizedTitle:string = title.trim();
+    if ( normalizedTitle.length > 0 ) { return normalizedTitle; }
+    if ( sanitizedPath ) { return ( sanitizedPath.split('/').at(-1) ?? sanitizedPath ); }
+    const settings:SettingsSchema = await this.settingsService.retrieve();
+    return settings.title.trim();
   }
 
   private async loadDocumentFrontMatter(path:string, deleted:boolean = false):Promise<FrontMatterInterface | null> {
@@ -284,15 +290,16 @@ export class DocumentService {
   }
 
   public async document_retrive(path:string):Promise<DocumentSchema> {
-    const exists:boolean = await this.checkIfDocumentExists(path);
+    const documentExists:boolean = await this.checkIfDocumentExists(path);
+    const directoryExists:boolean = await this.checkIfDirectoryExists(path);
     const pinned:boolean = await this.pinnedService.isPinned(path);
-    const metadata:MetadataSchema = await this.buildDocumentMetadata(path);
-    const children:MetadataSchema[] = ( exists ? await this.retriveChildren(path) : [] );
-    const attachments:AttachmentSchema[] = ( exists ? await this.retrieveAttachments(path) : [] );
-    const versions:string[] = ( exists ? await this.retrieveVersions(path) : [] );
-    const content:ContentSchema = ( exists ? await this.loadDocumentFullContent(path) : { raw: '' } );
-    this.logger.debug(`Document <${ path }> ${ exists ? 'retrieved' : 'not exists' }`);
-    return { exists, pinned, metadata, children, attachments, versions, content };
+    const metadata: MetadataSchema = await this.buildDocumentMetadata(path);
+    const children: MetadataSchema[] = directoryExists ? await this.retriveChildren(path) : [];
+    const attachments:AttachmentSchema[] = ( documentExists ? await this.retrieveAttachments(path) : [] );
+    const versions: string[] = documentExists ? await this.retrieveVersions(path) : [];
+    const content:ContentSchema = ( documentExists ? await this.loadDocumentFullContent(path) : { raw: '' } );
+    this.logger.debug(`Document <${ path }> ${ ( documentExists ? 'retrieved' : ( directoryExists ? 'traversed' : 'not exists' ) ) }`);
+    return { exists: documentExists, pinned, metadata, children, attachments, versions, content };
   }
 
   public async document_store(path:string, token:TokenSchema, content:ContentSchema):Promise<void> {

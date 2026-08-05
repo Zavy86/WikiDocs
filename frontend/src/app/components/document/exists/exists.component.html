@@ -1,7 +1,14 @@
 <article>
-  <h1>Page not found</h1>
-  <p>This page does not exist yet.</p>
-  @if (canWrite()) {
-    <p>Would you like to create it now?</p>
+  @if (hasChildren()) {
+    <h1>{{ metadata().title }}</h1>
+    @if (canWrite()) {
+      <p>This page has no content yet.</p>
+    }
+  } @else {
+    <h1>Page not found</h1>
+    <p>This page does not exist yet.</p>
+    @if (canWrite()) {
+      <p>Would you like to create it now?</p>
+    }
   }
 </article>
