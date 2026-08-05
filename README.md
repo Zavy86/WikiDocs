@@ -30,13 +30,11 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Uploading and downloading Attachments
 - Uploading images ~~(also from clipboard)~~
 - Content can be categorized in namespaces
-- ~~Automatic generated index and sitemap~~
 - Public and private browsing
 - Desktop and remote Sync
 - Syntax highlighting
 - ~~Multi-language~~
 - ~~Dark mode~~
-- ~~Sitemap~~
 - and many more...
 
 ~~Striked~~ features are work in progress.
