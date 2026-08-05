@@ -9,7 +9,8 @@ function readBinaryResponse(response:Response, callback:(error:Error | null, bod
   response.on('end', ():void => callback(null, Buffer.concat(chunks)));
 }
 
-describe('synchronization (e2e)', ():void => {
+describe('synchronization', ():void => {
+
   let testApp:E2e;
   let adminToken:string;
 

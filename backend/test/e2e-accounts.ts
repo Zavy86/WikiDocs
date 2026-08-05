@@ -1,6 +1,7 @@
 import { authenticate, bearer, createE2eApp, E2e, initialize, initializer } from './e2e';
 
-describe('local-mode accounts (e2e)', ():void => {
+describe('local-mode accounts', ():void => {
+
   let testApp:E2e;
 
   beforeEach(async ():Promise<void> => {
@@ -51,7 +52,7 @@ describe('local-mode accounts (e2e)', ():void => {
   });
 });
 
-describe('public-mode accounts (e2e)', (): void => {
+describe('public-mode accounts', (): void => {
 
   let testApp: E2e;
 
@@ -65,7 +66,9 @@ describe('public-mode accounts (e2e)', (): void => {
   });
 
   it('issues a read-only guest token and disables local access', async (): Promise<void> => {
-    const response = await testApp.http.get('/api/guest').expect(200);
+    const response = await testApp.http
+      .get('/api/guest')
+      .expect(200);
     const token: string = response.body.jwt as string;
     await testApp.http
       .head('/api/token')
@@ -89,7 +92,7 @@ describe('public-mode accounts (e2e)', (): void => {
 
 });
 
-describe('private-mode accounts (e2e)', (): void => {
+describe('private-mode accounts', (): void => {
 
   let testApp: E2e;
 
@@ -153,7 +156,9 @@ describe('private-mode accounts (e2e)', (): void => {
       password: 'reader password',
     };
     const adminToken: string = await authenticate(testApp);
-    const settings = await testApp.http.get('/api/settings').expect(200);
+    const settings = await testApp.http
+      .get('/api/settings')
+      .expect(200);
     await testApp.http
       .post('/api/accounts')
       .set(bearer(adminToken))
