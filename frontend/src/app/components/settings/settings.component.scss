@@ -34,6 +34,20 @@
   }
 }
 
+.color-field-invalid {
+  --mat-form-field-outlined-input-text-color: #b3261e;
+  --mat-form-field-outlined-caret-color: #b3261e;
+
+  input {
+    color: #b3261e;
+    caret-color: #b3261e;
+  }
+
+  button {
+    color: #b3261e;
+  }
+}
+
 .native-color-picker {
   position: fixed;
   width: 1px;

@@ -89,6 +89,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width color-field"
+            [class.color-field-invalid]="form.controls.color.invalid"
             [style.--color-field-background]="form.controls.color.value"
           >
             <mat-label>Color</mat-label>
