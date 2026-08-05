@@ -3,9 +3,9 @@
     <h1>Wiki|Docs</h1>
     <p>Initialize datasets for this new instance</p>
     <form class="initialization-form" [formGroup]="form" (ngSubmit)="submitInitialization()">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Title</mat-label>
-        <input matInput id="title" type="text" formControlName="title" maxlength="32"/>
+        <input matInput id="title" type="text" formControlName="title" maxlength="32" />
         @if (form.controls.title.touched && form.controls.title.hasError('required')) {
           <mat-error>Title is required</mat-error>
         }
@@ -13,9 +13,9 @@
           <mat-error>Title must be at most 32 characters</mat-error>
         }
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Account</mat-label>
-        <input matInput id="account" type="email" formControlName="account" maxlength="256" autocomplete="username"/>
+        <input matInput id="account" type="email" formControlName="account" maxlength="256" autocomplete="username" />
         @if (form.controls.account.touched && form.controls.account.hasError('required')) {
           <mat-error>Account is required</mat-error>
         }
@@ -27,9 +27,9 @@
         }
       </mat-form-field>
       <div class="layout-grid">
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="app-form-control-full-width">
           <mat-label>Firstname</mat-label>
-          <input matInput id="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="given-name"/>
+          <input matInput id="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="given-name" />
           @if (form.controls.firstname.touched && form.controls.firstname.hasError('required')) {
             <mat-error>Firstname is required</mat-error>
           }
@@ -37,9 +37,9 @@
             <mat-error>Firstname must be at most 32 characters</mat-error>
           }
         </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="app-form-control-full-width">
           <mat-label>Lastname</mat-label>
-          <input matInput id="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="family-name"/>
+          <input matInput id="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="family-name" />
           @if (form.controls.lastname.touched && form.controls.lastname.hasError('required')) {
             <mat-error>Lastname is required</mat-error>
           }
@@ -50,9 +50,18 @@
       </div>
       @if (!isLocalMode()) {
         <div class="layout-grid">
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>Password</mat-label>
-            <input matInput id="password" name="password" type="password" formControlName="password" maxlength="256" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
+            <input
+              matInput
+              id="password"
+              name="password"
+              type="password"
+              formControlName="password"
+              maxlength="256"
+              [errorStateMatcher]="passwordErrorStateMatcher"
+              autocomplete="new-password"
+            />
             @if (form.controls.password.touched && form.controls.password.hasError('required')) {
               <mat-error>Password is required</mat-error>
             }
@@ -63,9 +72,18 @@
               <mat-error>Fill both password fields</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>Confirm password</mat-label>
-            <input matInput id="confirm" name="confirm" type="password" formControlName="confirm" maxlength="256" [errorStateMatcher]="passwordErrorStateMatcher" autocomplete="new-password"/>
+            <input
+              matInput
+              id="confirm"
+              name="confirm"
+              type="password"
+              formControlName="confirm"
+              maxlength="256"
+              [errorStateMatcher]="passwordErrorStateMatcher"
+              autocomplete="new-password"
+            />
             @if (form.controls.confirm.touched && form.controls.confirm.hasError('required')) {
               <mat-error>Password confirmation is required</mat-error>
             }

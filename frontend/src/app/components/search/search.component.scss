@@ -2,11 +2,6 @@
   padding: 0 16px 18px;
 }
 
-.content-wrapper {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
 .search-loading {
   display: flex;
   justify-content: center;
@@ -25,7 +20,9 @@
   border-radius: 6px;
   color: inherit;
   text-decoration: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .search-result:hover,

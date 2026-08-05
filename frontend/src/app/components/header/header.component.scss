@@ -3,10 +3,10 @@
 }
 
 .header-inner {
-  max-width: 980px;
+  max-width: var(--app-content-max-width);
   margin: 0 auto;
-  padding: 0 16px;
-  height: 70px;
+  padding: 0 var(--app-page-horizontal-padding);
+  height: var(--app-header-height);
   display: flex;
   align-items: center;
 }
@@ -59,7 +59,7 @@
   flex-direction: column;
   padding: 8px;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: var(--app-surface-color);
   box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
   z-index: 10;
 }
@@ -83,9 +83,7 @@
 }
 
 @media only screen and (max-width: 992px) {
-
   .header-inner {
     padding: 0 8px;
   }
-
 }

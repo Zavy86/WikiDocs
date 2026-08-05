@@ -1,9 +1,9 @@
 <main class="login-page">
   <form class="login-form" [formGroup]="form" (ngSubmit)="authenticate()">
     <h2>Login</h2>
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="app-form-control-full-width">
       <mat-label>Account</mat-label>
-      <input matInput id="account" type="email" formControlName="account" autocomplete="username"/>
+      <input matInput id="account" type="email" formControlName="account" autocomplete="username" />
       @if (form.controls.account.touched && form.controls.account.hasError('required')) {
         <mat-error>Account is required</mat-error>
       }
@@ -11,14 +11,14 @@
         <mat-error>Account must be a valid email</mat-error>
       }
     </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="app-form-control-full-width">
       <mat-label>Password</mat-label>
-      <input matInput id="password" type="password" formControlName="password" autocomplete="current-password"/>
+      <input matInput id="password" type="password" formControlName="password" autocomplete="current-password" />
       @if (form.controls.password.touched && form.controls.password.hasError('required')) {
         <mat-error>Password is required</mat-error>
       }
     </mat-form-field>
-    <button mat-flat-button color="primary" class="full-width" type="submit" [disabled]="loading()">
+    <button mat-flat-button color="primary" class="app-form-control-full-width" type="submit" [disabled]="loading()">
       {{ loading() ? 'Signing in...' : 'Sign in' }}
     </button>
   </form>

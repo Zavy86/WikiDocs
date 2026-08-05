@@ -1,5 +1,5 @@
 <main class="page-main">
-  <section class="content-wrapper">
+  <section class="app-page-content">
     <h1>Accounts</h1>
     <p>Manage authorized wiki users</p>
     @if (loading()) {
@@ -8,22 +8,16 @@
       <div class="table-wrapper">
         <table class="accounts-table">
           <thead>
-          <tr>
-            <th>Account</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th class="actions-header">
-              <button
-                class="table-action-button"
-                mat-icon-button type="button"
-                aria-label="Add account"
-                (click)="openCreateDialog()"
-                [disabled]="processing()"
-              >
-                <mat-icon>add</mat-icon>
-              </button>
-            </th>
-          </tr>
+            <tr>
+              <th>Account</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th class="actions-header">
+                <button class="table-action-button" mat-icon-button type="button" aria-label="Add account" (click)="openCreateDialog()" [disabled]="processing()">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </th>
+            </tr>
           </thead>
           <tbody>
             @if (accounts().length === 0) {
@@ -37,13 +31,7 @@
                   <td>{{ account.firstname }} {{ account.lastname }}</td>
                   <td>{{ account.role }}</td>
                   <td class="row-actions">
-                    <button
-                      class="table-action-button"
-                      mat-icon-button type="button"
-                      aria-label="Edit account"
-                      (click)="openEditDialog(account)"
-                      [disabled]="processing()"
-                    >
+                    <button class="table-action-button" mat-icon-button type="button" aria-label="Edit account" (click)="openEditDialog(account)" [disabled]="processing()">
                       <mat-icon>edit</mat-icon>
                     </button>
                   </td>

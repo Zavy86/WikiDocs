@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="dialog-title">
+<h2 mat-dialog-title class="dialog-title app-dialog-title">
   <span>{{ data.title }}</span>
   <button mat-icon-button type="button" [attr.aria-label]="data.closeAriaLabel" (click)="close()">
     <mat-icon>close</mat-icon>
@@ -9,22 +9,11 @@
   @if (isInitializing()) {
     <p class="status">Loading paths...</p>
   } @else {
-    <mat-tree
-        #tree
-        class="tree"
-        [dataSource]="dataSource()"
-        [childrenAccessor]="childrenAccessor"
-    >
+    <mat-tree #tree class="tree" [dataSource]="dataSource()" [childrenAccessor]="childrenAccessor">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="tree-node">
         <div class="tree-node-row">
           <button mat-icon-button type="button" disabled aria-hidden="true"></button>
-          <button
-            type="button"
-            class="node-button"
-            [class.node-button-selected]="isSelected(node)"
-            [disabled]="!isSelectable(node.path)"
-            (click)="selectNode(node)"
-          >
+          <button type="button" class="node-button" [class.node-button-selected]="isSelected(node)" [disabled]="!isSelectable(node.path)" (click)="selectNode(node)">
             <span class="node-title">{{ node.title }}</span>
             <span class="node-path">{{ node.path }}</span>
           </button>
@@ -41,22 +30,16 @@
         <div class="tree-node-row">
           <button mat-icon-button type="button" [attr.aria-label]="'Toggle ' + node.path" matTreeNodeToggle>
             <mat-icon class="mat-icon-rtl-mirror">
-              {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
             </mat-icon>
           </button>
-          <button
-            type="button"
-            class="node-button"
-            [class.node-button-selected]="isSelected(node)"
-            [disabled]="!isSelectable(node.path)"
-            (click)="selectNode(node)"
-          >
+          <button type="button" class="node-button" [class.node-button-selected]="isSelected(node)" [disabled]="!isSelectable(node.path)" (click)="selectNode(node)">
             <span class="node-title">{{ node.title }}</span>
             <span class="node-path">{{ node.path }}</span>
           </button>
         </div>
         @if (node.loading) {
-          <mat-progress-bar mode="indeterminate" class="tree-progress-bar"/>
+          <mat-progress-bar mode="indeterminate" class="tree-progress-bar" />
         }
         @if (node.error) {
           <div class="status status-error">{{ node.error }}</div>

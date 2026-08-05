@@ -1,21 +1,19 @@
-<h2 mat-dialog-title class="dialog-title">
+<h2 mat-dialog-title class="dialog-title app-dialog-title">
   <span>Attachments</span>
-  <button mat-icon-button type="button" class="dialog-close-button" [disabled]="isUploading() || isRefreshing()" (click)="close()" aria-label="Close attachments dialog">
+  <button mat-icon-button type="button" class="app-dialog-close-button" [disabled]="isUploading() || isRefreshing()" (click)="close()" aria-label="Close attachments dialog">
     <mat-icon>close</mat-icon>
   </button>
 </h2>
 <mat-dialog-content class="dialog-content">
   <div class="upload-row">
     <label class="file-picker">
-      <input type="file" [disabled]="isUploading() || isRefreshing()" (change)="onFileSelected($event)"/>
+      <input type="file" [disabled]="isUploading() || isRefreshing()" (change)="onFileSelected($event)" />
       <span>{{ selectedFileName() || 'Choose file' }}</span>
     </label>
-    <button mat-flat-button color="primary" type="button" [disabled]="! selectedFileName() || isUploading() || isRefreshing()" (click)="uploadSelectedFile()">
-      Upload
-    </button>
+    <button mat-flat-button color="primary" type="button" [disabled]="!selectedFileName() || isUploading() || isRefreshing()" (click)="uploadSelectedFile()">Upload</button>
   </div>
   @if (isUploading() || isRefreshing()) {
-    <mat-progress-bar mode="indeterminate"/>
+    <mat-progress-bar mode="indeterminate" />
   }
   <div class="attachments-section">
     @if (attachments().length === 0) {
@@ -38,7 +36,7 @@
                 </button>
                 <div class="attachment-main">
                   @if (isImageAttachment(attachment.file)) {
-                    <img [src]="getPreviewUrl(attachment)" [alt]="attachment.file" class="attachment-preview"/>
+                    <img [src]="getPreviewUrl(attachment)" [alt]="attachment.file" class="attachment-preview" />
                   }
                   <span class="attachment-file">{{ attachment.file }}</span>
                 </div>

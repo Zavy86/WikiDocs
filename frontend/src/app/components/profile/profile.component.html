@@ -1,47 +1,25 @@
 <main class="page-main">
-  <section class="content-wrapper">
+  <section class="app-page-content">
     <h1>Profile</h1>
     <p>Update your personal account information</p>
     <form class="profile-form" [formGroup]="form" (ngSubmit)="save()">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="app-form-control-full-width">
         <mat-label>Account</mat-label>
-        <input
-          matInput
-          id="account"
-          name="account"
-          type="email"
-          formControlName="account"
-          [readonly]="true"
-          autocomplete="off"
-        />
+        <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="true" autocomplete="off" />
       </mat-form-field>
       <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="app-form-control-full-width">
           <mat-label>Firstname</mat-label>
-          <input
-            matInput
-            id="firstname"
-            name="firstname"
-            type="text"
-            formControlName="firstname"
-            maxlength="32"
-          />
+          <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" />
         </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="app-form-control-full-width">
           <mat-label>Lastname</mat-label>
-          <input
-            matInput
-            id="lastname"
-            name="lastname"
-            type="text"
-            formControlName="lastname"
-            maxlength="32"
-          />
+          <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" />
         </mat-form-field>
       </div>
       @if (!isLocalUser()) {
         <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>New password</mat-label>
             <input
               matInput
@@ -57,17 +35,9 @@
               <mat-error>Fill both password fields</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>Check password</mat-label>
-            <input
-              matInput
-              id="confirm"
-              name="confirm"
-              type="password"
-              formControlName="confirm"
-              [errorStateMatcher]="passwordErrorStateMatcher"
-              maxlength="256"
-            />
+            <input matInput id="confirm" name="confirm" type="password" formControlName="confirm" [errorStateMatcher]="passwordErrorStateMatcher" maxlength="256" />
             @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
               <mat-error>Fill both password fields</mat-error>
             }
@@ -77,7 +47,7 @@
           </mat-form-field>
         </div>
       }
-      <div class="actions">
+      <div class="app-form-actions">
         <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
         <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
       </div>

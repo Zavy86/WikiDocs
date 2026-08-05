@@ -1,14 +1,5 @@
-.content-wrapper {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
 .settings-form {
   margin-top: 1.5rem;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .color-field {
@@ -54,13 +45,6 @@
   height: 1px;
   opacity: 0;
   pointer-events: none;
-}
-
-.actions {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 .loading {
