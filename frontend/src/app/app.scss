@@ -9,7 +9,8 @@
 .app-shell {
   min-height: var(--app-shell-min-height);
   height: auto;
-  background-color: var(--app-surface-color);
+  background-color: var(--app-shell-accent-tint);
+  background-image: var(--app-shell-background);
 }
 
 .app-drawer {

@@ -43,6 +43,8 @@ html {
   --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
   --app-surface-color: #ffffff;
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
+  --app-shell-background: linear-gradient(145deg, #ffffff 0%, var(--app-shell-accent-tint) 100%);
   --app-divider-color: #dddddd;
   --app-shell-min-height: 100vh;
   --app-sidebar-width: 300px;
