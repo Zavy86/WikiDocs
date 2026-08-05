@@ -37,6 +37,7 @@ html {
 
 :root {
   --theme-color: #4caf50;
+  --mat-sys-primary: var(--theme-color);
   --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
 }

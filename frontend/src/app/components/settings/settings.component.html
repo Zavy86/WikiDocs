@@ -86,7 +86,12 @@
               <mat-option value="light">Light</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field
+            appearance="outline"
+            class="full-width color-field"
+            [class.color-field-invalid]="form.controls.color.invalid"
+            [style.--color-field-background]="form.controls.color.value"
+          >
             <mat-label>Color</mat-label>
             <input
               matInput
@@ -94,9 +99,25 @@
               name="color"
               type="text"
               formControlName="color"
-              readonly
             />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              aria-label="Open color picker"
+              (click)="openColorPicker()"
+            >
+              <span class="material-symbols-outlined">palette</span>
+            </button>
           </mat-form-field>
+          <input
+            #colorPicker
+            class="native-color-picker"
+            type="color"
+            tabindex="-1"
+            [value]="colorPickerValue()"
+            (input)="onColorPickerChange($event)"
+          />
         </div>
         <div class="actions">
           <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>

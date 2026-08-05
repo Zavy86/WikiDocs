@@ -1,7 +1,7 @@
 import { finalize, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, ElementRef, inject, Signal, signal, viewChild, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpService } from 'src/app/services/http.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { InformationService } from 'src/app/services/information.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import { SettingsType } from 'src/app/types';
 
 @Component({
@@ -27,6 +28,7 @@ export class SettingsComponent {
   private readonly alertService:AlertService = inject(AlertService);
   private readonly httpService:HttpService = inject(HttpService);
   private readonly informationService:InformationService = inject(InformationService);
+  private readonly themeService:ThemeService = inject(ThemeService);
   private readonly breakpointObserver:BreakpointObserver = inject(BreakpointObserver);
 
   private readonly formBuilder:FormBuilder = inject(FormBuilder);
@@ -35,6 +37,7 @@ export class SettingsComponent {
   protected readonly saving:WritableSignal<boolean> = signal(false);
   protected readonly isMobile:Signal<boolean> = toSignal(this.breakpointObserver.observe('(max-width: 992px)').pipe(map((state:BreakpointState):boolean => state.matches)), { initialValue: false });
   protected readonly isLocalMode:Signal<boolean> = computed(():boolean => this.informationService.retrieve()?.mode === 'local');
+  protected readonly colorPicker:Signal<ElementRef<HTMLInputElement>> = viewChild.required<ElementRef<HTMLInputElement>>('colorPicker');
 
   protected readonly form = this.formBuilder.nonNullable.group({
     title: [ '', [ Validators.required, Validators.maxLength(32) ] ],
@@ -85,6 +88,7 @@ export class SettingsComponent {
         next: ():void => {
           this.initialSettings = request;
           this.patchForm(request);
+          this.themeService.applyColor(request.color);
           this.alertService.success('Settings updated successfully.');
         },
         error: (error:HttpErrorResponse):void => {
@@ -121,6 +125,24 @@ export class SettingsComponent {
       template: settings.template,
       color: settings.color,
     });
+  }
+
+  protected colorPickerValue():string {
+    const color:string = this.form.controls.color.value;
+    if ( /^#[0-9A-Fa-f]{3}$/.test(color) ) {
+      return `#${ color[1] }${ color[1] }${ color[2] }${ color[2] }${ color[3] }${ color[3] }`;
+    }
+    return /^#[0-9A-Fa-f]{6}$/.test(color) ? color : '#000000';
+  }
+
+  protected openColorPicker():void {
+    this.colorPicker().nativeElement.click();
+  }
+
+  protected onColorPickerChange(event:Event):void {
+    const target:EventTarget | null = event.target;
+    if ( ! ( target instanceof HTMLInputElement ) ) { return; }
+    this.form.controls.color.setValue(target.value);
   }
 
 }
