@@ -262,7 +262,7 @@ export class DocumentService {
     for ( const entry of entries ) {
       const match:RegExpMatchArray | null = ( entry.isFile() ? entry.name.match(/^(0|[1-9]\d*)\.md$/) : null );
       if ( ! match ) {
-        console.warn(`Ignoring invalid document version entry <${ entry.name }> for <${ sanitizedPath }>`);
+        this.logger.warn(`Ignoring invalid document version entry <${ entry.name }> for <${ sanitizedPath }>`);
         continue;
       }
       timestamps.push(match[ 1 ]);
