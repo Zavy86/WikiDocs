@@ -57,7 +57,6 @@ export class PinnedService extends DatasetsService {
 
   public async store(path:string):Promise<void> {
     const sanitizedPath:string = this.environmentService.sanitizeDocumentPath(path);
-    console.log(`Sanitized path: ${ sanitizedPath }`);
     if ( ! await this.documentService.checkIfDocumentExists(sanitizedPath) ) {
       throw new BadRequestException(`Document <${ sanitizedPath }> not found`);
     }

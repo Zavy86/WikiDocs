@@ -53,5 +53,4 @@ docker-release-beta: check-versions
 
 docker-release-pulse:
 	@echo "Releasing Wiki|Docs Pulse"
-	#docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile -t zavy86/wikidocs:pulse --push .
-	docker build -f pulse/dockerfile -t zavy86/wikidocs:pulse --push .
+	docker buildx build --platform linux/amd64,linux/arm64 -f pulse/dockerfile -t zavy86/wikidocs:pulse --push .

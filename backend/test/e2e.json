@@ -1,0 +1,17 @@
+{
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "verbose": true,
+  "maxWorkers": 1,
+  "testTimeout": 30000,
+  "testRegex": "e2e-.*\\.ts$",
+  "transformIgnorePatterns": [],
+  "moduleFileExtensions": ["ts", "js", "json"],
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/../src/$1",
+    "^@shared/(.*)$": "<rootDir>/../../shared/$1"
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "nest build",
     "start": "dotenv -e ../dev.env -- nest start --watch",
-    "test": "jest --config ./test/jest-e2e.json"
+    "test": "jest --config ./test/e2e.json"
   },
   "packageManager": "npm",
   "dependencies": {
