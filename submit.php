@@ -320,7 +320,7 @@ function image_upload_ajax(){
     return false;
   }
   // make file name
-  $file_name=strtolower(str_replace(" ","-",$image['name']));
+  $file_name=strtolower(str_replace(" ","-",wdf_safe_filename($image['name'])));
   // check for posted image
   if(isset($image['tmp_name']) && $image['tmp_name']){
     // sanitization for SVG
@@ -380,7 +380,7 @@ function image_drop_upload_ajax() {
     return false;
   }
   $image_base64 = $_POST['image_base64'];
-  $image_filename = $_POST['image_name'];
+  $image_filename = wdf_safe_filename($_POST['image_name']);
   if(Session::getInstance()->autenticationLevel()!=2){
     echo json_encode(array("error"=>1,"code"=>"not_authenticated"));
     return false;
@@ -466,7 +466,7 @@ function image_delete_ajax() {
     echo json_encode(array("error"=>1,"code"=>"csrf_error"));
     return false;
   }
-  $image_filename = basename($_POST['image_name']); // added basename()
+  $image_filename = wdf_safe_filename($_POST['image_name']);
   if(Session::getInstance()->autenticationLevel() != 2) {
     echo json_encode(array("error" => 1, "code" => "not_authenticated"));
     return false;
@@ -555,7 +555,7 @@ function attachment_upload_ajax(){
     return false;
   }
   // make file name
-  $file_name=strtolower(str_replace(" ","-",$attachment['name']));
+  $file_name=strtolower(str_replace(" ","-",wdf_safe_filename($attachment['name'])));
   // move temporary file
   $uploaded=move_uploaded_file($attachment['tmp_name'],$DOC->DIR.$file_name);
   // check for uploaded
@@ -583,7 +583,7 @@ function attachment_delete_ajax() {
     echo json_encode(array("error"=>1,"code"=>"csrf_error"));
     return false;
   }
-  $attachment_filename = $_POST['attachment_name'];
+  $attachment_filename = wdf_safe_filename($_POST['attachment_name']);
   if(Session::getInstance()->autenticationLevel() != 2) {
     echo json_encode(array("error" => 1, "code" => "not_authenticated"));
     return false;
