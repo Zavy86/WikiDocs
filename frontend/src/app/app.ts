@@ -6,13 +6,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { SessionService } from 'src/app/services/session.service';
+import { AuthenticationChange, SessionService } from 'src/app/services/session.service';
 import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
 import { PrivacyService } from 'src/app/services/privacy.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ReleaseService } from 'src/app/services/release.service';
 import { AttachmentType, DocumentType, InformationType, MetadataType, PinnedType, SettingsType } from 'src/app/types';
 import {
   ActionItem,
@@ -31,6 +32,8 @@ import {
   PrivacyComponent,
   PromptComponent,
   PromptData,
+  ReleaseComponent,
+  ReleaseDialogData,
   SidebarComponent,
   StartupComponent,
   TopComponent,
@@ -54,6 +57,7 @@ export class App implements AfterViewInit {
   private readonly themeService:ThemeService = inject(ThemeService);
   private readonly httpService:HttpService = inject(HttpService);
   private readonly settingsService:SettingsService = inject(SettingsService);
+  private readonly releaseService:ReleaseService = inject(ReleaseService);
   private readonly informationService:InformationService = inject(InformationService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly privacyService:PrivacyService = inject(PrivacyService);
@@ -69,6 +73,8 @@ export class App implements AfterViewInit {
   private readonly privacyComponent:Signal<PrivacyComponent> = viewChild.required(PrivacyComponent);
 
   private privacyModalPrompted:boolean = false;
+
+  private releaseDialogOpen:boolean = false;
 
   protected readonly startupError:Signal<string | null> = computed(():string | null => {
     return this.informationService.error() ?? this.sessionService.startupError();
@@ -269,16 +275,18 @@ export class App implements AfterViewInit {
 
   constructor() {
     effect(():void => this.openPrivacyModalIfNeeded());
+    effect(():void => this.openReleaseDialogIfNeeded());
     this.loadInformationBoundState();
     this.loadDocumentForCurrentUrl();
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(():void => {
       this.loadInformationBoundState();
       this.loadDocumentForCurrentUrl();
     });
-    this.sessionService.authenticationChangedEvent.subscribe(():void => {
+    this.sessionService.authenticationChangedEvent.subscribe((change:AuthenticationChange):void => {
       if ( ! this.informationService.isInitialized() ) { return; }
       this.updateAuthenticationState();
       this.loadPinnedIfSessionReady();
+      if ( change === 'login' ) { this.loadReleaseIfAuthorized(); }
     });
   }
 
@@ -380,6 +388,21 @@ export class App implements AfterViewInit {
     queueMicrotask(():void => this.privacyComponent().open());
   }
 
+  private openReleaseDialogIfNeeded():void {
+    if ( ! this.hasManageAuthorization() || ! this.releaseService.shouldShowDialog() || this.releaseDialogOpen ) { return; }
+    const release = this.releaseService.release();
+    if ( ! release ) { return; }
+    this.releaseDialogOpen = true;
+    const data:ReleaseDialogData = { latest: release.latest };
+    this.dialog
+      .open(ReleaseComponent, { width: '90vw', maxWidth: '480px', data })
+      .afterClosed()
+      .subscribe(():void => {
+        this.releaseDialogOpen = false;
+        this.releaseService.dismiss();
+      });
+  }
+
   private updateAuthenticationState():void {
     const isValid:boolean = this.sessionService.isValid();
     const isGuestUser:boolean = this.sessionService.isGuestUser();
@@ -391,6 +414,11 @@ export class App implements AfterViewInit {
     this.hasWriteAuthorization.set(isValid && this.sessionService.hasAuthorization('write'));
     this.hasDeleteAuthorization.set(isValid && this.sessionService.hasAuthorization('delete'));
     this.hasManageAuthorization.set(isValid && this.sessionService.hasAuthorization('manage'));
+  }
+
+  private loadReleaseIfAuthorized():void {
+    if ( ! this.hasManageAuthorization() ) { return; }
+    this.releaseService.refresh().subscribe({ error: ():void => undefined });
   }
 
   private logout():void {

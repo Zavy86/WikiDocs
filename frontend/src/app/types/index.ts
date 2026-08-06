@@ -10,6 +10,7 @@ export * from 'src/app/types/jwt.type';
 export * from 'src/app/types/metadata.type';
 export * from 'src/app/types/pinned.type';
 export * from 'src/app/types/profile.type';
+export * from 'src/app/types/release.type';
 export * from 'src/app/types/search.type';
 export * from 'src/app/types/settings.type';
 export * from 'src/app/types/tree.type';

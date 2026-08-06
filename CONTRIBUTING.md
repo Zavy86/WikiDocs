@@ -79,7 +79,7 @@ The image is built from the `docker/dockerfile` and the compose stack is defined
 The docker image includes the backend and frontend, based on the `node:alpine` base image it runs the backend and the
 frontend is served as static files.
 
-The compose stack includes the image and a volume for the datasets, exposing the app on port 3000.
+The compose stack includes the image and a volume for the datasets, exposing the app on host port 3600.
 
 From repository root:
 
@@ -90,13 +90,13 @@ make docker-compose-up
 # Smoke checks
 docker compose -f docker/compose.yml -p wikidocs ps
 docker compose -f docker/compose.yml -p wikidocs logs --tail=100 wikidocs
-curl http://localhost:3000/api/information
+curl http://localhost:3600/api/information
 
 # Stop stack
 make docker-compose-down
 ```
 
-The compose stack exposes the app on `http://localhost:3000` and includes a container health check for the frontend `/`
+The compose stack exposes the app on `http://localhost:3600` and includes a container health check for the frontend `/`
 and for the backend `/api/health`.
 
 

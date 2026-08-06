@@ -44,7 +44,12 @@ html {
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
   --app-surface-color: #ffffff;
   --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
-  --app-shell-background: linear-gradient(145deg, #ffffff 0%, var(--app-shell-accent-tint) 100%);
+  --app-shell-background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 500px,
+    var(--app-shell-accent-tint) 100%
+  );
   --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 9%);
   --app-control-shadow: 0 3px 6px rgb(0 0 0 / 9%);
   --app-divider-color: #dddddd;
@@ -274,6 +279,11 @@ code {
 
 h2.app-dialog-title {
   margin-bottom: 0;
+}
+
+.app-dialog-message {
+  margin: 0;
+  white-space: pre-line;
 }
 
 .app-dialog-close-button {

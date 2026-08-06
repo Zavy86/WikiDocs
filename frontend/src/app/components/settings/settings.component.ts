@@ -14,6 +14,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { InformationService } from 'src/app/services/information.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { SettingsType } from 'src/app/types';
+import { ReleaseService } from 'src/app/services/release.service';
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ export class SettingsComponent {
   private readonly alertService:AlertService = inject(AlertService);
   private readonly httpService:HttpService = inject(HttpService);
   private readonly informationService:InformationService = inject(InformationService);
+  private readonly releaseService:ReleaseService = inject(ReleaseService);
   private readonly themeService:ThemeService = inject(ThemeService);
   private readonly breakpointObserver:BreakpointObserver = inject(BreakpointObserver);
 
@@ -36,6 +38,7 @@ export class SettingsComponent {
 
   protected readonly loading:WritableSignal<boolean> = signal(true);
   protected readonly saving:WritableSignal<boolean> = signal(false);
+  protected readonly checkingRelease:WritableSignal<boolean> = signal(false);
   protected readonly timezoneLoadError:WritableSignal<string | null> = signal<string | null>(null);
   protected readonly timezoneOptions:WritableSignal<ReadonlyArray<string>> = signal<ReadonlyArray<string>>([]);
   protected readonly timezoneSearch:WritableSignal<string> = signal<string>('');
@@ -136,6 +139,19 @@ export class SettingsComponent {
       template: settings.template,
       color: settings.color,
     });
+  }
+
+  protected checkForNewVersions():void {
+    if ( this.checkingRelease() ) { return; }
+    this.checkingRelease.set(true);
+    this.releaseService
+      .refresh(true)
+      .pipe(finalize(():void => this.checkingRelease.set(false)))
+      .subscribe({
+        error: (error:HttpErrorResponse):void => {
+          this.alertService.error(error.error?.message || 'Unable to check for new versions.');
+        }
+      });
   }
 
   private loadTimezones():void {

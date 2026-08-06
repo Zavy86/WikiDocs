@@ -12,6 +12,7 @@ export * from 'src/schemas/metadata.schema';
 export * from 'src/schemas/pin.schema';
 export * from 'src/schemas/pinned.schema';
 export * from 'src/schemas/profile.schema';
+export * from 'src/schemas/release.schema';
 export * from 'src/schemas/search.schema';
 export * from 'src/schemas/settings.schema';
 export * from 'src/schemas/snapshot.schema';

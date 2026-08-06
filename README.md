@@ -68,21 +68,21 @@ to run Wiki|Docs in a container.
 
 Running in container is the recommended way to self-host Wiki|Docs, as it is the easiest and fastest way to get started.
 
-You can access to the web client at `http://localhost:3000` after running the container, and you can also interact with
-the backend API at `http://localhost:3000/api/` where you can find the swagger documentation.
+You can access to the web client at `http://localhost:3210` after running the container, and you can also interact with
+the backend API at `http://localhost:3210/api/` where you can find the swagger documentation.
 
 
 #### Quick run
 
 ```
-docker run -p 3000:3000 zavy86/wikidocs:2
+docker run -p 3210:3210 zavy86/wikidocs:2
 ```
 
 
 #### Additional settings
 
 ```
-docker run --name wikidocs -d -p 3000:3000 -v /path/to/local/wikidocs/datasets/or/volume:/var/lib/wikidocs zavy86/wikidocs:2
+docker run --name wikidocs -d -p 3210:3210 -v /path/to/local/wikidocs/datasets/or/volume:/var/lib/wikidocs zavy86/wikidocs:2
 ```
 
 
@@ -103,7 +103,7 @@ services:
     volumes:
       - datasets:/var/lib/wikidocs/datasets
     ports:
-      - "3000:3000"
+      - "3210:3210"
 
 ```
 

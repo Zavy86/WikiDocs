@@ -2,6 +2,7 @@ export * from 'src/services/accounts.service';
 export * from 'src/services/document.service';
 export * from 'src/services/environment.service';
 export * from 'src/services/pinned.service';
+export * from 'src/services/release.service';
 export * from 'src/services/search.service';
 export * from 'src/services/settings.service';
 export * from 'src/services/system.service';

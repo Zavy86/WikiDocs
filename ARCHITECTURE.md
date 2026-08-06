@@ -58,7 +58,7 @@ for non-API, extensionless routes.
 | Variant | Runtime behavior                                                                                                 |
 |---------|------------------------------------------------------------------------------------------------------------------|
 | Watch   | Backend and frontend may run separately during development in watch mode.                                        |
-| Docker  | A single Node.js process serves the built Angular application at `/` and the Nest API at `/api`.                 |
+| Docker  | A single Node.js process listens on `3210`, serves the built frontend application at `/`, and the API at `/api`. |
 | Desktop | Electron starts the packaged backend as a child process and then loads the packaged frontend in its main window. |
 
 ## Runtime configuration
@@ -124,6 +124,7 @@ routes with an authorization additionally require at least one authorization dec
 | `PATCH`  | `/api/profile`      | JWT        | Update the current account profile.                       |
 | `GET`    | `/api/settings`     | Public     | Retrieve settings.                                        |
 | `PUT`    | `/api/settings`     | `manage`   | Overwrite settings.                                       |
+| `GET`    | `/api/release`      | `manage`   | Return installed and latest release.                      |
 | `GET`    | `/api/accounts`     | `manage`   | Retrieve accounts without password hashes.                |
 | `POST`   | `/api/accounts`     | `manage`   | Upsert accounts.                                          |
 | `DELETE` | `/api/accounts`     | `manage`   | Delete the account selected by `account`.                 |
@@ -187,6 +188,23 @@ only while uninitialized.
 
 Initialization creates default settings, one administrator account, an empty pinned list, the document and trash
 directories, and a root document. Password must be `null` in local mode and non-null in public or private mode.
+
+## Release checks
+
+The backend checks Pulse at startup and every eight hours, sending its package version and runtime `MODE` so Pulse can
+record active installations. Port `3000` uses the local Pulse service at `http://localhost:3001`; every other backend
+port uses `https://pulse.wikidocs.app`. Scheduled failures are logged and preserve the cached value. A forced
+`GET /api/release?force=true` check returns an error when Pulse is unavailable.
+
+```
+┌─────────────────────────────────────────┐
+│ ReleaseContract                         │
+├─────────────────────────────────────────┤
+│ Properties:                             │
+│ ├── current: string                     │
+│ └── latest: string                      │
+└─────────────────────────────────────────┘
+```
 
 ## Settings
 

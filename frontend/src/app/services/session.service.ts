@@ -7,13 +7,15 @@ import { InformationService } from 'src/app/services/information.service';
 import { LogsService } from 'src/app/services/logs.service';
 import { AuthenticateType, InformationType, JwtType, TokenType } from 'src/app/types';
 
+export type AuthenticationChange = 'login' | 'logout' | 'restored';
+
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
   private expirationTimer:ReturnType<typeof setTimeout> | null = null;
   private bootstrapSessionRequest:Observable<boolean> | null = null;
   private informationService:InformationService | null = null;
-  private readonly authenticationChangedSubject:Subject<void> = new Subject<void>();
+  private readonly authenticationChangedSubject:Subject<AuthenticationChange> = new Subject<AuthenticationChange>();
   private readonly readyState:WritableSignal<boolean> = signal(false);
   private readonly validState:WritableSignal<boolean> = signal(false);
   private readonly tokenState:WritableSignal<string> = signal('');
@@ -26,7 +28,7 @@ export class SessionService {
   private readonly startupErrorState:WritableSignal<string | null> = signal<string | null>(null);
   private readonly urlBeforeWaitState:WritableSignal<string> = signal('');
 
-  public readonly authenticationChangedEvent:Observable<void> = this.authenticationChangedSubject.asObservable();
+  public readonly authenticationChangedEvent:Observable<AuthenticationChange> = this.authenticationChangedSubject.asObservable();
   public readonly isReady:Signal<boolean> = this.readyState.asReadonly();
   public readonly isValid:Signal<boolean> = this.validState.asReadonly();
   public readonly isGuestUser:Signal<boolean> = computed(():boolean => ( this.roleState() === 'guest' ));
@@ -150,7 +152,7 @@ export class SessionService {
     this.readyState.set(true);
   }
 
-  private checkIfTokenIsValid():void {
+  private checkIfTokenIsValid(isNewLogin:boolean = false):void {
     this.readyState.set(false);
     if ( ! this.hasToken() ) {
       this.ensureBootstrapSessionIfNeeded().subscribe();
@@ -160,7 +162,7 @@ export class SessionService {
       next: ():void => {
         this.validState.set(true);
         this.readyState.set(true);
-        this.authenticationChangedSubject.next();
+        this.authenticationChangedSubject.next(( isNewLogin ? 'login' : 'restored' ));
       },
       error: (error):void => {
         this.logsService.error('[SessionService] verifyToken failed', error);
@@ -210,8 +212,7 @@ export class SessionService {
   public setNewTokenAndCheckIfIsValid(response:JwtType):void {
     this.applyTokenState(response.jwt);
     localStorage.setItem('JWT', response.jwt);
-    this.checkIfTokenIsValid();
-    this.authenticationChangedSubject.next();
+    this.checkIfTokenIsValid(true);
   }
 
   public tryAuthenticate(account:string, password:string, duration:number = 86400):Observable<boolean> {
@@ -272,7 +273,7 @@ export class SessionService {
                 this.validState.set(true);
                 this.readyState.set(true);
                 this.clearStartupError();
-                this.authenticationChangedSubject.next();
+                this.authenticationChangedSubject.next('login');
               }),
               map(():boolean => true),
               catchError((error):Observable<boolean> => {
@@ -322,7 +323,7 @@ export class SessionService {
   public logout():void {
     const hadToken:boolean = this.hasToken();
     this.destroySessionAndRemoveTokenFromLocalStorage();
-    if ( hadToken ) { this.authenticationChangedSubject.next(); }
+    if ( hadToken ) { this.authenticationChangedSubject.next('logout'); }
   }
 
   public setUrlBeforeWait(url:string):void {

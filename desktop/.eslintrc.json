@@ -61,6 +61,19 @@
     "array-bracket-spacing": [
       "error",
       "never"
+    ],
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": false,
+        "overrides": {
+          "arrow": {
+            "before": true,
+            "after": true
+          }
+        }
+      }
     ]
   }
 }

@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Head, HttpCode, Patch, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Head, HttpCode, ParseBoolPipe, Patch, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOkResponse, ApiOperation, ApiProduces, ApiQuery, ApiTags } from "@nestjs/swagger";
 import type { Response } from 'express';
 import { Authorizations, JwtAccount, JwtToken, Public } from "src/app.decorators";
 import type { SyncStream } from "src/services";
-import { AccountsService, AttachmentStream, DocumentService, PinnedService, SearchService, SettingsService, SyncService, SystemService } from "src/services";
+import { AccountsService, AttachmentStream, DocumentService, PinnedService, ReleaseService, SearchService, SettingsService, SyncService, SystemService } from "src/services";
 import {
   AccountsSchema,
   ActionsSchema,
@@ -16,6 +16,7 @@ import {
   JwtSchema,
   PinnedSchema,
   ProfileSchema,
+  ReleaseSchema,
   SearchSchema,
   SettingsSchema,
   SnapshotSchema,
@@ -32,17 +33,18 @@ export class AppController {
     private readonly accountsService:AccountsService,
     private readonly documentService:DocumentService,
     private readonly pinnedService:PinnedService,
+    private readonly releaseService:ReleaseService,
     private readonly searchService:SearchService,
     private readonly systemService:SystemService,
     private readonly settingsService:SettingsService,
-    private readonly syncService:SyncService
+    private readonly syncService:SyncService,
   ) {}
 
   @Public()
   @Get('/health')
   @HttpCode(204)
   @ApiOperation({ summary: 'Check service availability' })
-  health():Promise<void> {
+  public health():Promise<void> {
     return this.systemService.health();
   }
 
@@ -50,15 +52,28 @@ export class AppController {
   @Get('/information')
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve service information' })
-  information():Promise<InformationSchema> {
+  public information():Promise<InformationSchema> {
     return this.systemService.information();
+  }
+
+  @ApiBearerAuth()
+  @Authorizations('manage')
+  @Get('release')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Retrieve the installed and latest release versions' })
+  @ApiOkResponse({ type: ReleaseSchema })
+  @ApiQuery({ name: 'force', required: false, default: false })
+  public release_retrieve(
+    @Query('force') force:boolean,
+  ):Promise<ReleaseSchema> {
+    return this.releaseService.retrieve(force);
   }
 
   @Public()
   @Post('/initialize')
   @HttpCode(204)
   @ApiOperation({ summary: 'Initialize the datasets' })
-  initialize(
+  public initialize(
     @Body() request:InitializationSchema
   ):Promise<void> {
     return this.systemService.initialize(request);
@@ -68,7 +83,7 @@ export class AppController {
   @Head('token')
   @ApiOperation({ summary: 'Check given bearer token validity' })
   @HttpCode(204)
-  token(
+  public token(
     @JwtToken() token:TokenSchema,
   ):Promise<void> {
     return this.accountsService.verify(token);
@@ -78,7 +93,7 @@ export class AppController {
   @Get('guest')
   @ApiOperation({ summary: 'Try to get a guest session token' })
   @HttpCode(200)
-  guest():Promise<JwtSchema> {
+  public guest():Promise<JwtSchema> {
     return this.accountsService.guest();
   }
 
@@ -86,7 +101,7 @@ export class AppController {
   @Get('local')
   @ApiOperation({ summary: 'Try to get a local session token' })
   @HttpCode(200)
-  local():Promise<JwtSchema> {
+  public local():Promise<JwtSchema> {
     return this.accountsService.local();
   }
 
@@ -94,8 +109,8 @@ export class AppController {
   @Post('authenticate')
   @ApiOperation({ summary: 'Authenticate to get a session token' })
   @HttpCode(200)
-  authenticate(
-    @Body() request:AuthenticateSchema
+  public authenticate(
+    @Body() request:AuthenticateSchema,
   ):Promise<JwtSchema> {
     return this.accountsService.authenticate(request);
   }
@@ -104,9 +119,9 @@ export class AppController {
   @Patch('profile')
   @ApiOperation({ summary: 'Update your profile and password' })
   @HttpCode(204)
-  profile(
+  public profile(
     @JwtAccount() account:string,
-    @Body() request:ProfileSchema
+    @Body() request:ProfileSchema,
   ):Promise<void> {
     return this.accountsService.profile(account, request);
   }
@@ -115,7 +130,7 @@ export class AppController {
   @Get('settings')
   @ApiOperation({ summary: 'Retrieve system settings' })
   @HttpCode(200)
-  settings_retrieve():Promise<SettingsSchema> {
+  public settings_retrieve():Promise<SettingsSchema> {
     return this.settingsService.retrieve();
   }
 
@@ -124,8 +139,8 @@ export class AppController {
   @Put('settings')
   @ApiOperation({ summary: 'Store system settings' })
   @HttpCode(204)
-  settings_store(
-    @Body() request:SettingsSchema
+  public settings_store(
+    @Body() request:SettingsSchema,
   ):Promise<void> {
     return this.settingsService.store(request);
   }
@@ -135,7 +150,7 @@ export class AppController {
   @Get('/accounts')
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve authorized accounts' })
-  accounts_retrieve():Promise<AccountsSchema> {
+  public accounts_retrieve():Promise<AccountsSchema> {
     return this.accountsService.retrieve();
   }
 
@@ -144,8 +159,8 @@ export class AppController {
   @Post('/accounts')
   @HttpCode(204)
   @ApiOperation({ summary: 'Store authorized accounts' })
-  accounts_store(
-    @Body() request:AccountsSchema
+  public accounts_store(
+    @Body() request:AccountsSchema,
   ):Promise<void> {
     return this.accountsService.store(request);
   }
@@ -156,8 +171,8 @@ export class AppController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Delete authorized account' })
   @ApiQuery({ name: 'account', required: true })
-  accounts_remove(
-    @Query('account') account:string
+  public accounts_remove(
+    @Query('account') account:string,
   ):Promise<void> {
     return this.accountsService.remove(account);
   }
@@ -167,7 +182,7 @@ export class AppController {
   @Get('/pinned')
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve documents pinned' })
-  pinned_retrieve():Promise<PinnedSchema> {
+  public pinned_retrieve():Promise<PinnedSchema> {
     return this.pinnedService.retrieve();
   }
 
@@ -177,8 +192,8 @@ export class AppController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Pin a document' })
   @ApiQuery({ name: 'path', required: true })
-  pinned_store(
-    @Query('path') path:string
+  public pinned_store(
+    @Query('path') path:string,
   ):Promise<void> {
     return this.pinnedService.store(path);
   }
@@ -190,9 +205,9 @@ export class AppController {
   @ApiOperation({ summary: 'Sort a pinned document' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'sorting', required: true })
-  pinned_sort(
+  public pinned_sort(
     @Query('path') path:string,
-    @Query('sorting') sorting:number
+    @Query('sorting') sorting:number,
   ):Promise<void> {
     return this.pinnedService.sort(path, sorting);
   }
@@ -203,8 +218,8 @@ export class AppController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Unpin a document' })
   @ApiQuery({ name: 'path', required: true })
-  pinned_remove(
-    @Query('path') path:string
+  public pinned_remove(
+    @Query('path') path:string,
   ):Promise<void> {
     return this.pinnedService.remove(path);
   }
@@ -215,8 +230,8 @@ export class AppController {
   @HttpCode(200)
   @ApiOperation({ summary: 'Search for documents' })
   @ApiQuery({ name: 'query', required: true })
-  search(
-    @Query('query') query:string
+  public search(
+    @Query('query') query:string,
   ):Promise<SearchSchema> {
     return this.searchService.search(query);
   }
@@ -227,8 +242,8 @@ export class AppController {
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve direct children of a tree path' })
   @ApiQuery({ name: 'path', required: true })
-  tree(
-    @Query('path') path:string
+  public tree(
+    @Query('path') path:string,
   ):Promise<TreeSchema> {
     return this.documentService.tree(path);
   }
@@ -239,8 +254,8 @@ export class AppController {
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve a document' })
   @ApiQuery({ name: 'path', required: true })
-  document_retrieve(
-    @Query('path') path:string
+  public document_retrieve(
+    @Query('path') path:string,
   ):Promise<DocumentSchema> {
     return this.documentService.document_retrive(path);
   }
@@ -251,10 +266,10 @@ export class AppController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Store a document' })
   @ApiQuery({ name: 'path', required: true })
-  document_store(
+  public document_store(
     @Query('path') path:string,
     @JwtToken() token:TokenSchema,
-    @Body() content:ContentSchema
+    @Body() content:ContentSchema,
   ):Promise<void> {
     return this.documentService.document_store(path, token, content);
   }
@@ -266,9 +281,9 @@ export class AppController {
   @ApiOperation({ summary: 'Move a document' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'destination', required: true })
-  document_move(
+  public document_move(
     @Query('path') path:string,
-    @Query('destination') destination:string
+    @Query('destination') destination:string,
   ):Promise<void> {
     return this.documentService.document_move(path, destination);
   }
@@ -280,7 +295,7 @@ export class AppController {
   @ApiOperation({ summary: 'Remove a document' })
   @ApiQuery({ name: 'path', required: true })
   @Authorizations('delete')
-  document_remove(
+  public document_remove(
     @Query('path') path:string,
   ):Promise<void> {
     return this.documentService.document_remove(path);
@@ -293,9 +308,9 @@ export class AppController {
   @ApiOperation({ summary: 'Retrieve a document version' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'timestamp', required: true })
-  version_retrieve(
+  public version_retrieve(
     @Query('path') path:string,
-    @Query('timestamp') timestamp:string
+    @Query('timestamp') timestamp:string,
   ):Promise<ContentSchema> {
     return this.documentService.version_retrieve(path, timestamp);
   }
@@ -307,9 +322,9 @@ export class AppController {
   @ApiOperation({ summary: 'Remove a document version' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'timestamp', required: true })
-  version_remove(
+  public version_remove(
     @Query('path') path:string,
-    @Query('timestamp') timestamp:string
+    @Query('timestamp') timestamp:string,
   ):Promise<void> {
     return this.documentService.version_remove(path, timestamp);
   }
@@ -323,11 +338,11 @@ export class AppController {
   @ApiQuery({ name: 'token', required: true })
   @ApiProduces('application/octet-stream')
   @ApiOkResponse({ content: { 'application/octet-stream': { schema: { type: 'string', format: 'binary' } } } })
-  async attachment_retrieve(
+  public async attachment_retrieve(
     @Query('path') path:string,
     @Query('file') file:string,
     @Query('token') token:string,
-    @Res({ passthrough: true }) response:Response
+    @Res({ passthrough: true }) response:Response,
   ):Promise<StreamableFile> {
     const attachment:AttachmentStream = await this.documentService.attachment_retrive(path, file, token);
     const escapedFileName:string = attachment.fileName.replace(/"/g, '\\"');
@@ -346,11 +361,11 @@ export class AppController {
   @ApiQuery({ name: 'file', required: true })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
-  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } }, required: [ 'file' ] } })
-  attachment_store(
+  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } }, required: ['file'] } })
+  public attachment_store(
     @Query('path') path:string,
     @Query('file') file:string,
-    @UploadedFile() uploaded:{ buffer:Buffer }
+    @UploadedFile() uploaded:{ buffer:Buffer },
   ):Promise<void> {
     return this.documentService.attachment_store(path, file, uploaded);
   }
@@ -362,9 +377,9 @@ export class AppController {
   @ApiOperation({ summary: 'Remove an attachment' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'file', required: true })
-  attachment_remove(
+  public attachment_remove(
     @Query('path') path:string,
-    @Query('file') file:string
+    @Query('file') file:string,
   ):Promise<void> {
     return this.documentService.attachment_remove(path, file);
   }
@@ -374,7 +389,7 @@ export class AppController {
   @Get('trash')
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve deleted documents' })
-  trash_retrieve():Promise<TrashSchema> {
+  public trash_retrieve():Promise<TrashSchema> {
     return this.documentService.trash_retrieve();
   }
 
@@ -385,9 +400,9 @@ export class AppController {
   @ApiOperation({ summary: 'Restore a deleted document' })
   @ApiQuery({ name: 'path', required: true })
   @ApiQuery({ name: 'destination', required: true })
-  trash_recover(
+  public trash_recover(
     @Query('path') path:string,
-    @Query('destination') destination:string
+    @Query('destination') destination:string,
   ):Promise<void> {
     return this.documentService.trash_recover(path, destination);
   }
@@ -398,8 +413,8 @@ export class AppController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Permanently remove a deleted document' })
   @ApiQuery({ name: 'path', required: true })
-  trash_remove(
-    @Query('path') path:string
+  public trash_remove(
+    @Query('path') path:string,
   ):Promise<void> {
     return this.documentService.trash_remove(path);
   }
@@ -409,7 +424,7 @@ export class AppController {
   @Get('sync')
   @HttpCode(200)
   @ApiOperation({ summary: 'Retrieve current document snapshot' })
-  sync_snapshot():Promise<SnapshotSchema> {
+  public sync_snapshot():Promise<SnapshotSchema> {
     return this.syncService.sync_snapshot();
   }
 
@@ -420,9 +435,9 @@ export class AppController {
   @ApiOperation({ summary: 'Send actions and retrieve changes' })
   @ApiProduces('application/zip')
   @ApiOkResponse({ content: { 'application/zip': { schema: { type: 'string', format: 'binary' } } } })
-  async sync_actions(
+  public async sync_actions(
     @Body() actions:ActionsSchema,
-    @Res({ passthrough: true }) response:Response
+    @Res({ passthrough: true }) response:Response,
   ):Promise<StreamableFile> {
     const archive:SyncStream = await this.syncService.sync_actions(actions);
     response.type('application/zip');
@@ -440,11 +455,10 @@ export class AppController {
   @ApiOperation({ summary: 'Apply uploaded sync archive' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
-  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } }, required: [ 'file' ] } })
-  sync_import(
-    @UploadedFile() uploaded:{ buffer:Buffer }
+  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } }, required: ['file'] } })
+  public sync_import(
+    @UploadedFile() uploaded:{ buffer:Buffer },
   ):Promise<void> {
     return this.syncService.sync_import(uploaded);
   }
-
 }
