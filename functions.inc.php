@@ -140,7 +140,7 @@ function wdf_pulse_latest_version(bool $force=false):?string{
 function wdf_pulse_request_latest_version():?string{
   $query=http_build_query(['version'=>trim(VERSION),'mode'=>(strlen(VIEWCODE ?? '')?'private':'public')]);
   $context=stream_context_create(['http'=>['method'=>'GET','timeout'=>2,'ignore_errors'=>true,'header'=>"Accept: application/json\r\n" ]]);
-  $response=@file_get_contents('https://pulse.wikidocs.app/api/api/latest?'.$query,false,$context);
+  $response=@file_get_contents('https://pulse.wikidocs.app/api/latest?'.$query,false,$context);
   if($response===false){return null;}
   $payload=json_decode($response,true);
   if(!is_array($payload) || !isset($payload['version']) || !is_string($payload['version'])){return null;}
