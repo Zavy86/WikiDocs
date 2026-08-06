@@ -35,6 +35,28 @@ function wdf_redirect(string $location):void{
 }
 
 /**
+ * Safe Internal Path
+ *
+ * Force a user supplied path to stay inside the application, blocking absolute,
+ * protocol relative and scheme prefixed targets so it cannot be used as an open
+ * redirect.
+ *
+ * @param string $path Requested path
+ * @return string Internal path prefixed with PATH
+ */
+function wdf_safe_internal_path(string $path):string{
+  // strip control characters (tab, CR, LF) that browsers remove from URLs and
+  // could otherwise hide a leading "//host"
+  $path=preg_replace('/[\x00-\x1F\x7F]/','',$path);
+  // normalize backslashes so "\evil.com" cannot be read as an authority
+  $path=str_replace("\\","/",$path);
+  // drop any scheme prefix (http:, javascript:, ...)
+  $path=preg_replace('#^[a-z][a-z0-9+.\-]*:#i','',$path);
+  // strip leading slashes so the result can never leave the current host
+  return PATH.ltrim($path,'/');
+}
+
+/**
  * Alert (if debug is enabled show a debug message)
  *
  * @param string $message Alert message
