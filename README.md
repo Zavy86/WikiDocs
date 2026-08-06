@@ -1,4 +1,4 @@
-> Checkout the new **Version 2** beta!
+> Check out the new **Version 2** beta!
 >
 > https://github.com/Zavy86/WikiDocs/tree/v2
 
