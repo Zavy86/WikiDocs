@@ -60,6 +60,13 @@ function authentication(){
   // check for authentication
   if($_SESSION['wikidocs']['authenticated']) {
     wdf_alert($TXT->SubmitAuthSuccess,"success");
+    $latestVersion=wdf_pulse_latest_version(true);
+    if($latestVersion!==null && $latestVersion!==trim(VERSION)){
+      wdf_alert(sprintf($TXT->PulseUpdateAvailable,$latestVersion),"info");
+      if(preg_match('/^2(?:\.|$)/',$latestVersion)){
+        wdf_alert($TXT->PulseMajorUpdateAvailable,"warning");
+      }
+    }
     wdf_redirect(PATH.$p_document);
   }else{
     wdf_alert($TXT->SubmitAuthInvalid,"danger");

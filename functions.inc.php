@@ -91,6 +91,65 @@ function wdf_alert(string $message,string $class="info"):bool{
 }
 
 /**
+ * Retrieve the latest Wiki|Docs release from Pulse.
+ *
+ * Homepage checks share a file cache for eight hours. Authentication checks
+ * bypass that interval so an authenticated user immediately sees a release
+ * notification when one is available.
+ *
+ * @param bool $force Whether to bypass the homepage cache interval
+ * @return ?string The latest version, or null when Pulse is unavailable
+ */
+function wdf_pulse_latest_version(bool $force=false):?string{
+  $cachePath=BASE.'datasets/pulse.json';
+  $cacheHandle=@fopen($cachePath,'c+');
+  // Never turn a Pulse outage or an unwritable runtime cache into a site error.
+  if($cacheHandle===false){
+    if(!$force){return null;}
+    return wdf_pulse_request_latest_version();
+  }
+  if(!flock($cacheHandle,LOCK_EX)){
+    fclose($cacheHandle);
+    return null;
+  }
+  rewind($cacheHandle);
+  $cache=json_decode(stream_get_contents($cacheHandle),true);
+  if(!is_array($cache)){$cache=[];}
+  $attemptedAt=(int)($cache['attemptedAt'] ?? 0);
+  if(!$force && $attemptedAt>(time()-(8*60*60))){
+    $version=$cache['version'] ?? null;
+    flock($cacheHandle,LOCK_UN);
+    fclose($cacheHandle);
+    return (is_string($version) && strlen($version))?$version:null;
+  }
+  $version=wdf_pulse_request_latest_version();
+  $newCache=['attemptedAt'=>time(),'version'=>$version];
+  rewind($cacheHandle);
+  ftruncate($cacheHandle,0);
+  fwrite($cacheHandle,json_encode($newCache));
+  fflush($cacheHandle);
+  flock($cacheHandle,LOCK_UN);
+  fclose($cacheHandle);
+  return $version;
+}
+
+/**
+ * Request the Pulse endpoint with the current version and privacy mode.
+ *
+ * @return ?string The latest version, or null for any transport/API failure
+ */
+function wdf_pulse_request_latest_version():?string{
+  $query=http_build_query(['version'=>trim(VERSION),'mode'=>(strlen(VIEWCODE ?? '')?'private':'public')]);
+  $context=stream_context_create(['http'=>['method'=>'GET','timeout'=>2,'ignore_errors'=>true,'header'=>"Accept: application/json\r\n" ]]);
+  $response=@file_get_contents('https://pulse.wikidocs.app/api/api/latest?'.$query,false,$context);
+  if($response===false){return null;}
+  $payload=json_decode($response,true);
+  if(!is_array($payload) || !isset($payload['version']) || !is_string($payload['version'])){return null;}
+  $version=trim($payload['version']);
+  return strlen($version)?$version:null;
+}
+
+/**
  * CSRF Check
  *
  * @return bool

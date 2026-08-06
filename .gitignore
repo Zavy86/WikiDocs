@@ -5,6 +5,7 @@ robots.txt
 sitemap.xml
 styles/styles-custom.css
 datasets/config.inc.php
+datasets/pulse.json
 datasets/documents/*
 datasets/trash/*
 !datasets/documents/.gitkeep
