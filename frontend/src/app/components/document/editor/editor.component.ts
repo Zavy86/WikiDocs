@@ -52,6 +52,7 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
       this.syncingFromInput = true;
       this.editor.value(raw);
       this.syncingFromInput = false;
+      this.refreshFrontMatterLineClasses();
     });
     effect(() => {
       const request:EditorInsertRequest | null = this.insertRequest();
