@@ -28,7 +28,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Support for Mermaid diagrams
 - Unlimited page revisions
 - Uploading and downloading Attachments
-- Uploading images ~~(also from clipboard)~~
+- Uploading images (also from clipboard)
 - Content can be categorized in namespaces
 - Public and private browsing
 - Desktop and remote Sync
