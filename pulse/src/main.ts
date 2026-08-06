@@ -14,6 +14,7 @@ async function bootstrap():Promise<void> {
   const express:NestExpressApplication = app as NestExpressApplication;
   app.setGlobalPrefix('/api');
   const expressInstance = express.getHttpAdapter().getInstance();
+  expressInstance.set('trust proxy', 1);
   expressInstance.get('/', (_request, response):void => {
     response.type('html').send(DASHBOARD_HTML);
   });
