@@ -26,6 +26,7 @@ import {
   DocumentMode,
   DocumentPageData,
   EditorInsertRequest,
+  EditorPastedImageRequest,
   FooterComponent,
   HeaderComponent,
   InitializationComponent,
@@ -120,6 +121,8 @@ export class App implements AfterViewInit {
   protected readonly versioning:WritableSignal<boolean> = signal(false);
 
   protected readonly pendingEditorInsertRequest:WritableSignal<EditorInsertRequest | null> = signal<EditorInsertRequest | null>(null);
+
+  protected readonly pendingEditorPastedImageRequest:WritableSignal<EditorPastedImageRequest | null> = signal<EditorPastedImageRequest | null>(null);
 
   protected readonly isSavingDocument:WritableSignal<boolean> = signal(false);
 
@@ -263,14 +266,19 @@ export class App implements AfterViewInit {
 
   private readonly pendingEditPath:WritableSignal<string | null> = signal<string | null>(null);
   private editorInsertRequestSequence = 0;
+  private editorPastedImageRequestSequence = 0;
 
   protected readonly documentPageData:Signal<DocumentPageData> = computed<DocumentPageData>(():DocumentPageData => ( {
     document: this.currentDocument(),
     mode: this.mode(),
     editorRaw: this.editorRaw(),
     editorInsertRequest: this.pendingEditorInsertRequest(),
+    editorPastedImageRequest: this.pendingEditorPastedImageRequest(),
+    isSaving: this.isSavingDocument(),
     onEditorRawChange: (raw:string):void => this.onEditorRawChange(raw),
     onEditorInsertRequestApplied: (requestId:number):void => this.onEditorInsertRequestApplied(requestId),
+    onEditorPastedImageRequestApplied: (requestId:number):void => this.onEditorPastedImageRequestApplied(requestId),
+    onEditorInitialDocumentSaveRequested: (image:File):void => this.requestInitialDocumentSave(image),
   } ));
 
   constructor() {
@@ -350,6 +358,14 @@ export class App implements AfterViewInit {
     this.pendingEditorInsertRequest.set({
       id: this.editorInsertRequestSequence,
       markdown,
+    });
+  }
+
+  private queuePastedImageRequest(image:File):void {
+    this.editorPastedImageRequestSequence += 1;
+    this.pendingEditorPastedImageRequest.set({
+      id: this.editorPastedImageRequestSequence,
+      image,
     });
   }
 
@@ -520,6 +536,63 @@ export class App implements AfterViewInit {
     });
   }
 
+  private requestInitialDocumentSave(image:File):void {
+    const document:DocumentType | null = this.currentDocument();
+    if ( document?.exists === true ) {
+      this.queuePastedImageRequest(image);
+      return;
+    }
+    if ( ! document || this.isSavingDocument() ) { return; }
+    const data:ConfirmData = {
+      title: 'Save document before uploading image',
+      message: 'The document must be saved before an image can be uploaded. Do you want to save this draft and continue?',
+      confirmLabel: 'Save and upload',
+      cancelLabel: 'Cancel',
+      confirmColor: 'primary',
+    };
+    this.dialog
+      .open(ConfirmComponent, { width: '90vw', maxWidth: '520px', data })
+      .afterClosed()
+      .subscribe((confirmed:boolean | undefined):void => {
+        if ( confirmed !== true ) { return; }
+        this.saveInitialDocumentAndUploadImage(image);
+      });
+  }
+
+  private saveInitialDocumentAndUploadImage(image:File):void {
+    if ( this.currentDocument()?.exists === true || this.isSavingDocument() ) { return; }
+    const path:string = this.currentPath();
+    const raw:string = this.editorRaw();
+    this.isSavingDocument.set(true);
+    this.httpService.POST<void>(`/document?path=${ encodeURIComponent(path) }`, {
+      raw,
+      versioning: this.versioning()
+    }).subscribe({
+      next: ():void => {
+        if ( this.currentPath() !== path ) {
+          this.isSavingDocument.set(false);
+          return;
+        }
+        this.currentDocument.update((document:DocumentType | null):DocumentType | null => {
+          if ( ! document ) { return null; }
+          return {
+            ...document,
+            exists: true,
+            content: { ...document.content, raw },
+          };
+        });
+        this.editorInitialRaw.set(raw);
+        this.isSavingDocument.set(false);
+        this.queuePastedImageRequest(image);
+        this.alertService.success('Document saved successfully.');
+      },
+      error: (error:HttpErrorResponse):void => {
+        this.isSavingDocument.set(false);
+        this.alertService.error(error.message || 'Unable to save document before uploading image.');
+      }
+    });
+  }
+
   private moveDocument(destination:string):void {
     if ( ! this.canMoveDocument() ) { return; }
     const sourcePath:string = this.currentPath();
@@ -597,6 +670,7 @@ export class App implements AfterViewInit {
   private loadDocumentForCurrentUrl():void {
     this.mode.set('view');
     this.pendingEditorInsertRequest.set(null);
+    this.pendingEditorPastedImageRequest.set(null);
     this.syncSearchQuery();
     const path:string = this.normalizePath(this.router.url);
     this.currentPath.set(path);
@@ -768,6 +842,11 @@ export class App implements AfterViewInit {
   protected onEditorInsertRequestApplied(requestId:number):void {
     if ( this.pendingEditorInsertRequest()?.id !== requestId ) { return; }
     this.pendingEditorInsertRequest.set(null);
+  }
+
+  protected onEditorPastedImageRequestApplied(requestId:number):void {
+    if ( this.pendingEditorPastedImageRequest()?.id !== requestId ) { return; }
+    this.pendingEditorPastedImageRequest.set(null);
   }
 
   protected onNavigationToggle():void {

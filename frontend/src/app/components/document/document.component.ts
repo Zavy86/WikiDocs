@@ -3,7 +3,7 @@ import { ROUTER_OUTLET_DATA } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 import { DocumentViewerComponent } from 'src/app/components/document/viewer/viewer.component';
 import { DocumentExistsComponent } from 'src/app/components/document/exists/exists.component';
-import { DocumentEditorComponent, EditorInsertRequest } from 'src/app/components/document/editor/editor.component';
+import { DocumentEditorComponent, EditorInsertRequest, EditorPastedImageRequest } from 'src/app/components/document/editor/editor.component';
 import { DocumentType } from 'src/app/types';
 
 export type DocumentMode = 'view' | 'edit';
@@ -13,8 +13,12 @@ export type DocumentPageData = {
   readonly mode:DocumentMode;
   readonly editorRaw:string;
   readonly editorInsertRequest:EditorInsertRequest | null;
+  readonly editorPastedImageRequest:EditorPastedImageRequest | null;
+  readonly isSaving:boolean;
   readonly onEditorRawChange:(raw:string) => void;
   readonly onEditorInsertRequestApplied:(requestId:number) => void;
+  readonly onEditorPastedImageRequestApplied:(requestId:number) => void;
+  readonly onEditorInitialDocumentSaveRequested:(image:File) => void;
 };
 
 @Component({
@@ -31,6 +35,8 @@ export class DocumentComponent {
   protected readonly mode:Signal<DocumentMode> = computed(():DocumentMode => this.pageData().mode);
   protected readonly editorRaw:Signal<string> = computed(():string => this.pageData().editorRaw);
   protected readonly editorInsertRequest:Signal<EditorInsertRequest | null> = computed(():EditorInsertRequest | null => this.pageData().editorInsertRequest);
+  protected readonly editorPastedImageRequest:Signal<EditorPastedImageRequest | null> = computed(():EditorPastedImageRequest | null => this.pageData().editorPastedImageRequest);
+  protected readonly isSaving:Signal<boolean> = computed(():boolean => this.pageData().isSaving);
   protected readonly canWrite:Signal<boolean> = computed(():boolean => this.sessionService.isValid() && this.sessionService.hasAuthorization('write'));
 
   protected onEditorRawChange(raw:string):void {
@@ -39,6 +45,14 @@ export class DocumentComponent {
 
   protected onEditorInsertRequestApplied(requestId:number):void {
     this.pageData().onEditorInsertRequestApplied(requestId);
+  }
+
+  protected onEditorPastedImageRequestApplied(requestId:number):void {
+    this.pageData().onEditorPastedImageRequestApplied(requestId);
+  }
+
+  protected onEditorInitialDocumentSaveRequested(image:File):void {
+    this.pageData().onEditorInitialDocumentSaveRequested(image);
   }
 
 }

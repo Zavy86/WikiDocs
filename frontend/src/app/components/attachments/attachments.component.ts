@@ -1,12 +1,13 @@
 import { map, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { buildBackendUrl } from 'src/app/app.backend';
+import { isImageAttachmentFileName } from 'src/app/app.utilities';
 import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -29,7 +30,7 @@ export type AttachmentsDialogResult = {
   styleUrl: './attachments.component.scss',
   imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule ],
 })
-export class AttachmentsComponent {
+export class AttachmentsComponent implements OnInit {
 
   private readonly alertService:AlertService = inject(AlertService);
   private readonly httpService:HttpService = inject(HttpService);
@@ -44,6 +45,10 @@ export class AttachmentsComponent {
   protected readonly deletingAttachmentFile:WritableSignal<string | null> = signal<string | null>(null);
 
   private selectedFile:File | null = null;
+
+  public ngOnInit():void {
+    this.refreshAttachments();
+  }
 
   protected close():void {
     this.dialogRef.close({
@@ -111,8 +116,7 @@ export class AttachmentsComponent {
   }
 
   protected isImageAttachment(fileName:string):boolean {
-    const extension:string = fileName.trim().split('.').at(-1)?.toLowerCase() ?? '';
-    return [ 'apng', 'avif', 'bmp', 'gif', 'ico', 'jpeg', 'jpg', 'png', 'svg', 'webp' ].includes(extension);
+    return isImageAttachmentFileName(fileName);
   }
 
   protected getPreviewUrl(attachment:AttachmentType):string {
