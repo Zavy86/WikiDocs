@@ -1,6 +1,6 @@
 import { map, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +30,7 @@ export type AttachmentsDialogResult = {
   styleUrl: './attachments.component.scss',
   imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule ],
 })
-export class AttachmentsComponent {
+export class AttachmentsComponent implements OnInit {
 
   private readonly alertService:AlertService = inject(AlertService);
   private readonly httpService:HttpService = inject(HttpService);
@@ -45,6 +45,10 @@ export class AttachmentsComponent {
   protected readonly deletingAttachmentFile:WritableSignal<string | null> = signal<string | null>(null);
 
   private selectedFile:File | null = null;
+
+  public ngOnInit():void {
+    this.refreshAttachments();
+  }
 
   protected close():void {
     this.dialogRef.close({

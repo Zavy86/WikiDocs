@@ -23,10 +23,14 @@
       <app-document-editor
         [raw]="editorRaw()"
         [documentPath]="document()?.metadata?.path ?? ''"
+        [documentExists]="document()?.exists === true"
+        [isSaving]="isSaving()"
         [insertRequest]="editorInsertRequest()"
+        [pastedImageRequest]="editorPastedImageRequest()"
         (rawChanged)="onEditorRawChange($event)"
         (insertRequestApplied)="onEditorInsertRequestApplied($event)"
-        (attachmentsChanged)="onEditorAttachmentsChange($event)"
+        (pastedImageRequestApplied)="onEditorPastedImageRequestApplied($event)"
+        (initialDocumentSaveRequested)="onEditorInitialDocumentSaveRequested($event)"
       />
     }
   </section>

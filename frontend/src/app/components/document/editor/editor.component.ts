@@ -5,11 +5,15 @@ import type EasyMDEType from 'easymde';
 import { getImageAttachmentExtensionFromMimeType } from 'src/app/app.utilities';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
-import { AttachmentType, DocumentType } from 'src/app/types';
 
 export type EditorInsertRequest = {
   readonly id:number;
   readonly markdown:string;
+};
+
+export type EditorPastedImageRequest = {
+  readonly id:number;
+  readonly image:File;
 };
 
 @Component({
@@ -21,10 +25,14 @@ export type EditorInsertRequest = {
 export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
   public readonly raw = input.required<string>();
   public readonly documentPath = input.required<string>();
+  public readonly documentExists = input.required<boolean>();
+  public readonly isSaving = input.required<boolean>();
   public readonly insertRequest = input<EditorInsertRequest | null>(null);
+  public readonly pastedImageRequest = input<EditorPastedImageRequest | null>(null);
   public readonly rawChanged = output<string>();
   public readonly insertRequestApplied = output<number>();
-  public readonly attachmentsChanged = output<ReadonlyArray<AttachmentType>>();
+  public readonly pastedImageRequestApplied = output<number>();
+  public readonly initialDocumentSaveRequested = output<File>();
   private readonly alertService:AlertService = inject(AlertService);
   private readonly destroyRef:DestroyRef = inject(DestroyRef);
   private readonly httpService:HttpService = inject(HttpService);
@@ -35,6 +43,7 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
   private readonly frontMatterLineIndexes = new Set<number>();
   private readonly isEditorReady:WritableSignal<boolean> = signal<boolean>(false);
   private lastAppliedInsertRequestId:number | null = null;
+  private lastAppliedPastedImageRequestId:number | null = null;
 
   public constructor() {
     effect(() => {
@@ -44,11 +53,17 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
       this.editor.value(raw);
       this.syncingFromInput = false;
     });
-
     effect(() => {
       const request:EditorInsertRequest | null = this.insertRequest();
       if ( ! this.isEditorReady() || ! request ) { return; }
       this.applyInsertRequest(request);
+    });
+    effect(() => {
+      const request:EditorPastedImageRequest | null = this.pastedImageRequest();
+      if ( ! this.isEditorReady() || ! request || this.lastAppliedPastedImageRequestId === request.id ) { return; }
+      this.lastAppliedPastedImageRequestId = request.id;
+      this.insertAndUploadImage(request.image);
+      this.pastedImageRequestApplied.emit(request.id);
     });
   }
 
@@ -158,11 +173,27 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const fileName:string = `image_${ Date.now() }.${ extension }`;
-    const markdown:string = `![${ fileName }](./${ fileName })`;
-    this.insertMarkdownAtCursor(markdown);
-    this.uploadPastedImage(image, fileName);
+    if ( ! this.documentExists() ) {
+      if ( this.isSaving() ) {
+        this.alertService.warning('Wait for the document to be saved before pasting another image.');
+        return;
+      }
+      this.initialDocumentSaveRequested.emit(image);
+      return;
+    }
+    this.insertAndUploadImage(image);
   };
+
+  private insertAndUploadImage(image:File):void {
+    const extension:string | null = getImageAttachmentExtensionFromMimeType(image.type);
+    if ( ! extension ) {
+      this.alertService.error(`Unsupported image type: ${ image.type || 'unknown' }.`);
+      return;
+    }
+    const fileName:string = `image_${ Date.now() }.${ extension }`;
+    this.insertMarkdownAtCursor(`![${ fileName }](./${ fileName })`);
+    this.uploadPastedImage(image, fileName);
+  }
 
   private insertMarkdownAtCursor(markdown:string):void {
     if ( ! this.editor ) { return; }
@@ -179,20 +210,11 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
     this.httpService.UPLOAD<void>(uri, formData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: ():void => {
         this.alertService.success('Image uploaded successfully.');
-        this.refreshAttachments();
       },
       error: (error:HttpErrorResponse):void => {
         this.removeMarkdownForFailedUpload(fileName);
         this.alertService.error(error.message || 'Unable to upload image.');
       }
-    });
-  }
-
-  private refreshAttachments():void {
-    const uri:string = `/document?path=${ encodeURIComponent(this.documentPath()) }`;
-    this.httpService.GET<DocumentType>(uri).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (document:DocumentType):void => this.attachmentsChanged.emit([ ...document.attachments ]),
-      error: (error:HttpErrorResponse):void => this.alertService.error(error.message || 'Image uploaded, but unable to refresh attachments.'),
     });
   }
 
