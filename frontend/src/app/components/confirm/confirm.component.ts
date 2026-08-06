@@ -14,7 +14,6 @@ export type ConfirmData = {
   standalone: true,
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
-  styleUrl: './confirm.component.scss',
   imports: [ MatDialogModule, MatButtonModule ],
 })
 export class ConfirmComponent {

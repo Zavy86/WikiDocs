@@ -15,6 +15,7 @@ export * from 'src/app/components/header/header.component';
 export * from 'src/app/components/initialization/initialization.component';
 export * from 'src/app/components/privacy/privacy.component';
 export * from 'src/app/components/profile/profile.component';
+export * from 'src/app/components/release/release.component';
 export * from 'src/app/components/search/search.component';
 export * from 'src/app/components/settings/settings.component';
 export * from 'src/app/components/sidebar/sidebar.component';

@@ -82,6 +82,7 @@
         </div>
         <div class="app-form-actions">
           <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
+          <button mat-stroked-button type="button" (click)="checkForNewVersions()" [disabled]="checkingRelease()">{{ checkingRelease() ? 'Checking...' : 'Check for new versions' }}</button>
           <button mat-flat-button color="primary" type="submit" [disabled]="saving() || timezoneLoadError() !== null">{{ saving() ? 'Saving...' : 'Save' }}</button>
         </div>
       </form>

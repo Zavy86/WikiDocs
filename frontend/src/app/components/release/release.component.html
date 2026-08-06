@@ -1,0 +1,8 @@
+<h2 mat-dialog-title class="app-dialog-title">New version available</h2>
+<mat-dialog-content>
+  <p class="app-dialog-message">Version {{ data.latest }} is available.</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="close()">Dismiss</button>
+  <a mat-flat-button color="primary" href="https://github.com/Zavy86/WikiDocs/releases" target="_blank" rel="noopener" (click)="close()">View releases</a>
+</mat-dialog-actions>

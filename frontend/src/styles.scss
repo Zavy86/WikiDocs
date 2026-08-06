@@ -276,6 +276,11 @@ h2.app-dialog-title {
   margin-bottom: 0;
 }
 
+.app-dialog-message {
+  margin: 0;
+  white-space: pre-line;
+}
+
 .app-dialog-close-button {
   margin-right: -0.25rem;
   margin-left: auto;

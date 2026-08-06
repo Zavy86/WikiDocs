@@ -18,7 +18,6 @@ export type PromptData = {
   standalone: true,
   selector: 'app-prompt',
   templateUrl: './prompt.component.html',
-  styleUrl: './prompt.component.scss',
   imports: [ ReactiveFormsModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule ],
 })
 export class PromptComponent {
