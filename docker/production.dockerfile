@@ -18,11 +18,13 @@ FROM alpine:3.20
 ARG DEPENDENCIES="\
 shadow \
 apache2-http2 \
+ca-certificates \
 php \
 php-apache2 \
 php-dom \
 php-json \
 php-mbstring \
+php-openssl \
 php-session \
 php-xml \
 "

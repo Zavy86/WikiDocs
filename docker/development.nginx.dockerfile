@@ -16,11 +16,13 @@ ARG DEPENDENCIES="\
     curl \
     shadow \
     nginx \
+    ca-certificates \
     php83 \
     php83-fpm \
     php83-dom \
     php83-json \
     php83-mbstring \
+    php83-openssl \
     php83-session \
     php83-xml \
 "

@@ -16,11 +16,13 @@ vim \
 curl \
 shadow \
 apache2 \
+ca-certificates \
 php \
 php-apache2 \
 php-dom \
 php-json \
 php-mbstring \
+php-openssl \
 php-session \
 php-xml \
 "
