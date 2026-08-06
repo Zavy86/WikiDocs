@@ -67,6 +67,8 @@
 	"SettingsTimezone": "Tijdzone",
 	"SettingsCancel": "Annuleren",
 	"SettingsSubmit": "Opslaan",
+	"PulseUpdateAvailable": "Er is een nieuwe versie %s beschikbaar.",
+	"PulseMajorUpdateAvailable": "Deze versie bevat belangrijke niet-compatibele wijzigingen. Lees de migratienotities voordat u bijwerkt.",
 	"SubmitAuthSuccess": "Authenticatie geslaagd!",
 	"SubmitAuthInvalid": "Ongeldige authenticatiecode!",
 	"SubmitNotAuthenticated": "Je bent niet geauthenticeerd!",
