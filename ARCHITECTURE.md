@@ -386,6 +386,17 @@ is `true` and `content.md` already exists, the backend first copies the current 
 copy fails the store operation. New documents never create a version. `_versions` is an internal archive and is not
 exposed through document APIs.
 
+### Image pasting
+
+The document editor accepts one supported image from the clipboard at a time. For an existing document, it generates a
+timestamped attachment file name, inserts a relative Markdown image reference at the cursor, and uploads the image
+through the existing `POST /api/attachment` endpoint. The attachment is stored alongside `content.md`.
+
+For a new document, the editor asks the user to save the draft before uploading the image, then continues the same
+insert-and-upload flow. Unsupported image types, multiple pasted images, and uploads attempted while the initial save
+is in progress produce an actionable error. If the attachment upload fails, the editor removes the Markdown reference
+it inserted for that image.
+
 ```
 ┌─────────────────────────────────────────┐
 │ MetadataContract                        │
