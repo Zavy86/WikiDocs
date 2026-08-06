@@ -46,6 +46,7 @@ if($g_act=="store"){
   $config.="define('COLOR',\"".$_POST['color']."\");\n";
   $config.="define('DARK',".(isset($_POST['dark'])?"true":"false").");\n";
   $config.="define('GTAG',".($_POST['gtag']?"\"".$_POST['gtag']."\"":"null").");\n";
+  $config.="define('ATTACHMENTEXTENSION',".($_POST['attachmentextension']?"array(".implode(",",array_map(fn($v) => '"' . trim($v) . '"', explode(',', $_POST['attachmentextension']))).")":"null").");\n";
   // write configuration file
   file_put_contents(BASE."datasets/config.inc.php",$config);
   // alert and redirect
@@ -128,6 +129,15 @@ if($g_act=="store"){
           <div class="input-field col s12 m7">
             <input type="text" name="gtag" id="gtag" class="validate" placeholder="<?= $TXT->SettingsGtagPlaceholder ?>.. (like UA-123456789-1)" value="<?= GTAG ?>">
             <label for="gtag"><span class="main-color-text"><?= $TXT->SettingsGtag ?></span></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m5">
+            <input type="text" name="attachmentextension" id="attachmentextension" class="validate" placeholder="<?= $TXT->SettingsAttachmentExtensionPlaceholder ?>" value="<?= implode(", ",ATTACHMENTEXTENSION) ?>" required>
+            <label for="attachmentextension"><span class="main-color-text"><?= $TXT->SettingsAttachmentExtension ?></span></label>
+          </div>
+          <div class="input-field col s12 m7">
+            <!--another settings -->
           </div>
         </div>
         <div class="row">

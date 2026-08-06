@@ -80,7 +80,8 @@ if($g_act=="conclude"){
     'VIEWCODE'=>'null',
     'COLOR'=>'#4CAF50',
     'DARK'=>'false',
-    'GTAG'=>'null'
+    'GTAG'=>'null',
+    'ATTACHMENTEXTENSION'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx")
   ];
   foreach($config_items as $key=>$value){
     if($value===null||$value==='null'){
@@ -89,6 +90,8 @@ if($g_act=="conclude"){
       $config.="define('".$key. "', ".($value==='true'?'true':'false').");\n";
     }elseif(is_numeric($value)){
       $config.="define('".$key."', ".$value.");\n";
+    }elseif(is_array($value)){
+      $config.="define('".$key."', array(\"".implode("\",\"",$value)."\"));\n";
     }else{
       $config.="define('" .$key."', '".addslashes($value)."');\n";
     }

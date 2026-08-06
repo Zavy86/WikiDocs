@@ -63,6 +63,8 @@
     "SettingsDark": "夜間模式",
     "SettingsGtag": "Google Analytics標籤",
     "SettingsGtagPlaceholder": "插入G-TAG",
+	"SettingsAttachmentExtension": "附件允許的檔案副檔名",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
     "SettingsLanguage": "語言",
     "SettingsTimezone": "時區",
     "SettingsCancel": "取消",

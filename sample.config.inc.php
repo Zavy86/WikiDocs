@@ -32,3 +32,5 @@ define('COLOR',"#4CAF50");
 define('DARK',false);
 // Google Analytics Tag
 define('GTAG',null);
+// File attachment extension
+define('ATTACHMENTEXTENSION',array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx"));

@@ -63,6 +63,8 @@
 	"SettingsDark": "Темный режим",
 	"SettingsGtag": "Тег Google Аналитики",
 	"SettingsGtagPlaceholder": "Вставьте G-TAG",
+	"SettingsAttachmentExtension": "Допустимые расширения для вложений",
+	"SettingsAttachmentExtensionPlaceholder": "pdf, txt, doc, docx",
 	"SettingsLanguage": "Язык",
 	"SettingsTimezone": "Часовой пояс",
 	"SettingsCancel": "Отмена",
