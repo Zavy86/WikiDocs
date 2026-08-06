@@ -255,10 +255,16 @@ final class Document{
      */
     private static function sanitizeIframes($part) {
         $allowedHosts = self::allowedIframeHosts();
+        // The attribute chunk tokenizes quoted values so a value that itself
+        // contains ">" (e.g. srcdoc="<img ...>") does not truncate the match,
+        // and the closing </iframe> is optional so an UNCLOSED <iframe ...>
+        // is still caught and escaped. Without this an unclosed srcdoc iframe
+        // slipped through to Parsedown, which re-emitted it as a live element
+        // and re-decoded the srcdoc payload (stored XSS).
         return preg_replace_callback(
-            '#<iframe\b([^>]*?)(?:/\s*>|>\s*(.*?)</iframe\s*>)#is',
+            '#<iframe\b((?:"[^"]*"|\'[^\']*\'|[^>"\'])*)>(?:\s*(.*?)</iframe\s*>)?#is',
             function($m) use ($allowedHosts) {
-                $attrs = $m[1];
+                $attrs = rtrim($m[1], '/');
                 $inner = isset($m[2]) ? $m[2] : '';
                 // extract src
                 if (!preg_match('/\bsrc\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|([^\s>]+))/i', $attrs, $sm)) {
