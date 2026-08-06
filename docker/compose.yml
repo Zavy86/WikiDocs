@@ -10,11 +10,11 @@ services:
       MODE: public
       SECRET: ${SECRET:-wikidocs-insecure-secret-to-be-changed}
     ports:
-      - "3600:3000"
+      - "3600:3210"
     volumes:
       - datasets:/var/lib/wikidocs/datasets
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ >/dev/null && wget -qO- http://127.0.0.1:3000/api/health >/dev/null || exit 1" ]
+      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:3210/ >/dev/null && wget -qO- http://127.0.0.1:3210/api/health >/dev/null || exit 1" ]
       retries: 6
       timeout: 9s
       interval: 60s
