@@ -11,6 +11,7 @@ export * from './jwt.contract';
 export * from './metadata.contract';
 export * from './pinned.contract';
 export * from './profile.contract';
+export * from './release.contract';
 export * from './search.contract';
 export * from './settings.contract';
 export * from './snapshot.contract';
