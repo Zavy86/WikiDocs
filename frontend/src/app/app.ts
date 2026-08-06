@@ -271,6 +271,7 @@ export class App implements AfterViewInit {
     editorInsertRequest: this.pendingEditorInsertRequest(),
     onEditorRawChange: (raw:string):void => this.onEditorRawChange(raw),
     onEditorInsertRequestApplied: (requestId:number):void => this.onEditorInsertRequestApplied(requestId),
+    onEditorAttachmentsChange: (attachments:ReadonlyArray<AttachmentType>):void => this.syncCurrentDocumentAttachments(attachments),
   } ));
 
   constructor() {

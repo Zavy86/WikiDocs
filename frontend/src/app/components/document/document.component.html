@@ -22,9 +22,11 @@
     @if (mode() === 'edit') {
       <app-document-editor
         [raw]="editorRaw()"
+        [documentPath]="document()?.metadata?.path ?? ''"
         [insertRequest]="editorInsertRequest()"
         (rawChanged)="onEditorRawChange($event)"
         (insertRequestApplied)="onEditorInsertRequestApplied($event)"
+        (attachmentsChanged)="onEditorAttachmentsChange($event)"
       />
     }
   </section>

@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { buildBackendUrl } from 'src/app/app.backend';
+import { isImageAttachmentFileName } from 'src/app/app.utilities';
 import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -111,8 +112,7 @@ export class AttachmentsComponent {
   }
 
   protected isImageAttachment(fileName:string):boolean {
-    const extension:string = fileName.trim().split('.').at(-1)?.toLowerCase() ?? '';
-    return [ 'apng', 'avif', 'bmp', 'gif', 'ico', 'jpeg', 'jpg', 'png', 'svg', 'webp' ].includes(extension);
+    return isImageAttachmentFileName(fileName);
   }
 
   protected getPreviewUrl(attachment:AttachmentType):string {

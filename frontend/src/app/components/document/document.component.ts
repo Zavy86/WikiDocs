@@ -4,7 +4,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { DocumentViewerComponent } from 'src/app/components/document/viewer/viewer.component';
 import { DocumentExistsComponent } from 'src/app/components/document/exists/exists.component';
 import { DocumentEditorComponent, EditorInsertRequest } from 'src/app/components/document/editor/editor.component';
-import { DocumentType } from 'src/app/types';
+import { AttachmentType, DocumentType } from 'src/app/types';
 
 export type DocumentMode = 'view' | 'edit';
 
@@ -15,6 +15,7 @@ export type DocumentPageData = {
   readonly editorInsertRequest:EditorInsertRequest | null;
   readonly onEditorRawChange:(raw:string) => void;
   readonly onEditorInsertRequestApplied:(requestId:number) => void;
+  readonly onEditorAttachmentsChange:(attachments:ReadonlyArray<AttachmentType>) => void;
 };
 
 @Component({
@@ -39,6 +40,10 @@ export class DocumentComponent {
 
   protected onEditorInsertRequestApplied(requestId:number):void {
     this.pageData().onEditorInsertRequestApplied(requestId);
+  }
+
+  protected onEditorAttachmentsChange(attachments:ReadonlyArray<AttachmentType>):void {
+    this.pageData().onEditorAttachmentsChange(attachments);
   }
 
 }
