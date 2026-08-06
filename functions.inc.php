@@ -31,7 +31,8 @@ function wdf_dump($variable,?string $label=null,?string $class=null,bool $force=
  */
 function wdf_redirect(string $location):void{
   if(DEBUG){die("<a href=\"".$location."\">".$location."</a>");}
-  exit(header("location: ".$location));
+  header("location: ".$location);
+  exit;
 }
 
 /**
@@ -83,10 +84,8 @@ function wdf_alert(string $message,string $class="info"):bool{
       case "danger":$message="<!> ".$message;break;
       default:$message="(?) ".$message;
     }
-    // dump alert
     wdf_dump($message,"ALERT");
   }
-  // return
   return true;
 }
 
@@ -273,28 +272,25 @@ EOS;
  * @return string Parsed text
  */
 function parseCustomTags($text, $tags) {
-    // Regular expression to match inline code (`code`) and code blocks (```code```)
-    $codeBlockPattern = '/(```.*?```|`[^`]*`)/s';
-
-    // Split text by code blocks
-    $segments = preg_split($codeBlockPattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-    // Process only non-code segments
-    foreach ($segments as &$segment) {
-        // If the segment is not a code block, process for custom tags
-        if (!preg_match($codeBlockPattern, $segment)) {
-            foreach ($tags as $tag => $callback) {
-                if (preg_match('/\[' . $tag . '(?::(\d+))?\]/', $segment, $matches)) {
-                    $param = isset($matches[1]) ? (int)$matches[1] : 7; // Default limit is 7
-                    $html = call_user_func($callback, $param);
-                    $segment = str_replace($matches[0], $html, $segment);
-                }
-            }
+  // Regular expression to match inline code (`code`) and code blocks (```code```)
+  $codeBlockPattern = '/(```.*?```|`[^`]*`)/s';
+  // Split text by code blocks
+  $segments = preg_split($codeBlockPattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+  // Process only non-code segments
+  foreach ($segments as &$segment) {
+    // If the segment is not a code block, process for custom tags
+    if (!preg_match($codeBlockPattern, $segment)) {
+      foreach ($tags as $tag => $callback) {
+        if (preg_match('/\[' . $tag . '(?::(\d+))?]/', $segment, $matches)) {
+          $param = isset($matches[1]) ? (int)$matches[1] : 7; // Default limit is 7
+          $html = call_user_func($callback, $param);
+          $segment = str_replace($matches[0], $html, $segment);
         }
+      }
     }
-
-    // Join the segments back together
-    return implode('', $segments);
+  }
+  // Join the segments back together
+  return implode('', $segments);
 }
 
 /**
@@ -304,17 +300,15 @@ function parseCustomTags($text, $tags) {
  * @return string HTML of the recent edits
  */
 function renderRecentEdits($limit = 7) {
-    $docs = Document::getLastEditedDocs($limit);
-    $html = "<ul>\n";
-
-    foreach ($docs as $doc) {
-        $path = rtrim($doc['path'], '/');
-        $title = getDocumentTitle($path);
-        $html .= '<li><a href="' . URL . $path . '">' . $title . '</a> - ' . date('Y-m-d H:i', $doc['timestamp']) . "</li>\n";
-    }
-
-    $html .= "</ul>\n";
-    return $html;
+  $docs = Document::getLastEditedDocs($limit);
+  $html = "<ul>\n";
+  foreach ($docs as $doc) {
+    $path = rtrim($doc['path'], '/');
+    $title = getDocumentTitle($path);
+    $html .= '<li><a href="' . URL . $path . '">' . $title . '</a> - ' . date('Y-m-d H:i', $doc['timestamp']) . "</li>\n";
+  }
+  $html .= "</ul>\n";
+  return $html;
 }
 
 /**
@@ -324,19 +318,19 @@ function renderRecentEdits($limit = 7) {
  * @return string The title of the document
  */
 function getDocumentTitle($path) {
-    // Construct the full path to the content.md file
-    $fullPath = realpath(__DIR__ . '/../public_html/datasets/documents/' . $path . '/content.md');
-    if ($fullPath && file_exists($fullPath)) {
-        $file = fopen($fullPath, 'r');
-        if ($file) {
-            $firstLine = fgets($file);
-            fclose($file);
-            if ($firstLine !== false && strpos($firstLine, '# ') === 0) {
-                return trim(substr($firstLine, 2));
-            }
-        }
+  // Construct the full path to the content.md file
+  $fullPath = realpath(__DIR__ . '/../public_html/datasets/documents/' . $path . '/content.md');
+  if ($fullPath && file_exists($fullPath)) {
+    $file = fopen($fullPath, 'r');
+    if ($file) {
+      $firstLine = fgets($file);
+      fclose($file);
+      if ($firstLine !== false && strpos($firstLine, '# ') === 0) {
+        return trim(substr($firstLine, 2));
+      }
     }
-    return $path; // fallback to the path if title not found
+  }
+  return $path; // fallback to the path if title not found
 }
 
 /**
@@ -345,8 +339,8 @@ function getDocumentTitle($path) {
  * @return string The total number of content.md files
  */
 function renderTotalContent() {
-    $total = Document::getTotalContentCount();
-    return (string)$total;
+  $total = Document::getTotalContentCount();
+  return (string)$total;
 }
 
 /**
@@ -356,15 +350,14 @@ function renderTotalContent() {
  * @return string Parsed text
  */
 function parseInlineText($text) {
-    // Define the tags and their respective callbacks
-    $tags = [
-        'wd-recentedits' => function($limit = 7) {
-            return renderRecentEdits($limit);
-        },
-        'wd-total' => function() {
-            return renderTotalContent();
-        }
-    ];
-
-    return parseCustomTags($text, $tags);
+  // Define the tags and their respective callbacks
+  $tags = [
+    'wd-recentedits' => function($limit = 7) {
+      return renderRecentEdits($limit);
+    },
+    'wd-total' => function() {
+      return renderTotalContent();
+    }
+  ];
+  return parseCustomTags($text, $tags);
 }
