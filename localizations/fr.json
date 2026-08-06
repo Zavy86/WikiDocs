@@ -67,6 +67,8 @@
 	"SettingsTimezone": "Fuseau horaire",
 	"SettingsCancel": "Annuler",
 	"SettingsSubmit": "Sauvegarder",
+	"PulseUpdateAvailable": "Une nouvelle version %s est disponible.",
+	"PulseMajorUpdateAvailable": "Cette version introduit des changements majeurs incompatibles. Consultez les notes de migration avant la mise à jour.",
 	"SubmitAuthSuccess": "Authentification acceptée !",
 	"SubmitAuthInvalid": "Code d'authentification incorrect !",
 	"SubmitNotAuthenticated": "Vous n'êtes pas authentifié(e) !",

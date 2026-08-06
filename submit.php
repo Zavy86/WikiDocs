@@ -40,8 +40,6 @@ function authentication(){
   // get localization
   $TXT=Localization::getInstance();
   wdf_dump($_REQUEST,"_REQUEST");
-  // reset authentication
-  $_SESSION['wikidocs']['authenticated']=0;
   // acquire variables
   $p_document=strtolower($_POST['document']);
   $p_password=$_POST['password'];
@@ -60,6 +58,13 @@ function authentication(){
   // check for authentication
   if($_SESSION['wikidocs']['authenticated']) {
     wdf_alert($TXT->SubmitAuthSuccess,"success");
+    $latestVersion=wdf_pulse_latest_version(true);
+    if($latestVersion!==null && $latestVersion!==trim(VERSION)){
+      wdf_alert(sprintf($TXT->PulseUpdateAvailable,$latestVersion),"info");
+      if(preg_match('/^2(?:\.|$)/',$latestVersion)){
+        wdf_alert($TXT->PulseMajorUpdateAvailable,"warning");
+      }
+    }
     wdf_redirect(PATH.$p_document);
   }else{
     wdf_alert($TXT->SubmitAuthInvalid,"danger");
@@ -115,7 +120,6 @@ function content_save(){
     wdf_regenerate_sitemap();
     // redirect
     wdf_redirect(PATH.$p_document);
-    return;
   }
   // file path is ok.
   // check for directory or make it
@@ -132,11 +136,11 @@ function content_save(){
   // document path definition
   define("DOC_PATH",$DOC->PATH."/");
   // replace url in images
-  $p_content=preg_replace_callback('/!\[(.*)\]\s?\((.*)(.png|.gif|.jpg|.jpeg|.svg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+  $p_content=preg_replace_callback('/!\[(.*)]\s?\((.*)(.png|.gif|.jpg|.jpeg|.svg)(.*)\)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
   // replace url in images
-  $p_content=preg_replace_callback('/\[(.*)\]:\s?(.*)(.png|.gif|.jpg|.jpeg|.svg|)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
+  $p_content=preg_replace_callback('/\[(.*)]:\s?(.*)(.png|.gif|.jpg|.jpeg|.svg|)/',function($match){return str_replace(DOC_PATH,"{{DOC_PATH}}",$match[0]);},$p_content);
   // replace path in url
-  $p_content=preg_replace_callback('/\[(.*)\]\s?\((.*)\)/',function($match){return str_replace("(".PATH,"({{APP_PATH}}",$match[0]);},$p_content);
+  $p_content=preg_replace_callback('/\[(.*)]\s?\((.*)\)/',function($match){return str_replace("(".PATH,"({{APP_PATH}}",$match[0]);},$p_content);
   wdf_dump($p_content,"content");
   // save content file
   $bytes=file_put_contents($DOC->DIR."content.md",$p_content);

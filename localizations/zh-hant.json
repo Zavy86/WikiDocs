@@ -67,6 +67,8 @@
     "SettingsTimezone": "時區",
     "SettingsCancel": "取消",
     "SettingsSubmit": "保存",
+    "PulseUpdateAvailable": "新版本 %s 已可用。",
+    "PulseMajorUpdateAvailable": "此版本包含重大不相容變更。升級前請查閱遷移說明。",
     "SubmitAuthSuccess": "驗證成功!",
     "SubmitAuthInvalid": "驗證碼無效!",
     "SubmitNotAuthenticated": "您未通過身份驗證!",
