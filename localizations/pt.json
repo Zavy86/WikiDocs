@@ -69,6 +69,8 @@
 	"SettingsTimezone": "Timezone",
 	"SettingsCancel": "Cancelar",
 	"SettingsSubmit": "Guardar",
+	"PulseUpdateAvailable": "Uma nova versão %s está disponível.",
+	"PulseMajorUpdateAvailable": "Esta versão introduz alterações importantes incompatíveis. Consulte as notas de migração antes de atualizar.",
 	"SubmitAuthSuccess": "Autenticação bem-sucedida!",
 	"SubmitAuthInvalid": "Código de autenticação inválido!",
 	"SubmitNotAuthenticated": "Não está autenticado!",

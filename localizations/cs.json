@@ -69,6 +69,8 @@
 	"SettingsTimezone": "Časové pásmo",
 	"SettingsCancel": "Zrušit",
 	"SettingsSubmit": "Uložit",
+	"PulseUpdateAvailable": "Je k dispozici nová verze %s.",
+	"PulseMajorUpdateAvailable": "Tato verze přináší zásadní nekompatibilní změny. Před aktualizací si prostudujte migrační poznámky.",
 	"SubmitAuthSuccess": "Ověření proběhlo úspěšně!",
 	"SubmitAuthInvalid": "Neplatný ověřovací kód!",
 	"SubmitNotAuthenticated": "Nejste přihlášen(a)!",

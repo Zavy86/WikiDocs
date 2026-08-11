@@ -69,6 +69,8 @@
 	"SettingsTimezone": "Часовой пояс",
 	"SettingsCancel": "Отмена",
 	"SettingsSubmit": "Сохранить",
+	"PulseUpdateAvailable": "Доступна новая версия %s.",
+	"PulseMajorUpdateAvailable": "Эта версия содержит важные несовместимые изменения. Перед обновлением ознакомьтесь с примечаниями по миграции.",
 	"SubmitAuthSuccess": "Авторизация прошла успешно!",
 	"SubmitAuthInvalid": "Неверный код аутентификации!",
 	"SubmitNotAuthenticated": "Вы не авторизованы!",

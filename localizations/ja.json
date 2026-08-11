@@ -69,6 +69,8 @@
     "SettingsTimezone": "タイムゾーン",
     "SettingsCancel": "キャンセル",
     "SettingsSubmit": "保存",
+    "PulseUpdateAvailable": "新しいバージョン %s が利用可能です。",
+    "PulseMajorUpdateAvailable": "このリリースには互換性を損なう大きな変更が含まれています。更新前に移行ノートを確認してください。",
     "SubmitAuthSuccess": "認証に成功しました！",
     "SubmitAuthInvalid": "無効な認証コードです！",
     "SubmitNotAuthenticated": "認証されていません！",

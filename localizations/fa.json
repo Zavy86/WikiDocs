@@ -69,6 +69,8 @@
 	"SettingsTimezone": "منطقه زمانی",
 	"SettingsCancel": "لغو",
 	"SettingsSubmit": "ذخیره",
+	"PulseUpdateAvailable": "نسخه جدید %s در دسترس است.",
+	"PulseMajorUpdateAvailable": "این نسخه شامل تغییرات مهم و ناسازگار است. پیش از به‌روزرسانی، یادداشت‌های مهاجرت را بررسی کنید.",
 	"SubmitAuthSuccess": "باموفقیت وارد سیستم شدید.",
 	"SubmitAuthInvalid": "کلمه عبور اشتباه می‌باشد!",
 	"SubmitNotAuthenticated": "شما وارد سیستم نشده‌اید!",

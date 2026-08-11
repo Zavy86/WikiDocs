@@ -87,7 +87,7 @@ final class Session{
 			'httponly' => true,
 			'samesite' => 'Strict'
 		]);
-		header('Location:' . PATH . DOC);
+		header('Location: ' . wdf_safe_internal_path(DOC));
 	}
 
 	public function privacyAgreeded():bool{
