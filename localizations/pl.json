@@ -71,6 +71,8 @@
 	"SettingsTimezone": "Strefa czasowa",
 	"SettingsCancel": "Anuluj",
 	"SettingsSubmit": "Zapisz",
+	"PulseUpdateAvailable": "Dostępna jest nowa wersja %s.",
+	"PulseMajorUpdateAvailable": "Ta wersja wprowadza istotne niekompatybilne zmiany. Przed aktualizacją zapoznaj się z uwagami dotyczącymi migracji.",
 	"SubmitAuthSuccess": "Uwierzytelnianie zakończone sukcesem!",
 	"SubmitAuthInvalid": "Nieprawidłowy kod uwierzytelniający!",
 	"SubmitNotAuthenticated": "Nie jesteś uwierzytelniony!",

@@ -29,6 +29,8 @@ $TXT=Localization::getInstance();
 $APP=new WikiDocs();
 // initialize document
 $DOC=new Document(DOC);
+// Check releases once every eight hours when the homepage is refreshed.
+if($DOC->ID==='homepage'){wdf_pulse_latest_version();}
 // initialize markdown parser
 $PARSER=new ParsedownPlus([
 	'tables' => [

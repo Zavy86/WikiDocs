@@ -71,6 +71,8 @@
 	"SettingsTimezone": "Fuso orario",
 	"SettingsCancel": "Annulla",
 	"SettingsSubmit": "Salva",
+	"PulseUpdateAvailable": "È disponibile la nuova versione %s.",
+	"PulseMajorUpdateAvailable": "Questa release introduce importanti modifiche non retrocompatibili. Consulta le note di migrazione prima di aggiornare.",
 	"SubmitAuthSuccess": "Autenticazione completata!",
 	"SubmitAuthInvalid": "Codice di autenticazione non valido!",
 	"SubmitNotAuthenticated": "Non sei autenticato!",
