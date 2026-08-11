@@ -6,6 +6,14 @@
  * @repository https://github.com/Zavy86/wikidocs
  *
  */
+
+function sanitizeExtensions(?string $rawInput): array {
+    return array_values(array_filter(array_map(
+        fn($v) => strtolower(preg_replace('/[^A-Za-z0-9]/', '', $v)),
+        explode(',', $rawInput ?? '')
+    )));
+}
+
 require_once("bootstrap.inc.php");
 // get localization
 $TXT=Localization::getInstance();
@@ -46,7 +54,8 @@ if($g_act=="store"){
   $config.="define('COLOR',\"".$_POST['color']."\");\n";
   $config.="define('DARK',".(isset($_POST['dark'])?"true":"false").");\n";
   $config.="define('GTAG',".($_POST['gtag']?"\"".$_POST['gtag']."\"":"null").");\n";
-  $config.="define('ATTACHMENTEXTENSION',".($_POST['attachmentextension']?"array(".implode(",",array_map(fn($v) => '"' . trim($v) . '"', explode(',', $_POST['attachmentextension']))).")":"null").");\n";
+  $config.="define('ATTACHMENT_UPLOAD_EXTENSION', ".var_export(sanitizeExtensions($_POST['ATTACHMENT_UPLOAD_EXTENSION'] ?? null), true).");\n";
+  $config.="define('ATTACHMENT_DISPLAY_EXTENSION', ".var_export(sanitizeExtensions($_POST['ATTACHMENT_DISPLAY_EXTENSION'] ?? null), true).");\n";
   // write configuration file
   file_put_contents(BASE."datasets/config.inc.php",$config);
   // alert and redirect
@@ -133,11 +142,12 @@ if($g_act=="store"){
         </div>
         <div class="row">
           <div class="input-field col s12 m5">
-            <input type="text" name="attachmentextension" id="attachmentextension" class="validate" placeholder="<?= $TXT->SettingsAttachmentExtensionPlaceholder ?>" value="<?= implode(", ",ATTACHMENTEXTENSION) ?>" required>
-            <label for="attachmentextension"><span class="main-color-text"><?= $TXT->SettingsAttachmentExtension ?></span></label>
+            <input type="text" name="ATTACHMENT_UPLOAD_EXTENSION" id="ATTACHMENT_UPLOAD_EXTENSION" class="validate" placeholder="<?= $TXT->SettingsATTACHMENT_UPLOAD_EXTENSIONPlaceholder ?>" value="<?= implode(", ",ATTACHMENT_UPLOAD_EXTENSION) ?>" required>
+            <label for="ATTACHMENT_UPLOAD_EXTENSION"><span class="main-color-text"><?= $TXT->SettingsATTACHMENT_UPLOAD_EXTENSION ?></span></label>
           </div>
           <div class="input-field col s12 m7">
-            <!--another settings -->
+            <input type="text" name="ATTACHMENT_DISPLAY_EXTENSION" id="ATTACHMENT_DISPLAY_EXTENSION" class="validate" placeholder="<?= $TXT->SettingsATTACHMENT_DISPLAY_EXTENSIONPlaceholder ?>" value="<?= implode(", ",ATTACHMENT_DISPLAY_EXTENSION) ?>" required>
+            <label for="ATTACHMENT_DISPLAY_EXTENSION"><span class="main-color-text"><?= $TXT->SettingsATTACHMENT_DISPLAY_EXTENSION ?></span></label>
           </div>
         </div>
         <div class="row">

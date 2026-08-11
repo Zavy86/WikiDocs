@@ -232,7 +232,7 @@
                       <input type="file" name="image" required>
                     </div><!-- /btn -->
                     <div class="file-path-wrapper">
-                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>.. (png, jpg, gif, svg)">
+                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->ImagesSelect ?>... (png, jpg, gif, svg)">
                     </div><!-- /file-path-wrapper -->
                   </div><!-- /input-field -->
                   <div class="input-field col s3">
@@ -267,7 +267,7 @@
                       <input type="file" name="attachment" required>
                     </div><!-- /btn -->
                     <div class="file-path-wrapper">
-                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>.. <?= implode(", ",ATTACHMENTEXTENSION) ?>">
+                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>... <?= implode(", ",ATTACHMENT_UPLOAD_EXTENSION) ?>">
                     </div><!-- /file-path-wrapper -->
                   </div><!-- /input-field -->
                   <div class="input-field col s3">

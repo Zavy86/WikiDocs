@@ -33,4 +33,5 @@ define('DARK',false);
 // Google Analytics Tag
 define('GTAG',null);
 // File attachment extension
-define('ATTACHMENTEXTENSION',array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx"));
+define('ATTACHMENT_UPLOAD_EXTENSION',array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods"));
+define('ATTACHMENT_DISPLAY_EXTENSION',array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods"));

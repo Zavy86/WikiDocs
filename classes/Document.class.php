@@ -457,9 +457,14 @@ final class Document{
             foreach($elements as $element_fe){
                 // skip directories
                 if(is_dir($this->DIR."/".$element_fe)){continue;}
-                $file_extension=explode(".",$element_fe);
+                $file_extension=strtolower(end(explode(".",$element_fe)));
                 // check extensions
-                if(!in_array(end($file_extension),ATTACHMENTEXTENSION)){continue;}
+                if(MODE=='edit') {
+                    if(ATTACHMENT_UPLOAD_EXTENSION.length && !in_array($file_extension,ATTACHMENT_UPLOAD_EXTENSION)){continue;}
+                }
+                else {
+                    if(ATTACHMENT_DISPLAY_EXTENSION.length && !in_array($file_extension,ATTACHMENT_DISPLAY_EXTENSION)){continue;}
+                }
                 // make element
                 $attachment=new stdClass();
                 $attachment->label=$element_fe;

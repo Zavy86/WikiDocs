@@ -532,7 +532,7 @@ function attachment_upload_ajax(){
   $attachment=$_FILES['attachment'];
   $attachment['ext']=strtolower(pathinfo($_FILES['attachment']['name'],PATHINFO_EXTENSION));
   // check extension
-  if(!in_array($attachment['ext'],ATTACHMENTEXTENSION)){
+  if(ATTACHMENT_UPLOAD_EXTENSION.length && !in_array($attachment['ext'],ATTACHMENT_UPLOAD_EXTENSION)){
     echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$attachment));
     return false;
   }
