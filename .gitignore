@@ -4,6 +4,7 @@
 robots.txt
 sitemap.xml
 styles/styles-custom.css
+helpers/mimetypes/mimetypes-custom.php
 datasets/config.inc.php
 datasets/pulse.json
 datasets/documents/*
