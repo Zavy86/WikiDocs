@@ -536,7 +536,11 @@ function attachment_upload_ajax(){
   $attachment=$_FILES['attachment'];
   $attachment['ext']=strtolower(pathinfo($_FILES['attachment']['name'],PATHINFO_EXTENSION));
   // check extension
-  if(ATTACHMENT_UPLOAD_EXTENSION.length && !in_array($attachment['ext'],ATTACHMENT_UPLOAD_EXTENSION)){
+  if(in_array($attachment['ext'],ATTACHMENT_DENIED_EXTENSIONS)){
+    echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$attachment));
+    return false;
+  }
+  if(count(ATTACHMENT_UPLOAD_EXTENSIONS) && !in_array($attachment['ext'],ATTACHMENT_UPLOAD_EXTENSIONS)){
     echo json_encode(array("error"=>1,"code"=>"extension_not_allowed","file"=>$attachment));
     return false;
   }

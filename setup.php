@@ -81,8 +81,8 @@ if($g_act=="conclude"){
     'COLOR'=>'#4CAF50',
     'DARK'=>'false',
     'GTAG'=>'null',
-    'ATTACHMENT_UPLOAD_EXTENSION'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods"),
-    'ATTACHMENT_DISPLAY_EXTENSION'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods")
+    'ATTACHMENT_UPLOAD_EXTENSIONS'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods"),
+    'ATTACHMENT_DISPLAY_EXTENSIONS'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods")
   ];
   foreach($config_items as $key=>$value){
     if($value===null||$value==='null'){

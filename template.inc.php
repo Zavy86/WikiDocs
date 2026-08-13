@@ -267,7 +267,7 @@
                       <input type="file" name="attachment" required>
                     </div><!-- /btn -->
                     <div class="file-path-wrapper">
-                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>... <?= implode(", ",ATTACHMENT_UPLOAD_EXTENSION) ?>">
+                      <input type="text" id="uploader-path" class="file-path validate" placeholder="<?= $TXT->AttachmentsSelect ?>... <?= count(ATTACHMENT_UPLOAD_EXTENSIONS)?" (".implode(", ",ATTACHMENT_UPLOAD_EXTENSIONS).")":"" ?>">
                     </div><!-- /file-path-wrapper -->
                   </div><!-- /input-field -->
                   <div class="input-field col s3">
