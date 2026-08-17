@@ -1,6 +1,8 @@
+import localeIT from '@angular/common/locales/it';
 import localizationEN from 'src/app/localizations/en.yml';
+import localizationIT from 'src/app/localizations/it.yml';
 import { parse } from 'yaml';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { computed, effect, inject, Injectable, Signal } from '@angular/core';
 import { LogsService } from 'src/app/services/logs.service';
 import { SettingsService } from 'src/app/services/settings.service';
@@ -8,6 +10,8 @@ import { LocalizationParameters, SettingsType } from 'src/app/types';
 
 type LocalizationDictionary = Readonly<Record<string, string>>;
 type LocalizationTree = Readonly<Record<string, unknown>>;
+
+registerLocaleData(localeIT);
 
 @Injectable({ providedIn: 'root' })
 export class LocalizationService {
@@ -18,6 +22,7 @@ export class LocalizationService {
 
   private readonly localizations:Readonly<Partial<Record<SettingsType['localization'], LocalizationDictionary>>> = {
     en: this.parseLocalization('en', localizationEN),
+    it: this.parseLocalization('it', localizationIT),
   };
 
   public readonly language:Signal<SettingsType['localization']> = computed(():SettingsType['localization'] => {

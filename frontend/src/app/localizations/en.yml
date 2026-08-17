@@ -100,7 +100,7 @@ app:
       unsaved-message: You have unsaved changes. Are you sure you want to continue moving this document?
       title: Move document
     new-document:
-      message: "Enter the destination path for the new page:"
+      message: Enter the destination path for the new document
       title: New document
     save-before-image:
       message: The document must be saved before an image can be uploaded. Do you want to save this draft and continue?
@@ -173,13 +173,13 @@ document:
       image-upload-success: Image uploaded successfully.
       image-upload-unavailable: Unable to upload image.
       paste-one-image: Paste one image at a time.
-      unsupported-image-type: "Unsupported image type: {type:unknown}."
+      unsupported-image-type: Unsupported image type {type:unknown}.
       wait-before-pasting: Wait for the document to be saved before pasting another image.
   empty:
     create-prompt: Would you like to create it now?
-    missing-content: This page has no content yet.
-    missing-page: This page does not exist yet.
-    title: Page not found
+    missing-content: This document has no content yet.
+    missing-document: This document does not exist yet.
+    title: Document not found
   loading: Loading document...
   tags-label: Document tags
 footer:
@@ -224,6 +224,7 @@ settings:
   description: Configure your wiki engine
   languages:
     en: English
+    it: Italian
   loading: Loading settings...
   messages:
     load-unavailable: Unable to load settings.
