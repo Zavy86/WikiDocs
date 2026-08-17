@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Wiki|Docs.iml" filepath="$PROJECT_DIR$/.idea/Wiki|Docs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wikidocs.iml" filepath="$PROJECT_DIR$/.idea/wikidocs.iml" />
     </modules>
   </component>
