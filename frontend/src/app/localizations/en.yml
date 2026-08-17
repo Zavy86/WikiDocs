@@ -231,6 +231,7 @@ settings:
     fr: French
     it: Italian
     ja: Japanese
+    nl: Dutch
   loading: Loading settings...
   messages:
     load-unavailable: Unable to load settings.

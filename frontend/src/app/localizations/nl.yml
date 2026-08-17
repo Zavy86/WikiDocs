@@ -1,0 +1,313 @@
+common:
+  defaults:
+    notice: Copyright {year} Alle rechten voorbehouden
+  actions:
+    agree: Akkoord
+    cancel: Annuleren
+    choose-file: Bestand kiezen
+    continue: Doorgaan
+    create: Maken
+    delete: Verwijderen
+    delete-permanently: Permanent verwijderen
+    discard: Weggooien
+    dismiss: Sluiten
+    initialize: Initialiseren
+    keep-editing: Doorgaan met bewerken
+    move: Verplaatsen
+    overwrite: Overschrijven
+    recover: Herstellen
+    reset: Opnieuw instellen
+    retry: Opnieuw proberen
+    save: Opslaan
+    save-and-upload: Opslaan en uploaden
+    sign-in: Aanmelden
+    upload: Uploaden
+    view-releases: Versies bekijken
+  fields:
+    account: Account
+    check-password: Controleer wachtwoord
+    color: Kleur
+    confirm-password: Bevestig wachtwoord
+    firstname: Voornaam
+    language: Taal
+    lastname: Achternaam
+    name: Naam
+    new-password: Nieuw wachtwoord
+    notice: Kennisgeving
+    owner: Eigenaar
+    password: Wachtwoord
+    path: Pad
+    privacy-banner: Privacybanner
+    role: Rol
+    subtitle: Ondertitel
+    template: Sjabloon
+    timezone: Tijdzone
+    title: Titel
+  roles:
+    administrator: beheerder
+    author: auteur
+    user: gebruiker
+  states:
+    checking: Controleren...
+    initializing: Initialiseren...
+    loading: Laden...
+    saving: Opslaan...
+    signing-in: Aanmelden...
+  validation:
+    account-email: Account moet een geldig e-mailadres zijn
+    account-maxlength: Account mag maximaal 256 tekens lang zijn
+    account-required: Account is vereist
+    firstname-maxlength: De voornaam mag maximaal 32 tekens lang zijn
+    firstname-required: Voornaam is vereist
+    lastname-maxlength: Achternaam mag maximaal 32 tekens lang zijn
+    lastname-required: Achternaam is vereist
+    password-confirmation-maxlength: Wachtwoordbevestiging mag maximaal 256 tekens lang zijn
+    password-confirmation-required: Wachtwoordbevestiging is vereist
+    password-fields-incomplete: Vul beide wachtwoordvelden in
+    password-maxlength: Het wachtwoord mag maximaal 256 tekens lang zijn
+    password-mismatch: Wachtwoorden moeten overeenkomen
+    password-required: Wachtwoord is vereist
+    title-maxlength: De titel mag maximaal 32 tekens bevatten
+    title-required: Titel is vereist
+app:
+  actions:
+    attachments: Bijlagen
+    cancel-editing: Bewerken annuleren
+    create-document: Document maken
+    create-version-before-saving: Maak een versie voordat u deze opslaat
+    delete-document: Document verwijderen
+    document-versions: Documentversies
+    do-not-create-version-before-saving: Maak geen versie voordat u deze opslaat
+    edit-document: Document bewerken
+    move-document: Document verplaatsen
+    new-document: Nieuw document
+    pin-document: Document vastzetten
+    print: Afdrukken
+    settings: Instellingen
+    sign-out: Afmelden
+    trash: Prullenbak
+    unpin-document: Document losmaken
+  dialogs:
+    delete-document:
+      message: Weet u zeker dat u dit document wilt verwijderen? Niet-opgeslagen
+        wijzigingen worden verwijderd en het document wordt naar de prullenbak
+        verplaatst
+      title: Document verwijderen
+    discard-changes:
+      message: Weet u zeker dat u niet-opgeslagen wijzigingen wilt verwijderen?
+      title: Wijzigingen negeren
+    move-document:
+      close-label: Sluit het verplaatsingsdialoogvenster
+      description: Selecteer de bovenliggende bestemming voor {path:dit document}.
+      unsaved-message: U heeft niet-opgeslagen wijzigingen. Weet u zeker dat u dit
+        document wilt blijven verplaatsen?
+      title: Document verplaatsen
+    new-document:
+      message: Voer het bestemmingspad voor het nieuwe document in
+      title: Nieuw document
+    save-before-image:
+      message: Het document moet worden opgeslagen voordat een afbeelding kan worden
+        geüpload. Wilt u dit concept opslaan en doorgaan?
+      title: Sla het document op voordat u de afbeelding uploadt
+  messages:
+    delete-success: Document succesvol verwijderd
+    delete-unavailable: Kan document niet verwijderen
+    invalid-path: Ongeldig pad
+    invalid-source-path: Ongeldig brondocumentpad
+    move-success: Document is succesvol verplaatst.
+    move-unavailable: Kan document niet verplaatsen
+    navigation-unavailable: Kan niet naar het geselecteerde pad navigeren
+    pin-success: Document succesvol vastgezet.
+    pin-unavailable: Kan document niet vastzetten.
+    reserved-path: Dit pad is gereserveerd door de applicatie
+    save-before-image-unavailable: Kan het document niet opslaan voordat de afbeelding wordt geüpload.
+    save-success: Document succesvol opgeslagen.
+    save-unavailable: Kan document niet opslaan.
+    settings-load-unavailable: Kan instellingen niet laden
+    unpin-success: Document is succesvol losgemaakt.
+    unpin-unavailable: Kan document niet losmaken.
+accounts:
+  account-dialog:
+    close-label: Sluit het accountdialoogvenster
+    create-title: Account aanmaken
+    delete-message: Weet u zeker dat u het account "{account:dit account}"
+      definitief wilt verwijderen?
+    delete-title: Account verwijderen
+    edit-title: Account bewerken
+    password-placeholder: Laat dit leeg om het huidige wachtwoord te behouden.
+  description: Beheer geautoriseerde wiki-gebruikers
+  empty: Geen accounts gevonden.
+  loading: Accounts laden...
+  messages:
+    current-account-delete-forbidden: U kunt uw huidige account niet verwijderen.
+    delete-success: Account succesvol verwijderd.
+    delete-unavailable: Kan account niet verwijderen.
+    load-unavailable: Kan accounts niet laden.
+    save-success: Account succesvol opgeslagen.
+    save-unavailable: Kan account niet opslaan.
+  table:
+    add-label: Account toevoegen
+    edit-label: Account bewerken
+  title: Accounts
+attachments:
+  close-label: Sluit het bijlagendialoogvenster
+  delete-label: Bijlage verwijderen
+  dialogs:
+    delete-message: Wilt u "{file:deze bijlage}" verwijderen?
+    delete-title: Bijlage verwijderen
+    overwrite-message: Er bestaat al een bijlage met de naam "{file:dit bestand}".
+      Wilt u het overschrijven?
+    overwrite-title: Bijlage overschrijven
+  empty: Er zijn geen bijlagen beschikbaar voor dit document.
+  insert-label: Bijlage invoegen
+  messages:
+    delete-success: Bijlage "{file:dit bestand}" is succesvol verwijderd.
+    delete-unavailable: Kan bijlage "{file:dit bestand}" niet verwijderen.
+    invalid-file-name: Ongeldige bestandsnaam.
+    refresh-unavailable: Kan documentbijlagen niet vernieuwen.
+    upload-success: Bijlage succesvol geüpload.
+    upload-unavailable: Kan bijlage niet uploaden.
+  title: Bijlagen
+authentication:
+  messages:
+    failed: Authenticatie mislukt.
+  title: Aanmelden
+document:
+  editor:
+    label: Document-editor voor onbewerkte inhoud
+    messages:
+      image-upload-success: Afbeelding succesvol geüpload.
+      image-upload-unavailable: Kan afbeelding niet uploaden.
+      paste-one-image: Plak één afbeelding tegelijk.
+      unsupported-image-type: Niet-ondersteund afbeeldingstype {type:onbekend}.
+      wait-before-pasting: Wacht tot het document is opgeslagen voordat u een nieuwe
+        afbeelding plakt.
+  empty:
+    create-prompt: Wilt u deze nu aanmaken?
+    missing-content: Dit document heeft nog geen inhoud.
+    missing-document: Dit document bestaat nog niet.
+    title: Document niet gevonden
+  loading: Document laden...
+  tags-label: Documenttags
+footer:
+  last-update: Laatst bijgewerkt op {timestamp:een onbekend tijdstip} door {author:een onbekende auteur}
+  login: Aanmelden
+  logout: Uitloggen
+  powered-by: Aangedreven door
+header:
+  accounts: Accounts
+  profile: Profiel
+  sign-in: Aanmelden
+  toggle-actions-label: Acties weergeven of verbergen
+  toggle-sidebar-label: Zijbalk weergeven of verbergen
+initialization:
+  description: Initialiseer gegevenssets voor dit nieuwe exemplaar
+  messages:
+    failed: Initialisatie is mislukt.
+privacy:
+  disagree: Niet mee eens
+  title: Privacybeleid en Cookieovereenkomst
+profile:
+  description: Update uw persoonlijke accountgegevens
+  messages:
+    update-success: Profiel is succesvol bijgewerkt
+    update-unavailable: Kan profiel niet updaten
+  password-placeholder: Laat de velden leeg om uw huidige wachtwoord te behouden.
+  title: Profiel
+release:
+  check-action: Controleer op nieuwe versies
+  message: Versie {version:onbekend} is beschikbaar.
+  messages:
+    check-unavailable: Kan niet controleren op nieuwe versies.
+  title: Nieuwe versie beschikbaar
+search:
+  empty: Geen resultaten.
+  instruction: Voer een zoekterm in.
+  messages:
+    unavailable: Kan de wiki niet doorzoeken.
+  title: Zoekresultaten
+settings:
+  color-picker-label: Kleurkiezer openen
+  description: Configureer uw wiki-engine
+  languages:
+    cs: Tsjechisch
+    de: Duits
+    en: Engels
+    es: Spaans
+    fa: Perzisch
+    fr: Frans
+    it: Italiaans
+    ja: Japans
+    nl: Nederlands
+  loading: Instellingen laden...
+  messages:
+    load-unavailable: Kan instellingen niet laden.
+    timezone-load-unavailable: Kan de tijdzonelijst van de browser niet laden.
+    timezone-unsupported: Tijdzoneselectie wordt niet ondersteund door deze browser.
+    update-success: Instellingen zijn succesvol bijgewerkt.
+    update-unavailable: Kan instellingen niet updaten.
+  options:
+    dark: Donker
+    light: Licht
+  placeholders:
+    privacy-banner: Laat dit leeg om de privacymodaliteit uit te schakelen
+    timezone-search: Zoek tijdzone
+  title: Instellingen
+sidebar:
+  document: Document
+  navigation-label: Wiki-navigatie
+  pinned: Vastgezet
+  search-label: Zoekwiki
+  search-placeholder: Zoek in wiki..
+startup:
+  messages:
+    information-unavailable: Kan motorinformatie niet laden.
+    local-session-unavailable: Kan de lokale beheerderssessie niet initialiseren.
+  title: Opstartfout
+top:
+  label: Terug naar boven
+trash:
+  deleted-label: Verwijderd
+  dialogs:
+    delete-message: '"{document:dit document}" definitief verwijderen? Hiermee
+      worden "{document:dit document}", alle onderliggende documenten en bijlagen
+      permanent verwijderd.'
+    delete-title: Document definitief verwijderen
+    recover-close-label: Sluit het hersteldialoogvenster
+    recover-description: Selecteer de bovenliggende bestemming voor {document:dit document}.
+    recover-title: Document herstellen
+  empty: Prullenbak is leeg
+  loading: Prullenbak laden...
+  messages:
+    delete-success: Document permanent verwijderd.
+    delete-unavailable: Kan document niet permanent verwijderen.
+    load-unavailable: Kan de prullenbak niet laden.
+    recover-success: Document succesvol hersteld.
+    recover-unavailable: Kan document niet herstellen.
+  path-label: Pad
+  permanently-delete-label: Permanent verwijderen
+  permanently-delete-entry-label: "{document:dit document} definitief verwijderen"
+  recover-label: Herstellen
+  recover-entry-label: Herstel {document:dit document}
+  title: Prullenbak
+  updated-label: Bijgewerkt
+  author-label: Auteur
+  unknown: Onbekend
+tree:
+  loading: Paden laden...
+  messages:
+    load-unavailable: Kan kinderen niet laden.
+  toggle-label: "{path:dit pad} weergeven of verbergen"
+versions:
+  close-label: Dialoogvenster Versies sluiten
+  delete-label: Versie verwijderen
+  delete-message: Weet u zeker dat u de versie definitief wilt verwijderen uit
+    {timestamp:het geselecteerde tijdstip}?
+  delete-title: Versie verwijderen
+  empty: Er zijn geen versies beschikbaar voor dit document.
+  messages:
+    delete-success: Documentversie is succesvol verwijderd.
+    delete-unavailable: Kan de geselecteerde versie niet verwijderen.
+    load-unavailable: Kan de geselecteerde versie niet laden.
+    refresh-unavailable: Kan documentversies niet vernieuwen.
+  title: Documentversies

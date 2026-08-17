@@ -231,6 +231,7 @@ settings:
     fr: Français
     it: Italien
     ja: Japonais
+    nl: Néerlandais
   loading: Chargement des paramètres...
   messages:
     load-unavailable: Impossible de charger les paramètres.
