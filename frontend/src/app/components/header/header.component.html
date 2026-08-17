@@ -9,7 +9,7 @@
             type="button"
             (click)="onNavigationToggle()"
             aria-controls="nav-mobile"
-            aria-label="Toggle sidebar"
+            [attr.aria-label]="'header.toggle-sidebar-label' | localized"
           >
             <mat-icon>menu</mat-icon>
           </button>
@@ -41,7 +41,7 @@
               mat-icon-button
               type="button"
               (click)="onMobileActionsToggle()"
-              aria-label="Toggle actions"
+              [attr.aria-label]="'header.toggle-actions-label' | localized"
             >
               <mat-icon>more_vert</mat-icon>
             </button>

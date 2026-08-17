@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
-import { TreeComponent, TreeData } from 'src/app/components/tree/tree.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { TrashService } from 'src/app/services/trash.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
+import { TreeComponent, TreeData } from 'src/app/components/tree/tree.component';
+import { LocalizedPipe, TimeZonePipe } from 'src/app/app.pipes';
 import { MetadataType } from 'src/app/types';
-import { TimeZonePipe } from 'src/app/app.pipes';
 
 type TrashEntry = {
   readonly metadata:MetadataType;
@@ -28,13 +29,14 @@ type TrashPath = {
   selector: 'app-trash',
   templateUrl: './trash.component.html',
   styleUrl: './trash.component.scss',
-  imports: [ TimeZonePipe, MatButtonModule, MatIconModule, MatTooltipModule ],
+  imports: [ TimeZonePipe, MatButtonModule, MatIconModule, MatTooltipModule, LocalizedPipe ],
 })
 export class TrashComponent {
 
   private readonly alertService:AlertService = inject(AlertService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly trashService:TrashService = inject(TrashService);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly loading:WritableSignal<boolean> = signal(true);
   protected readonly processing:WritableSignal<boolean> = signal(false);
@@ -58,10 +60,10 @@ export class TrashComponent {
   protected recover(entry:TrashEntry):void {
     if ( this.processing() ) { return; }
     const data:TreeData = {
-      title: 'Recover document',
-      description: `Select the destination parent for ${ entry.fileName }.`,
-      submitLabel: 'Recover',
-      closeAriaLabel: 'Close recovery dialog',
+      title: this.localizationService.getText('trash.dialogs.recover-title'),
+      description: this.localizationService.getText('trash.dialogs.recover-description', { document: entry.fileName }),
+      submitLabel: this.localizationService.getText('common.actions.recover'),
+      closeAriaLabel: this.localizationService.getText('trash.dialogs.recover-close-label'),
     };
     this.dialog
       .open(TreeComponent, { width: '92vw', maxWidth: '860px', disableClose: true, data })
@@ -75,10 +77,10 @@ export class TrashComponent {
   protected confirmRemoval(entry:TrashEntry):void {
     if ( this.processing() ) { return; }
     const data:ConfirmData = {
-      title: 'Permanently delete document',
-      message: `Permanently delete "${ entry.fileName }"? This permanently removes "${ entry.fileName }", all nested documents, and attachments.`,
-      confirmLabel: 'Delete permanently',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('trash.dialogs.delete-title'),
+      message: this.localizationService.getText('trash.dialogs.delete-message', { document: entry.fileName }),
+      confirmLabel: this.localizationService.getText('common.actions.delete-permanently'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     };
     this.dialog
@@ -101,7 +103,7 @@ export class TrashComponent {
         },
         error: (error:HttpErrorResponse):void => {
           this.documents.set([]);
-          this.alertService.error(error.message || 'Unable to load trash.');
+          this.alertService.error(this.localizationService.getText('trash.messages.load-unavailable'));
         },
       });
   }
@@ -113,11 +115,11 @@ export class TrashComponent {
       .pipe(finalize(():void => this.processing.set(false)))
       .subscribe({
         next: ():void => {
-          this.alertService.success('Document recovered successfully.');
+          this.alertService.success(this.localizationService.getText('trash.messages.recover-success'));
           this.loadTrash();
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to recover document.');
+          this.alertService.error(this.localizationService.getText('trash.messages.recover-unavailable'));
         },
       });
   }
@@ -129,11 +131,11 @@ export class TrashComponent {
       .pipe(finalize(():void => this.processing.set(false)))
       .subscribe({
         next: ():void => {
-          this.alertService.success('Document permanently deleted.');
+          this.alertService.success(this.localizationService.getText('trash.messages.delete-success'));
           this.loadTrash();
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to permanently delete document.');
+          this.alertService.error(this.localizationService.getText('trash.messages.delete-unavailable'));
         },
       });
   }

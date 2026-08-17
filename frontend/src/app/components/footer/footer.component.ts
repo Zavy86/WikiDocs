@@ -1,6 +1,7 @@
-import { Component, computed, input, InputSignal, Signal } from '@angular/core';
+import { Component, computed, inject, input, InputSignal, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TimeZonePipe } from 'src/app/app.pipes';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizedPipe, TimeZonePipe } from 'src/app/app.pipes';
 import { DocumentType, SettingsType } from 'src/app/types';
 
 @Component({
@@ -8,9 +9,11 @@ import { DocumentType, SettingsType } from 'src/app/types';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
-  imports: [ RouterLink, TimeZonePipe ],
+  imports: [ RouterLink, TimeZonePipe, LocalizedPipe ],
 })
 export class FooterComponent {
+
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   public readonly settings:InputSignal<SettingsType | null> = input<SettingsType | null>(null);
   public readonly document:InputSignal<DocumentType | null> = input<DocumentType | null>(null);
@@ -24,7 +27,7 @@ export class FooterComponent {
 
   protected readonly notice:Signal<string> = computed(():string => {
     const notice:string = ( this.settings()?.notice?.trim() ?? '' );
-    return ( notice.length > 0 ? notice : `Copyright ${ new Date().getFullYear() } All Rights Reserved` );
+    return ( notice.length > 0 ? notice : this.localizationService.getText('common.defaults.notice', { year: new Date().getFullYear() }) );
   });
 
   protected readonly author:Signal<string> = computed(():string => this.document()?.metadata?.author ?? '');

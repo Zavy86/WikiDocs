@@ -8,18 +8,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { HttpService } from 'src/app/services/http.service';
-import { SessionService } from 'src/app/services/session.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { HttpService } from 'src/app/services/http.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ProfileType } from 'src/app/types';
+import { SessionService } from 'src/app/services/session.service';
 import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 @Component({
   standalone: true,
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
-  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule ],
+  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, LocalizedPipe ],
 })
 export class ProfileComponent {
 
@@ -29,6 +31,7 @@ export class ProfileComponent {
   private readonly formBuilder:FormBuilder = inject(FormBuilder);
   private readonly router:Router = inject(Router);
   private readonly breakpointObserver:BreakpointObserver = inject(BreakpointObserver);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly saving:WritableSignal<boolean> = signal(false);
   protected readonly isMobile:Signal<boolean> = toSignal(this.breakpointObserver.observe('(max-width: 992px)').pipe(map((state:BreakpointState):boolean => state.matches)), { initialValue: false });
@@ -76,11 +79,11 @@ export class ProfileComponent {
       .pipe(finalize(() => this.saving.set(false)))
       .subscribe({
         next: ():void => {
-          this.alertService.success('Profile updated successfully');
+          this.alertService.success(this.localizationService.getText('profile.messages.update-success'));
           void this.router.navigateByUrl('/authenticate');
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to update profile');
+          this.alertService.error(this.localizationService.getText('profile.messages.update-unavailable'));
         },
       });
   }

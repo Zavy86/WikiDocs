@@ -9,9 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { map, Observable } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
-import { AccountType } from 'src/app/types';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
+import { LocalizedPipe } from 'src/app/app.pipes';
+import { AccountType } from 'src/app/types';
 
 export type AccountMode = 'create' | 'edit';
 
@@ -34,7 +36,7 @@ export type AccountResult = {
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
-  imports: [ ReactiveFormsModule, MatDialogModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
+  imports: [ ReactiveFormsModule, MatDialogModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, LocalizedPipe ],
 })
 export class AccountComponent {
 
@@ -43,11 +45,12 @@ export class AccountComponent {
   private readonly destroyRef:DestroyRef = inject(DestroyRef);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly dialogRef:MatDialogRef<AccountComponent, AccountResult | null> = inject(MatDialogRef<AccountComponent, AccountResult | null>);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly data:AccountData = inject<AccountData>(MAT_DIALOG_DATA);
 
-  protected readonly title:Signal<string> = computed(():string => this.data.mode === 'create' ? 'Create account' : 'Edit account');
-  protected readonly submitLabel:Signal<string> = computed(():string => this.data.mode === 'create' ? 'Create' : 'Save');
+  protected readonly title:Signal<string> = computed(():string => this.localizationService.getText(this.data.mode === 'create' ? 'accounts.account-dialog.create-title' : 'accounts.account-dialog.edit-title'));
+  protected readonly submitLabel:Signal<string> = computed(():string => this.localizationService.getText(this.data.mode === 'create' ? 'common.actions.create' : 'common.actions.save'));
   protected readonly isEditMode:boolean = ( this.data.mode === 'edit' );
   protected readonly isSelfAccount:boolean = ( this.isEditMode && this.data.account?.account === this.data.selfAccount );
   protected readonly passwordErrorStateMatcher = matchingFieldsErrorStateMatcher;
@@ -86,10 +89,10 @@ export class AccountComponent {
       return;
     }
     this.openConfirmDialog({
-      title: 'Discard changes',
-      message: 'Are you sure you want to discard unsaved changes?',
-      confirmLabel: 'Discard',
-      cancelLabel: 'Keep editing',
+      title: this.localizationService.getText('app.dialogs.discard-changes.title'),
+      message: this.localizationService.getText('app.dialogs.discard-changes.message'),
+      confirmLabel: this.localizationService.getText('common.actions.discard'),
+      cancelLabel: this.localizationService.getText('common.actions.keep-editing'),
       confirmColor: 'warn',
     }).subscribe((confirmed:boolean):void => {
       if ( ! confirmed ) { return; }
@@ -131,14 +134,14 @@ export class AccountComponent {
     const account:string | undefined = this.data.account?.account;
     if ( ! this.isEditMode || ! account ) { return; }
     if ( this.isSelfAccount ) {
-      this.alertService.error('You cannot delete your current account.');
+      this.alertService.error(this.localizationService.getText('accounts.messages.current-account-delete-forbidden'));
       return;
     }
     this.openConfirmDialog({
-      title: 'Delete account',
-      message: `Are you sure you want to permanently delete the account "${ account }"?`,
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('accounts.account-dialog.delete-title'),
+      message: this.localizationService.getText('accounts.account-dialog.delete-message', { account }),
+      confirmLabel: this.localizationService.getText('common.actions.delete'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     }).subscribe((confirmed:boolean):void => {
       if ( ! confirmed ) { return; }

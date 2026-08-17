@@ -8,9 +8,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { buildBackendUrl } from 'src/app/app.backend';
 import { isImageAttachmentFileName } from 'src/app/app.utilities';
-import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { AlertService } from 'src/app/services/alert.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { HttpService } from 'src/app/services/http.service';
+import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { AttachmentType, DocumentType } from 'src/app/types';
 
 export type AttachmentsDialogData = {
@@ -28,7 +30,7 @@ export type AttachmentsDialogResult = {
   selector: 'app-attachments',
   templateUrl: './attachments.component.html',
   styleUrl: './attachments.component.scss',
-  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule ],
+  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule, LocalizedPipe ],
 })
 export class AttachmentsComponent implements OnInit {
 
@@ -36,6 +38,7 @@ export class AttachmentsComponent implements OnInit {
   private readonly httpService:HttpService = inject(HttpService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly dialogRef:MatDialogRef<AttachmentsComponent, AttachmentsDialogResult> = inject(MatDialogRef<AttachmentsComponent, AttachmentsDialogResult>);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly data:AttachmentsDialogData = inject<AttachmentsDialogData>(MAT_DIALOG_DATA);
   protected readonly attachments:WritableSignal<ReadonlyArray<AttachmentType>> = signal<ReadonlyArray<AttachmentType>>([ ...this.data.attachments ]);
@@ -68,7 +71,7 @@ export class AttachmentsComponent implements OnInit {
     if ( this.isUploading() || this.isRefreshing() || ! this.selectedFile ) { return; }
     const fileName:string = this.selectedFile.name.trim();
     if ( fileName.length === 0 ) {
-      this.alertService.error('Invalid file name.');
+      this.alertService.error(this.localizationService.getText('attachments.messages.invalid-file-name'));
       return;
     }
     const hasConflictingName:boolean = this.attachments().some((attachment:AttachmentType):boolean => attachment.file.toLowerCase() === fileName.toLowerCase());
@@ -77,10 +80,10 @@ export class AttachmentsComponent implements OnInit {
       return;
     }
     const data:ConfirmData = {
-      title: 'Overwrite attachment',
-      message: `An attachment named "${ fileName }" already exists. Do you want to overwrite it?`,
-      confirmLabel: 'Overwrite',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('attachments.dialogs.overwrite-title'),
+      message: this.localizationService.getText('attachments.dialogs.overwrite-message', { file: fileName }),
+      confirmLabel: this.localizationService.getText('common.actions.overwrite'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     };
     this.openConfirmDialog(data).subscribe((confirmed:boolean):void => {
@@ -99,10 +102,10 @@ export class AttachmentsComponent implements OnInit {
   protected requestDeleteAttachment(attachment:AttachmentType):void {
     if ( this.isUploading() || this.isRefreshing() || this.isDeletingAttachment(attachment.file) ) { return; }
     const data:ConfirmData = {
-      title: 'Delete attachment',
-      message: `Do you want to delete "${ attachment.file }"?`,
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('attachments.dialogs.delete-title'),
+      message: this.localizationService.getText('attachments.dialogs.delete-message', { file: attachment.file }),
+      confirmLabel: this.localizationService.getText('common.actions.delete'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     };
     this.openConfirmDialog(data).subscribe((confirmed:boolean):void => {
@@ -144,12 +147,12 @@ export class AttachmentsComponent implements OnInit {
       next: ():void => {
         this.selectedFile = null;
         this.selectedFileName.set('');
-        this.alertService.success('Attachment uploaded successfully.');
+        this.alertService.success(this.localizationService.getText('attachments.messages.upload-success'));
         this.refreshAttachments();
       },
       error: (error:HttpErrorResponse):void => {
         this.isUploading.set(false);
-        this.alertService.error(error.message || 'Unable to upload attachment.');
+        this.alertService.error(this.localizationService.getText('attachments.messages.upload-unavailable'));
       }
     });
   }
@@ -162,13 +165,13 @@ export class AttachmentsComponent implements OnInit {
     const uri:string = `/attachment?path=${ pathParam }&file=${ fileParam }`;
     this.httpService.DELETE<void>(uri).subscribe({
       next: ():void => {
-        this.alertService.success(`Attachment "${ fileName }" deleted successfully.`);
+        this.alertService.success(this.localizationService.getText('attachments.messages.delete-success', { file: fileName }));
         this.deletingAttachmentFile.set(null);
         this.refreshAttachments();
       },
       error: (error:HttpErrorResponse):void => {
         this.deletingAttachmentFile.set(null);
-        this.alertService.error(error.message || `Unable to delete attachment "${ fileName }".`);
+        this.alertService.error(this.localizationService.getText('attachments.messages.delete-unavailable', { file: fileName }));
       }
     });
   }
@@ -184,7 +187,7 @@ export class AttachmentsComponent implements OnInit {
       error: (error:HttpErrorResponse):void => {
         this.isUploading.set(false);
         this.isRefreshing.set(false);
-        this.alertService.error(error.message || 'Unable to refresh document attachments.');
+        this.alertService.error(this.localizationService.getText('attachments.messages.refresh-unavailable'));
       }
     });
   }

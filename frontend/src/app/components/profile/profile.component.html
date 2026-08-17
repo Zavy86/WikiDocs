@@ -1,26 +1,26 @@
 <main class="page-main">
   <section class="app-page-content">
-    <h1>Profile</h1>
-    <p>Update your personal account information</p>
+    <h1>{{ 'profile.title' | localized }}</h1>
+    <p>{{ 'profile.description' | localized }}</p>
     <form class="profile-form" [formGroup]="form" (ngSubmit)="save()">
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Account</mat-label>
+        <mat-label>{{ 'common.fields.account' | localized }}</mat-label>
         <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="true" autocomplete="off" />
       </mat-form-field>
       <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
         <mat-form-field appearance="outline" class="app-form-control-full-width">
-          <mat-label>Firstname</mat-label>
+          <mat-label>{{ 'common.fields.firstname' | localized }}</mat-label>
           <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" />
         </mat-form-field>
         <mat-form-field appearance="outline" class="app-form-control-full-width">
-          <mat-label>Lastname</mat-label>
+          <mat-label>{{ 'common.fields.lastname' | localized }}</mat-label>
           <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" />
         </mat-form-field>
       </div>
       @if (!isLocalUser()) {
         <div class="layout-grid layout-grid-2" [class.layout-grid-mobile-stack]="isMobile()">
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>New password</mat-label>
+            <mat-label>{{ 'common.fields.new-password' | localized }}</mat-label>
             <input
               matInput
               id="password"
@@ -29,27 +29,27 @@
               formControlName="password"
               [errorStateMatcher]="passwordErrorStateMatcher"
               maxlength="256"
-              placeholder="Leave fields blank to keep your current password."
+              [placeholder]="'profile.password-placeholder' | localized"
             />
             @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
-              <mat-error>Fill both password fields</mat-error>
+              <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
             }
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Check password</mat-label>
+            <mat-label>{{ 'common.fields.check-password' | localized }}</mat-label>
             <input matInput id="confirm" name="confirm" type="password" formControlName="confirm" [errorStateMatcher]="passwordErrorStateMatcher" maxlength="256" />
             @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
-              <mat-error>Fill both password fields</mat-error>
+              <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
             }
             @if (form.controls.confirm.touched && form.hasError('fieldsMismatch')) {
-              <mat-error>Passwords must match</mat-error>
+              <mat-error>{{ 'common.validation.password-mismatch' | localized }}</mat-error>
             }
           </mat-form-field>
         </div>
       }
       <div class="app-form-actions">
-        <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
+        <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">{{ 'common.actions.reset' | localized }}</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="saving()">{{ (saving() ? 'common.states.saving' : 'common.actions.save') | localized }}</button>
       </div>
     </form>
   </section>

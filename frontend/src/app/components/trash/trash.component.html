@@ -1,10 +1,10 @@
 <main class="page-main">
   <section class="app-page-content">
-    <h1>Trash</h1>
+    <h1>{{ 'trash.title' | localized }}</h1>
     @if (loading()) {
-      <p class="loading" role="status" aria-live="polite">Loading trash...</p>
+      <p class="loading" role="status" aria-live="polite">{{ 'trash.loading' | localized }}</p>
     } @else if (entries().length === 0) {
-      <p class="empty-state">Trash is empty</p>
+      <p class="empty-state">{{ 'trash.empty' | localized }}</p>
     } @else {
       <div class="trash-cards">
         @for (entry of entries(); track entry.metadata.path) {
@@ -16,8 +16,8 @@
                   class="card-action-button recover-action-button"
                   mat-icon-button
                   type="button"
-                  matTooltip="Recover"
-                  [attr.aria-label]="'Recover ' + entry.fileName"
+                  [matTooltip]="'trash.recover-label' | localized"
+                  [attr.aria-label]="'trash.recover-entry-label' | localized:{ document: entry.fileName }"
                   [disabled]="processing()"
                   (click)="recover(entry)"
                 >
@@ -27,8 +27,8 @@
                   class="card-action-button delete-action-button"
                   mat-icon-button
                   type="button"
-                  matTooltip="Permanently delete"
-                  [attr.aria-label]="'Permanently delete ' + entry.fileName"
+                  [matTooltip]="'trash.permanently-delete-label' | localized"
+                  [attr.aria-label]="'trash.permanently-delete-entry-label' | localized:{ document: entry.fileName }"
                   [disabled]="processing()"
                   (click)="confirmRemoval(entry)"
                 >
@@ -38,20 +38,20 @@
             </div>
             <dl class="card-details">
               <div>
-                <dt>Author</dt>
+                <dt>{{ 'trash.author-label' | localized }}</dt>
                 <dd>{{ entry.metadata.author }}</dd>
               </div>
               <div>
-                <dt>Updated</dt>
+                <dt>{{ 'trash.updated-label' | localized }}</dt>
                 <dd>{{ entry.metadata.timestamp | timezone: 'yyyy-MM-dd HH:mm' }}</dd>
               </div>
               <div>
-                <dt>Path</dt>
+                <dt>{{ 'trash.path-label' | localized }}</dt>
                 <dd>{{ entry.metadata.path }}</dd>
               </div>
               <div>
-                <dt>Deleted</dt>
-                <dd>{{ entry.deletedAt ? (entry.deletedAt | timezone: 'yyyy-MM-dd HH:mm') : 'Unknown' }}</dd>
+                <dt>{{ 'trash.deleted-label' | localized }}</dt>
+                <dd>{{ entry.deletedAt ? (entry.deletedAt | timezone: 'yyyy-MM-dd HH:mm') : ('trash.unknown' | localized) }}</dd>
               </div>
             </dl>
           </article>

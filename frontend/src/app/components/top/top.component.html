@@ -5,7 +5,7 @@
     mat-icon-button
     type="button"
     (click)="onClick()"
-    aria-label="Back to top"
+    [attr.aria-label]="'top.label' | localized"
   >
     <mat-icon>keyboard_arrow_up</mat-icon>
   </button>

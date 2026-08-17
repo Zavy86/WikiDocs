@@ -11,16 +11,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AlertService } from 'src/app/services/alert.service';
 import { InformationService } from 'src/app/services/information.service';
-import { SettingsService } from 'src/app/services/settings.service';
-import { SettingsType } from 'src/app/types';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ReleaseService } from 'src/app/services/release.service';
+import { SettingsService } from 'src/app/services/settings.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
+import { SettingsType } from 'src/app/types';
 
 @Component({
   standalone: true,
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
-  imports: [ ReactiveFormsModule, MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule ],
+  imports: [ ReactiveFormsModule, MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, LocalizedPipe ],
 })
 export class SettingsComponent {
 
@@ -31,6 +33,7 @@ export class SettingsComponent {
   private readonly releaseService:ReleaseService = inject(ReleaseService);
   private readonly settingsService:SettingsService = inject(SettingsService);
   private readonly breakpointObserver:BreakpointObserver = inject(BreakpointObserver);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   private readonly formBuilder:FormBuilder = inject(FormBuilder);
 
@@ -100,10 +103,10 @@ export class SettingsComponent {
         next: ():void => {
           this.initialSettings = request;
           this.patchForm(request);
-          this.alertService.success('Settings updated successfully.');
+          this.alertService.success(this.localizationService.getText('settings.messages.update-success'));
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to update settings.');
+          this.alertService.error(this.localizationService.getText('settings.messages.update-unavailable'));
         }
       });
   }
@@ -119,7 +122,7 @@ export class SettingsComponent {
           this.patchForm(settings);
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to load settings.');
+          this.alertService.error(this.localizationService.getText('settings.messages.load-unavailable'));
         }
       });
   }
@@ -146,14 +149,14 @@ export class SettingsComponent {
       .pipe(finalize(():void => this.checkingRelease.set(false)))
       .subscribe({
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.error?.message || 'Unable to check for new versions.');
+          this.alertService.error(this.localizationService.getText('release.messages.check-unavailable'));
         }
       });
   }
 
   private loadTimezones():void {
     if ( typeof Intl.supportedValuesOf !== 'function' ) {
-      this.timezoneLoadError.set('Timezone selection is not supported by this browser.');
+      this.timezoneLoadError.set(this.localizationService.getText('settings.messages.timezone-unsupported'));
       return;
     }
     this.timezoneOptions.set([ 'UTC', ...Intl.supportedValuesOf('timeZone') ].sort((first:string, second:string):number => first.localeCompare(second)));

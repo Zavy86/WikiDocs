@@ -5,13 +5,13 @@
         @if (document()?.exists === true) {
           <div class="footer-meta">
             <p class="left-text">
-              <small>Last update {{ document()?.metadata?.timestamp | timezone: 'yyyy-MM-dd HH:mm' }} by {{ author() }}</small>
+              <small>{{ 'footer.last-update' | localized:{ timestamp: (document()?.metadata?.timestamp | timezone: 'yyyy-MM-dd HH:mm') ?? '', author: author() } }}</small>
             </p>
           </div>
         }
         <div class="footer-powered" [class.full-width]="document()?.exists !== true">
           <p class="right-text">
-            <small>Powered by <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a></small>
+            <small>{{ 'footer.powered-by' | localized }} <a href="https://github.com/Zavy86/WikiDocs" target="_blank">Wiki|Docs</a></small>
           </p>
         </div>
       </div>
@@ -27,7 +27,7 @@
           </p>
           <p class="center-text">
             <small>
-              <a routerLink="/authenticate">{{ ( isAuthenticated() ? 'Logout' : 'Login' ) }}</a>
+              <a routerLink="/authenticate">{{ (isAuthenticated() ? 'footer.logout' : 'footer.login') | localized }}</a>
             </small>
           </p>
         </div>

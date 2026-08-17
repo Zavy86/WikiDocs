@@ -1,12 +1,12 @@
 <h2 mat-dialog-title class="dialog-title app-dialog-title">
-  <span>Document versions</span>
+  <span>{{ 'versions.title' | localized }}</span>
   <button
     mat-icon-button
     type="button"
     class="app-dialog-close-button"
     [disabled]="isLoading() || deletingTimestamp() !== null"
     (click)="close()"
-    aria-label="Close versions dialog"
+    [attr.aria-label]="'versions.close-label' | localized"
   >
     <mat-icon>close</mat-icon>
   </button>
@@ -16,7 +16,7 @@
     <mat-progress-bar mode="indeterminate" />
   }
   @if (versions().length === 0) {
-    <p class="empty-message">No versions available for this document.</p>
+    <p class="empty-message">{{ 'versions.empty' | localized }}</p>
   } @else {
     <mat-list>
       @for (timestamp of versions(); track timestamp) {
@@ -32,7 +32,7 @@
                 type="button"
                 [disabled]="isLoading() || deletingTimestamp() !== null"
                 (click)="requestDeleteVersion(timestamp)"
-                aria-label="Delete version"
+                [attr.aria-label]="'versions.delete-label' | localized"
               >
                 <mat-icon>delete</mat-icon>
               </button>

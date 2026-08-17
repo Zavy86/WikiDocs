@@ -1,57 +1,57 @@
 <main class="page-main">
   <section class="content-wrapper">
     <h1>Wiki|Docs</h1>
-    <p>Initialize datasets for this new instance</p>
+    <p>{{ 'initialization.description' | localized }}</p>
     <form class="initialization-form" [formGroup]="form" (ngSubmit)="submitInitialization()">
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Title</mat-label>
+        <mat-label>{{ 'common.fields.title' | localized }}</mat-label>
         <input matInput id="title" type="text" formControlName="title" maxlength="32" />
         @if (form.controls.title.touched && form.controls.title.hasError('required')) {
-          <mat-error>Title is required</mat-error>
+          <mat-error>{{ 'common.validation.title-required' | localized }}</mat-error>
         }
         @if (form.controls.title.touched && form.controls.title.hasError('maxlength')) {
-          <mat-error>Title must be at most 32 characters</mat-error>
+          <mat-error>{{ 'common.validation.title-maxlength' | localized }}</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Account</mat-label>
+        <mat-label>{{ 'common.fields.account' | localized }}</mat-label>
         <input matInput id="account" type="email" formControlName="account" maxlength="256" autocomplete="username" />
         @if (form.controls.account.touched && form.controls.account.hasError('required')) {
-          <mat-error>Account is required</mat-error>
+          <mat-error>{{ 'common.validation.account-required' | localized }}</mat-error>
         }
         @if (form.controls.account.touched && form.controls.account.hasError('email')) {
-          <mat-error>Account must be a valid email</mat-error>
+          <mat-error>{{ 'common.validation.account-email' | localized }}</mat-error>
         }
         @if (form.controls.account.touched && form.controls.account.hasError('maxlength')) {
-          <mat-error>Account must be at most 256 characters</mat-error>
+          <mat-error>{{ 'common.validation.account-maxlength' | localized }}</mat-error>
         }
       </mat-form-field>
       <div class="layout-grid">
         <mat-form-field appearance="outline" class="app-form-control-full-width">
-          <mat-label>Firstname</mat-label>
+          <mat-label>{{ 'common.fields.firstname' | localized }}</mat-label>
           <input matInput id="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="given-name" />
           @if (form.controls.firstname.touched && form.controls.firstname.hasError('required')) {
-            <mat-error>Firstname is required</mat-error>
+            <mat-error>{{ 'common.validation.firstname-required' | localized }}</mat-error>
           }
           @if (form.controls.firstname.touched && form.controls.firstname.hasError('maxlength')) {
-            <mat-error>Firstname must be at most 32 characters</mat-error>
+            <mat-error>{{ 'common.validation.firstname-maxlength' | localized }}</mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="outline" class="app-form-control-full-width">
-          <mat-label>Lastname</mat-label>
+          <mat-label>{{ 'common.fields.lastname' | localized }}</mat-label>
           <input matInput id="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="family-name" />
           @if (form.controls.lastname.touched && form.controls.lastname.hasError('required')) {
-            <mat-error>Lastname is required</mat-error>
+            <mat-error>{{ 'common.validation.lastname-required' | localized }}</mat-error>
           }
           @if (form.controls.lastname.touched && form.controls.lastname.hasError('maxlength')) {
-            <mat-error>Lastname must be at most 32 characters</mat-error>
+            <mat-error>{{ 'common.validation.lastname-maxlength' | localized }}</mat-error>
           }
         </mat-form-field>
       </div>
       @if (!isLocalMode()) {
         <div class="layout-grid">
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Password</mat-label>
+            <mat-label>{{ 'common.fields.password' | localized }}</mat-label>
             <input
               matInput
               id="password"
@@ -63,17 +63,17 @@
               autocomplete="new-password"
             />
             @if (form.controls.password.touched && form.controls.password.hasError('required')) {
-              <mat-error>Password is required</mat-error>
+              <mat-error>{{ 'common.validation.password-required' | localized }}</mat-error>
             }
             @if (form.controls.password.touched && form.controls.password.hasError('maxlength')) {
-              <mat-error>Password must be at most 256 characters</mat-error>
+              <mat-error>{{ 'common.validation.password-maxlength' | localized }}</mat-error>
             }
             @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
-              <mat-error>Fill both password fields</mat-error>
+              <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
             }
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Confirm password</mat-label>
+            <mat-label>{{ 'common.fields.confirm-password' | localized }}</mat-label>
             <input
               matInput
               id="confirm"
@@ -85,22 +85,22 @@
               autocomplete="new-password"
             />
             @if (form.controls.confirm.touched && form.controls.confirm.hasError('required')) {
-              <mat-error>Password confirmation is required</mat-error>
+              <mat-error>{{ 'common.validation.password-confirmation-required' | localized }}</mat-error>
             }
             @if (form.controls.confirm.touched && form.controls.confirm.hasError('maxlength')) {
-              <mat-error>Password confirmation must be at most 256 characters</mat-error>
+              <mat-error>{{ 'common.validation.password-confirmation-maxlength' | localized }}</mat-error>
             }
             @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
-              <mat-error>Fill both password fields</mat-error>
+              <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
             }
             @if (form.controls.confirm.touched && form.hasError('fieldsMismatch')) {
-              <mat-error>Passwords must match</mat-error>
+              <mat-error>{{ 'common.validation.password-mismatch' | localized }}</mat-error>
             }
           </mat-form-field>
         </div>
       }
       <button mat-flat-button color="primary" type="submit" [disabled]="loading()">
-        {{ loading() ? 'Initializing...' : 'Initialize' }}
+        {{ (loading() ? 'common.states.initializing' : 'common.actions.initialize') | localized }}
       </button>
     </form>
   </section>

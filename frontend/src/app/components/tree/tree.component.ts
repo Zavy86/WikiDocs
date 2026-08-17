@@ -1,5 +1,4 @@
 import { firstValueFrom } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { AlertService } from 'src/app/services/alert.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { HttpService } from 'src/app/services/http.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { MetadataType, TreeType } from 'src/app/types';
 
 type TreeNode = {
@@ -33,13 +34,14 @@ export type TreeData = {
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrl: './tree.component.scss',
-  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatTreeModule, MatProgressBarModule ],
+  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatTreeModule, MatProgressBarModule, LocalizedPipe ],
 })
 export class TreeComponent {
 
   private readonly httpService:HttpService = inject(HttpService);
   private readonly alertService:AlertService = inject(AlertService);
   private readonly dialogRef:MatDialogRef<TreeComponent, string | null> = inject(MatDialogRef<TreeComponent, string | null>);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly data:TreeData = inject<TreeData>(MAT_DIALOG_DATA);
   protected readonly dataSource:WritableSignal<TreeNode[]> = signal<TreeNode[]>([]);
@@ -129,8 +131,7 @@ export class TreeComponent {
       node.expandable = children.length > 0;
       node.loaded = true;
     } catch (error:unknown) {
-      const httpError:HttpErrorResponse | null = ( error instanceof HttpErrorResponse ? error : null );
-      node.error = httpError?.message || 'Unable to load children';
+      node.error = this.localizationService.getText('tree.messages.load-unavailable');
       this.alertService.error(node.error);
     } finally {
       node.loading = false;

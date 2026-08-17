@@ -1,10 +1,12 @@
+import type EasyMDEType from 'easymde';
 import { AfterViewInit, Component, DestroyRef, effect, ElementRef, inject, input, OnDestroy, output, signal, viewChild, WritableSignal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type EasyMDEType from 'easymde';
 import { getImageAttachmentExtensionFromMimeType } from 'src/app/app.utilities';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 export type EditorInsertRequest = {
   readonly id:number;
@@ -21,6 +23,7 @@ export type EditorPastedImageRequest = {
   selector: 'app-document-editor',
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',
+  imports: [ LocalizedPipe ],
 })
 export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
   public readonly raw = input.required<string>();
@@ -36,6 +39,7 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
   private readonly alertService:AlertService = inject(AlertService);
   private readonly destroyRef:DestroyRef = inject(DestroyRef);
   private readonly httpService:HttpService = inject(HttpService);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
   private readonly editorTextarea = viewChild.required<ElementRef<HTMLTextAreaElement>>('editorTextarea');
   private editor:EasyMDEType | null = null;
   private editorInitializationToken = 0;
@@ -163,20 +167,20 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
 
     event.preventDefault();
     if ( images.length > 1 ) {
-      this.alertService.error('Paste one image at a time.');
+      this.alertService.error(this.localizationService.getText('document.editor.messages.paste-one-image'));
       return;
     }
 
     const image:File = images[0];
     const extension:string | null = getImageAttachmentExtensionFromMimeType(image.type);
     if ( ! extension ) {
-      this.alertService.error(`Unsupported image type: ${ image.type || 'unknown' }.`);
+      this.alertService.error(this.localizationService.getText('document.editor.messages.unsupported-image-type', { type: image.type || 'unknown' }));
       return;
     }
 
     if ( ! this.documentExists() ) {
       if ( this.isSaving() ) {
-        this.alertService.warning('Wait for the document to be saved before pasting another image.');
+        this.alertService.warning(this.localizationService.getText('document.editor.messages.wait-before-pasting'));
         return;
       }
       this.initialDocumentSaveRequested.emit(image);
@@ -188,7 +192,7 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
   private insertAndUploadImage(image:File):void {
     const extension:string | null = getImageAttachmentExtensionFromMimeType(image.type);
     if ( ! extension ) {
-      this.alertService.error(`Unsupported image type: ${ image.type || 'unknown' }.`);
+      this.alertService.error(this.localizationService.getText('document.editor.messages.unsupported-image-type', { type: image.type || 'unknown' }));
       return;
     }
     const fileName:string = `image_${ Date.now() }.${ extension }`;
@@ -210,11 +214,11 @@ export class DocumentEditorComponent implements AfterViewInit, OnDestroy {
     const uri:string = `/attachment?path=${ encodeURIComponent(this.documentPath()) }&file=${ encodeURIComponent(fileName) }`;
     this.httpService.UPLOAD<void>(uri, formData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: ():void => {
-        this.alertService.success('Image uploaded successfully.');
+        this.alertService.success(this.localizationService.getText('document.editor.messages.image-upload-success'));
       },
       error: (error:HttpErrorResponse):void => {
         this.removeMarkdownForFailedUpload(fileName);
-        this.alertService.error(error.message || 'Unable to upload image.');
+        this.alertService.error(this.localizationService.getText('document.editor.messages.image-upload-unavailable'));
       }
     });
   }

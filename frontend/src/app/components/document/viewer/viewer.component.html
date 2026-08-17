@@ -3,7 +3,7 @@
     <h1>{{ metadata().title }}</h1>
     @if (metadata().tags && metadata().tags.length > 0) {
       <div class="tags">
-        <mat-chip-set class="tags-set" aria-label="Document tags">
+        <mat-chip-set class="tags-set" [attr.aria-label]="'document.tags-label' | localized">
           @for (tag of metadata().tags; track tag) {
             <mat-chip class="tag-chip">{{ tag }}</mat-chip>
           }

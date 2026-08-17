@@ -1,13 +1,14 @@
 import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 @Component({
   standalone: true,
   selector: 'app-startup',
   templateUrl: './startup.component.html',
   styleUrl: './startup.component.scss',
-  imports: [ MatProgressSpinnerModule, MatButtonModule ],
+  imports: [ MatProgressSpinnerModule, MatButtonModule, LocalizedPipe ],
 })
 export class StartupComponent {
 

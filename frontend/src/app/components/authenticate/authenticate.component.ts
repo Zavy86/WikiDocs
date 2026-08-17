@@ -6,16 +6,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { SessionService } from 'src/app/services/session.service';
-import { LogsService } from 'src/app/services/logs.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { LogsService } from 'src/app/services/logs.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { SessionService } from 'src/app/services/session.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 @Component({
   standalone: true,
   selector: 'app-authenticate',
   templateUrl: './authenticate.component.html',
   styleUrl: './authenticate.component.scss',
-  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule ],
+  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, LocalizedPipe ],
 })
 export class AuthenticateComponent implements OnInit {
   private readonly router:Router = inject(Router);
@@ -23,6 +25,7 @@ export class AuthenticateComponent implements OnInit {
   private readonly sessionService:SessionService = inject(SessionService);
   private readonly logsService:LogsService = inject(LogsService);
   private readonly alertService:AlertService = inject(AlertService);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly loading:WritableSignal<boolean> = signal(false);
 
@@ -49,14 +52,14 @@ export class AuthenticateComponent implements OnInit {
       .subscribe({
         next: (authenticated:boolean):void => {
           if ( ! authenticated ) {
-            this.alertService.error('Authentication failed.');
+            this.alertService.error(this.localizationService.getText('authentication.messages.failed'));
             return;
           }
           const nextUrl:string = this.sessionService.takeUrlBeforeWait();
           void this.router.navigateByUrl(nextUrl);
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error('Authentication failed.');
+          this.alertService.error(this.localizationService.getText('authentication.messages.failed'));
           this.logsService.error('[AuthenticateComponent] authentication request failed', {
             status: error.status,
             message: error.message,

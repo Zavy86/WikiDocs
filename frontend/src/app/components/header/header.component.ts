@@ -2,9 +2,10 @@ import { Component, computed, input, InputSignal, output, OutputEmitterRef, Sign
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { ActionComponent, ActionItem } from 'src/app/components/header/action/action.component';
-import { DocumentType, SettingsType } from 'src/app/types';
 import { DocumentMode } from "src/app/components";
+import { ActionComponent, ActionItem } from 'src/app/components/header/action/action.component';
+import { LocalizedPipe } from 'src/app/app.pipes';
+import { DocumentType, SettingsType } from 'src/app/types';
 
 export type BreadcrumbEntry = {
   readonly path:string;
@@ -17,7 +18,7 @@ export type BreadcrumbEntry = {
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [ RouterLink, MatButtonModule, MatIconModule, ActionComponent ]
+  imports: [ RouterLink, MatButtonModule, MatIconModule, ActionComponent, LocalizedPipe ]
 })
 export class HeaderComponent {
 

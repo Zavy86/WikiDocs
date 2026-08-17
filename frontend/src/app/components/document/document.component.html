@@ -16,7 +16,7 @@
           />
         }
       } @else {
-        <p>Loading document...</p>
+        <p>{{ 'document.loading' | localized }}</p>
       }
     }
     @if (mode() === 'edit') {

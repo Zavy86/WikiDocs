@@ -1,9 +1,9 @@
 @if (error()) {
   <div class="startup-error-page">
     <section class="startup-error-card">
-      <h2>Startup error</h2>
+      <h2>{{ 'startup.title' | localized }}</h2>
       <p>{{ error() }}</p>
-      <button mat-flat-button type="button" class="retry-button" (click)="retry()">Retry</button>
+      <button mat-flat-button type="button" class="retry-button" (click)="retry()">{{ 'common.actions.retry' | localized }}</button>
     </section>
   </div>
 } @else {

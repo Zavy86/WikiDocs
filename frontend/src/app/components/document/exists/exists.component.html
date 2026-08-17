@@ -2,13 +2,13 @@
   @if (hasChildren()) {
     <h1>{{ metadata().title }}</h1>
     @if (canWrite()) {
-      <p>This page has no content yet.</p>
+      <p>{{ 'document.empty.missing-content' | localized }}</p>
     }
   } @else {
-    <h1>Page not found</h1>
-    <p>This page does not exist yet.</p>
+    <h1>{{ 'document.empty.title' | localized }}</h1>
+    <p>{{ 'document.empty.missing-page' | localized }}</p>
     @if (canWrite()) {
-      <p>Would you like to create it now?</p>
+      <p>{{ 'document.empty.create-prompt' | localized }}</p>
     }
   }
 </article>

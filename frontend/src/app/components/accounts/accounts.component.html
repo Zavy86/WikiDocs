@@ -1,19 +1,19 @@
 <main class="page-main">
   <section class="app-page-content">
-    <h1>Accounts</h1>
-    <p>Manage authorized wiki users</p>
+    <h1>{{ 'accounts.title' | localized }}</h1>
+    <p>{{ 'accounts.description' | localized }}</p>
     @if (loading()) {
-      <p class="loading">Loading accounts...</p>
+      <p class="loading">{{ 'accounts.loading' | localized }}</p>
     } @else {
       <div class="table-wrapper">
         <table class="accounts-table">
           <thead>
             <tr>
-              <th>Account</th>
-              <th>Name</th>
-              <th>Role</th>
+              <th>{{ 'common.fields.account' | localized }}</th>
+              <th>{{ 'common.fields.name' | localized }}</th>
+              <th>{{ 'common.fields.role' | localized }}</th>
               <th class="actions-header">
-                <button class="table-action-button" mat-icon-button type="button" aria-label="Add account" (click)="openCreateDialog()" [disabled]="processing()">
+                <button class="table-action-button" mat-icon-button type="button" [attr.aria-label]="'accounts.table.add-label' | localized" (click)="openCreateDialog()" [disabled]="processing()">
                   <mat-icon>add</mat-icon>
                 </button>
               </th>
@@ -22,16 +22,16 @@
           <tbody>
             @if (accounts().length === 0) {
               <tr>
-                <td colspan="4" class="empty-state">No accounts found.</td>
+                <td colspan="4" class="empty-state">{{ 'accounts.empty' | localized }}</td>
               </tr>
             } @else {
               @for (account of accounts(); track account.account) {
                 <tr>
                   <td>{{ account.account }}</td>
                   <td>{{ account.firstname }} {{ account.lastname }}</td>
-                  <td>{{ account.role }}</td>
+                  <td>{{ ('common.roles.' + account.role) | localized }}</td>
                   <td class="row-actions">
-                    <button class="table-action-button" mat-icon-button type="button" aria-label="Edit account" (click)="openEditDialog(account)" [disabled]="processing()">
+                    <button class="table-action-button" mat-icon-button type="button" [attr.aria-label]="'accounts.table.edit-label' | localized" (click)="openEditDialog(account)" [disabled]="processing()">
                       <mat-icon>edit</mat-icon>
                     </button>
                   </td>

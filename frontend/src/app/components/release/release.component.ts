@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 export type ReleaseDialogData = {
   readonly latest:string;
@@ -10,7 +11,7 @@ export type ReleaseDialogData = {
   standalone: true,
   selector: 'app-release',
   templateUrl: './release.component.html',
-  imports: [ MatButtonModule, MatDialogModule ],
+  imports: [ MatButtonModule, MatDialogModule, LocalizedPipe ],
 })
 export class ReleaseComponent {
 

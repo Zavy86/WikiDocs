@@ -1,3 +1,4 @@
+import { map, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -5,12 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { map, Observable } from 'rxjs';
-import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { ConfirmComponent, ConfirmData } from 'src/app/components/confirm/confirm.component';
+import { LocalizedPipe, TimeZonePipe } from 'src/app/app.pipes';
 import { ContentType, DocumentType } from 'src/app/types';
-import { TimeZonePipe } from 'src/app/app.pipes';
 
 export type VersionsDialogData = {
   readonly path:string;
@@ -28,7 +29,7 @@ export type VersionsDialogResult = {
   selector: 'app-versions',
   templateUrl: './versions.component.html',
   styleUrl: './versions.component.scss',
-  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule ],
+  imports: [ MatDialogModule, MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule, LocalizedPipe ],
   providers: [ TimeZonePipe ],
 })
 export class VersionsComponent {
@@ -38,6 +39,7 @@ export class VersionsComponent {
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly dialogRef:MatDialogRef<VersionsComponent, VersionsDialogResult> = inject(MatDialogRef<VersionsComponent, VersionsDialogResult>);
   private readonly timeZonePipe:TimeZonePipe = inject(TimeZonePipe);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly data:VersionsDialogData = inject<VersionsDialogData>(MAT_DIALOG_DATA);
   protected readonly versions:WritableSignal<ReadonlyArray<string>> = signal<ReadonlyArray<string>>([ ...this.data.versions ]);
@@ -64,7 +66,7 @@ export class VersionsComponent {
       },
       error: (error:HttpErrorResponse):void => {
         this.isLoading.set(false);
-        this.alertService.error(error.message || 'Unable to load the selected version.');
+        this.alertService.error(this.localizationService.getText('versions.messages.load-unavailable'));
         this.refreshVersions();
       }
     });
@@ -73,10 +75,10 @@ export class VersionsComponent {
   protected requestDeleteVersion(timestamp:string):void {
     if ( ! this.data.canDelete || this.isLoading() || this.deletingTimestamp() !== null ) { return; }
     const data:ConfirmData = {
-      title: 'Delete version',
-      message: `Are you sure you want to permanently delete the version from ${ this.formatTimestamp(timestamp) }?`,
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('versions.delete-title'),
+      message: this.localizationService.getText('versions.delete-message', { timestamp: this.formatTimestamp(timestamp) }),
+      confirmLabel: this.localizationService.getText('common.actions.delete'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     };
     this.openConfirmDialog(data).subscribe((confirmed:boolean):void => {
@@ -94,12 +96,12 @@ export class VersionsComponent {
     this.httpService.DELETE<void>(uri).subscribe({
       next: ():void => {
         this.deletingTimestamp.set(null);
-        this.alertService.success('Document version deleted successfully.');
+        this.alertService.success(this.localizationService.getText('versions.messages.delete-success'));
         this.refreshVersions();
       },
       error: (error:HttpErrorResponse):void => {
         this.deletingTimestamp.set(null);
-        this.alertService.error(error.message || 'Unable to delete the selected version.');
+        this.alertService.error(this.localizationService.getText('versions.messages.delete-unavailable'));
         this.refreshVersions();
       }
     });
@@ -114,7 +116,7 @@ export class VersionsComponent {
       },
       error: (error:HttpErrorResponse):void => {
         this.isLoading.set(false);
-        this.alertService.error(error.message || 'Unable to refresh document versions.');
+        this.alertService.error(this.localizationService.getText('versions.messages.refresh-unavailable'));
       }
     });
   }

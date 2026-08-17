@@ -7,7 +7,7 @@
 <mat-dialog-content>
   <p class="dialog-description">{{ data.description }}</p>
   @if (isInitializing()) {
-    <p class="status">Loading paths...</p>
+    <p class="status">{{ 'tree.loading' | localized }}</p>
   } @else {
     <mat-tree #tree class="tree" [dataSource]="dataSource()" [childrenAccessor]="childrenAccessor">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="tree-node">
@@ -28,7 +28,7 @@
         (expandedChange)="onNodeExpanded(node, $event)"
       >
         <div class="tree-node-row">
-          <button mat-icon-button type="button" [attr.aria-label]="'Toggle ' + node.path" matTreeNodeToggle>
+          <button mat-icon-button type="button" [attr.aria-label]="'tree.toggle-label' | localized:{ path: node.path }" matTreeNodeToggle>
             <mat-icon class="mat-icon-rtl-mirror">
               {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
             </mat-icon>
@@ -49,6 +49,6 @@
   }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-stroked-button type="button" (click)="close()">Cancel</button>
+  <button mat-stroked-button type="button" (click)="close()">{{ 'common.actions.cancel' | localized }}</button>
   <button mat-flat-button color="primary" type="button" [disabled]="!selectedPath()" (click)="submitSelection()">{{ data.submitLabel }}</button>
 </mat-dialog-actions>
