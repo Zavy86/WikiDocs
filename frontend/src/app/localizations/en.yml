@@ -1,0 +1,295 @@
+common:
+  defaults:
+    notice: Copyright {year} All Rights Reserved
+  actions:
+    agree: Agree
+    cancel: Cancel
+    choose-file: Choose file
+    continue: Continue
+    create: Create
+    delete: Delete
+    delete-permanently: Delete permanently
+    discard: Discard
+    dismiss: Dismiss
+    initialize: Initialize
+    keep-editing: Keep editing
+    move: Move
+    overwrite: Overwrite
+    recover: Recover
+    reset: Reset
+    retry: Retry
+    save: Save
+    save-and-upload: Save and upload
+    sign-in: Sign in
+    upload: Upload
+    view-releases: View releases
+  fields:
+    account: Account
+    check-password: Check password
+    color: Color
+    confirm-password: Confirm password
+    firstname: Firstname
+    language: Language
+    lastname: Lastname
+    name: Name
+    new-password: New password
+    notice: Notice
+    owner: Owner
+    password: Password
+    path: Path
+    privacy-banner: Privacy banner
+    role: Role
+    subtitle: Subtitle
+    template: Template
+    timezone: Timezone
+    title: Title
+  roles:
+    administrator: administrator
+    author: author
+    user: user
+  states:
+    checking: Checking...
+    initializing: Initializing...
+    loading: Loading...
+    saving: Saving...
+    signing-in: Signing in...
+  validation:
+    account-email: Account must be a valid email
+    account-maxlength: Account must be at most 256 characters
+    account-required: Account is required
+    firstname-maxlength: Firstname must be at most 32 characters
+    firstname-required: Firstname is required
+    lastname-maxlength: Lastname must be at most 32 characters
+    lastname-required: Lastname is required
+    password-confirmation-maxlength: Password confirmation must be at most 256 characters
+    password-confirmation-required: Password confirmation is required
+    password-fields-incomplete: Fill both password fields
+    password-maxlength: Password must be at most 256 characters
+    password-mismatch: Passwords must match
+    password-required: Password is required
+    title-maxlength: Title must be at most 32 characters
+    title-required: Title is required
+app:
+  actions:
+    attachments: Attachments
+    cancel-editing: Cancel editing
+    create-document: Create document
+    create-version-before-saving: Create version before saving
+    delete-document: Delete document
+    document-versions: Document versions
+    do-not-create-version-before-saving: Do not create version before saving
+    edit-document: Edit document
+    move-document: Move document
+    new-document: New document
+    pin-document: Pin document
+    print: Print
+    settings: Settings
+    sign-out: Sign out
+    trash: Trash
+    unpin-document: Unpin document
+  dialogs:
+    delete-document:
+      message: Are you sure you want to delete this document? Unsaved changes will be discarded and the document will be moved to trash
+      title: Delete document
+    discard-changes:
+      message: Are you sure you want to discard unsaved changes?
+      title: Discard changes
+    move-document:
+      close-label: Close move dialog
+      description: Select the destination parent for {path:this document}.
+      unsaved-message: You have unsaved changes. Are you sure you want to continue moving this document?
+      title: Move document
+    new-document:
+      message: "Enter the destination path for the new page:"
+      title: New document
+    save-before-image:
+      message: The document must be saved before an image can be uploaded. Do you want to save this draft and continue?
+      title: Save document before uploading image
+  messages:
+    delete-success: Document successfully deleted
+    delete-unavailable: Unable to delete document
+    invalid-path: Invalid path
+    invalid-source-path: Invalid source document path
+    move-success: Document moved successfully.
+    move-unavailable: Unable to move document
+    navigation-unavailable: Unable to navigate to the selected path
+    pin-success: Document pinned successfully.
+    pin-unavailable: Unable to pin document.
+    reserved-path: This path is reserved by the application
+    save-before-image-unavailable: Unable to save document before uploading image.
+    save-success: Document saved successfully.
+    save-unavailable: Unable to save document.
+    settings-load-unavailable: Unable to load settings
+    unpin-success: Document unpinned successfully.
+    unpin-unavailable: Unable to unpin document.
+accounts:
+  account-dialog:
+    close-label: Close account dialog
+    create-title: Create account
+    delete-message: Are you sure you want to permanently delete the account "{account:this account}"?
+    delete-title: Delete account
+    edit-title: Edit account
+    password-placeholder: Leave blank to keep current password.
+  description: Manage authorized wiki users
+  empty: No accounts found.
+  loading: Loading accounts...
+  messages:
+    current-account-delete-forbidden: You cannot delete your current account.
+    delete-success: Account deleted successfully.
+    delete-unavailable: Unable to delete account.
+    load-unavailable: Unable to load accounts.
+    save-success: Account saved successfully.
+    save-unavailable: Unable to save account.
+  table:
+    add-label: Add account
+    edit-label: Edit account
+  title: Accounts
+attachments:
+  close-label: Close attachments dialog
+  delete-label: Delete attachment
+  dialogs:
+    delete-message: Do you want to delete "{file:this attachment}"?
+    delete-title: Delete attachment
+    overwrite-message: An attachment named "{file:this file}" already exists. Do you want to overwrite it?
+    overwrite-title: Overwrite attachment
+  empty: No attachments available for this document.
+  insert-label: Insert attachment
+  messages:
+    delete-success: Attachment "{file:this file}" deleted successfully.
+    delete-unavailable: Unable to delete attachment "{file:this file}".
+    invalid-file-name: Invalid file name.
+    refresh-unavailable: Unable to refresh document attachments.
+    upload-success: Attachment uploaded successfully.
+    upload-unavailable: Unable to upload attachment.
+  title: Attachments
+authentication:
+  messages:
+    failed: Authentication failed.
+  title: Login
+document:
+  editor:
+    label: Document raw content editor
+    messages:
+      image-upload-success: Image uploaded successfully.
+      image-upload-unavailable: Unable to upload image.
+      paste-one-image: Paste one image at a time.
+      unsupported-image-type: "Unsupported image type: {type:unknown}."
+      wait-before-pasting: Wait for the document to be saved before pasting another image.
+  empty:
+    create-prompt: Would you like to create it now?
+    missing-content: This page has no content yet.
+    missing-page: This page does not exist yet.
+    title: Page not found
+  loading: Loading document...
+  tags-label: Document tags
+footer:
+  last-update: Last update {timestamp:at an unknown time} by {author:an unknown author}
+  login: Login
+  logout: Logout
+  powered-by: Powered by
+header:
+  accounts: Accounts
+  profile: Profile
+  sign-in: Sign in
+  toggle-actions-label: Toggle actions
+  toggle-sidebar-label: Toggle sidebar
+initialization:
+  description: Initialize datasets for this new instance
+  messages:
+    failed: Initialization failed.
+privacy:
+  disagree: Disagree
+  title: Privacy Policy and Cookie Agreement
+profile:
+  description: Update your personal account information
+  messages:
+    update-success: Profile updated successfully
+    update-unavailable: Unable to update profile
+  password-placeholder: Leave fields blank to keep your current password.
+  title: Profile
+release:
+  check-action: Check for new versions
+  message: Version {version:unknown} is available.
+  messages:
+    check-unavailable: Unable to check for new versions.
+  title: New version available
+search:
+  empty: No results.
+  instruction: Enter a search term.
+  messages:
+    unavailable: Unable to search the wiki.
+  title: Search results
+settings:
+  color-picker-label: Open color picker
+  description: Configure your wiki engine
+  languages:
+    en: English
+  loading: Loading settings...
+  messages:
+    load-unavailable: Unable to load settings.
+    timezone-load-unavailable: Unable to load the browser timezone list.
+    timezone-unsupported: Timezone selection is not supported by this browser.
+    update-success: Settings updated successfully.
+    update-unavailable: Unable to update settings.
+  options:
+    dark: Dark
+    light: Light
+  placeholders:
+    privacy-banner: Leave empty to disable the privacy modal
+    timezone-search: Search timezone
+  title: Settings
+sidebar:
+  document: Document
+  navigation-label: Wiki navigation
+  pinned: Pinned
+  search-label: Search wiki
+  search-placeholder: Search in wiki..
+startup:
+  messages:
+    information-unavailable: Unable to load engine information.
+    local-session-unavailable: Unable to initialize local administrator session.
+  title: Startup error
+top:
+  label: Back to top
+trash:
+  deleted-label: Deleted
+  dialogs:
+    delete-message: Permanently delete "{document:this document}"? This permanently removes "{document:this document}", all nested documents, and attachments.
+    delete-title: Permanently delete document
+    recover-close-label: Close recovery dialog
+    recover-description: Select the destination parent for {document:this document}.
+    recover-title: Recover document
+  empty: Trash is empty
+  loading: Loading trash...
+  messages:
+    delete-success: Document permanently deleted.
+    delete-unavailable: Unable to permanently delete document.
+    load-unavailable: Unable to load trash.
+    recover-success: Document recovered successfully.
+    recover-unavailable: Unable to recover document.
+  path-label: Path
+  permanently-delete-label: Permanently delete
+  permanently-delete-entry-label: Permanently delete {document:this document}
+  recover-label: Recover
+  recover-entry-label: Recover {document:this document}
+  title: Trash
+  updated-label: Updated
+  author-label: Author
+  unknown: Unknown
+tree:
+  loading: Loading paths...
+  messages:
+    load-unavailable: Unable to load children.
+  toggle-label: Toggle {path:this path}
+versions:
+  close-label: Close versions dialog
+  delete-label: Delete version
+  delete-message: Are you sure you want to permanently delete the version from {timestamp:the selected time}?
+  delete-title: Delete version
+  empty: No versions available for this document.
+  messages:
+    delete-success: Document version deleted successfully.
+    delete-unavailable: Unable to delete the selected version.
+    load-unavailable: Unable to load the selected version.
+    refresh-unavailable: Unable to refresh document versions.
+  title: Document versions
