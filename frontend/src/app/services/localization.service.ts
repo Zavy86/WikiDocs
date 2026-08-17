@@ -1,10 +1,10 @@
+import localizationEN from 'src/app/localizations/en.yml';
 import { parse } from 'yaml';
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, Signal } from '@angular/core';
 import { LogsService } from 'src/app/services/logs.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { LocalizationParameters, SettingsType } from 'src/app/types';
-import localizationEN from 'src/app/localizations/en.yml';
 
 type LocalizationDictionary = Readonly<Record<string, string>>;
 type LocalizationTree = Readonly<Record<string, unknown>>;

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { DEBUG } from 'src/app/app.backend';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class LogsService {
