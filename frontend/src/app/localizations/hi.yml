@@ -1,0 +1,309 @@
+common:
+  defaults:
+    notice: कॉपीराइट {year} सर्वाधिकार सुरक्षित
+  actions:
+    agree: सहमत
+    cancel: रद्द करना
+    choose-file: फाइलें चुनें
+    continue: जारी रखना
+    create: बनाएं
+    delete: मिटाना
+    delete-permanently: स्थायी रूप से हटाएँ
+    discard: खारिज करना
+    dismiss: नकार देना
+    initialize: प्रारंभ
+    keep-editing: संपादन करते रहें
+    move: कदम
+    overwrite: ओवरराइट
+    recover: वापस पाना
+    reset: रीसेट करें
+    retry: "पुन: प्रयास करें"
+    save: बचाना
+    save-and-upload: सहेजें और अपलोड करें
+    sign-in: दाखिल करना
+    upload: अपलोड करें
+    view-releases: रिलीज़ देखें
+  fields:
+    account: खाता
+    check-password: पासवर्ड जांचें
+    color: रंग
+    confirm-password: पासवर्ड की पुष्टि कीजिये
+    firstname: पहला नाम
+    language: भाषा
+    lastname: उपनाम
+    name: नाम
+    new-password: नया पासवर्ड
+    notice: सूचना
+    owner: मालिक
+    password: पासवर्ड
+    path: पथ
+    privacy-banner: गोपनीयता बैनर
+    role: भूमिका
+    subtitle: उपशीर्षक
+    template: खाका
+    timezone: समयक्षेत्र
+    title: शीर्षक
+  roles:
+    administrator: प्रशासक
+    author: लेखक
+    user: उपयोगकर्ता
+  states:
+    checking: जाँच हो रही है...
+    initializing: प्रारंभ किया जा रहा है...
+    loading: लोड हो रहा है...
+    saving: सहेजा जा रहा है...
+    signing-in: इन कर रहे हैं...
+  validation:
+    account-email: खाता एक वैध ईमेल होना चाहिए
+    account-maxlength: खाता अधिकतम 256 अक्षर का होना चाहिए
+    account-required: खाता आवश्यक है
+    firstname-maxlength: प्रथम नाम में अधिकतम 32 अक्षर होने चाहिए
+    firstname-required: पहला नाम आवश्यक है
+    lastname-maxlength: अंतिम नाम अधिकतम 32 अक्षर का होना चाहिए
+    lastname-required: अंतिम नाम आवश्यक है
+    password-confirmation-maxlength: पासवर्ड पुष्टिकरण अधिकतम 256 अक्षर का होना चाहिए
+    password-confirmation-required: पासवर्ड पुष्टिकरण आवश्यक है
+    password-fields-incomplete: दोनों पासवर्ड फ़ील्ड भरें
+    password-maxlength: पासवर्ड अधिकतम 256 अक्षर का होना चाहिए
+    password-mismatch: पासवर्डों को मेल खाना चाहिए
+    password-required: पासवर्ड आवश्यक है
+    title-maxlength: शीर्षक अधिकतम 32 अक्षर का होना चाहिए
+    title-required: शीर्षक आवश्यक है
+app:
+  actions:
+    attachments: संलग्नक
+    cancel-editing: संपादन रद्द करें
+    create-document: दस्तावेज़ बनाएँ
+    create-version-before-saving: सहेजने से पहले संस्करण बनाएं
+    delete-document: दस्तावेज़ हटाएँ
+    document-versions: दस्तावेज़ संस्करण
+    do-not-create-version-before-saving: सहेजने से पहले संस्करण न बनाएं
+    edit-document: दस्तावेज़ संपादित करें
+    move-document: दस्तावेज़ ले जाएँ
+    new-document: नया दस्तावेज़
+    pin-document: दस्तावेज़ पिन करें
+    print: छाप
+    settings: सेटिंग्स
+    sign-out: साइन आउट
+    trash: कचरा
+    unpin-document: दस्तावेज़ को अनपिन करें
+  dialogs:
+    delete-document:
+      message: क्या आप वाकई इस दस्तावेज़ को हटाना चाहते हैं? सहेजे न गए परिवर्तन हटा दिए जाएंगे और दस्तावेज़ ट्रैश में ले जाया जाएगा
+      title: दस्तावेज़ हटाएँ
+    discard-changes:
+      message: क्या आप वाकई सहेजे न गए परिवर्तनों को छोड़ना चाहते हैं?
+      title: परिवर्तनों को निरस्त करें
+    move-document:
+      close-label: चाल संवाद बंद करें
+      description: "{path:इस दस्तावेज़} के लिए गंतव्य अभिभावक का चयन करें।"
+      unsaved-message: आपके पास सहेजे नहीं गए परिवर्तन हैं. क्या आप वाकई इस दस्तावेज़ को स्थानांतरित करना जारी रखना चाहते हैं?
+      title: दस्तावेज़ ले जाएँ
+    new-document:
+      message: नये दस्तावेज़ के लिए गंतव्य पथ दर्ज करें
+      title: नया दस्तावेज़
+    save-before-image:
+      message: छवि अपलोड करने से पहले दस्तावेज़ को सहेजा जाना चाहिए। क्या आप इस ड्राफ्ट को सहेजना और जारी रखना चाहते हैं?
+      title: छवि अपलोड करने से पहले दस्तावेज़ सहेजें
+  messages:
+    delete-success: दस्तावेज़ सफलतापूर्वक हटा दिया गया
+    delete-unavailable: दस्तावेज़ हटाने में असमर्थ
+    invalid-path: अवैध्य मार्ग
+    invalid-source-path: अमान्य स्रोत दस्तावेज़ पथ
+    move-success: दस्तावेज़ सफलतापूर्वक स्थानांतरित हो गया.
+    move-unavailable: दस्तावेज़ को स्थानांतरित करने में असमर्थ
+    navigation-unavailable: चयनित पथ पर नेविगेट करने में असमर्थ
+    pin-success: दस्तावेज़ सफलतापूर्वक पिन किया गया.
+    pin-unavailable: दस्तावेज़ को पिन करने में असमर्थ.
+    reserved-path: यह पथ एप्लिकेशन द्वारा आरक्षित है
+    save-before-image-unavailable: छवि अपलोड करने से पहले दस्तावेज़ सहेजने में असमर्थ.
+    save-success: दस्तावेज़ सफलतापूर्वक सहेजा गया.
+    save-unavailable: दस्तावेज़ सहेजने में असमर्थ.
+    settings-load-unavailable: सेटिंग्स लोड करने में असमर्थ
+    unpin-success: दस्तावेज़ सफलतापूर्वक अनपिन किया गया.
+    unpin-unavailable: दस्तावेज़ को अनपिन करने में असमर्थ.
+accounts:
+  account-dialog:
+    close-label: खाता संवाद बंद करें
+    create-title: खाता बनाएं
+    delete-message: क्या आप वाकई "{account:इस खाते}" खाता स्थायी रूप से हटाना चाहते हैं?
+    delete-title: खाता हटा दो
+    edit-title: खाता संपादित करें
+    password-placeholder: वर्तमान पासवर्ड रखने के लिए खाली छोड़ दें.
+  description: अधिकृत विकी उपयोगकर्ताओं को प्रबंधित करें
+  empty: कोई खाता नहीं मिला.
+  loading: खाते लोड हो रहे हैं...
+  messages:
+    current-account-delete-forbidden: आप अपना चालू खाता नहीं हटा सकते.
+    delete-success: खाता सफलतापूर्वक हटा दिया गया.
+    delete-unavailable: खाता हटाने में असमर्थ.
+    load-unavailable: खाते लोड करने में असमर्थ.
+    save-success: खाता सफलतापूर्वक सहेजा गया.
+    save-unavailable: खाता सहेजने में असमर्थ.
+  table:
+    add-label: खाता जोड़ें
+    edit-label: खाता संपादित करें
+  title: हिसाब किताब
+attachments:
+  close-label: अनुलग्नक संवाद बंद करें
+  delete-label: अनुलग्नक हटाएँ
+  dialogs:
+    delete-message: क्या आप "{file:इस संलग्नक}" को हटाना चाहते हैं?
+    delete-title: अनुलग्नक हटाएँ
+    overwrite-message: '"{file:इस फ़ाइल}" नामक अनुलग्नक पहले से मौजूद है। क्या आप इसे अधिलेखित करना चाहते हैं?'
+    overwrite-title: अनुलग्नक को अधिलेखित करें
+  empty: इस दस्तावेज़ के लिए कोई अनुलग्नक उपलब्ध नहीं है.
+  insert-label: अनुलग्नक सम्मिलित करें
+  messages:
+    delete-success: अनुलग्नक "{file:इस फ़ाइल}" सफलतापूर्वक हटा दिया गया।
+    delete-unavailable: अनुलग्नक "{file:इस फ़ाइल}" को हटाने में असमर्थ.
+    invalid-file-name: अमान्य फ़ाइल नाम.
+    refresh-unavailable: दस्तावेज़ अनुलग्नकों को ताज़ा करने में असमर्थ.
+    upload-success: अनुलग्नक सफलतापूर्वक अपलोड हो गया.
+    upload-unavailable: अनुलग्नक अपलोड करने में असमर्थ.
+  title: संलग्नक
+authentication:
+  messages:
+    failed: प्रमाणीकरण विफल होना।
+  title: लॉग इन करें
+document:
+  editor:
+    label: दस्तावेज़ कच्ची सामग्री संपादक
+    messages:
+      image-upload-success: छवि सफलतापूर्वक अपलोड हो गई.
+      image-upload-unavailable: छवि अपलोड करने में असमर्थ.
+      paste-one-image: एक समय में एक छवि चिपकाएँ.
+      unsupported-image-type: असमर्थित छवि प्रकार {type:अज्ञात}.
+      wait-before-pasting: दूसरी छवि चिपकाने से पहले दस्तावेज़ के सहेजे जाने की प्रतीक्षा करें।
+  empty:
+    create-prompt: क्या आप इसे अभी बनाना चाहेंगे?
+    missing-content: इस दस्तावेज़ में अभी तक कोई सामग्री नहीं है.
+    missing-document: यह दस्तावेज़ अभी तक मौजूद नहीं है.
+    title: दस्तावेज़ नहीं मिला
+  loading: दस्तावेज़ लोड हो रहा है...
+  tags-label: दस्तावेज़ टैग
+footer:
+  last-update: "{author:अज्ञात लेखक} द्वारा अंतिम अद्यतन {timestamp:अज्ञात समय पर}"
+  login: लॉग इन करें
+  logout: लॉग आउट
+  powered-by: द्वारा संचालित
+header:
+  accounts: हिसाब किताब
+  profile: प्रोफ़ाइल
+  sign-in: दाखिल करना
+  toggle-actions-label: क्रियाएँ टॉगल करें
+  toggle-sidebar-label: साइडबार टॉगल करें
+initialization:
+  description: इस नए उदाहरण के लिए डेटासेट प्रारंभ करें
+  messages:
+    failed: आरंभीकरण विफल रहा.
+privacy:
+  disagree: असहमत
+  title: गोपनीयता नीति और कुकी समझौता
+profile:
+  description: अपनी व्यक्तिगत खाता जानकारी अपडेट करें
+  messages:
+    update-success: प्रोफ़ाइल सफलतापूर्वक अपडेट की गई
+    update-unavailable: प्रोफ़ाइल अद्यतन करने में असमर्थ
+  password-placeholder: अपना वर्तमान पासवर्ड रखने के लिए फ़ील्ड खाली छोड़ दें।
+  title: प्रोफ़ाइल
+release:
+  check-action: नए संस्करणों की जाँच करें
+  message: संस्करण {version:अज्ञात} उपलब्ध है.
+  messages:
+    check-unavailable: नए संस्करणों की जाँच करने में असमर्थ.
+  title: नया संस्करण उपलब्ध है
+search:
+  empty: कोई परिणाम नहीं.
+  instruction: एक खोज शब्द दर्ज करें.
+  messages:
+    unavailable: विकि पर खोज करने में असमर्थ.
+  title: खोज के परिणाम
+settings:
+  color-picker-label: रंग बीनने वाला खोलें
+  description: अपना विकि इंजन कॉन्फ़िगर करें
+  languages:
+    ar: अरबी
+    cs: चेक
+    de: जर्मन
+    en: अंग्रेज़ी
+    es: स्पैनिश
+    fa: फ़ारसी
+    fr: फ़्रेंच
+    hi: हिंदी
+    it: इतालवी
+    ja: जापानी
+    nl: डच
+    pl: पोलिश
+    pt: पुर्तगाली
+    ru: रूसी
+    zh: चीनी
+  loading: सेटिंग लोड हो रही है...
+  messages:
+    load-unavailable: सेटिंग्स लोड करने में असमर्थ.
+    timezone-load-unavailable: ब्राउज़र समयक्षेत्र सूची लोड करने में असमर्थ.
+    timezone-unsupported: समयक्षेत्र चयन इस ब्राउज़र द्वारा समर्थित नहीं है.
+    update-success: सेटिंग्स सफलतापूर्वक अपडेट की गईं.
+    update-unavailable: सेटिंग्स अपडेट करने में असमर्थ.
+  options:
+    dark: अँधेरा
+    light: रोशनी
+  placeholders:
+    privacy-banner: गोपनीयता मोडल को अक्षम करने के लिए खाली छोड़ दें
+    timezone-search: समयक्षेत्र खोजें
+  title: सेटिंग्स
+sidebar:
+  document: दस्तावेज़
+  navigation-label: विकी नेविगेशन
+  pinned: पिन की गई
+  search-label: विकी खोजें
+  search-placeholder: विकी में खोजें..
+startup:
+  messages:
+    information-unavailable: इंजन जानकारी लोड करने में असमर्थ.
+    local-session-unavailable: स्थानीय व्यवस्थापक सत्र आरंभ करने में असमर्थ.
+  title: स्टार्टअप त्रुटि
+top:
+  label: शीर्ष पर वापस जाएँ
+trash:
+  deleted-label: हटाए गए
+  dialogs:
+    delete-message: '"{document:इस दस्तावेज़}" को स्थायी रूप से हटाएं? यह "{document:इस दस्तावेज़}", सभी नेस्टेड दस्तावेज़ों और अनुलग्नकों को स्थायी रूप से हटा देता है।'
+    delete-title: दस्तावेज़ को स्थायी रूप से हटाएँ
+    recover-close-label: पुनर्प्राप्ति संवाद बंद करें
+    recover-description: "{document:इस दस्तावेज़} के लिए गंतव्य अभिभावक का चयन करें।"
+    recover-title: दस्तावेज़ पुनर्प्राप्त करें
+  empty: कचरा खाली है
+  loading: कचरा लोड हो रहा है...
+  messages:
+    delete-success: दस्तावेज़ स्थायी रूप से हटा दिया गया.
+    delete-unavailable: दस्तावेज़ को स्थायी रूप से हटाने में असमर्थ.
+    load-unavailable: कचरा लोड करने में असमर्थ.
+    recover-success: दस्तावेज़ सफलतापूर्वक पुनर्प्राप्त किया गया.
+    recover-unavailable: दस्तावेज़ पुनर्प्राप्त करने में असमर्थ.
+  path-label: पथ
+  permanently-delete-label: स्थायी रूप से हटाना
+  permanently-delete-entry-label: "{document:इस दस्तावेज़} को स्थायी रूप से हटाएं"
+  recover-label: वापस पाना
+  recover-entry-label: "{document:इस दस्तावेज़} पुनर्प्राप्त करें"
+  title: कचरा
+  updated-label: अद्यतन
+  author-label: लेखक
+  unknown: अज्ञात
+tree:
+  loading: पथ लोड हो रहे हैं...
+  messages:
+    load-unavailable: बच्चों को लोड करने में असमर्थ.
+  toggle-label: "{path:इस पथ} दिखाएँ या छिपाएँ"
+versions:
+  close-label: संस्करण संवाद बंद करें
+  delete-label: संस्करण हटाएँ
+  delete-message: क्या आप वाकई {timestamp:चयनित समय} से संस्करण को स्थायी रूप से हटाना चाहते हैं?
+  delete-title: संस्करण हटाएँ
+  empty: इस दस्तावेज़ के लिए कोई संस्करण उपलब्ध नहीं है.
+  messages:
+    delete-success: दस्तावेज़ संस्करण सफलतापूर्वक हटा दिया गया.
+    delete-unavailable: चयनित संस्करण को हटाने में असमर्थ.
+    load-unavailable: चयनित संस्करण लोड करने में असमर्थ.
+    refresh-unavailable: दस्तावेज़ संस्करण ताज़ा करने में असमर्थ.
+  title: दस्तावेज़ संस्करण

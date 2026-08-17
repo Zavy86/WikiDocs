@@ -4,6 +4,7 @@ import localeDE from '@angular/common/locales/de';
 import localeES from '@angular/common/locales/es';
 import localeFA from '@angular/common/locales/fa';
 import localeFR from '@angular/common/locales/fr';
+import localeHI from '@angular/common/locales/hi';
 import localeIT from '@angular/common/locales/it';
 import localeJA from '@angular/common/locales/ja';
 import localeNL from '@angular/common/locales/nl';
@@ -18,6 +19,7 @@ import localizationEN from 'src/app/localizations/en.yml';
 import localizationES from 'src/app/localizations/es.yml';
 import localizationFA from 'src/app/localizations/fa.yml';
 import localizationFR from 'src/app/localizations/fr.yml';
+import localizationHI from 'src/app/localizations/hi.yml';
 import localizationIT from 'src/app/localizations/it.yml';
 import localizationJA from 'src/app/localizations/ja.yml';
 import localizationNL from 'src/app/localizations/nl.yml';
@@ -43,6 +45,7 @@ registerLocaleData(localeDE);
 registerLocaleData(localeES);
 registerLocaleData(localeFA);
 registerLocaleData(localeFR);
+registerLocaleData(localeHI);
 registerLocaleData(localeIT);
 registerLocaleData(localeJA);
 registerLocaleData(localeNL);
@@ -67,6 +70,7 @@ export class LocalizationService {
     es: this.parseLocalization('es', localizationES),
     fa: this.parseLocalization('fa', localizationFA),
     fr: this.parseLocalization('fr', localizationFR),
+    hi: this.parseLocalization('hi', localizationHI),
     it: this.parseLocalization('it', localizationIT),
     ja: this.parseLocalization('ja', localizationJA),
     nl: this.parseLocalization('nl', localizationNL),
