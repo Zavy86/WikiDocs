@@ -1,0 +1,306 @@
+common:
+  defaults:
+    notice: Copyright {year} Все права защищены
+  actions:
+    agree: Согласиться
+    cancel: Отмена
+    choose-file: Выбрать файл
+    continue: Продолжить
+    create: Создать
+    delete: Удалить
+    delete-permanently: Удалить безвозвратно
+    discard: Отменить изменения
+    dismiss: Закрыть
+    initialize: Инициализировать
+    keep-editing: Продолжить редактирование
+    move: Переместить
+    overwrite: Заменить
+    recover: Восстановить
+    reset: Сбросить
+    retry: Повторить
+    save: Сохранить
+    save-and-upload: Сохранить и загрузить
+    sign-in: Войти
+    upload: Загрузить
+    view-releases: Просмотреть выпуски
+  fields:
+    account: Учётная запись
+    check-password: Проверить пароль
+    color: Цвет
+    confirm-password: Подтвердите пароль
+    firstname: Имя
+    language: Язык
+    lastname: Фамилия
+    name: Имя
+    new-password: Новый пароль
+    notice: Уведомление
+    owner: Владелец
+    password: Пароль
+    path: Путь
+    privacy-banner: Баннер конфиденциальности
+    role: Роль
+    subtitle: Подзаголовок
+    template: Тема
+    timezone: Часовой пояс
+    title: Заголовок
+  roles:
+    administrator: администратор
+    author: автор
+    user: пользователь
+  states:
+    checking: Проверка...
+    initializing: Инициализация...
+    loading: Загрузка...
+    saving: Сохранение...
+    signing-in: Выполняется вход...
+  validation:
+    account-email: Учётная запись должна содержать действительный адрес электронной почты
+    account-maxlength: Учётная запись не должна превышать 256 символов
+    account-required: Требуется учётная запись
+    firstname-maxlength: Имя не должно превышать 32 символа
+    firstname-required: Требуется имя
+    lastname-maxlength: Фамилия не должна превышать 32 символа
+    lastname-required: Требуется фамилия
+    password-confirmation-maxlength: Подтверждение пароля не должно превышать 256 символов
+    password-confirmation-required: Требуется подтверждение пароля
+    password-fields-incomplete: Заполните оба поля пароля
+    password-maxlength: Пароль не должен превышать 256 символов
+    password-mismatch: Пароли должны совпадать
+    password-required: Требуется пароль
+    title-maxlength: Заголовок не должен превышать 32 символа
+    title-required: Требуется заголовок
+app:
+  actions:
+    attachments: Вложения
+    cancel-editing: Отменить редактирование
+    create-document: Создать документ
+    create-version-before-saving: Создавать версию перед сохранением
+    delete-document: Удалить документ
+    document-versions: Версии документа
+    do-not-create-version-before-saving: Не создавать версию перед сохранением
+    edit-document: Редактировать документ
+    move-document: Переместить документ
+    new-document: Новый документ
+    pin-document: Закрепить документ
+    print: Печать
+    settings: Настройки
+    sign-out: Выйти
+    trash: Корзина
+    unpin-document: Открепить документ
+  dialogs:
+    delete-document:
+      message: Вы уверены, что хотите удалить этот документ? Несохранённые изменения будут отменены, а документ будет перемещён в корзину
+      title: Удалить документ
+    discard-changes:
+      message: Вы уверены, что хотите отменить несохранённые изменения?
+      title: Отменить изменения
+    move-document:
+      close-label: Закрыть диалог перемещения
+      description: Выберите родительский документ назначения для {path:этого документа}.
+      unsaved-message: У вас есть несохранённые изменения. Вы уверены, что хотите продолжить перемещение этого документа?
+      title: Переместить документ
+    new-document:
+      message: Укажите путь назначения для нового документа
+      title: Новый документ
+    save-before-image:
+      message: Перед загрузкой изображения документ необходимо сохранить. Сохранить этот черновик и продолжить?
+      title: Сохранить документ перед загрузкой изображения
+  messages:
+    delete-success: Документ успешно удалён
+    delete-unavailable: Не удалось удалить документ
+    invalid-path: Недопустимый путь
+    invalid-source-path: Недопустимый путь исходного документа
+    move-success: Документ успешно перемещён.
+    move-unavailable: Не удалось переместить документ
+    navigation-unavailable: Не удалось перейти по выбранному пути
+    pin-success: Документ успешно закреплён.
+    pin-unavailable: Не удалось закрепить документ.
+    reserved-path: Этот путь зарезервирован приложением
+    save-before-image-unavailable: Не удалось сохранить документ перед загрузкой изображения.
+    save-success: Документ успешно сохранён.
+    save-unavailable: Не удалось сохранить документ.
+    settings-load-unavailable: Не удалось загрузить настройки
+    unpin-success: Документ успешно откреплён.
+    unpin-unavailable: Не удалось открепить документ.
+accounts:
+  account-dialog:
+    close-label: Закрыть диалог учётной записи
+    create-title: Создать учётную запись
+    delete-message: Вы уверены, что хотите безвозвратно удалить учётную запись «{account:эту учётную запись}»?
+    delete-title: Удалить учётную запись
+    edit-title: Изменить учётную запись
+    password-placeholder: Оставьте поле пустым, чтобы сохранить текущий пароль.
+  description: Управление авторизованными пользователями wiki
+  empty: Учётные записи не найдены.
+  loading: Загрузка учётных записей...
+  messages:
+    current-account-delete-forbidden: Нельзя удалить текущую учётную запись.
+    delete-success: Учётная запись успешно удалена.
+    delete-unavailable: Не удалось удалить учётную запись.
+    load-unavailable: Не удалось загрузить учётные записи.
+    save-success: Учётная запись успешно сохранена.
+    save-unavailable: Не удалось сохранить учётную запись.
+  table:
+    add-label: Добавить учётную запись
+    edit-label: Изменить учётную запись
+  title: Учётные записи
+attachments:
+  close-label: Закрыть диалог вложений
+  delete-label: Удалить вложение
+  dialogs:
+    delete-message: Удалить «{file:это вложение}»?
+    delete-title: Удалить вложение
+    overwrite-message: Вложение с именем «{file:этот файл}» уже существует. Заменить его?
+    overwrite-title: Заменить вложение
+  empty: Для этого документа нет доступных вложений.
+  insert-label: Вставить вложение
+  messages:
+    delete-success: Вложение «{file:этот файл}» успешно удалено.
+    delete-unavailable: Не удалось удалить вложение «{file:этот файл}».
+    invalid-file-name: Недопустимое имя файла.
+    refresh-unavailable: Не удалось обновить вложения документа.
+    upload-success: Вложение успешно загружено.
+    upload-unavailable: Не удалось загрузить вложение.
+  title: Вложения
+authentication:
+  messages:
+    failed: Аутентификация не удалась.
+  title: Вход
+document:
+  editor:
+    label: Редактор исходного содержимого документа
+    messages:
+      image-upload-success: Изображение успешно загружено.
+      image-upload-unavailable: Не удалось загрузить изображение.
+      paste-one-image: Вставляйте по одному изображению за раз.
+      unsupported-image-type: Неподдерживаемый тип изображения {type:неизвестен}.
+      wait-before-pasting: Дождитесь сохранения документа, прежде чем вставлять другое изображение.
+  empty:
+    create-prompt: Создать его сейчас?
+    missing-content: У этого документа пока нет содержимого.
+    missing-document: Этот документ ещё не существует.
+    title: Документ не найден
+  loading: Загрузка документа...
+  tags-label: Теги документа
+footer:
+  last-update: "Последнее обновление {timestamp:в неизвестное время}, автор: {author:неизвестный автор}"
+  login: Вход
+  logout: Выйти
+  powered-by: На базе
+header:
+  accounts: Учётные записи
+  profile: Профиль
+  sign-in: Войти
+  toggle-actions-label: Переключить действия
+  toggle-sidebar-label: Переключить боковую панель
+initialization:
+  description: Инициализировать наборы данных для этого нового экземпляра
+  messages:
+    failed: Инициализация не удалась.
+privacy:
+  disagree: Не согласен
+  title: Политика конфиденциальности и соглашение об использовании cookie
+profile:
+  description: Обновите сведения о своей учётной записи
+  messages:
+    update-success: Профиль успешно обновлён
+    update-unavailable: Не удалось обновить профиль
+  password-placeholder: Оставьте поля пустыми, чтобы сохранить текущий пароль.
+  title: Профиль
+release:
+  check-action: Проверить наличие новых версий
+  message: Доступна версия {version:неизвестна}.
+  messages:
+    check-unavailable: Не удалось проверить наличие новых версий.
+  title: Доступна новая версия
+search:
+  empty: Нет результатов.
+  instruction: Введите поисковый запрос.
+  messages:
+    unavailable: Не удалось выполнить поиск в wiki.
+  title: Результаты поиска
+settings:
+  color-picker-label: Открыть выбор цвета
+  description: Настройте свой wiki-движок
+  languages:
+    cs: Чешский
+    de: Немецкий
+    en: Английский
+    es: Испанский
+    fa: Персидский
+    fr: Французский
+    it: Итальянский
+    ja: Японский
+    nl: Нидерландский
+    pl: Польский
+    pt: Португальский
+    ru: Русский
+  loading: Загрузка настроек...
+  messages:
+    load-unavailable: Не удалось загрузить настройки.
+    timezone-load-unavailable: Не удалось загрузить список часовых поясов браузера.
+    timezone-unsupported: Выбор часового пояса не поддерживается этим браузером.
+    update-success: Настройки успешно обновлены.
+    update-unavailable: Не удалось обновить настройки.
+  options:
+    dark: Тёмная
+    light: Светлая
+  placeholders:
+    privacy-banner: Оставьте пустым, чтобы отключить окно конфиденциальности
+    timezone-search: Поиск часового пояса
+  title: Настройки
+sidebar:
+  document: Документ
+  navigation-label: Навигация по wiki
+  pinned: Закреплённые
+  search-label: Поиск в wiki
+  search-placeholder: Поиск в wiki...
+startup:
+  messages:
+    information-unavailable: Не удалось загрузить сведения о движке.
+    local-session-unavailable: Не удалось инициализировать локальный сеанс администратора.
+  title: Ошибка запуска
+top:
+  label: Наверх
+trash:
+  deleted-label: Удалён
+  dialogs:
+    delete-message: Безвозвратно удалить «{document:этот документ}»? Будут окончательно удалены «{document:этот документ}», все вложенные документы и вложения.
+    delete-title: Удалить документ безвозвратно
+    recover-close-label: Закрыть диалог восстановления
+    recover-description: Выберите родительский документ назначения для {document:этого документа}.
+    recover-title: Восстановить документ
+  empty: Корзина пуста
+  loading: Загрузка корзины...
+  messages:
+    delete-success: Документ безвозвратно удалён.
+    delete-unavailable: Не удалось безвозвратно удалить документ.
+    load-unavailable: Не удалось загрузить корзину.
+    recover-success: Документ успешно восстановлен.
+    recover-unavailable: Не удалось восстановить документ.
+  path-label: Путь
+  permanently-delete-label: Удалить безвозвратно
+  permanently-delete-entry-label: Безвозвратно удалить {document:этот документ}
+  recover-label: Восстановить
+  recover-entry-label: Восстановить {document:этот документ}
+  title: Корзина
+  updated-label: Обновлён
+  author-label: Автор
+  unknown: Неизвестно
+tree:
+  loading: Загрузка путей...
+  messages:
+    load-unavailable: Не удалось загрузить дочерние элементы.
+  toggle-label: Переключить {path:этот путь}
+versions:
+  close-label: Закрыть диалог версий
+  delete-label: Удалить версию
+  delete-message: Вы уверены, что хотите безвозвратно удалить версию от {timestamp:выбранного времени}?
+  delete-title: Удалить версию
+  empty: Для этого документа нет доступных версий.
+  messages:
+    delete-success: Версия документа успешно удалена.
+    delete-unavailable: Не удалось удалить выбранную версию.
+    load-unavailable: Не удалось загрузить выбранную версию.
+    refresh-unavailable: Не удалось обновить версии документа.
+  title: Версии документа

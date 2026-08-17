@@ -241,6 +241,7 @@ settings:
     nl: Nederlands
     pl: Pools
     pt: Portugees
+    ru: Russisch
   loading: Instellingen laden...
   messages:
     load-unavailable: Kan instellingen niet laden.

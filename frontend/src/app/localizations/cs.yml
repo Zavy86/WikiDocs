@@ -234,6 +234,7 @@ settings:
     nl: Nizozemština
     pl: Polština
     pt: Portugalština
+    ru: Ruština
   loading: Probíhá načítání nastavení...
   messages:
     load-unavailable: Nastavení nelze načíst.
