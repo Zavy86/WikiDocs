@@ -235,6 +235,7 @@ settings:
     pl: Polski
     pt: Portugalski
     ru: Rosyjski
+    zh: Chiński
   loading: Ładowanie ustawień...
   messages:
     load-unavailable: Nie można wczytać ustawień.

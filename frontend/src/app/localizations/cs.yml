@@ -235,6 +235,7 @@ settings:
     pl: Polština
     pt: Portugalština
     ru: Ruština
+    zh: Čínština
   loading: Probíhá načítání nastavení...
   messages:
     load-unavailable: Nastavení nelze načíst.

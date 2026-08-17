@@ -242,6 +242,7 @@ settings:
     pl: Pools
     pt: Portugees
     ru: Russisch
+    zh: Chinees
   loading: Instellingen laden...
   messages:
     load-unavailable: Kan instellingen niet laden.

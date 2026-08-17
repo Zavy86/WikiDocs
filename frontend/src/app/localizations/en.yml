@@ -235,6 +235,7 @@ settings:
     pl: Polish
     pt: Portuguese
     ru: Russian
+    zh: Chinese
   loading: Loading settings...
   messages:
     load-unavailable: Unable to load settings.

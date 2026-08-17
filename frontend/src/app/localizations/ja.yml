@@ -235,6 +235,7 @@ settings:
     pl: ポーランド語
     pt: ポルトガル語
     ru: ロシア語
+    zh: 中国語
   loading: 設定を読み込み中...
   messages:
     load-unavailable: 設定を読み込めません。

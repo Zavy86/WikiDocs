@@ -235,6 +235,7 @@ settings:
     pl: Polonais
     pt: Portugais
     ru: Russe
+    zh: Chinois
   loading: Chargement des paramètres...
   messages:
     load-unavailable: Impossible de charger les paramètres.

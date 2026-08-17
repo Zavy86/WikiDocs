@@ -235,6 +235,7 @@ settings:
     pl: Polaco
     pt: Português
     ru: Russo
+    zh: Chinês
   loading: A carregar definições...
   messages:
     load-unavailable: Não foi possível carregar as definições.

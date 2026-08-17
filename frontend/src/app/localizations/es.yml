@@ -235,6 +235,7 @@ settings:
     pl: Polaco
     pt: Portugués
     ru: Ruso
+    zh: Chino
   loading: Cargando configuración...
   messages:
     load-unavailable: No se puede cargar la configuración.
