@@ -1,0 +1,165 @@
+$-toolbar-icons: (
+  'bold': 'format_bold',
+  'italic': 'format_italic',
+  'strikethrough': 'strikethrough_s',
+  'header': 'title',
+  'quote-left': 'format_quote',
+  'code': 'code',
+  'table': 'table_chart',
+  'list-ul': 'format_list_bulleted',
+  'list-ol': 'format_list_numbered',
+  'check-square-o': 'checklist',
+  'link': 'link',
+  'picture-o': 'image',
+  'image': 'image',
+  'file-image-o': 'image',
+  'photo': 'image',
+  'cloud-upload': 'upload',
+  'eraser': 'format_clear',
+  'minus': 'horizontal_rule',
+  'undo': 'undo',
+  'repeat': 'redo',
+  'eye': 'visibility',
+  'columns': 'view_column',
+  'question-circle': 'help',
+);
+
+@mixin styles {
+  app-document-editor .EasyMDEContainer {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    margin: 8px 0 0;
+  }
+
+  app-document-editor .EasyMDEContainer .editor-toolbar {
+    flex: 0 0 auto;
+  }
+
+  app-document-editor .EasyMDEContainer .CodeMirror {
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    height: clamp(260px, calc(100dvh - 340px), 900px) !important;
+    max-height: clamp(260px, calc(100dvh - 340px), 900px) !important;
+    border-radius: 6px;
+    font-family: var(--app-monospace-font-family);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .app-theme-dark app-document-editor .EasyMDEContainer {
+    color: var(--app-text-color);
+
+    .CodeMirror,
+    .CodeMirror-fullscreen,
+    .editor-toolbar,
+    .editor-toolbar.fullscreen,
+    .editor-preview,
+    .editor-preview-side,
+    .easymde-dropdown-content {
+      color: var(--app-text-color);
+      border-color: var(--app-border-color);
+      background: var(--app-surface-color);
+    }
+
+    .CodeMirror-gutters,
+    .CodeMirror-gutter-filler,
+    .CodeMirror-scrollbar-filler,
+    .editor-toolbar button:hover,
+    .editor-toolbar button.active {
+      color: var(--app-text-color);
+      border-color: var(--app-border-color);
+      background: var(--app-muted-surface-color);
+    }
+
+    .CodeMirror-cursor {
+      border-left-color: var(--app-text-color);
+    }
+
+    .CodeMirror-selected,
+    .CodeMirror-focused .CodeMirror-selected {
+      background: var(--app-active-surface-color);
+    }
+
+    .cm-s-easymde {
+      .cm-header,
+      .cm-variable-2,
+      .cm-def,
+      .cm-link {
+        color: #82aaff;
+      }
+
+      .cm-quote,
+      .cm-comment {
+        color: #bdbdbd;
+      }
+
+      .cm-string,
+      .cm-string-2,
+      .cm-attribute {
+        color: #c3e88d;
+      }
+
+      .cm-keyword,
+      .cm-tag,
+      .cm-builtin {
+        color: #c792ea;
+      }
+
+      .cm-number,
+      .cm-atom {
+        color: #f78c6c;
+      }
+    }
+  }
+
+  app-document-editor .EasyMDEContainer .CodeMirror-scroll {
+    min-height: 0 !important;
+    max-height: inherit !important;
+  }
+
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-1,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-2,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-3,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-4,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-5,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-6,
+  app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-hr {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+  }
+
+  app-document-editor .EasyMDEContainer .editor-toolbar i.fa::before,
+  app-document-editor .EasyMDEContainer .editor-toolbar i.fas::before {
+    font-family: 'Material Symbols Outlined' !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'liga';
+  }
+
+  @each $class, $symbol in $-toolbar-icons {
+    app-document-editor .EasyMDEContainer .editor-toolbar .fa-#{$class}::before {
+      content: $symbol;
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+    app-document-editor .EasyMDEContainer .CodeMirror {
+      height: clamp(220px, calc(100dvh - 290px), 720px) !important;
+      max-height: clamp(220px, calc(100dvh - 290px), 720px) !important;
+    }
+  }
+}

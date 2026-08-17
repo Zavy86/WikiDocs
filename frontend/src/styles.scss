@@ -1,4 +1,6 @@
+@use 'sass:meta';
 @use '@angular/material' as mat;
+@use 'app/components/document/editor/easymde' as app-easymde;
 
 @import '@fontsource/roboto/100.css';
 @import '@fontsource/roboto/100-italic.css';
@@ -35,24 +37,61 @@ html {
       density: 0,
     )
   );
+  color-scheme: light;
+  --mat-sys-primary: var(--theme-color);
+  --mat-sys-on-primary: var(--app-on-accent-color);
+  --mat-sys-primary-container: var(--app-accent-tint);
+  --mat-sys-on-primary-container: var(--app-text-color);
+}
+
+html.app-theme-dark {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$green-palette,
+        tertiary: mat.$green-palette,
+      ),
+    )
+  );
+  @include meta.load-css('prismjs/themes/prism-tomorrow');
+  color-scheme: dark;
+  --mat-sys-primary: var(--theme-color);
+  --mat-sys-on-primary: var(--app-on-accent-color);
+  --mat-sys-primary-container: var(--app-accent-tint);
+  --mat-sys-on-primary-container: var(--app-text-color);
 }
 
 :root {
   --theme-color: #4caf50;
-  --mat-sys-primary: var(--theme-color);
   --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
+  --app-background-color: #ffffff;
   --app-surface-color: #ffffff;
-  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
+  --app-raised-surface-color: #ffffff;
+  --app-muted-surface-color: #f1f1f1;
+  --app-hover-surface-color: #efefef;
+  --app-active-surface-color: #e0e0e0;
+  --app-text-color: #1f1f1f;
+  --app-muted-text-color: #666666;
+  --app-subtle-text-color: #777777;
+  --app-border-color: #dddddd;
+  --app-strong-border-color: #999999;
+  --app-on-accent-color: #ffffff;
+  --app-accent-tint: color-mix(in srgb, var(--theme-color) 18%, var(--app-surface-color));
+  --app-code-surface-color: #f0f0f0;
+  --app-mark-surface-color: #fcf8e3;
+  --app-highlight-surface-color: #fff3a0;
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, var(--app-background-color));
   --app-shell-background: linear-gradient(
     90deg,
-    #ffffff 0%,
-    #ffffff 500px,
+    var(--app-background-color) 0%,
+    var(--app-background-color) 500px,
     var(--app-shell-accent-tint) 100%
   );
   --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 9%);
   --app-control-shadow: 0 3px 6px rgb(0 0 0 / 9%);
-  --app-divider-color: #dddddd;
+  --app-divider-color: var(--app-border-color);
   --app-shell-min-height: 100vh;
   --app-sidebar-width: 300px;
   --app-header-height: 70px;
@@ -60,6 +99,28 @@ html {
   --app-page-horizontal-padding: 16px;
   --app-page-bottom-padding: 18px;
   --mat-dialog-container-color: var(--app-surface-color);
+}
+
+:root.app-theme-dark {
+  --app-background-color: #121212;
+  --app-surface-color: #1e1e1e;
+  --app-raised-surface-color: #242424;
+  --app-muted-surface-color: #2a2a2a;
+  --app-hover-surface-color: #2c2c2c;
+  --app-active-surface-color: #333333;
+  --app-text-color: #f5f5f5;
+  --app-muted-text-color: #bdbdbd;
+  --app-subtle-text-color: #b0b0b0;
+  --app-border-color: #424242;
+  --app-strong-border-color: #616161;
+  --app-on-accent-color: #000000;
+  --app-accent-tint: color-mix(in srgb, var(--theme-color) 24%, var(--app-surface-color));
+  --app-code-surface-color: #252525;
+  --app-mark-surface-color: color-mix(in srgb, #facc15 28%, transparent);
+  --app-highlight-surface-color: color-mix(in srgb, #facc15 32%, transparent);
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 10%, var(--app-background-color));
+  --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 35%);
+  --app-control-shadow: 0 3px 6px rgb(0 0 0 / 35%);
 }
 
 .main-color {
@@ -76,170 +137,15 @@ body {
   line-height: 1.6;
   font-family: var(--app-font-family);
   -webkit-font-smoothing: antialiased;
-  background: var(--app-surface-color);
+  color: var(--app-text-color);
+  background: var(--app-background-color);
 }
 
 body * {
   font-family: inherit;
 }
 
-app-document-editor .EasyMDEContainer {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  width: 100%;
-  min-height: 0;
-  margin: 8px 0 0;
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar {
-  flex: 0 0 auto;
-}
-
-app-document-editor .EasyMDEContainer .CodeMirror {
-  flex: 1 1 auto;
-  min-height: 0 !important;
-  height: clamp(260px, calc(100dvh - 340px), 900px) !important;
-  max-height: clamp(260px, calc(100dvh - 340px), 900px) !important;
-  border-radius: 6px;
-  font-family: var(--app-monospace-font-family);
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-app-document-editor .EasyMDEContainer .CodeMirror-scroll {
-  min-height: 0 !important;
-  max-height: inherit !important;
-}
-
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-1,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-2,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-3,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-4,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-5,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-header-6,
-app-document-editor .EasyMDEContainer .CodeMirror .cm-frontmatter-line .cm-hr {
-  font-size: inherit !important;
-  font-weight: inherit !important;
-  line-height: inherit !important;
-  color: inherit !important;
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar i.fa::before,
-app-document-editor .EasyMDEContainer .editor-toolbar i.fas::before {
-  font-family: 'Material Symbols Outlined' !important;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'liga';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-bold::before {
-  content: 'format_bold';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-italic::before {
-  content: 'format_italic';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-strikethrough::before {
-  content: 'strikethrough_s';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-header::before {
-  content: 'title';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-quote-left::before {
-  content: 'format_quote';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-code::before {
-  content: 'code';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-table::before {
-  content: 'table_chart';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-list-ul::before {
-  content: 'format_list_bulleted';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-list-ol::before {
-  content: 'format_list_numbered';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-check-square-o::before {
-  content: 'checklist';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-link::before {
-  content: 'link';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-picture-o::before {
-  content: 'image';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-image::before {
-  content: 'image';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-file-image-o::before {
-  content: 'image';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-photo::before {
-  content: 'image';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-cloud-upload::before {
-  content: 'upload';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-eraser::before {
-  content: 'format_clear';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-minus::before {
-  content: 'horizontal_rule';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-undo::before {
-  content: 'undo';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-repeat::before {
-  content: 'redo';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-eye::before {
-  content: 'visibility';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-columns::before {
-  content: 'view_column';
-}
-
-app-document-editor .EasyMDEContainer .editor-toolbar .fa-question-circle::before {
-  content: 'help';
-}
-
-@media only screen and (max-width: 992px) {
-  app-document-editor .EasyMDEContainer .CodeMirror {
-    height: clamp(220px, calc(100dvh - 290px), 720px) !important;
-    max-height: clamp(220px, calc(100dvh - 290px), 720px) !important;
-  }
-}
+@include app-easymde.styles;
 
 pre,
 code {
@@ -427,7 +333,7 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--app-muted-surface-color);
   border-radius: 10px;
 }
 
@@ -442,7 +348,34 @@ main {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--theme-color) #f1f1f1;
+  scrollbar-color: var(--theme-color) var(--app-muted-surface-color);
+}
+
+@media print {
+  :root,
+  :root.app-theme-dark {
+    color-scheme: light;
+    --app-background-color: #ffffff;
+    --app-surface-color: #ffffff;
+    --app-raised-surface-color: #ffffff;
+    --app-muted-surface-color: #f1f1f1;
+    --app-text-color: #000000;
+    --app-muted-text-color: #666666;
+    --app-subtle-text-color: #777777;
+    --app-border-color: #dddddd;
+    --app-strong-border-color: #999999;
+    --app-shell-accent-tint: #ffffff;
+    --app-shell-background: #ffffff;
+  }
+
+  body {
+    color: #000000;
+    background: #ffffff;
+  }
+
+  .app-shell {
+    background: #ffffff !important;
+  }
 }
 
 .mat-mdc-snack-bar-container.app-alert-error .mdc-snackbar__surface {

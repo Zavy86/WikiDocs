@@ -1,8 +1,9 @@
-import { MarkdownComponent } from 'ngx-markdown';
+import { MarkdownComponent, type MermaidAPI } from 'ngx-markdown';
 import { Component, computed, inject, input, InputSignal, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { ParserService } from 'src/app/services/parser.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import { AttachmentType, ContentType, MetadataType } from 'src/app/types';
 
 @Component({
@@ -15,6 +16,7 @@ import { AttachmentType, ContentType, MetadataType } from 'src/app/types';
 export class DocumentViewerComponent {
   private readonly router:Router = inject(Router);
   private readonly parserService:ParserService = inject(ParserService);
+  private readonly themeService:ThemeService = inject(ThemeService);
   readonly metadata:InputSignal<MetadataType> = input.required<MetadataType>();
   readonly content:InputSignal<ContentType> = input.required<ContentType>();
   readonly attachments:InputSignal<AttachmentType[]> = input.required<AttachmentType[]>();
@@ -23,6 +25,9 @@ export class DocumentViewerComponent {
     this.attachments() ?? [],
     this.metadata()?.path ?? '/',
   ));
+  protected readonly mermaidOptions:Signal<MermaidAPI.MermaidConfig> = computed(():MermaidAPI.MermaidConfig => ( {
+    theme: this.themeService.template() === 'dark' ? 'dark' : 'default',
+  } ));
 
   protected onMarkdownClick(event:MouseEvent):void {
     if ( event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ) { return; }

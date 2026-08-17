@@ -16,10 +16,10 @@
 
 .startup-error-card {
   width: min(520px, 100%);
-  border: 1px solid #dddddd;
+  border: 1px solid var(--app-border-color);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background: #ffffff;
+  background: var(--app-raised-surface-color);
 
   h2 {
     margin: 0 0 0.75rem;
@@ -33,7 +33,7 @@
 
   .retry-button {
     --mdc-filled-button-container-color: var(--theme-color);
-    --mdc-filled-button-label-text-color: #ffffff;
+    --mdc-filled-button-label-text-color: var(--app-on-accent-color);
     --mdc-filled-button-container-shape: 9999px;
   }
 }

@@ -17,7 +17,7 @@
   --mat-tree-container-background-color: var(--app-surface-color);
   max-height: 52vh;
   overflow: auto;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--app-border-color);
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
 }

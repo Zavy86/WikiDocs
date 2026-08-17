@@ -659,7 +659,7 @@ export class App implements AfterViewInit {
   private loadSettings():void {
     this.settingsService.load().subscribe({
       next: (settings:SettingsType):void => {
-        this.themeService.applyColor(settings.color);
+        this.themeService.apply(settings.template, settings.color);
       },
       error: (error:HttpErrorResponse):void => {
         console.error(error.message || 'Unable to load settings');

@@ -6,10 +6,10 @@
 }
 
 .trash-card {
-  border: 1px solid #dddddd;
+  border: 1px solid var(--app-border-color);
   border-radius: 0.5rem;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--app-raised-surface-color);
 }
 
 .card-heading {
@@ -18,7 +18,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--app-border-color);
 }
 
 .card-heading h2 {
@@ -35,7 +35,7 @@
 }
 
 .card-action-button {
-  border: 1px solid #dddddd;
+  border: 1px solid var(--app-border-color);
   border-radius: 999px;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .card-details dt {
-  color: #666666;
+  color: var(--app-muted-text-color);
   font-size: 0.8rem;
   font-weight: 600;
 }

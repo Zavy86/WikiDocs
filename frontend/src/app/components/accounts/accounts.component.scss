@@ -12,7 +12,7 @@
 .accounts-table th,
 .accounts-table td {
   padding: 10px 12px;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--app-border-color);
   vertical-align: middle;
   text-align: left;
 }
@@ -29,13 +29,13 @@
 }
 
 .table-action-button {
-  border: 1px solid #dddddd;
+  border: 1px solid var(--app-border-color);
   border-radius: 999px;
-  background-color: #ffffff;
+  background-color: var(--app-raised-surface-color);
 }
 
 .empty-state {
-  color: #777777;
+  color: var(--app-subtle-text-color);
   text-align: center !important;
 }
 

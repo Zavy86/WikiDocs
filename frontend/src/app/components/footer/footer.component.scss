@@ -1,5 +1,5 @@
 footer {
-  color: #666666;
+  color: var(--app-muted-text-color);
   font-size: 13px;
 }
 
@@ -14,12 +14,12 @@ footer small {
 }
 
 footer a {
-  color: #666666;
+  color: var(--app-muted-text-color);
 }
 
 footer a:hover,
 footer a:active {
-  color: #000000;
+  color: var(--app-text-color);
   text-decoration: none;
 }
 

@@ -3,8 +3,8 @@
 }
 
 .color-field {
-  --mat-form-field-outlined-input-text-color: #ffffff;
-  --mat-form-field-outlined-caret-color: #ffffff;
+  --mat-form-field-outlined-input-text-color: var(--app-on-accent-color);
+  --mat-form-field-outlined-caret-color: var(--app-on-accent-color);
 
   ::ng-deep .mat-mdc-text-field-wrapper {
     background-color: var(--color-field-background);
@@ -12,16 +12,16 @@
 
   ::ng-deep .mat-mdc-floating-label {
     padding: 0 4px;
-    background-color: #ffffff;
+    background-color: var(--app-surface-color);
   }
 
   input {
-    color: #ffffff;
-    caret-color: #ffffff;
+    color: var(--app-on-accent-color);
+    caret-color: var(--app-on-accent-color);
   }
 
   button {
-    color: #ffffff;
+    color: var(--app-on-accent-color);
   }
 }
 

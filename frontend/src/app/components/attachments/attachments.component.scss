@@ -21,7 +21,7 @@
   gap: 0.5rem;
   cursor: pointer;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #b0bec5;
+  border: 1px solid var(--app-border-color);
   border-radius: 6px;
   min-height: 40px;
   box-sizing: border-box;
@@ -73,7 +73,7 @@
   height: 38px;
   object-fit: cover;
   border-radius: 4px;
-  border: 1px solid #d7dde3;
+  border: 1px solid var(--app-border-color);
 }
 
 .attachment-delete-button {
