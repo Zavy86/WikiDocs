@@ -1,0 +1,304 @@
+common:
+  defaults:
+    notice: Copyright {year} Wszelkie prawa zastrzeżone
+  actions:
+    agree: Akceptuję
+    cancel: Anuluj
+    choose-file: Wybierz plik
+    continue: Kontynuuj
+    create: Utwórz
+    delete: Usuń
+    delete-permanently: Usuń trwale
+    discard: Odrzuć
+    dismiss: Zamknij
+    initialize: Zainicjuj
+    keep-editing: Kontynuuj edycję
+    move: Przenieś
+    overwrite: Zastąp
+    recover: Przywróć
+    reset: Resetuj
+    retry: Spróbuj ponownie
+    save: Zapisz
+    save-and-upload: Zapisz i prześlij
+    sign-in: Zaloguj się
+    upload: Prześlij
+    view-releases: Zobacz wydania
+  fields:
+    account: Konto
+    check-password: Sprawdź hasło
+    color: Kolor
+    confirm-password: Potwierdź hasło
+    firstname: Imię
+    language: Język
+    lastname: Nazwisko
+    name: Nazwa
+    new-password: Nowe hasło
+    notice: Informacja
+    owner: Właściciel
+    password: Hasło
+    path: Ścieżka
+    privacy-banner: Baner prywatności
+    role: Rola
+    subtitle: Podtytuł
+    template: Motyw
+    timezone: Strefa czasowa
+    title: Tytuł
+  roles:
+    administrator: administrator
+    author: autor
+    user: użytkownik
+  states:
+    checking: Sprawdzanie...
+    initializing: Inicjowanie...
+    loading: Ładowanie...
+    saving: Zapisywanie...
+    signing-in: Logowanie...
+  validation:
+    account-email: Konto musi być prawidłowym adresem e-mail
+    account-maxlength: Konto może mieć maksymalnie 256 znaków
+    account-required: Konto jest wymagane
+    firstname-maxlength: Imię może mieć maksymalnie 32 znaki
+    firstname-required: Imię jest wymagane
+    lastname-maxlength: Nazwisko może mieć maksymalnie 32 znaki
+    lastname-required: Nazwisko jest wymagane
+    password-confirmation-maxlength: Potwierdzenie hasła może mieć maksymalnie 256 znaków
+    password-confirmation-required: Potwierdzenie hasła jest wymagane
+    password-fields-incomplete: Wypełnij oba pola hasła
+    password-maxlength: Hasło może mieć maksymalnie 256 znaków
+    password-mismatch: Hasła muszą być zgodne
+    password-required: Hasło jest wymagane
+    title-maxlength: Tytuł może mieć maksymalnie 32 znaki
+    title-required: Tytuł jest wymagany
+app:
+  actions:
+    attachments: Załączniki
+    cancel-editing: Anuluj edycję
+    create-document: Utwórz dokument
+    create-version-before-saving: Utwórz wersję przed zapisaniem
+    delete-document: Usuń dokument
+    document-versions: Wersje dokumentu
+    do-not-create-version-before-saving: Nie twórz wersji przed zapisaniem
+    edit-document: Edytuj dokument
+    move-document: Przenieś dokument
+    new-document: Nowy dokument
+    pin-document: Przypnij dokument
+    print: Drukuj
+    settings: Ustawienia
+    sign-out: Wyloguj się
+    trash: Kosz
+    unpin-document: Odepnij dokument
+  dialogs:
+    delete-document:
+      message: Czy na pewno chcą Państwo usunąć ten dokument? Niezapisane zmiany zostaną odrzucone, a dokument zostanie przeniesiony do kosza.
+      title: Usuń dokument
+    discard-changes:
+      message: Czy na pewno chcą Państwo odrzucić niezapisane zmiany?
+      title: Odrzuć zmiany
+    move-document:
+      close-label: Zamknij okno przenoszenia
+      description: Wybierz docelowy dokument nadrzędny dla {path:tego dokumentu}.
+      unsaved-message: Istnieją niezapisane zmiany. Czy na pewno chcą Państwo kontynuować przenoszenie tego dokumentu?
+      title: Przenieś dokument
+    new-document:
+      message: Wprowadź docelową ścieżkę dla nowego dokumentu
+      title: Nowy dokument
+    save-before-image:
+      message: Dokument musi zostać zapisany przed przesłaniem obrazu. Czy chcą Państwo zapisać ten szkic i kontynuować?
+      title: Zapisz dokument przed przesłaniem obrazu
+  messages:
+    delete-success: Dokument został pomyślnie usunięty.
+    delete-unavailable: Nie można usunąć dokumentu.
+    invalid-path: Nieprawidłowa ścieżka.
+    invalid-source-path: Nieprawidłowa ścieżka dokumentu źródłowego.
+    move-success: Dokument został pomyślnie przeniesiony.
+    move-unavailable: Nie można przenieść dokumentu.
+    navigation-unavailable: Nie można przejść do wybranej ścieżki.
+    pin-success: Dokument został pomyślnie przypięty.
+    pin-unavailable: Nie można przypiąć dokumentu.
+    reserved-path: Ta ścieżka jest zarezerwowana przez aplikację.
+    save-before-image-unavailable: Nie można zapisać dokumentu przed przesłaniem obrazu.
+    save-success: Dokument został pomyślnie zapisany.
+    save-unavailable: Nie można zapisać dokumentu.
+    settings-load-unavailable: Nie można wczytać ustawień.
+    unpin-success: Dokument został pomyślnie odpięty.
+    unpin-unavailable: Nie można odpiąć dokumentu.
+accounts:
+  account-dialog:
+    close-label: Zamknij okno konta
+    create-title: Utwórz konto
+    delete-message: Czy na pewno chcą Państwo trwale usunąć konto „{account:to konto}”?
+    delete-title: Usuń konto
+    edit-title: Edytuj konto
+    password-placeholder: Pozostaw puste, aby zachować bieżące hasło.
+  description: Zarządzaj uprawnionymi użytkownikami wiki
+  empty: Nie znaleziono kont.
+  loading: Ładowanie kont...
+  messages:
+    current-account-delete-forbidden: Nie można usunąć bieżącego konta.
+    delete-success: Konto zostało pomyślnie usunięte.
+    delete-unavailable: Nie można usunąć konta.
+    load-unavailable: Nie można wczytać kont.
+    save-success: Konto zostało pomyślnie zapisane.
+    save-unavailable: Nie można zapisać konta.
+  table:
+    add-label: Dodaj konto
+    edit-label: Edytuj konto
+  title: Konta
+attachments:
+  close-label: Zamknij okno załączników
+  delete-label: Usuń załącznik
+  dialogs:
+    delete-message: Czy chcą Państwo usunąć „{file:ten załącznik}”?
+    delete-title: Usuń załącznik
+    overwrite-message: Załącznik o nazwie „{file:ten plik}” już istnieje. Czy chcą Państwo go zastąpić?
+    overwrite-title: Zastąp załącznik
+  empty: Brak załączników dla tego dokumentu.
+  insert-label: Wstaw załącznik
+  messages:
+    delete-success: Załącznik „{file:ten plik}” został pomyślnie usunięty.
+    delete-unavailable: Nie można usunąć załącznika „{file:ten plik}”.
+    invalid-file-name: Nieprawidłowa nazwa pliku.
+    refresh-unavailable: Nie można odświeżyć załączników dokumentu.
+    upload-success: Załącznik został pomyślnie przesłany.
+    upload-unavailable: Nie można przesłać załącznika.
+  title: Załączniki
+authentication:
+  messages:
+    failed: Uwierzytelnianie nie powiodło się.
+  title: Logowanie
+document:
+  editor:
+    label: Edytor surowej zawartości dokumentu
+    messages:
+      image-upload-success: Obraz został pomyślnie przesłany.
+      image-upload-unavailable: Nie można przesłać obrazu.
+      paste-one-image: Wklejaj po jednym obrazie.
+      unsupported-image-type: Nieobsługiwany typ obrazu {type:nieznany}.
+      wait-before-pasting: Zaczekaj na zapisanie dokumentu przed wklejeniem kolejnego obrazu.
+  empty:
+    create-prompt: Czy chcą Państwo utworzyć go teraz?
+    missing-content: Ten dokument nie ma jeszcze zawartości.
+    missing-document: Ten dokument jeszcze nie istnieje.
+    title: Nie znaleziono dokumentu
+  loading: Ładowanie dokumentu...
+  tags-label: Tagi dokumentu
+footer:
+  last-update: Ostatnia aktualizacja {timestamp:o nieznanej godzinie} przez {author:nieznanego autora}
+  login: Zaloguj się
+  logout: Wyloguj się
+  powered-by: Obsługiwane przez
+header:
+  accounts: Konta
+  profile: Profil
+  sign-in: Zaloguj się
+  toggle-actions-label: Przełącz działania
+  toggle-sidebar-label: Przełącz panel boczny
+initialization:
+  description: Zainicjuj zbiory danych dla tej nowej instancji
+  messages:
+    failed: Inicjalizacja nie powiodła się.
+privacy:
+  disagree: Nie akceptuję
+  title: Polityka prywatności i zgoda na pliki cookie
+profile:
+  description: Zaktualizuj informacje o swoim koncie
+  messages:
+    update-success: Profil został pomyślnie zaktualizowany.
+    update-unavailable: Nie można zaktualizować profilu.
+  password-placeholder: Pozostaw pola puste, aby zachować bieżące hasło.
+  title: Profil
+release:
+  check-action: Sprawdź dostępność nowych wersji
+  message: Dostępna jest wersja {version:nieznana}.
+  messages:
+    check-unavailable: Nie można sprawdzić dostępności nowych wersji.
+  title: Dostępna nowa wersja
+search:
+  empty: Brak wyników.
+  instruction: Wprowadź wyszukiwane hasło.
+  messages:
+    unavailable: Nie można przeszukać wiki.
+  title: Wyniki wyszukiwania
+settings:
+  color-picker-label: Otwórz wybór koloru
+  description: Skonfiguruj silnik wiki
+  languages:
+    cs: Czeski
+    de: Niemiecki
+    en: Angielski
+    es: Hiszpański
+    fa: Perski
+    fr: Francuski
+    it: Włoski
+    ja: Japoński
+    nl: Niderlandzki
+    pl: Polski
+  loading: Ładowanie ustawień...
+  messages:
+    load-unavailable: Nie można wczytać ustawień.
+    timezone-load-unavailable: Nie można wczytać listy stref czasowych przeglądarki.
+    timezone-unsupported: Wybór strefy czasowej nie jest obsługiwany przez tę przeglądarkę.
+    update-success: Ustawienia zostały pomyślnie zaktualizowane.
+    update-unavailable: Nie można zaktualizować ustawień.
+  options:
+    dark: Ciemny
+    light: Jasny
+  placeholders:
+    privacy-banner: Pozostaw puste, aby wyłączyć okno prywatności
+    timezone-search: Wyszukaj strefę czasową
+  title: Ustawienia
+sidebar:
+  document: Dokument
+  navigation-label: Nawigacja wiki
+  pinned: Przypięte
+  search-label: Przeszukaj wiki
+  search-placeholder: Szukaj w wiki...
+startup:
+  messages:
+    information-unavailable: Nie można wczytać informacji o silniku.
+    local-session-unavailable: Nie można zainicjować lokalnej sesji administratora.
+  title: Błąd uruchamiania
+top:
+  label: Wróć na górę
+trash:
+  deleted-label: Usunięto
+  dialogs:
+    delete-message: Czy chcą Państwo trwale usunąć „{document:ten dokument}”? Spowoduje to trwałe usunięcie dokumentu, wszystkich zagnieżdżonych dokumentów i załączników.
+    delete-title: Trwale usuń dokument
+    recover-close-label: Zamknij okno przywracania
+    recover-description: Wybierz docelowy dokument nadrzędny dla {document:tego dokumentu}.
+    recover-title: Przywróć dokument
+  empty: Kosz jest pusty
+  loading: Ładowanie kosza...
+  messages:
+    delete-success: Dokument został trwale usunięty.
+    delete-unavailable: Nie można trwale usunąć dokumentu.
+    load-unavailable: Nie można wczytać kosza.
+    recover-success: Dokument został pomyślnie przywrócony.
+    recover-unavailable: Nie można przywrócić dokumentu.
+  path-label: Ścieżka
+  permanently-delete-label: Usuń trwale
+  permanently-delete-entry-label: Usuń trwale {document:ten dokument}
+  recover-label: Przywróć
+  recover-entry-label: Przywróć {document:ten dokument}
+  title: Kosz
+  updated-label: Zaktualizowano
+  author-label: Autor
+  unknown: Nieznany
+tree:
+  loading: Ładowanie ścieżek...
+  messages:
+    load-unavailable: Nie można wczytać elementów podrzędnych.
+  toggle-label: Przełącz {path:tę ścieżkę}
+versions:
+  close-label: Zamknij okno wersji
+  delete-label: Usuń wersję
+  delete-message: Czy chcą Państwo trwale usunąć wersję z {timestamp:wybranego czasu}?
+  delete-title: Usuń wersję
+  empty: Brak dostępnych wersji tego dokumentu.
+  messages:
+    delete-success: Wersja dokumentu została pomyślnie usunięta.
+    delete-unavailable: Nie można usunąć wybranej wersji.
+    load-unavailable: Nie można wczytać wybranej wersji.
+    refresh-unavailable: Nie można odświeżyć wersji dokumentu.
+  title: Wersje dokumentu

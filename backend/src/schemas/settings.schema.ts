@@ -42,9 +42,9 @@ export class SettingsSchema implements SettingsContract {
   privacy:string | null;
 
   @Expose()
-  @IsIn([ 'cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja', 'nl' ])
-  @ApiProperty({ enum: [ 'cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja', 'nl' ], example: 'en' })
-  localization:'cs' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'it' | 'ja' | 'nl';
+  @IsIn([ 'cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja', 'nl', 'pl' ])
+  @ApiProperty({ enum: [ 'cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja', 'nl', 'pl' ], example: 'en' })
+  localization:'cs' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'it' | 'ja' | 'nl' | 'pl';
 
   @Expose()
   @IsString()
