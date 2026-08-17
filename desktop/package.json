@@ -10,7 +10,6 @@
   "scripts": {
     "start": "electron-forge start",
     "prestart": "npm --prefix ../backend run build && npm --prefix ../frontend run build",
-    "dependencies": "npm --prefix ../backend ci && npm --prefix ../frontend ci && npm ci",
     "package": "node ./scripts/verify-runtime-artifacts.js && electron-forge package",
     "make": "node ./scripts/verify-runtime-artifacts.js && electron-forge make",
     "publish": "node ./scripts/verify-runtime-artifacts.js && electron-forge publish",
