@@ -1,11 +1,13 @@
 import localeCS from '@angular/common/locales/cs';
 import localeDE from '@angular/common/locales/de';
 import localeES from '@angular/common/locales/es';
+import localeFA from '@angular/common/locales/fa';
 import localeIT from '@angular/common/locales/it';
 import localizationCS from 'src/app/localizations/cs.yml';
 import localizationDE from 'src/app/localizations/de.yml';
 import localizationEN from 'src/app/localizations/en.yml';
 import localizationES from 'src/app/localizations/es.yml';
+import localizationFA from 'src/app/localizations/fa.yml';
 import localizationIT from 'src/app/localizations/it.yml';
 import { parse } from 'yaml';
 import { DOCUMENT, registerLocaleData } from '@angular/common';
@@ -20,6 +22,7 @@ type LocalizationTree = Readonly<Record<string, unknown>>;
 registerLocaleData(localeCS);
 registerLocaleData(localeDE);
 registerLocaleData(localeES);
+registerLocaleData(localeFA);
 registerLocaleData(localeIT);
 
 @Injectable({ providedIn: 'root' })
@@ -34,6 +37,7 @@ export class LocalizationService {
     de: this.parseLocalization('de', localizationDE),
     en: this.parseLocalization('en', localizationEN),
     es: this.parseLocalization('es', localizationES),
+    fa: this.parseLocalization('fa', localizationFA),
     it: this.parseLocalization('it', localizationIT),
   };
 
@@ -44,6 +48,7 @@ export class LocalizationService {
   public constructor() {
     effect(():void => {
       this.document.documentElement.lang = this.language();
+      this.document.documentElement.dir = this.language() === 'fa' ? 'rtl' : 'ltr';
     });
   }
 

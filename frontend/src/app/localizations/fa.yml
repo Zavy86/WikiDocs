@@ -1,0 +1,300 @@
+common:
+  defaults:
+    notice: حق نشر {year} تمامی حقوق محفوظ است
+  actions:
+    agree: موافقم
+    cancel: لغو
+    choose-file: انتخاب فایل
+    continue: ادامه
+    create: ایجاد
+    delete: حذف
+    delete-permanently: حذف دائمی
+    discard: کنار گذاشتن
+    dismiss: بستن
+    initialize: راه‌اندازی
+    keep-editing: ادامهٔ ویرایش
+    move: انتقال
+    overwrite: جای‌گزینی
+    recover: بازیابی
+    reset: بازنشانی
+    retry: تلاش مجدد
+    save: ذخیره
+    save-and-upload: ذخیره و بارگذاری
+    sign-in: ورود
+    upload: بارگذاری
+    view-releases: مشاهدهٔ انتشارها
+  fields:
+    account: حساب کاربری
+    check-password: بررسی گذرواژه
+    color: رنگ
+    confirm-password: تأیید گذرواژه
+    firstname: نام
+    language: زبان
+    lastname: نام خانوادگی
+    name: نام
+    new-password: گذرواژهٔ جدید
+    notice: اطلاعیه
+    owner: مالک
+    password: گذرواژه
+    path: مسیر
+    privacy-banner: بنر حریم خصوصی
+    role: نقش
+    subtitle: زیرعنوان
+    template: قالب
+    timezone: منطقهٔ زمانی
+    title: عنوان
+  roles:
+    administrator: مدیر
+    author: نویسنده
+    user: کاربر
+  states:
+    checking: در حال بررسی...
+    initializing: در حال راه‌اندازی...
+    loading: در حال بارگذاری...
+    saving: در حال ذخیره...
+    signing-in: در حال ورود...
+  validation:
+    account-email: حساب کاربری باید یک نشانی ایمیل معتبر باشد
+    account-maxlength: حساب کاربری نباید بیش از ۲۵۶ نویسه باشد
+    account-required: وارد کردن حساب کاربری الزامی است
+    firstname-maxlength: نام نباید بیش از ۳۲ نویسه باشد
+    firstname-required: وارد کردن نام الزامی است
+    lastname-maxlength: نام خانوادگی نباید بیش از ۳۲ نویسه باشد
+    lastname-required: وارد کردن نام خانوادگی الزامی است
+    password-confirmation-maxlength: تأیید گذرواژه نباید بیش از ۲۵۶ نویسه باشد
+    password-confirmation-required: وارد کردن تأیید گذرواژه الزامی است
+    password-fields-incomplete: هر دو فیلد گذرواژه را تکمیل کنید
+    password-maxlength: گذرواژه نباید بیش از ۲۵۶ نویسه باشد
+    password-mismatch: گذرواژه‌ها باید یکسان باشند
+    password-required: وارد کردن گذرواژه الزامی است
+    title-maxlength: عنوان نباید بیش از ۳۲ نویسه باشد
+    title-required: وارد کردن عنوان الزامی است
+app:
+  actions:
+    attachments: پیوست‌ها
+    cancel-editing: لغو ویرایش
+    create-document: ایجاد سند
+    create-version-before-saving: ایجاد نسخه پیش از ذخیره
+    delete-document: حذف سند
+    document-versions: نسخه‌های سند
+    do-not-create-version-before-saving: پیش از ذخیره نسخه ایجاد نکنید
+    edit-document: ویرایش سند
+    move-document: انتقال سند
+    new-document: سند جدید
+    pin-document: سنجاق کردن سند
+    print: چاپ
+    settings: تنظیمات
+    sign-out: خروج
+    trash: زباله‌دان
+    unpin-document: برداشتن سنجاق سند
+  dialogs:
+    delete-document:
+      message: آیا از حذف این سند مطمئن هستید؟ تغییرات ذخیره‌نشده کنار گذاشته می‌شوند و سند به زباله‌دان منتقل خواهد شد
+      title: حذف سند
+    discard-changes:
+      message: آیا از کنار گذاشتن تغییرات ذخیره‌نشده مطمئن هستید؟
+      title: کنار گذاشتن تغییرات
+    move-document:
+      close-label: بستن گفت‌وگوی انتقال
+      description: والد مقصد را برای {path:این سند} انتخاب کنید.
+      unsaved-message: تغییرات ذخیره‌نشده دارید. آیا از ادامهٔ انتقال این سند مطمئن هستید؟
+      title: انتقال سند
+    new-document:
+      message: مسیر مقصد سند جدید را وارد کنید
+      title: سند جدید
+    save-before-image:
+      message: پیش از بارگذاری تصویر، سند باید ذخیره شود. آیا می‌خواهید این پیش‌نویس را ذخیره کرده و ادامه دهید؟
+      title: ذخیرهٔ سند پیش از بارگذاری تصویر
+  messages:
+    delete-success: سند با موفقیت حذف شد
+    delete-unavailable: حذف سند ممکن نیست
+    invalid-path: مسیر نامعتبر است
+    invalid-source-path: مسیر سند مبدأ نامعتبر است
+    move-success: سند با موفقیت منتقل شد.
+    move-unavailable: انتقال سند ممکن نیست
+    navigation-unavailable: پیمایش به مسیر انتخاب‌شده ممکن نیست
+    pin-success: سند با موفقیت سنجاق شد.
+    pin-unavailable: سنجاق کردن سند ممکن نیست.
+    reserved-path: این مسیر توسط برنامه رزرو شده است
+    save-before-image-unavailable: ذخیرهٔ سند پیش از بارگذاری تصویر ممکن نیست.
+    save-success: سند با موفقیت ذخیره شد.
+    save-unavailable: ذخیرهٔ سند ممکن نیست.
+    settings-load-unavailable: بارگذاری تنظیمات ممکن نیست
+    unpin-success: سنجاق سند با موفقیت برداشته شد.
+    unpin-unavailable: برداشتن سنجاق سند ممکن نیست.
+accounts:
+  account-dialog:
+    close-label: بستن گفت‌وگوی حساب کاربری
+    create-title: ایجاد حساب کاربری
+    delete-message: آیا از حذف دائمی حساب کاربری "{account:این حساب کاربری}" مطمئن هستید؟
+    delete-title: حذف حساب کاربری
+    edit-title: ویرایش حساب کاربری
+    password-placeholder: برای حفظ گذرواژهٔ فعلی، این فیلد را خالی بگذارید.
+  description: مدیریت کاربران مجاز ویکی
+  empty: هیچ حساب کاربری یافت نشد.
+  loading: در حال بارگذاری حساب‌های کاربری...
+  messages:
+    current-account-delete-forbidden: نمی‌توانید حساب کاربری فعلی خود را حذف کنید.
+    delete-success: حساب کاربری با موفقیت حذف شد.
+    delete-unavailable: حذف حساب کاربری ممکن نیست.
+    load-unavailable: بارگذاری حساب‌های کاربری ممکن نیست.
+    save-success: حساب کاربری با موفقیت ذخیره شد.
+    save-unavailable: ذخیرهٔ حساب کاربری ممکن نیست.
+  table:
+    add-label: افزودن حساب کاربری
+    edit-label: ویرایش حساب کاربری
+  title: حساب‌های کاربری
+attachments:
+  close-label: بستن گفت‌وگوی پیوست‌ها
+  delete-label: حذف پیوست
+  dialogs:
+    delete-message: آیا می‌خواهید "{file:این پیوست}" را حذف کنید؟
+    delete-title: حذف پیوست
+    overwrite-message: پیوستی با نام "{file:این فایل}" از پیش وجود دارد. آیا می‌خواهید آن را جای‌گزین کنید؟
+    overwrite-title: جای‌گزینی پیوست
+  empty: هیچ پیوستی برای این سند موجود نیست.
+  insert-label: درج پیوست
+  messages:
+    delete-success: پیوست "{file:این فایل}" با موفقیت حذف شد.
+    delete-unavailable: حذف پیوست "{file:این فایل}" ممکن نیست.
+    invalid-file-name: نام فایل نامعتبر است.
+    refresh-unavailable: به‌روزرسانی پیوست‌های سند ممکن نیست.
+    upload-success: پیوست با موفقیت بارگذاری شد.
+    upload-unavailable: بارگذاری پیوست ممکن نیست.
+  title: پیوست‌ها
+authentication:
+  messages:
+    failed: احراز هویت ناموفق بود.
+  title: ورود
+document:
+  editor:
+    label: ویرایشگر محتوای خام سند
+    messages:
+      image-upload-success: تصویر با موفقیت بارگذاری شد.
+      image-upload-unavailable: بارگذاری تصویر ممکن نیست.
+      paste-one-image: هر بار یک تصویر جای‌گذاری کنید.
+      unsupported-image-type: نوع تصویر {type:نامشخص} پشتیبانی نمی‌شود.
+      wait-before-pasting: پیش از جای‌گذاری تصویر دیگر، منتظر بمانید تا سند ذخیره شود.
+  empty:
+    create-prompt: آیا می‌خواهید اکنون آن را ایجاد کنید؟
+    missing-content: این سند هنوز محتوایی ندارد.
+    missing-document: این سند هنوز وجود ندارد.
+    title: سند یافت نشد
+  loading: در حال بارگذاری سند...
+  tags-label: برچسب‌های سند
+footer:
+  last-update: آخرین به‌روزرسانی در {timestamp:زمان نامشخص} توسط {author:نویسنده‌ای نامشخص}
+  login: ورود
+  logout: خروج
+  powered-by: راه‌اندازی شده با
+header:
+  accounts: حساب‌های کاربری
+  profile: نمایه
+  sign-in: ورود
+  toggle-actions-label: نمایش یا پنهان کردن اقدامات
+  toggle-sidebar-label: نمایش یا پنهان کردن نوار کناری
+initialization:
+  description: مجموعه‌داده‌ها را برای این نمونهٔ جدید راه‌اندازی کنید
+  messages:
+    failed: راه‌اندازی ناموفق بود.
+privacy:
+  disagree: مخالفم
+  title: خط‌مشی حریم خصوصی و موافقت‌نامهٔ کوکی‌ها
+profile:
+  description: اطلاعات حساب کاربری شخصی خود را به‌روزرسانی کنید
+  messages:
+    update-success: نمایه با موفقیت به‌روزرسانی شد
+    update-unavailable: به‌روزرسانی نمایه ممکن نیست
+  password-placeholder: برای حفظ گذرواژهٔ فعلی، فیلدها را خالی بگذارید.
+  title: نمایه
+release:
+  check-action: بررسی نسخه‌های جدید
+  message: نسخهٔ {version:نامشخص} در دسترس است.
+  messages:
+    check-unavailable: بررسی نسخه‌های جدید ممکن نیست.
+  title: نسخهٔ جدید در دسترس است
+search:
+  empty: نتیجه‌ای یافت نشد.
+  instruction: عبارت جست‌وجو را وارد کنید.
+  messages:
+    unavailable: جست‌وجو در ویکی ممکن نیست.
+  title: نتایج جست‌وجو
+settings:
+  color-picker-label: باز کردن انتخاب‌گر رنگ
+  description: موتور ویکی خود را پیکربندی کنید
+  languages:
+    cs: چکی
+    de: آلمانی
+    en: انگلیسی
+    es: اسپانیایی
+    fa: فارسی
+    it: ایتالیایی
+  loading: در حال بارگذاری تنظیمات...
+  messages:
+    load-unavailable: بارگذاری تنظیمات ممکن نیست.
+    timezone-load-unavailable: بارگذاری فهرست مناطق زمانی مرورگر ممکن نیست.
+    timezone-unsupported: انتخاب منطقهٔ زمانی توسط این مرورگر پشتیبانی نمی‌شود.
+    update-success: تنظیمات با موفقیت به‌روزرسانی شد.
+    update-unavailable: به‌روزرسانی تنظیمات ممکن نیست.
+  options:
+    dark: تیره
+    light: روشن
+  placeholders:
+    privacy-banner: برای غیرفعال کردن پنجرهٔ حریم خصوصی، این فیلد را خالی بگذارید
+    timezone-search: جست‌وجوی منطقهٔ زمانی
+  title: تنظیمات
+sidebar:
+  document: سند
+  navigation-label: پیمایش ویکی
+  pinned: سنجاق‌شده
+  search-label: جست‌وجو در ویکی
+  search-placeholder: جست‌وجو در ویکی...
+startup:
+  messages:
+    information-unavailable: بارگذاری اطلاعات موتور ممکن نیست.
+    local-session-unavailable: راه‌اندازی نشست مدیر محلی ممکن نیست.
+  title: خطای راه‌اندازی
+top:
+  label: بازگشت به بالا
+trash:
+  deleted-label: حذف‌شده
+  dialogs:
+    delete-message: آیا "{document:این سند}" را برای همیشه حذف می‌کنید؟ این کار "{document:این سند}"، همهٔ سندهای تو در تو و پیوست‌ها را برای همیشه حذف می‌کند.
+    delete-title: حذف دائمی سند
+    recover-close-label: بستن گفت‌وگوی بازیابی
+    recover-description: والد مقصد را برای {document:این سند} انتخاب کنید.
+    recover-title: بازیابی سند
+  empty: زباله‌دان خالی است
+  loading: در حال بارگذاری زباله‌دان...
+  messages:
+    delete-success: سند برای همیشه حذف شد.
+    delete-unavailable: حذف دائمی سند ممکن نیست.
+    load-unavailable: بارگذاری زباله‌دان ممکن نیست.
+    recover-success: سند با موفقیت بازیابی شد.
+    recover-unavailable: بازیابی سند ممکن نیست.
+  path-label: مسیر
+  permanently-delete-label: حذف دائمی
+  permanently-delete-entry-label: حذف دائمی {document:این سند}
+  recover-label: بازیابی
+  recover-entry-label: بازیابی {document:این سند}
+  title: زباله‌دان
+  updated-label: به‌روزرسانی‌شده
+  author-label: نویسنده
+  unknown: نامشخص
+tree:
+  loading: در حال بارگذاری مسیرها...
+  messages:
+    load-unavailable: بارگذاری فرزندان ممکن نیست.
+  toggle-label: نمایش یا پنهان کردن {path:این مسیر}
+versions:
+  close-label: بستن گفت‌وگوی نسخه‌ها
+  delete-label: حذف نسخه
+  delete-message: آیا از حذف دائمی نسخهٔ مربوط به {timestamp:زمان انتخاب‌شده} مطمئن هستید؟
+  delete-title: حذف نسخه
+  empty: هیچ نسخه‌ای برای این سند موجود نیست.
+  messages:
+    delete-success: نسخهٔ سند با موفقیت حذف شد.
+    delete-unavailable: حذف نسخهٔ انتخاب‌شده ممکن نیست.
+    load-unavailable: بارگذاری نسخهٔ انتخاب‌شده ممکن نیست.
+    refresh-unavailable: به‌روزرسانی نسخه‌های سند ممکن نیست.
+  title: نسخه‌های سند
