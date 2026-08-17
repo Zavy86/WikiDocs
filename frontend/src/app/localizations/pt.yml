@@ -1,0 +1,305 @@
+common:
+  defaults:
+    notice: Copyright {year} Todos os direitos reservados
+  actions:
+    agree: Concordar
+    cancel: Cancelar
+    choose-file: Escolher ficheiro
+    continue: Continuar
+    create: Criar
+    delete: Eliminar
+    delete-permanently: Eliminar permanentemente
+    discard: Descartar
+    dismiss: Fechar
+    initialize: Inicializar
+    keep-editing: Continuar a editar
+    move: Mover
+    overwrite: Substituir
+    recover: Recuperar
+    reset: Repor
+    retry: Tentar novamente
+    save: Guardar
+    save-and-upload: Guardar e carregar
+    sign-in: Iniciar sessão
+    upload: Carregar
+    view-releases: Ver versões
+  fields:
+    account: Conta
+    check-password: Verificar palavra-passe
+    color: Cor
+    confirm-password: Confirmar palavra-passe
+    firstname: Nome próprio
+    language: Idioma
+    lastname: Apelido
+    name: Nome
+    new-password: Nova palavra-passe
+    notice: Aviso
+    owner: Proprietário
+    password: Palavra-passe
+    path: Caminho
+    privacy-banner: Aviso de privacidade
+    role: Função
+    subtitle: Subtítulo
+    template: Tema
+    timezone: Fuso horário
+    title: Título
+  roles:
+    administrator: administrador
+    author: autor
+    user: utilizador
+  states:
+    checking: A verificar...
+    initializing: A inicializar...
+    loading: A carregar...
+    saving: A guardar...
+    signing-in: A iniciar sessão...
+  validation:
+    account-email: A conta tem de ser um endereço de e-mail válido
+    account-maxlength: A conta pode ter, no máximo, 256 caracteres
+    account-required: A conta é obrigatória
+    firstname-maxlength: O nome próprio pode ter, no máximo, 32 caracteres
+    firstname-required: O nome próprio é obrigatório
+    lastname-maxlength: O apelido pode ter, no máximo, 32 caracteres
+    lastname-required: O apelido é obrigatório
+    password-confirmation-maxlength: A confirmação da palavra-passe pode ter, no máximo, 256 caracteres
+    password-confirmation-required: A confirmação da palavra-passe é obrigatória
+    password-fields-incomplete: Preencha ambos os campos da palavra-passe
+    password-maxlength: A palavra-passe pode ter, no máximo, 256 caracteres
+    password-mismatch: As palavras-passe têm de coincidir
+    password-required: A palavra-passe é obrigatória
+    title-maxlength: O título pode ter, no máximo, 32 caracteres
+    title-required: O título é obrigatório
+app:
+  actions:
+    attachments: Anexos
+    cancel-editing: Cancelar edição
+    create-document: Criar documento
+    create-version-before-saving: Criar versão antes de guardar
+    delete-document: Eliminar documento
+    document-versions: Versões do documento
+    do-not-create-version-before-saving: Não criar versão antes de guardar
+    edit-document: Editar documento
+    move-document: Mover documento
+    new-document: Novo documento
+    pin-document: Fixar documento
+    print: Imprimir
+    settings: Definições
+    sign-out: Terminar sessão
+    trash: Lixo
+    unpin-document: Desafixar documento
+  dialogs:
+    delete-document:
+      message: Tem a certeza de que pretende eliminar este documento? As alterações não guardadas serão descartadas e o documento será movido para o lixo
+      title: Eliminar documento
+    discard-changes:
+      message: Tem a certeza de que pretende descartar as alterações não guardadas?
+      title: Descartar alterações
+    move-document:
+      close-label: Fechar a caixa de diálogo para mover o documento
+      description: Selecione o documento principal de destino para {path:este documento}.
+      unsaved-message: Tem alterações não guardadas. Tem a certeza de que pretende continuar a mover este documento?
+      title: Mover documento
+    new-document:
+      message: Introduza o caminho de destino para o novo documento
+      title: Novo documento
+    save-before-image:
+      message: O documento tem de ser guardado antes de poder carregar uma imagem. Pretende guardar este rascunho e continuar?
+      title: Guardar documento antes de carregar imagem
+  messages:
+    delete-success: Documento eliminado com êxito
+    delete-unavailable: Não foi possível eliminar o documento
+    invalid-path: Caminho inválido
+    invalid-source-path: Caminho do documento de origem inválido
+    move-success: Documento movido com êxito.
+    move-unavailable: Não foi possível mover o documento
+    navigation-unavailable: Não foi possível navegar para o caminho selecionado
+    pin-success: Documento fixado com êxito.
+    pin-unavailable: Não foi possível fixar o documento.
+    reserved-path: Este caminho está reservado pela aplicação
+    save-before-image-unavailable: Não foi possível guardar o documento antes de carregar a imagem.
+    save-success: Documento guardado com êxito.
+    save-unavailable: Não foi possível guardar o documento.
+    settings-load-unavailable: Não foi possível carregar as definições
+    unpin-success: Documento desafixado com êxito.
+    unpin-unavailable: Não foi possível desafixar o documento.
+accounts:
+  account-dialog:
+    close-label: Fechar a caixa de diálogo da conta
+    create-title: Criar conta
+    delete-message: Tem a certeza de que pretende eliminar permanentemente a conta "{account:esta conta}"?
+    delete-title: Eliminar conta
+    edit-title: Editar conta
+    password-placeholder: Deixe em branco para manter a palavra-passe atual.
+  description: Gerir utilizadores autorizados da wiki
+  empty: Não foram encontradas contas.
+  loading: A carregar contas...
+  messages:
+    current-account-delete-forbidden: Não pode eliminar a sua conta atual.
+    delete-success: Conta eliminada com êxito.
+    delete-unavailable: Não foi possível eliminar a conta.
+    load-unavailable: Não foi possível carregar as contas.
+    save-success: Conta guardada com êxito.
+    save-unavailable: Não foi possível guardar a conta.
+  table:
+    add-label: Adicionar conta
+    edit-label: Editar conta
+  title: Contas
+attachments:
+  close-label: Fechar a caixa de diálogo de anexos
+  delete-label: Eliminar anexo
+  dialogs:
+    delete-message: Pretende eliminar "{file:este anexo}"?
+    delete-title: Eliminar anexo
+    overwrite-message: Já existe um anexo chamado "{file:este ficheiro}". Pretende substituí-lo?
+    overwrite-title: Substituir anexo
+  empty: Não existem anexos disponíveis para este documento.
+  insert-label: Inserir anexo
+  messages:
+    delete-success: Anexo "{file:este ficheiro}" eliminado com êxito.
+    delete-unavailable: Não foi possível eliminar o anexo "{file:este ficheiro}".
+    invalid-file-name: Nome de ficheiro inválido.
+    refresh-unavailable: Não foi possível atualizar os anexos do documento.
+    upload-success: Anexo carregado com êxito.
+    upload-unavailable: Não foi possível carregar o anexo.
+  title: Anexos
+authentication:
+  messages:
+    failed: Falha na autenticação.
+  title: Iniciar sessão
+document:
+  editor:
+    label: Editor de conteúdo bruto do documento
+    messages:
+      image-upload-success: Imagem carregada com êxito.
+      image-upload-unavailable: Não foi possível carregar a imagem.
+      paste-one-image: Cole uma imagem de cada vez.
+      unsupported-image-type: O tipo de imagem {type:desconhecido} não é suportado.
+      wait-before-pasting: Aguarde que o documento seja guardado antes de colar outra imagem.
+  empty:
+    create-prompt: Pretende criá-lo agora?
+    missing-content: Este documento ainda não tem conteúdo.
+    missing-document: Este documento ainda não existe.
+    title: Documento não encontrado
+  loading: A carregar documento...
+  tags-label: Etiquetas do documento
+footer:
+  last-update: Última atualização {timestamp:num momento desconhecido} por {author:um autor desconhecido}
+  login: Iniciar sessão
+  logout: Terminar sessão
+  powered-by: Desenvolvido por
+header:
+  accounts: Contas
+  profile: Perfil
+  sign-in: Iniciar sessão
+  toggle-actions-label: Alternar ações
+  toggle-sidebar-label: Alternar barra lateral
+initialization:
+  description: Inicializar conjuntos de dados para esta nova instância
+  messages:
+    failed: Falha na inicialização.
+privacy:
+  disagree: Não concordo
+  title: Política de privacidade e acordo de cookies
+profile:
+  description: Atualize as informações da sua conta pessoal
+  messages:
+    update-success: Perfil atualizado com êxito
+    update-unavailable: Não foi possível atualizar o perfil
+  password-placeholder: Deixe os campos em branco para manter a sua palavra-passe atual.
+  title: Perfil
+release:
+  check-action: Procurar novas versões
+  message: A versão {version:desconhecida} está disponível.
+  messages:
+    check-unavailable: Não foi possível procurar novas versões.
+  title: Nova versão disponível
+search:
+  empty: Sem resultados.
+  instruction: Introduza um termo de pesquisa.
+  messages:
+    unavailable: Não foi possível pesquisar na wiki.
+  title: Resultados da pesquisa
+settings:
+  color-picker-label: Abrir seletor de cores
+  description: Configure o seu motor de wiki
+  languages:
+    cs: Checo
+    de: Alemão
+    en: Inglês
+    es: Espanhol
+    fa: Persa
+    fr: Francês
+    it: Italiano
+    ja: Japonês
+    nl: Neerlandês
+    pl: Polaco
+    pt: Português
+  loading: A carregar definições...
+  messages:
+    load-unavailable: Não foi possível carregar as definições.
+    timezone-load-unavailable: Não foi possível carregar a lista de fusos horários do navegador.
+    timezone-unsupported: A seleção de fuso horário não é suportada por este navegador.
+    update-success: Definições atualizadas com êxito.
+    update-unavailable: Não foi possível atualizar as definições.
+  options:
+    dark: Escuro
+    light: Claro
+  placeholders:
+    privacy-banner: Deixe vazio para desativar a caixa de diálogo de privacidade
+    timezone-search: Pesquisar fuso horário
+  title: Definições
+sidebar:
+  document: Documento
+  navigation-label: Navegação da wiki
+  pinned: Fixado
+  search-label: Pesquisar na wiki
+  search-placeholder: Pesquisar na wiki...
+startup:
+  messages:
+    information-unavailable: Não foi possível carregar as informações do motor.
+    local-session-unavailable: Não foi possível inicializar a sessão de administrador local.
+  title: Erro de arranque
+top:
+  label: Voltar ao início
+trash:
+  deleted-label: Eliminado
+  dialogs:
+    delete-message: Eliminar permanentemente "{document:este documento}"? Esta ação remove permanentemente "{document:este documento}", todos os documentos aninhados e os anexos.
+    delete-title: Eliminar documento permanentemente
+    recover-close-label: Fechar a caixa de diálogo de recuperação
+    recover-description: Selecione o documento principal de destino para {document:este documento}.
+    recover-title: Recuperar documento
+  empty: O lixo está vazio
+  loading: A carregar lixo...
+  messages:
+    delete-success: Documento eliminado permanentemente.
+    delete-unavailable: Não foi possível eliminar permanentemente o documento.
+    load-unavailable: Não foi possível carregar o lixo.
+    recover-success: Documento recuperado com êxito.
+    recover-unavailable: Não foi possível recuperar o documento.
+  path-label: Caminho
+  permanently-delete-label: Eliminar permanentemente
+  permanently-delete-entry-label: Eliminar permanentemente {document:este documento}
+  recover-label: Recuperar
+  recover-entry-label: Recuperar {document:este documento}
+  title: Lixo
+  updated-label: Atualizado
+  author-label: Autor
+  unknown: Desconhecido
+tree:
+  loading: A carregar caminhos...
+  messages:
+    load-unavailable: Não foi possível carregar os elementos subordinados.
+  toggle-label: Alternar {path:este caminho}
+versions:
+  close-label: Fechar a caixa de diálogo de versões
+  delete-label: Eliminar versão
+  delete-message: Pretende eliminar permanentemente a versão de {timestamp:a hora selecionada}?
+  delete-title: Eliminar versão
+  empty: Não existem versões disponíveis para este documento.
+  messages:
+    delete-success: Versão do documento eliminada com êxito.
+    delete-unavailable: Não foi possível eliminar a versão selecionada do documento.
+    load-unavailable: Não foi possível carregar a versão selecionada do documento.
+    refresh-unavailable: Não foi possível atualizar as versões do documento.
+  title: Versões do documento

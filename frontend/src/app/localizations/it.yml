@@ -233,6 +233,7 @@ settings:
     ja: Giapponese
     nl: Olandese
     pl: Polacco
+    pt: Portoghese
   loading: Caricamento delle impostazioni in corso...
   messages:
     load-unavailable: Impossibile caricare le impostazioni.

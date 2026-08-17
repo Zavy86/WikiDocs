@@ -233,6 +233,7 @@ settings:
     ja: Japoński
     nl: Niderlandzki
     pl: Polski
+    pt: Portugalski
   loading: Ładowanie ustawień...
   messages:
     load-unavailable: Nie można wczytać ustawień.

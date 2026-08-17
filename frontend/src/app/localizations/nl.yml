@@ -240,6 +240,7 @@ settings:
     ja: Japans
     nl: Nederlands
     pl: Pools
+    pt: Portugees
   loading: Instellingen laden...
   messages:
     load-unavailable: Kan instellingen niet laden.

@@ -7,6 +7,7 @@ import localeIT from '@angular/common/locales/it';
 import localeJA from '@angular/common/locales/ja';
 import localeNL from '@angular/common/locales/nl';
 import localePL from '@angular/common/locales/pl';
+import localePT from '@angular/common/locales/pt';
 import localizationCS from 'src/app/localizations/cs.yml';
 import localizationDE from 'src/app/localizations/de.yml';
 import localizationEN from 'src/app/localizations/en.yml';
@@ -17,6 +18,7 @@ import localizationIT from 'src/app/localizations/it.yml';
 import localizationJA from 'src/app/localizations/ja.yml';
 import localizationNL from 'src/app/localizations/nl.yml';
 import localizationPL from 'src/app/localizations/pl.yml';
+import localizationPT from 'src/app/localizations/pt.yml';
 import { parse } from 'yaml';
 import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT, registerLocaleData } from '@angular/common';
@@ -38,6 +40,7 @@ registerLocaleData(localeIT);
 registerLocaleData(localeJA);
 registerLocaleData(localeNL);
 registerLocaleData(localePL);
+registerLocaleData(localePT);
 
 @Injectable({ providedIn: 'root' })
 export class LocalizationService {
@@ -58,6 +61,7 @@ export class LocalizationService {
     ja: this.parseLocalization('ja', localizationJA),
     nl: this.parseLocalization('nl', localizationNL),
     pl: this.parseLocalization('pl', localizationPL),
+    pt: this.parseLocalization('pt', localizationPT),
   };
 
   public readonly language:Signal<SettingsType['localization']> = computed(():SettingsType['localization'] => {
