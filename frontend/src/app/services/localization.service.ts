@@ -2,12 +2,14 @@ import localeCS from '@angular/common/locales/cs';
 import localeDE from '@angular/common/locales/de';
 import localeES from '@angular/common/locales/es';
 import localeFA from '@angular/common/locales/fa';
+import localeFR from '@angular/common/locales/fr';
 import localeIT from '@angular/common/locales/it';
 import localizationCS from 'src/app/localizations/cs.yml';
 import localizationDE from 'src/app/localizations/de.yml';
 import localizationEN from 'src/app/localizations/en.yml';
 import localizationES from 'src/app/localizations/es.yml';
 import localizationFA from 'src/app/localizations/fa.yml';
+import localizationFR from 'src/app/localizations/fr.yml';
 import localizationIT from 'src/app/localizations/it.yml';
 import { parse } from 'yaml';
 import { Directionality } from '@angular/cdk/bidi';
@@ -25,6 +27,7 @@ registerLocaleData(localeCS);
 registerLocaleData(localeDE);
 registerLocaleData(localeES);
 registerLocaleData(localeFA);
+registerLocaleData(localeFR);
 registerLocaleData(localeIT);
 
 @Injectable({ providedIn: 'root' })
@@ -41,6 +44,7 @@ export class LocalizationService {
     en: this.parseLocalization('en', localizationEN),
     es: this.parseLocalization('es', localizationES),
     fa: this.parseLocalization('fa', localizationFA),
+    fr: this.parseLocalization('fr', localizationFR),
     it: this.parseLocalization('it', localizationIT),
   };
 

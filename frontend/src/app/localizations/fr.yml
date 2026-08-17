@@ -1,0 +1,301 @@
+common:
+  defaults:
+    notice: Copyright {year} Tous droits réservés
+  actions:
+    agree: Accepter
+    cancel: Annuler
+    choose-file: Choisir un fichier
+    continue: Continuer
+    create: Créer
+    delete: Supprimer
+    delete-permanently: Supprimer définitivement
+    discard: Ignorer
+    dismiss: Fermer
+    initialize: Initialiser
+    keep-editing: Continuer la modification
+    move: Déplacer
+    overwrite: Remplacer
+    recover: Restaurer
+    reset: Réinitialiser
+    retry: Réessayer
+    save: Enregistrer
+    save-and-upload: Enregistrer et téléverser
+    sign-in: Se connecter
+    upload: Téléverser
+    view-releases: Voir les versions
+  fields:
+    account: Compte
+    check-password: Vérifier le mot de passe
+    color: Couleur
+    confirm-password: Confirmer le mot de passe
+    firstname: Prénom
+    language: Langue
+    lastname: Nom
+    name: Nom
+    new-password: Nouveau mot de passe
+    notice: Mentions légales
+    owner: Propriétaire
+    password: Mot de passe
+    path: Chemin
+    privacy-banner: Bannière de confidentialité
+    role: Rôle
+    subtitle: Sous-titre
+    template: Thème
+    timezone: Fuseau horaire
+    title: Titre
+  roles:
+    administrator: administrateur
+    author: auteur
+    user: utilisateur
+  states:
+    checking: Vérification en cours...
+    initializing: Initialisation en cours...
+    loading: Chargement en cours...
+    saving: Enregistrement en cours...
+    signing-in: Connexion en cours...
+  validation:
+    account-email: Le compte doit être une adresse e-mail valide
+    account-maxlength: Le compte ne doit pas dépasser 256 caractères
+    account-required: Le compte est obligatoire
+    firstname-maxlength: Le prénom ne doit pas dépasser 32 caractères
+    firstname-required: Le prénom est obligatoire
+    lastname-maxlength: Le nom ne doit pas dépasser 32 caractères
+    lastname-required: Le nom est obligatoire
+    password-confirmation-maxlength: La confirmation du mot de passe ne doit pas dépasser 256 caractères
+    password-confirmation-required: La confirmation du mot de passe est obligatoire
+    password-fields-incomplete: Remplissez les deux champs de mot de passe
+    password-maxlength: Le mot de passe ne doit pas dépasser 256 caractères
+    password-mismatch: Les mots de passe doivent correspondre
+    password-required: Le mot de passe est obligatoire
+    title-maxlength: Le titre ne doit pas dépasser 32 caractères
+    title-required: Le titre est obligatoire
+app:
+  actions:
+    attachments: Pièces jointes
+    cancel-editing: Annuler la modification
+    create-document: Créer un document
+    create-version-before-saving: Créer une version avant l'enregistrement
+    delete-document: Supprimer le document
+    document-versions: Versions du document
+    do-not-create-version-before-saving: Ne pas créer de version avant l'enregistrement
+    edit-document: Modifier le document
+    move-document: Déplacer le document
+    new-document: Nouveau document
+    pin-document: Épingler le document
+    print: Imprimer
+    settings: Paramètres
+    sign-out: Se déconnecter
+    trash: Corbeille
+    unpin-document: Désépingler le document
+  dialogs:
+    delete-document:
+      message: Voulez-vous vraiment supprimer ce document ? Les modifications non enregistrées seront ignorées et le document sera déplacé vers la corbeille
+      title: Supprimer le document
+    discard-changes:
+      message: Voulez-vous vraiment ignorer les modifications non enregistrées ?
+      title: Ignorer les modifications
+    move-document:
+      close-label: Fermer la boîte de dialogue de déplacement
+      description: Sélectionnez le parent de destination pour {path:ce document}.
+      unsaved-message: Vous avez des modifications non enregistrées. Voulez-vous vraiment continuer à déplacer ce document ?
+      title: Déplacer le document
+    new-document:
+      message: Saisissez le chemin de destination du nouveau document
+      title: Nouveau document
+    save-before-image:
+      message: Le document doit être enregistré avant de pouvoir téléverser une image. Voulez-vous enregistrer ce brouillon et continuer ?
+      title: Enregistrer le document avant de téléverser une image
+  messages:
+    delete-success: Document supprimé avec succès
+    delete-unavailable: Impossible de supprimer le document
+    invalid-path: Chemin non valide
+    invalid-source-path: Chemin du document source non valide
+    move-success: Document déplacé avec succès.
+    move-unavailable: Impossible de déplacer le document
+    navigation-unavailable: Impossible d'accéder au chemin sélectionné
+    pin-success: Document épinglé avec succès.
+    pin-unavailable: Impossible d'épingler le document.
+    reserved-path: Ce chemin est réservé par l'application
+    save-before-image-unavailable: Impossible d'enregistrer le document avant le téléversement de l'image.
+    save-success: Document enregistré avec succès.
+    save-unavailable: Impossible d'enregistrer le document.
+    settings-load-unavailable: Impossible de charger les paramètres
+    unpin-success: Document désépinglé avec succès.
+    unpin-unavailable: Impossible de désépingler le document.
+accounts:
+  account-dialog:
+    close-label: Fermer la boîte de dialogue du compte
+    create-title: Créer un compte
+    delete-message: Voulez-vous vraiment supprimer définitivement le compte "{account:ce compte}" ?
+    delete-title: Supprimer le compte
+    edit-title: Modifier le compte
+    password-placeholder: Laissez vide pour conserver le mot de passe actuel.
+  description: Gérer les utilisateurs autorisés du wiki
+  empty: Aucun compte trouvé.
+  loading: Chargement des comptes...
+  messages:
+    current-account-delete-forbidden: Vous ne pouvez pas supprimer votre compte actuel.
+    delete-success: Compte supprimé avec succès.
+    delete-unavailable: Impossible de supprimer le compte.
+    load-unavailable: Impossible de charger les comptes.
+    save-success: Compte enregistré avec succès.
+    save-unavailable: Impossible d'enregistrer le compte.
+  table:
+    add-label: Ajouter un compte
+    edit-label: Modifier le compte
+  title: Comptes
+attachments:
+  close-label: Fermer la boîte de dialogue des pièces jointes
+  delete-label: Supprimer la pièce jointe
+  dialogs:
+    delete-message: Voulez-vous supprimer "{file:cette pièce jointe}" ?
+    delete-title: Supprimer la pièce jointe
+    overwrite-message: Une pièce jointe nommée "{file:ce fichier}" existe déjà. Voulez-vous la remplacer ?
+    overwrite-title: Remplacer la pièce jointe
+  empty: Aucune pièce jointe n'est disponible pour ce document.
+  insert-label: Insérer une pièce jointe
+  messages:
+    delete-success: Pièce jointe "{file:ce fichier}" supprimée avec succès.
+    delete-unavailable: Impossible de supprimer la pièce jointe "{file:ce fichier}".
+    invalid-file-name: Nom de fichier non valide.
+    refresh-unavailable: Impossible d'actualiser les pièces jointes du document.
+    upload-success: Pièce jointe téléversée avec succès.
+    upload-unavailable: Impossible de téléverser la pièce jointe.
+  title: Pièces jointes
+authentication:
+  messages:
+    failed: Échec de l'authentification.
+  title: Connexion
+document:
+  editor:
+    label: Éditeur du contenu brut du document
+    messages:
+      image-upload-success: Image téléversée avec succès.
+      image-upload-unavailable: Impossible de téléverser l'image.
+      paste-one-image: Collez une image à la fois.
+      unsupported-image-type: Type d'image non pris en charge {type:inconnu}.
+      wait-before-pasting: Attendez que le document soit enregistré avant de coller une autre image.
+  empty:
+    create-prompt: Voulez-vous le créer maintenant ?
+    missing-content: Ce document ne contient pas encore de contenu.
+    missing-document: Ce document n'existe pas encore.
+    title: Document introuvable
+  loading: Chargement du document...
+  tags-label: Étiquettes du document
+footer:
+  last-update: Dernière mise à jour {timestamp:à une date inconnue} par {author:un auteur inconnu}
+  login: Connexion
+  logout: Déconnexion
+  powered-by: Propulsé par
+header:
+  accounts: Comptes
+  profile: Profil
+  sign-in: Se connecter
+  toggle-actions-label: Afficher ou masquer les actions
+  toggle-sidebar-label: Afficher ou masquer la barre latérale
+initialization:
+  description: Initialisez les ensembles de données de cette nouvelle instance
+  messages:
+    failed: Échec de l'initialisation.
+privacy:
+  disagree: Refuser
+  title: Politique de confidentialité et accord relatif aux cookies
+profile:
+  description: Mettez à jour les informations de votre compte personnel
+  messages:
+    update-success: Profil mis à jour avec succès
+    update-unavailable: Impossible de mettre à jour le profil
+  password-placeholder: Laissez les champs vides pour conserver votre mot de passe actuel.
+  title: Profil
+release:
+  check-action: Rechercher de nouvelles versions
+  message: La version {version:inconnue} est disponible.
+  messages:
+    check-unavailable: Impossible de rechercher de nouvelles versions.
+  title: Nouvelle version disponible
+search:
+  empty: Aucun résultat.
+  instruction: Saisissez un terme de recherche.
+  messages:
+    unavailable: Impossible de rechercher dans le wiki.
+  title: Résultats de la recherche
+settings:
+  color-picker-label: Ouvrir le sélecteur de couleur
+  description: Configurez votre moteur de wiki
+  languages:
+    cs: Tchèque
+    de: Allemand
+    en: Anglais
+    es: Espagnol
+    fa: Persan
+    fr: Français
+    it: Italien
+  loading: Chargement des paramètres...
+  messages:
+    load-unavailable: Impossible de charger les paramètres.
+    timezone-load-unavailable: Impossible de charger la liste des fuseaux horaires du navigateur.
+    timezone-unsupported: La sélection du fuseau horaire n'est pas prise en charge par ce navigateur.
+    update-success: Paramètres mis à jour avec succès.
+    update-unavailable: Impossible de mettre à jour les paramètres.
+  options:
+    dark: Sombre
+    light: Clair
+  placeholders:
+    privacy-banner: Laissez vide pour désactiver la fenêtre de confidentialité
+    timezone-search: Rechercher un fuseau horaire
+  title: Paramètres
+sidebar:
+  document: Document
+  navigation-label: Navigation du wiki
+  pinned: Épinglé
+  search-label: Rechercher dans le wiki
+  search-placeholder: Rechercher dans le wiki...
+startup:
+  messages:
+    information-unavailable: Impossible de charger les informations du moteur.
+    local-session-unavailable: Impossible d'initialiser la session locale de l'administrateur.
+  title: Erreur de démarrage
+top:
+  label: Retour en haut
+trash:
+  deleted-label: Supprimé
+  dialogs:
+    delete-message: Supprimer définitivement "{document:ce document}" ? Cette action supprimera définitivement "{document:ce document}", tous les documents imbriqués et les pièces jointes.
+    delete-title: Supprimer définitivement le document
+    recover-close-label: Fermer la boîte de dialogue de restauration
+    recover-description: Sélectionnez le parent de destination pour {document:ce document}.
+    recover-title: Restaurer le document
+  empty: La corbeille est vide
+  loading: Chargement de la corbeille...
+  messages:
+    delete-success: Document supprimé définitivement.
+    delete-unavailable: Impossible de supprimer définitivement le document.
+    load-unavailable: Impossible de charger la corbeille.
+    recover-success: Document restauré avec succès.
+    recover-unavailable: Impossible de restaurer le document.
+  path-label: Chemin
+  permanently-delete-label: Supprimer définitivement
+  permanently-delete-entry-label: Supprimer définitivement {document:ce document}
+  recover-label: Restaurer
+  recover-entry-label: Restaurer {document:ce document}
+  title: Corbeille
+  updated-label: Mis à jour
+  author-label: Auteur
+  unknown: Inconnu
+tree:
+  loading: Chargement des chemins...
+  messages:
+    load-unavailable: Impossible de charger les éléments enfants.
+  toggle-label: Afficher ou masquer {path:ce chemin}
+versions:
+  close-label: Fermer la boîte de dialogue des versions
+  delete-label: Supprimer la version
+  delete-message: Voulez-vous vraiment supprimer définitivement la version de {timestamp:l'heure sélectionnée} ?
+  delete-title: Supprimer la version
+  empty: Aucune version n'est disponible pour ce document.
+  messages:
+    delete-success: Version du document supprimée avec succès.
+    delete-unavailable: Impossible de supprimer la version sélectionnée.
+    load-unavailable: Impossible de charger la version sélectionnée.
+    refresh-unavailable: Impossible d'actualiser les versions du document.
+  title: Versions du document
