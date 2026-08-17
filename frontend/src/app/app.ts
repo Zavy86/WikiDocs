@@ -282,6 +282,11 @@ export class App implements AfterViewInit {
   } ));
 
   constructor() {
+    effect(():void => {
+      const settings:SettingsType | null = this.settingsService.settings();
+      if ( settings === null ) { return; }
+      this.themeService.apply(settings.template, settings.color);
+    });
     effect(():void => this.openPrivacyModalIfNeeded());
     effect(():void => this.openReleaseDialogIfNeeded());
     this.loadInformationBoundState();
@@ -370,8 +375,9 @@ export class App implements AfterViewInit {
   }
 
   private loadInformationBoundState():void {
-    if ( ! this.informationService.isInitialized() ) {
-      this.settingsService.clear();
+    const information:InformationType | null = this.informationService.retrieve();
+    if ( ! information?.initialized ) {
+      if ( information !== null ) { this.settingsService.clear(); }
       this.pinnedDocuments.set([]);
       this.isAuthenticated.set(false);
       this.isGuestUser.set(false);
@@ -658,9 +664,6 @@ export class App implements AfterViewInit {
 
   private loadSettings():void {
     this.settingsService.load().subscribe({
-      next: (settings:SettingsType):void => {
-        this.themeService.apply(settings.template, settings.color);
-      },
       error: (error:HttpErrorResponse):void => {
         console.error(error.message || 'Unable to load settings');
       }

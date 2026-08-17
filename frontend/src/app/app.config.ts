@@ -6,7 +6,7 @@ import { provideRouter, withHashLocation } from '@angular/router';
 import { MARKED_OPTIONS, provideMarkdown, SANITIZE } from 'ngx-markdown';
 import { InformationService } from 'src/app/services/information.service';
 import { ParserService } from 'src/app/services/parser.service';
-import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { routes } from 'src/app/app.routes';
 
 export const appConfig:ApplicationConfig = {
@@ -17,7 +17,7 @@ export const appConfig:ApplicationConfig = {
     },
     importProvidersFrom(MatSnackBarModule),
     provideAppInitializer(():Promise<void> => {
-      inject(ThemeService).restore();
+      inject(SettingsService).restore();
       const informationService:InformationService = inject(InformationService);
       void informationService.load();
       const parserService:ParserService = inject(ParserService);

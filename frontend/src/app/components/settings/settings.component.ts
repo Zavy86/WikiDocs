@@ -9,10 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpService } from 'src/app/services/http.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { InformationService } from 'src/app/services/information.service';
-import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { SettingsType } from 'src/app/types';
 import { ReleaseService } from 'src/app/services/release.service';
 
@@ -28,10 +27,9 @@ export class SettingsComponent {
   private initialSettings:SettingsType | null = null;
 
   private readonly alertService:AlertService = inject(AlertService);
-  private readonly httpService:HttpService = inject(HttpService);
   private readonly informationService:InformationService = inject(InformationService);
   private readonly releaseService:ReleaseService = inject(ReleaseService);
-  private readonly themeService:ThemeService = inject(ThemeService);
+  private readonly settingsService:SettingsService = inject(SettingsService);
   private readonly breakpointObserver:BreakpointObserver = inject(BreakpointObserver);
 
   private readonly formBuilder:FormBuilder = inject(FormBuilder);
@@ -95,14 +93,13 @@ export class SettingsComponent {
     };
 
     this.saving.set(true);
-    this.httpService
-      .PUT<void>('/settings', request)
+    this.settingsService
+      .update(request)
       .pipe(finalize(():void => this.saving.set(false)))
       .subscribe({
         next: ():void => {
           this.initialSettings = request;
           this.patchForm(request);
-          this.themeService.apply(request.template, request.color);
           this.alertService.success('Settings updated successfully.');
         },
         error: (error:HttpErrorResponse):void => {
@@ -113,8 +110,8 @@ export class SettingsComponent {
 
   private loadSettings():void {
     this.loading.set(true);
-    this.httpService
-      .GET<SettingsType>('/settings')
+    this.settingsService
+      .load()
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (settings:SettingsType):void => {

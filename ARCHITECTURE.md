@@ -515,8 +515,19 @@ The Angular application uses standalone components and hash-based routing. In de
 | `/#/trash`        | `delete`                                     |
 | `/#/**`           | `read`                                       |
 
-The application initializer loads runtime information and Markdown plugins. While the dataset is uninitialized, route
-guards allow initialization UI access regardless of normal route policy.
+The application initializer restores cached settings, loads runtime information, and loads Markdown plugins. While the
+dataset is uninitialized, route guards allow initialization UI access regardless of normal route policy.
+
+### Settings lifecycle
+
+The frontend stores the complete settings object in `localStorage` under `SETTINGS`. `SettingsService` restores this
+value into its Angular signal during application initialization, making settings available before the backend responds.
+Successful `GET /api/settings` and `PUT /api/settings` requests replace the signal and cached object in full. Request
+failures preserve the last available value. A successful information response with `initialized: false` clears both the
+signal and cache because the stored settings no longer describe the active dataset.
+
+The root application observes the settings signal and delegates `template` and `color` application to `ThemeService`.
+`ThemeService` owns only the visual state and does not persist a separate theme cache.
 
 ### Session lifecycle
 
