@@ -33,11 +33,9 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Public and private browsing
 - Desktop and remote Sync
 - Syntax highlighting
-- ~~Multi-language~~
+- Multi-language
 - Dark mode
 - and many more...
-
-~~Striked~~ features are work in progress.
 
 
 ## Demo

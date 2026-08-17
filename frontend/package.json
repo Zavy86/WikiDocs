@@ -9,6 +9,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
+    "check:localizations": "node scripts/check-localizations.mjs",
     "start": "ng serve",
     "test": "ng test"
   },
@@ -35,7 +36,8 @@
     "ngx-markdown": "^22.0.0",
     "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@angular/build": "^22.0.4",
