@@ -5,6 +5,7 @@ import { catchError, finalize, from, map, Observable, of, shareReplay, Subject, 
 import { buildBackendUrl } from 'src/app/app.backend';
 import { InformationService } from 'src/app/services/information.service';
 import { LogsService } from 'src/app/services/logs.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { AuthenticateType, InformationType, JwtType, TokenType } from 'src/app/types';
 
 export type AuthenticationChange = 'login' | 'logout' | 'restored';
@@ -76,7 +77,7 @@ export class SessionService {
 
   private setLocalStartupError(message:string, error:unknown):void {
     this.logsService.error(`[SessionService] ${ message }`, error);
-    this.startupErrorState.set('Unable to initialize local administrator session.');
+    this.startupErrorState.set(this.injector.get(LocalizationService).getText('startup.messages.local-session-unavailable'));
   }
 
   private clearStartupError():void {

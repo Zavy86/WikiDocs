@@ -6,14 +6,15 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { AuthenticationChange, SessionService } from 'src/app/services/session.service';
+import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { PrivacyService } from 'src/app/services/privacy.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { ThemeService } from 'src/app/services/theme.service';
-import { SettingsService } from 'src/app/services/settings.service';
 import { ReleaseService } from 'src/app/services/release.service';
+import { SessionService, AuthenticationChange } from 'src/app/services/session.service';
+import { SettingsService } from 'src/app/services/settings.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import { AttachmentType, DocumentType, InformationType, MetadataType, PinnedType, SettingsType } from 'src/app/types';
 import {
   ActionItem,
@@ -59,6 +60,7 @@ export class App implements AfterViewInit {
   private readonly httpService:HttpService = inject(HttpService);
   private readonly settingsService:SettingsService = inject(SettingsService);
   private readonly releaseService:ReleaseService = inject(ReleaseService);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
   private readonly informationService:InformationService = inject(InformationService);
   private readonly dialog:MatDialog = inject(MatDialog);
   private readonly privacyService:PrivacyService = inject(PrivacyService);
@@ -213,53 +215,53 @@ export class App implements AfterViewInit {
   protected readonly showTop:Signal<boolean> = computed(():boolean => ! this.applicationPaths.has(this.currentPath()) && this.mode() === 'view');
 
   protected readonly genericActions:Signal<ReadonlyArray<ActionItem>> = computed<ReadonlyArray<ActionItem>>(():ActionItem[] => [
-    ...( this.canOpenTrash() ? [ this.createAction('trash', 'delete_sweep', 'Trash') ] : [] ),
-    ...( this.canOpenProfile() ? [ this.createAction('profile', 'person', 'Profile') ] : [] ),
-    ...( this.canOpenAccounts() ? [ this.createAction('accounts', 'people', 'Accounts') ] : [] ),
-    ...( this.canOpenSettings() ? [ this.createAction('settings', 'settings', 'Settings') ] : [] ),
-    ...( this.canSignOut() ? [ this.createAction('logout', 'lock', 'Sign out') ] : [] ),
-    ...( ! this.isAuthenticated() && ! this.isLocalUser() ? [ this.createAction('login', 'lock_open', 'Sign in') ] : [] ),
+    ...( this.canOpenTrash() ? [ this.createAction('trash', 'delete_sweep', this.localizationService.getText('app.actions.trash')) ] : [] ),
+    ...( this.canOpenProfile() ? [ this.createAction('profile', 'person', this.localizationService.getText('header.profile')) ] : [] ),
+    ...( this.canOpenAccounts() ? [ this.createAction('accounts', 'people', this.localizationService.getText('header.accounts')) ] : [] ),
+    ...( this.canOpenSettings() ? [ this.createAction('settings', 'settings', this.localizationService.getText('app.actions.settings')) ] : [] ),
+    ...( this.canSignOut() ? [ this.createAction('logout', 'lock', this.localizationService.getText('app.actions.sign-out')) ] : [] ),
+    ...( ! this.isAuthenticated() && ! this.isLocalUser() ? [ this.createAction('login', 'lock_open', this.localizationService.getText('header.sign-in')) ] : [] ),
   ]);
 
   protected readonly viewActions:Signal<ReadonlyArray<ActionItem>> = computed<ReadonlyArray<ActionItem>>(():ActionItem[] => [
-    ...( this.canPrintDocument() ? [ this.createAction('print', 'print', 'Print') ] : [] ),
-    ...( this.canAddPage() ? [ this.createAction('new', 'add', 'New document') ] : [] ),
+    ...( this.canPrintDocument() ? [ this.createAction('print', 'print', this.localizationService.getText('app.actions.print')) ] : [] ),
+    ...( this.canAddPage() ? [ this.createAction('new', 'add', this.localizationService.getText('app.actions.new-document')) ] : [] ),
     ...( this.canEditDocument()
       ? [ this.createAction(
         'edit',
         this.currentDocument()?.exists === false ? 'add' : 'edit',
-        this.currentDocument()?.exists === false ? 'Create document' : 'Edit document'
+        this.localizationService.getText(this.currentDocument()?.exists === false ? 'app.actions.create-document' : 'app.actions.edit-document')
       ) ]
       : [] ),
     ...( this.canTogglePinnedDocument()
       ? [ this.createAction(
         'pin',
         this.isCurrentPathPinned() ? 'keep_off' : 'keep',
-        this.isCurrentPathPinned() ? 'Unpin document' : 'Pin document'
+        this.localizationService.getText(this.isCurrentPathPinned() ? 'app.actions.unpin-document' : 'app.actions.pin-document')
       ) ]
       : [] )
   ]);
 
   protected readonly editActions:Signal<ReadonlyArray<ActionItem>> = computed<ReadonlyArray<ActionItem>>(():ActionItem[] => [
-    this.createAction('cancel', 'cancel', 'Cancel editing', this.isSavingDocument(), 'grey'),
-    this.createAction('versions', 'history', 'Document versions', ! this.canOpenVersions(), 'yellow'),
+    this.createAction('cancel', 'cancel', this.localizationService.getText('app.actions.cancel-editing'), this.isSavingDocument(), 'grey'),
+    this.createAction('versions', 'history', this.localizationService.getText('app.actions.document-versions'), ! this.canOpenVersions(), 'yellow'),
     this.createAction(
       'versioning',
       this.versioning() ? 'check_box' : 'check_box_outline_blank',
-      this.versioning() ? 'Create version before saving' : 'Do not create version before saving',
+      this.localizationService.getText(this.versioning() ? 'app.actions.create-version-before-saving' : 'app.actions.do-not-create-version-before-saving'),
       this.isSavingDocument() || this.currentDocument()?.exists !== true,
       'orange'
     ),
     ...( this.hasWriteAuthorization()
-      ? [ this.createAction('attachments', 'attach_file', 'Attachments', ! this.canOpenAttachments(), 'blue') ]
+      ? [ this.createAction('attachments', 'attach_file', this.localizationService.getText('app.actions.attachments'), ! this.canOpenAttachments(), 'blue') ]
       : [] ),
     ...( this.hasWriteAuthorization()
-      ? [ this.createAction('move', 'drive_file_move', 'Move document', ! this.canMoveDocument(), 'purple') ]
+      ? [ this.createAction('move', 'drive_file_move', this.localizationService.getText('app.actions.move-document'), ! this.canMoveDocument(), 'purple') ]
       : [] ),
     ...( this.hasDeleteAuthorization()
-      ? [ this.createAction('delete', 'delete', 'Delete document', ! this.canDeleteDocument(), 'red') ]
+      ? [ this.createAction('delete', 'delete', this.localizationService.getText('app.actions.delete-document'), ! this.canDeleteDocument(), 'red') ]
       : [] ),
-    this.createAction('save', 'save', 'Save', ! this.canSaveDocument()),
+    this.createAction('save', 'save', this.localizationService.getText('common.actions.save'), ! this.canSaveDocument()),
   ]);
 
   protected readonly pinnedDocuments:WritableSignal<ReadonlyArray<MetadataType>> = signal<ReadonlyArray<MetadataType>>([]);
@@ -470,10 +472,10 @@ export class App implements AfterViewInit {
       return;
     }
     this.openConfirmDialog({
-      title: 'Discard changes',
-      message: 'Are you sure you want to discard unsaved changes?',
-      confirmLabel: 'Discard',
-      cancelLabel: 'Keep editing',
+      title: this.localizationService.getText('app.dialogs.discard-changes.title'),
+      message: this.localizationService.getText('app.dialogs.discard-changes.message'),
+      confirmLabel: this.localizationService.getText('common.actions.discard'),
+      cancelLabel: this.localizationService.getText('common.actions.keep-editing'),
       confirmColor: 'warn',
     }).subscribe((confirmed:boolean):void => {
       if ( ! confirmed ) { return; }
@@ -489,10 +491,10 @@ export class App implements AfterViewInit {
       return;
     }
     this.openConfirmDialog({
-      title: 'Move document',
-      message: 'You have unsaved changes. Are you sure you want to continue moving this document?',
-      confirmLabel: 'Continue',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('app.dialogs.move-document.title'),
+      message: this.localizationService.getText('app.dialogs.move-document.unsaved-message'),
+      confirmLabel: this.localizationService.getText('common.actions.continue'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'primary',
     }).subscribe((confirmed:boolean):void => {
       if ( ! confirmed ) { return; }
@@ -507,10 +509,10 @@ export class App implements AfterViewInit {
         maxWidth: '860px',
         disableClose: true,
         data: {
-          title: 'Move document',
-          description: `Select the destination parent for ${ this.currentPath() }.`,
-          submitLabel: 'Move',
-          closeAriaLabel: 'Close move dialog',
+          title: this.localizationService.getText('app.dialogs.move-document.title'),
+          description: this.localizationService.getText('app.dialogs.move-document.description', { path: this.currentPath() }),
+          submitLabel: this.localizationService.getText('common.actions.move'),
+          closeAriaLabel: this.localizationService.getText('app.dialogs.move-document.close-label'),
           sourcePath: this.currentPath(),
         } satisfies TreeData,
       })
@@ -533,11 +535,11 @@ export class App implements AfterViewInit {
         this.isSavingDocument.set(false);
         this.editorInitialRaw.set(this.editorRaw());
         this.loadDocumentForCurrentUrl();
-        this.alertService.success('Document saved successfully.');
+        this.alertService.success(this.localizationService.getText('app.messages.save-success'));
       },
       error: (error:HttpErrorResponse) => {
         this.isSavingDocument.set(false);
-        this.alertService.error(error.message || 'Unable to save document.');
+        this.alertService.error(this.localizationService.getText('app.messages.save-unavailable'));
       }
     });
   }
@@ -550,10 +552,10 @@ export class App implements AfterViewInit {
     }
     if ( ! document || this.isSavingDocument() ) { return; }
     const data:ConfirmData = {
-      title: 'Save document before uploading image',
-      message: 'The document must be saved before an image can be uploaded. Do you want to save this draft and continue?',
-      confirmLabel: 'Save and upload',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('app.dialogs.save-before-image.title'),
+      message: this.localizationService.getText('app.dialogs.save-before-image.message'),
+      confirmLabel: this.localizationService.getText('common.actions.save-and-upload'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'primary',
     };
     this.dialog
@@ -590,11 +592,11 @@ export class App implements AfterViewInit {
         this.editorInitialRaw.set(raw);
         this.isSavingDocument.set(false);
         this.queuePastedImageRequest(image);
-        this.alertService.success('Document saved successfully.');
+        this.alertService.success(this.localizationService.getText('app.messages.save-success'));
       },
       error: (error:HttpErrorResponse):void => {
         this.isSavingDocument.set(false);
-        this.alertService.error(error.message || 'Unable to save document before uploading image.');
+        this.alertService.error(this.localizationService.getText('app.messages.save-before-image-unavailable'));
       }
     });
   }
@@ -604,7 +606,7 @@ export class App implements AfterViewInit {
     const sourcePath:string = this.currentPath();
     const sourceName:string | null = this.getLastPathSegment(sourcePath);
     if ( ! sourceName ) {
-      this.alertService.error('Invalid source document path');
+      this.alertService.error(this.localizationService.getText('app.messages.invalid-source-path'));
       return;
     }
     this.isSavingDocument.set(true);
@@ -618,11 +620,11 @@ export class App implements AfterViewInit {
         this.mode.set('view');
         this.isSavingDocument.set(false);
         void this.router.navigate([ targetPath ]).then(():void => this.loadDocumentForCurrentUrl());
-        this.alertService.success('Document moved successfully.');
+        this.alertService.success(this.localizationService.getText('app.messages.move-success'));
       },
       error: (error:HttpErrorResponse):void => {
         this.isSavingDocument.set(false);
-        this.alertService.error(error.message || 'Unable to move document');
+        this.alertService.error(this.localizationService.getText('app.messages.move-unavailable'));
       }
     });
   }
@@ -631,10 +633,10 @@ export class App implements AfterViewInit {
     if ( ! this.canDeleteDocument() ) { return; }
     const path:string = this.currentPath();
     this.openConfirmDialog({
-      title: 'Delete document',
-      message: 'Are you sure you want to delete this document? Unsaved changes will be discarded and the document will be moved to trash',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: this.localizationService.getText('app.dialogs.delete-document.title'),
+      message: this.localizationService.getText('app.dialogs.delete-document.message'),
+      confirmLabel: this.localizationService.getText('common.actions.delete'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
       confirmColor: 'warn',
     }).subscribe((confirmed:boolean):void => {
       if ( ! confirmed ) { return; }
@@ -647,11 +649,11 @@ export class App implements AfterViewInit {
           this.isSavingDocument.set(false);
           const parentPath:string = this.getParentPath(path);
           void this.router.navigate([ parentPath ]).then(():void => this.loadDocumentForCurrentUrl());
-          this.alertService.warning('Document successfully deleted');
+          this.alertService.warning(this.localizationService.getText('app.messages.delete-success'));
         },
         error: (error:HttpErrorResponse):void => {
           this.isSavingDocument.set(false);
-          this.alertService.error(error.message || 'Unable to delete document');
+          this.alertService.error(this.localizationService.getText('app.messages.delete-unavailable'));
         }
       });
     });
@@ -758,22 +760,22 @@ export class App implements AfterViewInit {
     if ( ! document || document.exists !== true || ! this.hasWriteAuthorization() ) { return; }
     const defaultPath:string = this.getDefaultNewPath(this.currentPath());
     const data:PromptData = {
-      title: 'New document',
-      message: 'Enter the destination path for the new page:',
-      label: 'Path',
+      title: this.localizationService.getText('app.dialogs.new-document.title'),
+      message: this.localizationService.getText('app.dialogs.new-document.message'),
+      label: this.localizationService.getText('common.fields.path'),
       initialValue: defaultPath,
-      confirmLabel: 'Create',
-      cancelLabel: 'Cancel',
+      confirmLabel: this.localizationService.getText('common.actions.create'),
+      cancelLabel: this.localizationService.getText('common.actions.cancel'),
     };
     this.dialog.open(PromptComponent, { width: '90vw', maxWidth: '560px', data }).afterClosed().subscribe((rawInput:string | null):void => {
       if ( rawInput === null ) { return; }
       const targetPath:string | null = this.normalizeUserPath(rawInput);
       if ( ! targetPath ) {
-        this.alertService.error('Invalid path');
+        this.alertService.error(this.localizationService.getText('app.messages.invalid-path'));
         return;
       }
       if ( this.applicationPaths.has(targetPath) ) {
-        this.alertService.error('This path is reserved by the application');
+        this.alertService.error(this.localizationService.getText('app.messages.reserved-path'));
         return;
       }
       if ( targetPath === this.currentPath() ) {
@@ -784,7 +786,7 @@ export class App implements AfterViewInit {
       void this.router.navigate([ targetPath ]).then((navigated:boolean) => {
         if ( navigated ) { return; }
         this.pendingEditPath.set(null);
-        this.alertService.error('Unable to navigate to the selected path');
+        this.alertService.error(this.localizationService.getText('app.messages.navigation-unavailable'));
       });
     });
   }
@@ -822,10 +824,10 @@ export class App implements AfterViewInit {
           return { ...document, pinned: ! isPinned };
         });
         this.loadPinnedIfSessionReady();
-        this.alertService.success(isPinned ? 'Document unpinned successfully.' : 'Document pinned successfully.');
+        this.alertService.success(this.localizationService.getText(isPinned ? 'app.messages.unpin-success' : 'app.messages.pin-success'));
       },
       error: (error:HttpErrorResponse):void => {
-        this.alertService.error(error.message || ( isPinned ? 'Unable to unpin document.' : 'Unable to pin document.' ));
+        this.alertService.error(this.localizationService.getText(isPinned ? 'app.messages.unpin-unavailable' : 'app.messages.pin-unavailable'));
       }
     });
   }
