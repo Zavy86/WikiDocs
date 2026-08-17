@@ -230,6 +230,7 @@ settings:
     fa: Persiano
     fr: Francese
     it: Italiano
+    ja: Giapponese
   loading: Caricamento delle impostazioni in corso...
   messages:
     load-unavailable: Impossibile caricare le impostazioni.

@@ -56,7 +56,7 @@ export class SettingsComponent {
   });
   protected readonly localizationOptions:Signal<ReadonlyArray<LocalizationOption>> = computed(():ReadonlyArray<LocalizationOption> => {
     const language:SettingsType['localization'] = this.localizationService.language();
-    return ([ 'cs', 'de', 'en', 'es', 'fa', 'it' ] as const)
+    return ([ 'cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja' ] as const)
       .map((code):LocalizationOption => ({ code, label: this.localizationService.getText(`settings.languages.${ code }`) }))
       .sort((first:LocalizationOption, second:LocalizationOption):number => first.label.localeCompare(second.label, language));
   });

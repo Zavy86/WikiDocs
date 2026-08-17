@@ -230,6 +230,7 @@ settings:
     fa: Persan
     fr: Français
     it: Italien
+    ja: Japonais
   loading: Chargement des paramètres...
   messages:
     load-unavailable: Impossible de charger les paramètres.

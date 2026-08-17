@@ -230,6 +230,7 @@ settings:
     fa: Perština
     fr: Francouzština
     it: Italsky
+    ja: Japonština
   loading: Probíhá načítání nastavení...
   messages:
     load-unavailable: Nastavení nelze načíst.
