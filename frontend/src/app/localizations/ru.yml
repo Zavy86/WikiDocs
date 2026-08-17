@@ -223,6 +223,7 @@ settings:
   color-picker-label: Открыть выбор цвета
   description: Настройте свой wiki-движок
   languages:
+    ar: Арабский
     cs: Чешский
     de: Немецкий
     en: Английский

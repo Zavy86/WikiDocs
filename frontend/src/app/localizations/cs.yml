@@ -223,6 +223,7 @@ settings:
   color-picker-label: Otevřít výběr barvy
   description: Nakonfigurujte svůj wiki engine
   languages:
+    ar: Arabština
     cs: Česky
     de: Německy
     en: Anglicky

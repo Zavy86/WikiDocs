@@ -223,6 +223,7 @@ settings:
   color-picker-label: Abrir seletor de cores
   description: Configure o seu motor de wiki
   languages:
+    ar: Árabe
     cs: Checo
     de: Alemão
     en: Inglês

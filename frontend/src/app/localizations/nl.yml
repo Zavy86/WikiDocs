@@ -230,6 +230,7 @@ settings:
   color-picker-label: Kleurkiezer openen
   description: Configureer uw wiki-engine
   languages:
+    ar: Arabisch
     cs: Tsjechisch
     de: Duits
     en: Engels

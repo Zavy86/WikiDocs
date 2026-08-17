@@ -223,6 +223,7 @@ settings:
   color-picker-label: Farbauswahl öffnen
   description: Ihre Wiki-Engine konfigurieren
   languages:
+    ar: Arabisch
     cs: Tschechisch
     de: Deutsch
     en: Englisch

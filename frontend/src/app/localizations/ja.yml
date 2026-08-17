@@ -223,6 +223,7 @@ settings:
   color-picker-label: カラーピッカーを開く
   description: Wikiエンジンを設定します
   languages:
+    ar: アラビア語
     cs: チェコ語
     de: ドイツ語
     en: 英語

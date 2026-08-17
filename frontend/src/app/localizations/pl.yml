@@ -223,6 +223,7 @@ settings:
   color-picker-label: Otwórz wybór koloru
   description: Skonfiguruj silnik wiki
   languages:
+    ar: Arabski
     cs: Czeski
     de: Niemiecki
     en: Angielski

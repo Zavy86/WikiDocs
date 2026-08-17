@@ -1,3 +1,4 @@
+import localeAR from '@angular/common/locales/ar';
 import localeCS from '@angular/common/locales/cs';
 import localeDE from '@angular/common/locales/de';
 import localeES from '@angular/common/locales/es';
@@ -10,6 +11,7 @@ import localePL from '@angular/common/locales/pl';
 import localePT from '@angular/common/locales/pt';
 import localeRU from '@angular/common/locales/ru';
 import localeZH from '@angular/common/locales/zh';
+import localizationAR from 'src/app/localizations/ar.yml';
 import localizationCS from 'src/app/localizations/cs.yml';
 import localizationDE from 'src/app/localizations/de.yml';
 import localizationEN from 'src/app/localizations/en.yml';
@@ -35,6 +37,7 @@ type LocalizationDictionary = Readonly<Record<string, string>>;
 type LocalizationTree = Readonly<Record<string, unknown>>;
 type TextDirection = 'ltr' | 'rtl';
 
+registerLocaleData(localeAR);
 registerLocaleData(localeCS);
 registerLocaleData(localeDE);
 registerLocaleData(localeES);
@@ -55,8 +58,9 @@ export class LocalizationService {
   private readonly directionality:Directionality = inject(Directionality);
   private readonly logsService:LogsService = inject(LogsService);
   private readonly settingsService:SettingsService = inject(SettingsService);
-  private readonly rtlLanguages:ReadonlyArray<SettingsType['localization']> = [ 'fa' ];
+  private readonly rtlLanguages:ReadonlyArray<SettingsType['localization']> = [ 'ar', 'fa' ];
   private readonly localizations:Readonly<Partial<Record<SettingsType['localization'], LocalizationDictionary>>> = {
+    ar: this.parseLocalization('ar', localizationAR),
     cs: this.parseLocalization('cs', localizationCS),
     de: this.parseLocalization('de', localizationDE),
     en: this.parseLocalization('en', localizationEN),

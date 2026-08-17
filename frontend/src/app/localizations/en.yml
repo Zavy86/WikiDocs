@@ -223,6 +223,7 @@ settings:
   color-picker-label: Open color picker
   description: Configure your wiki engine
   languages:
+    ar: Arabic
     cs: Czech
     de: German
     en: English

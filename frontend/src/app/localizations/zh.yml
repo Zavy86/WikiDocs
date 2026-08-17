@@ -223,6 +223,7 @@ settings:
   color-picker-label: 打开颜色选择器
   description: 配置您的 Wiki 引擎
   languages:
+    ar: 阿拉伯语
     cs: 捷克语
     de: 德语
     en: 英语
