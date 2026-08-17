@@ -102,7 +102,7 @@ export class SettingsComponent {
         next: ():void => {
           this.initialSettings = request;
           this.patchForm(request);
-          this.themeService.applyColor(request.color);
+          this.themeService.apply(request.template, request.color);
           this.alertService.success('Settings updated successfully.');
         },
         error: (error:HttpErrorResponse):void => {

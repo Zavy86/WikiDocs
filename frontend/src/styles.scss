@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use 'sass:meta';
 
 @import '@fontsource/roboto/100.css';
 @import '@fontsource/roboto/100-italic.css';
@@ -35,24 +36,61 @@ html {
       density: 0,
     )
   );
+  color-scheme: light;
+  --mat-sys-primary: var(--theme-color);
+  --mat-sys-on-primary: var(--app-on-accent-color);
+  --mat-sys-primary-container: var(--app-accent-tint);
+  --mat-sys-on-primary-container: var(--app-text-color);
+}
+
+html.app-theme-dark {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$green-palette,
+        tertiary: mat.$green-palette,
+      ),
+    )
+  );
+  @include meta.load-css('prismjs/themes/prism-tomorrow');
+  color-scheme: dark;
+  --mat-sys-primary: var(--theme-color);
+  --mat-sys-on-primary: var(--app-on-accent-color);
+  --mat-sys-primary-container: var(--app-accent-tint);
+  --mat-sys-on-primary-container: var(--app-text-color);
 }
 
 :root {
   --theme-color: #4caf50;
-  --mat-sys-primary: var(--theme-color);
   --app-font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --app-monospace-font-family: Consolas, 'Courier New', Courier, monospace;
+  --app-background-color: #ffffff;
   --app-surface-color: #ffffff;
-  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, #ffffff);
+  --app-raised-surface-color: #ffffff;
+  --app-muted-surface-color: #f1f1f1;
+  --app-hover-surface-color: #efefef;
+  --app-active-surface-color: #e0e0e0;
+  --app-text-color: #1f1f1f;
+  --app-muted-text-color: #666666;
+  --app-subtle-text-color: #777777;
+  --app-border-color: #dddddd;
+  --app-strong-border-color: #999999;
+  --app-on-accent-color: #ffffff;
+  --app-accent-tint: color-mix(in srgb, var(--theme-color) 18%, var(--app-surface-color));
+  --app-code-surface-color: #f0f0f0;
+  --app-mark-surface-color: #fcf8e3;
+  --app-highlight-surface-color: #fff3a0;
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 5%, var(--app-background-color));
   --app-shell-background: linear-gradient(
     90deg,
-    #ffffff 0%,
-    #ffffff 500px,
+    var(--app-background-color) 0%,
+    var(--app-background-color) 500px,
     var(--app-shell-accent-tint) 100%
   );
   --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 9%);
   --app-control-shadow: 0 3px 6px rgb(0 0 0 / 9%);
-  --app-divider-color: #dddddd;
+  --app-divider-color: var(--app-border-color);
   --app-shell-min-height: 100vh;
   --app-sidebar-width: 300px;
   --app-header-height: 70px;
@@ -60,6 +98,28 @@ html {
   --app-page-horizontal-padding: 16px;
   --app-page-bottom-padding: 18px;
   --mat-dialog-container-color: var(--app-surface-color);
+}
+
+:root.app-theme-dark {
+  --app-background-color: #121212;
+  --app-surface-color: #1e1e1e;
+  --app-raised-surface-color: #242424;
+  --app-muted-surface-color: #2a2a2a;
+  --app-hover-surface-color: #2c2c2c;
+  --app-active-surface-color: #333333;
+  --app-text-color: #f5f5f5;
+  --app-muted-text-color: #bdbdbd;
+  --app-subtle-text-color: #b0b0b0;
+  --app-border-color: #424242;
+  --app-strong-border-color: #616161;
+  --app-on-accent-color: #000000;
+  --app-accent-tint: color-mix(in srgb, var(--theme-color) 24%, var(--app-surface-color));
+  --app-code-surface-color: #252525;
+  --app-mark-surface-color: color-mix(in srgb, #facc15 28%, transparent);
+  --app-highlight-surface-color: color-mix(in srgb, #facc15 32%, transparent);
+  --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 10%, var(--app-background-color));
+  --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 35%);
+  --app-control-shadow: 0 3px 6px rgb(0 0 0 / 35%);
 }
 
 .main-color {
@@ -76,7 +136,8 @@ body {
   line-height: 1.6;
   font-family: var(--app-font-family);
   -webkit-font-smoothing: antialiased;
-  background: var(--app-surface-color);
+  color: var(--app-text-color);
+  background: var(--app-background-color);
 }
 
 body * {
@@ -105,6 +166,72 @@ app-document-editor .EasyMDEContainer .CodeMirror {
   font-family: var(--app-monospace-font-family);
   font-size: 14px;
   line-height: 1.4;
+}
+
+.app-theme-dark app-document-editor .EasyMDEContainer {
+  color: var(--app-text-color);
+
+  .CodeMirror,
+  .CodeMirror-fullscreen,
+  .editor-toolbar,
+  .editor-toolbar.fullscreen,
+  .editor-preview,
+  .editor-preview-side,
+  .easymde-dropdown-content {
+    color: var(--app-text-color);
+    border-color: var(--app-border-color);
+    background: var(--app-surface-color);
+  }
+
+  .CodeMirror-gutters,
+  .CodeMirror-gutter-filler,
+  .CodeMirror-scrollbar-filler,
+  .editor-toolbar button:hover,
+  .editor-toolbar button.active {
+    color: var(--app-text-color);
+    border-color: var(--app-border-color);
+    background: var(--app-muted-surface-color);
+  }
+
+  .CodeMirror-cursor {
+    border-left-color: var(--app-text-color);
+  }
+
+  .CodeMirror-selected,
+  .CodeMirror-focused .CodeMirror-selected {
+    background: var(--app-active-surface-color);
+  }
+
+  .cm-s-easymde {
+    .cm-header,
+    .cm-variable-2,
+    .cm-def,
+    .cm-link {
+      color: #82aaff;
+    }
+
+    .cm-quote,
+    .cm-comment {
+      color: #bdbdbd;
+    }
+
+    .cm-string,
+    .cm-string-2,
+    .cm-attribute {
+      color: #c3e88d;
+    }
+
+    .cm-keyword,
+    .cm-tag,
+    .cm-builtin {
+      color: #c792ea;
+    }
+
+    .cm-number,
+    .cm-atom {
+      color: #f78c6c;
+    }
+  }
 }
 
 app-document-editor .EasyMDEContainer .CodeMirror-scroll {
@@ -427,7 +554,7 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--app-muted-surface-color);
   border-radius: 10px;
 }
 
@@ -442,7 +569,34 @@ main {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--theme-color) #f1f1f1;
+  scrollbar-color: var(--theme-color) var(--app-muted-surface-color);
+}
+
+@media print {
+  :root,
+  :root.app-theme-dark {
+    color-scheme: light;
+    --app-background-color: #ffffff;
+    --app-surface-color: #ffffff;
+    --app-raised-surface-color: #ffffff;
+    --app-muted-surface-color: #f1f1f1;
+    --app-text-color: #000000;
+    --app-muted-text-color: #666666;
+    --app-subtle-text-color: #777777;
+    --app-border-color: #dddddd;
+    --app-strong-border-color: #999999;
+    --app-shell-accent-tint: #ffffff;
+    --app-shell-background: #ffffff;
+  }
+
+  body {
+    color: #000000;
+    background: #ffffff;
+  }
+
+  .app-shell {
+    background: #ffffff !important;
+  }
 }
 
 .mat-mdc-snack-bar-container.app-alert-error .mdc-snackbar__surface {

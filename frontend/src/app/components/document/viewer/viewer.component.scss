@@ -264,4 +264,8 @@
     width: 100% !important;
     height: auto !important;
   }
+
+  :host-context(.app-theme-dark) .document-content :where(.mermaid, pre.mermaid) svg {
+    filter: invert(1) hue-rotate(180deg);
+  }
 }

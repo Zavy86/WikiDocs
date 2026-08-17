@@ -9,7 +9,7 @@
 
 .action-button {
   background-color: var(--theme-color);
-  color: #ffffff;
+  color: var(--app-on-accent-color);
 
   &:disabled {
     filter: saturate(0.5);
