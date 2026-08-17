@@ -36,8 +36,9 @@
           <mat-form-field appearance="outline" class="app-form-control-full-width">
             <mat-label>{{ 'common.fields.language' | localized }}</mat-label>
             <mat-select id="localization" name="localization" formControlName="localization">
-              <mat-option value="en">{{ 'settings.languages.en' | localized }}</mat-option>
-              <mat-option value="it">{{ 'settings.languages.it' | localized }}</mat-option>
+              @for (language of localizationOptions(); track language.code) {
+                <mat-option [value]="language.code">{{ language.label }}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">

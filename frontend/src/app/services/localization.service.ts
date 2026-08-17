@@ -1,4 +1,6 @@
+import localeCS from '@angular/common/locales/cs';
 import localeIT from '@angular/common/locales/it';
+import localizationCS from 'src/app/localizations/cs.yml';
 import localizationEN from 'src/app/localizations/en.yml';
 import localizationIT from 'src/app/localizations/it.yml';
 import { parse } from 'yaml';
@@ -11,6 +13,7 @@ import { LocalizationParameters, SettingsType } from 'src/app/types';
 type LocalizationDictionary = Readonly<Record<string, string>>;
 type LocalizationTree = Readonly<Record<string, unknown>>;
 
+registerLocaleData(localeCS);
 registerLocaleData(localeIT);
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +24,7 @@ export class LocalizationService {
   private readonly settingsService:SettingsService = inject(SettingsService);
 
   private readonly localizations:Readonly<Partial<Record<SettingsType['localization'], LocalizationDictionary>>> = {
+    cs: this.parseLocalization('cs', localizationCS),
     en: this.parseLocalization('en', localizationEN),
     it: this.parseLocalization('it', localizationIT),
   };

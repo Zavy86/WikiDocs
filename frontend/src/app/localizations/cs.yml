@@ -1,0 +1,297 @@
+common:
+  defaults:
+    notice: Copyright {year} Všechna práva vyhrazena
+  actions:
+    agree: Souhlasím
+    cancel: Zrušit
+    choose-file: Vybrat soubor
+    continue: Pokračovat
+    create: Vytvořit
+    delete: Odstranit
+    delete-permanently: Trvale odstranit
+    discard: Zahodit
+    dismiss: Zavřít
+    initialize: Inicializovat
+    keep-editing: Pokračovat v úpravách
+    move: Přesunout
+    overwrite: Přepsat
+    recover: Obnovit
+    reset: Resetovat
+    retry: Zkusit znovu
+    save: Uložit
+    save-and-upload: Uložit a nahrát
+    sign-in: Přihlásit se
+    upload: Nahrát
+    view-releases: Zobrazit vydání
+  fields:
+    account: Účet
+    check-password: Ověření hesla
+    color: Barva
+    confirm-password: Potvrzení hesla
+    firstname: Jméno
+    language: Jazyk
+    lastname: Příjmení
+    name: Název
+    new-password: Nové heslo
+    notice: Právní upozornění
+    owner: Vlastník
+    password: Heslo
+    path: Cesta
+    privacy-banner: Oznámení o ochraně osobních údajů
+    role: Role
+    subtitle: Podtitul
+    template: Motiv
+    timezone: Časové pásmo
+    title: Název
+  roles:
+    administrator: správce
+    author: autor
+    user: uživatel
+  states:
+    checking: Probíhá kontrola...
+    initializing: Probíhá inicializace...
+    loading: Probíhá načítání...
+    saving: Probíhá ukládání...
+    signing-in: Probíhá přihlašování...
+  validation:
+    account-email: Účet musí být platná e-mailová adresa
+    account-maxlength: Účet může obsahovat nejvýše 256 znaků
+    account-required: Účet je povinný
+    firstname-maxlength: Jméno může obsahovat nejvýše 32 znaků
+    firstname-required: Jméno je povinné
+    lastname-maxlength: Příjmení může obsahovat nejvýše 32 znaků
+    lastname-required: Příjmení je povinné
+    password-confirmation-maxlength: Potvrzení hesla může obsahovat nejvýše 256 znaků
+    password-confirmation-required: Potvrzení hesla je povinné
+    password-fields-incomplete: Vyplňte obě pole hesla
+    password-maxlength: Heslo může obsahovat nejvýše 256 znaků
+    password-mismatch: Hesla se musí shodovat
+    password-required: Heslo je povinné
+    title-maxlength: Název může obsahovat nejvýše 32 znaků
+    title-required: Název je povinný
+app:
+  actions:
+    attachments: Přílohy
+    cancel-editing: Zrušit úpravy
+    create-document: Vytvořit dokument
+    create-version-before-saving: Vytvořit verzi před uložením
+    delete-document: Odstranit dokument
+    document-versions: Verze dokumentu
+    do-not-create-version-before-saving: Nevytvářet verzi před uložením
+    edit-document: Upravit dokument
+    move-document: Přesunout dokument
+    new-document: Nový dokument
+    pin-document: Připnout dokument
+    print: Tisk
+    settings: Nastavení
+    sign-out: Odhlásit se
+    trash: Koš
+    unpin-document: Odepnout dokument
+  dialogs:
+    delete-document:
+      message: Opravdu chcete tento dokument odstranit? Neuložené změny budou zahozeny a dokument bude přesunut do koše
+      title: Odstranit dokument
+    discard-changes:
+      message: Opravdu chcete zahodit neuložené změny?
+      title: Zahodit změny
+    move-document:
+      close-label: Zavřít dialogové okno pro přesunutí
+      description: Vyberte cílový nadřazený dokument pro {path:tento dokument}.
+      unsaved-message: Máte neuložené změny. Opravdu chcete pokračovat v přesunutí tohoto dokumentu?
+      title: Přesunout dokument
+    new-document:
+      message: Zadejte cílovou cestu nového dokumentu
+      title: Nový dokument
+    save-before-image:
+      message: Před nahráním obrázku je nutné dokument uložit. Chcete tento koncept uložit a pokračovat?
+      title: Před nahráním obrázku uložte dokument
+  messages:
+    delete-success: Dokument byl úspěšně odstraněn
+    delete-unavailable: Dokument nelze odstranit
+    invalid-path: Neplatná cesta
+    invalid-source-path: Neplatná cesta zdrojového dokumentu
+    move-success: Dokument byl úspěšně přesunut.
+    move-unavailable: Dokument nelze přesunout
+    navigation-unavailable: Na vybranou cestu nelze přejít
+    pin-success: Dokument byl úspěšně připnut.
+    pin-unavailable: Dokument nelze připnout.
+    reserved-path: Tato cesta je vyhrazena aplikací
+    save-before-image-unavailable: Dokument nelze před nahráním obrázku uložit.
+    save-success: Dokument byl úspěšně uložen.
+    save-unavailable: Dokument nelze uložit.
+    settings-load-unavailable: Nastavení nelze načíst
+    unpin-success: Dokument byl úspěšně odepnut.
+    unpin-unavailable: Dokument nelze odepnout.
+accounts:
+  account-dialog:
+    close-label: Zavřít dialogové okno účtu
+    create-title: Vytvořit účet
+    delete-message: Opravdu chcete trvale odstranit účet „{account:tento účet}“?
+    delete-title: Odstranit účet
+    edit-title: Upravit účet
+    password-placeholder: Chcete-li zachovat současné heslo, ponechte pole prázdné.
+  description: Správa oprávněných uživatelů wiki
+  empty: Nebyly nalezeny žádné účty.
+  loading: Probíhá načítání účtů...
+  messages:
+    current-account-delete-forbidden: Aktuálně používaný účet nelze odstranit.
+    delete-success: Účet byl úspěšně odstraněn.
+    delete-unavailable: Účet nelze odstranit.
+    load-unavailable: Účty nelze načíst.
+    save-success: Účet byl úspěšně uložen.
+    save-unavailable: Účet nelze uložit.
+  table:
+    add-label: Přidat účet
+    edit-label: Upravit účet
+  title: Účty
+attachments:
+  close-label: Zavřít dialogové okno příloh
+  delete-label: Odstranit přílohu
+  dialogs:
+    delete-message: Chcete odstranit přílohu „{file:tato příloha}“?
+    delete-title: Odstranit přílohu
+    overwrite-message: Příloha s názvem „{file:tento soubor}“ již existuje. Chcete ji přepsat?
+    overwrite-title: Přepsat přílohu
+  empty: Pro tento dokument nejsou k dispozici žádné přílohy.
+  insert-label: Vložit přílohu
+  messages:
+    delete-success: Příloha „{file:tento soubor}“ byla úspěšně odstraněna.
+    delete-unavailable: Přílohu „{file:tento soubor}“ nelze odstranit.
+    invalid-file-name: Neplatný název souboru.
+    refresh-unavailable: Přílohy dokumentu nelze aktualizovat.
+    upload-success: Příloha byla úspěšně nahrána.
+    upload-unavailable: Přílohu nelze nahrát.
+  title: Přílohy
+authentication:
+  messages:
+    failed: Ověření se nezdařilo.
+  title: Přihlášení
+document:
+  editor:
+    label: Editor zdrojového obsahu dokumentu
+    messages:
+      image-upload-success: Obrázek byl úspěšně nahrán.
+      image-upload-unavailable: Obrázek nelze nahrát.
+      paste-one-image: Vkládejte vždy pouze jeden obrázek.
+      unsupported-image-type: Typ obrázku {type:neznámý} není podporován.
+      wait-before-pasting: Před vložením dalšího obrázku počkejte na uložení dokumentu.
+  empty:
+    create-prompt: Chcete jej nyní vytvořit?
+    missing-content: Tento dokument zatím nemá žádný obsah.
+    missing-document: Tento dokument zatím neexistuje.
+    title: Dokument nebyl nalezen
+  loading: Probíhá načítání dokumentu...
+  tags-label: Štítky dokumentu
+footer:
+  last-update: Poslední aktualizace {timestamp:v neznámou dobu}, autor {author:neznámý autor}
+  login: Přihlásit se
+  logout: Odhlásit se
+  powered-by: Využívá technologii
+header:
+  accounts: Účty
+  profile: Profil
+  sign-in: Přihlásit se
+  toggle-actions-label: Zobrazit nebo skrýt akce
+  toggle-sidebar-label: Zobrazit nebo skrýt postranní panel
+initialization:
+  description: Inicializujte datové sady pro tuto novou instanci
+  messages:
+    failed: Inicializace se nezdařila.
+privacy:
+  disagree: Nesouhlasím
+  title: Zásady ochrany osobních údajů a používání souborů cookie
+profile:
+  description: Aktualizujte osobní údaje svého účtu
+  messages:
+    update-success: Profil byl úspěšně aktualizován
+    update-unavailable: Profil nelze aktualizovat
+  password-placeholder: Chcete-li zachovat současné heslo, ponechte pole prázdná.
+  title: Profil
+release:
+  check-action: Zkontrolovat nové verze
+  message: Je k dispozici verze {version:neznámá}.
+  messages:
+    check-unavailable: Dostupnost nových verzí nelze zkontrolovat.
+  title: Je k dispozici nová verze
+search:
+  empty: Žádné výsledky.
+  instruction: Zadejte hledaný výraz.
+  messages:
+    unavailable: Ve wiki nelze vyhledávat.
+  title: Výsledky vyhledávání
+settings:
+  color-picker-label: Otevřít výběr barvy
+  description: Nakonfigurujte svůj wiki engine
+  languages:
+    cs: Česky
+    en: Anglicky
+    it: Italsky
+  loading: Probíhá načítání nastavení...
+  messages:
+    load-unavailable: Nastavení nelze načíst.
+    timezone-load-unavailable: Seznam časových pásem prohlížeče nelze načíst.
+    timezone-unsupported: Tento prohlížeč nepodporuje výběr časového pásma.
+    update-success: Nastavení bylo úspěšně aktualizováno.
+    update-unavailable: Nastavení nelze aktualizovat.
+  options:
+    dark: Tmavý
+    light: Světlý
+  placeholders:
+    privacy-banner: Chcete-li dialogové okno ochrany osobních údajů vypnout, ponechte pole prázdné
+    timezone-search: Hledat časové pásmo
+  title: Nastavení
+sidebar:
+  document: Dokument
+  navigation-label: Navigace wiki
+  pinned: Připnuté
+  search-label: Prohledat wiki
+  search-placeholder: Hledat ve wiki...
+startup:
+  messages:
+    information-unavailable: Informace o enginu nelze načíst.
+    local-session-unavailable: Místní relaci správce nelze inicializovat.
+  title: Chyba při spuštění
+top:
+  label: Zpět nahoru
+trash:
+  deleted-label: Odstraněno
+  dialogs:
+    delete-message: Opravdu chcete trvale odstranit dokument „{document:tento dokument}“? Tím budou trvale odstraněny dokument „{document:tento dokument}“, všechny vnořené dokumenty a přílohy.
+    delete-title: Trvale odstranit dokument
+    recover-close-label: Zavřít dialogové okno obnovení
+    recover-description: Vyberte cílový nadřazený dokument pro {document:tento dokument}.
+    recover-title: Obnovit dokument
+  empty: Koš je prázdný
+  loading: Probíhá načítání koše...
+  messages:
+    delete-success: Dokument byl trvale odstraněn.
+    delete-unavailable: Dokument nelze trvale odstranit.
+    load-unavailable: Koš nelze načíst.
+    recover-success: Dokument byl úspěšně obnoven.
+    recover-unavailable: Dokument nelze obnovit.
+  path-label: Cesta
+  permanently-delete-label: Trvale odstranit
+  permanently-delete-entry-label: Trvale odstranit {document:tento dokument}
+  recover-label: Obnovit
+  recover-entry-label: Obnovit {document:tento dokument}
+  title: Koš
+  updated-label: Aktualizováno
+  author-label: Autor
+  unknown: Neznámý
+tree:
+  loading: Probíhá načítání cest...
+  messages:
+    load-unavailable: Podřízené dokumenty nelze načíst.
+  toggle-label: Rozbalit nebo sbalit {path:tuto cestu}
+versions:
+  close-label: Zavřít dialogové okno verzí
+  delete-label: Odstranit verzi
+  delete-message: Opravdu chcete trvale odstranit verzi z {timestamp:vybraného času}?
+  delete-title: Odstranit verzi
+  empty: Pro tento dokument nejsou k dispozici žádné verze.
+  messages:
+    delete-success: Verze dokumentu byla úspěšně odstraněna.
+    delete-unavailable: Vybranou verzi nelze odstranit.
+    load-unavailable: Vybranou verzi nelze načíst.
+    refresh-unavailable: Verze dokumentu nelze aktualizovat.
+  title: Verze dokumentu

@@ -17,6 +17,11 @@ import { SettingsService } from 'src/app/services/settings.service';
 import { LocalizedPipe } from 'src/app/app.pipes';
 import { SettingsType } from 'src/app/types';
 
+type LocalizationOption = {
+  readonly code:SettingsType['localization'];
+  readonly label:string;
+};
+
 @Component({
   standalone: true,
   selector: 'app-settings',
@@ -48,6 +53,12 @@ export class SettingsComponent {
     return query.length === 0
       ? this.timezoneOptions()
       : this.timezoneOptions().filter((timezone:string):boolean => timezone.toLocaleLowerCase().includes(query));
+  });
+  protected readonly localizationOptions:Signal<ReadonlyArray<LocalizationOption>> = computed(():ReadonlyArray<LocalizationOption> => {
+    const language:SettingsType['localization'] = this.localizationService.language();
+    return ([ 'cs', 'en', 'it' ] as const)
+      .map((code):LocalizationOption => ({ code, label: this.localizationService.getText(`settings.languages.${ code }`) }))
+      .sort((first:LocalizationOption, second:LocalizationOption):number => first.label.localeCompare(second.label, language));
   });
   protected readonly isMobile:Signal<boolean> = toSignal(this.breakpointObserver.observe('(max-width: 992px)').pipe(map((state:BreakpointState):boolean => state.matches)), { initialValue: false });
   protected readonly isLocalMode:Signal<boolean> = computed(():boolean => this.informationService.retrieve()?.mode === 'local');

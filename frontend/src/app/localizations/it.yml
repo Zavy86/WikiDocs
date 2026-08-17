@@ -223,6 +223,7 @@ settings:
   color-picker-label: Apri selettore colore
   description: Configura il motore della wiki
   languages:
+    cs: Ceco
     en: Inglese
     it: Italiano
   loading: Caricamento delle impostazioni in corso...

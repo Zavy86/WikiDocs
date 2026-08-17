@@ -6,7 +6,7 @@ export type SettingsType = {
   owner:string;
   notice:string;
   privacy:string | null;
-  localization:'en' | 'it';
+  localization:'cs' | 'en' | 'it';
   timezone:string;
   template:'light' | 'dark';
   color:string;
