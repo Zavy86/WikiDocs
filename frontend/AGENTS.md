@@ -24,6 +24,7 @@ Keep new/refactored code in the same layer where responsibility already exists.
 3. Keep backward compatibility for routes, component inputs/outputs, and expected UI flows.
 4. Reuse existing components/config/routes before introducing new abstractions.
 5. Avoid silent fallbacks: surface explicit, meaningful errors in UI and service flows.
+6. Check if you need to update also the .md files with new documentation. 
 
 ## TypeScript Best Practices
 

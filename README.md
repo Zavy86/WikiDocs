@@ -34,7 +34,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Desktop and remote Sync
 - Syntax highlighting
 - ~~Multi-language~~
-- ~~Dark mode~~
+- Dark mode
 - and many more...
 
 ~~Striked~~ features are work in progress.
