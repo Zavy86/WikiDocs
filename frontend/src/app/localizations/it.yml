@@ -1,0 +1,296 @@
+common:
+  defaults:
+    notice: Copyright {year} Tutti i diritti riservati
+  actions:
+    agree: Accetta
+    cancel: Annulla
+    choose-file: Seleziona un file
+    continue: Continua
+    create: Crea
+    delete: Elimina
+    delete-permanently: Elimina definitivamente
+    discard: Scarta
+    dismiss: Ignora
+    initialize: Inizializza
+    keep-editing: Continua a modificare
+    move: Sposta
+    overwrite: Sovrascrivi
+    recover: Ripristina
+    reset: Reimposta
+    retry: Riprova
+    save: Salva
+    save-and-upload: Salva e carica
+    sign-in: Accedi
+    upload: Carica
+    view-releases: Visualizza versioni
+  fields:
+    account: Account
+    check-password: Verifica password
+    color: Colore
+    confirm-password: Conferma password
+    firstname: Nome
+    language: Lingua
+    lastname: Cognome
+    name: Nome
+    new-password: Nuova password
+    notice: Nota legale
+    owner: Titolare
+    password: Password
+    path: Percorso
+    privacy-banner: Banner della privacy
+    role: Ruolo
+    subtitle: Sottotitolo
+    template: Tema
+    timezone: Fuso orario
+    title: Titolo
+  roles:
+    administrator: amministratore
+    author: autore
+    user: utente
+  states:
+    checking: Verifica in corso...
+    initializing: Inizializzazione in corso...
+    loading: Caricamento in corso...
+    saving: Salvataggio in corso...
+    signing-in: Accesso in corso...
+  validation:
+    account-email: L'account deve essere un indirizzo email valido
+    account-maxlength: L'account può contenere al massimo 256 caratteri
+    account-required: L'account è obbligatorio
+    firstname-maxlength: Il nome può contenere al massimo 32 caratteri
+    firstname-required: Il nome è obbligatorio
+    lastname-maxlength: Il cognome può contenere al massimo 32 caratteri
+    lastname-required: Il cognome è obbligatorio
+    password-confirmation-maxlength: La conferma della password può contenere al massimo 256 caratteri
+    password-confirmation-required: La conferma della password è obbligatoria
+    password-fields-incomplete: Compila entrambi i campi della password
+    password-maxlength: La password può contenere al massimo 256 caratteri
+    password-mismatch: Le password devono coincidere
+    password-required: La password è obbligatoria
+    title-maxlength: Il titolo può contenere al massimo 32 caratteri
+    title-required: Il titolo è obbligatorio
+app:
+  actions:
+    attachments: Allegati
+    cancel-editing: Annulla modifiche
+    create-document: Crea documento
+    create-version-before-saving: Crea una revisione prima di salvare
+    delete-document: Elimina documento
+    document-versions: Revisioni del documento
+    do-not-create-version-before-saving: Non creare una revisione prima di salvare
+    edit-document: Modifica documento
+    move-document: Sposta documento
+    new-document: Nuovo documento
+    pin-document: Metti in evidenza
+    print: Stampa
+    settings: Impostazioni
+    sign-out: Esci
+    trash: Cestino
+    unpin-document: Rimuovi dagli elementi in evidenza
+  dialogs:
+    delete-document:
+      message: Eliminare questo documento? Le modifiche non salvate verranno scartate e il documento verrà spostato nel cestino
+      title: Elimina documento
+    discard-changes:
+      message: Scartare le modifiche non salvate?
+      title: Scarta modifiche
+    move-document:
+      close-label: Chiudi finestra di spostamento
+      description: Seleziona il documento principale di destinazione per {path:questo documento}.
+      unsaved-message: Sono presenti modifiche non salvate. Continuare a spostare questo documento?
+      title: Sposta documento
+    new-document:
+      message: Inserisci il percorso di destinazione del nuovo documento
+      title: Nuovo documento
+    save-before-image:
+      message: Prima di caricare un'immagine è necessario salvare il documento. Salvare questa bozza e continuare?
+      title: Salva il documento prima di caricare l'immagine
+  messages:
+    delete-success: Documento eliminato
+    delete-unavailable: Impossibile eliminare il documento
+    invalid-path: Percorso non valido
+    invalid-source-path: Percorso del documento di origine non valido
+    move-success: Documento spostato.
+    move-unavailable: Impossibile spostare il documento
+    navigation-unavailable: Impossibile raggiungere il percorso selezionato
+    pin-success: Documento messo in evidenza.
+    pin-unavailable: Impossibile mettere in evidenza il documento.
+    reserved-path: Questo percorso è riservato all'applicazione
+    save-before-image-unavailable: Impossibile salvare il documento prima di caricare l'immagine.
+    save-success: Documento salvato.
+    save-unavailable: Impossibile salvare il documento.
+    settings-load-unavailable: Impossibile caricare le impostazioni
+    unpin-success: Documento rimosso dagli elementi in evidenza.
+    unpin-unavailable: Impossibile rimuovere il documento dagli elementi in evidenza.
+accounts:
+  account-dialog:
+    close-label: Chiudi finestra dell'account
+    create-title: Crea account
+    delete-message: Eliminare definitivamente l'account "{account:questo account}"?
+    delete-title: Elimina account
+    edit-title: Modifica account
+    password-placeholder: Lascia vuoto per mantenere la password attuale.
+  description: Gestisci gli utenti autorizzati della wiki
+  empty: Nessun account trovato.
+  loading: Caricamento degli account in corso...
+  messages:
+    current-account-delete-forbidden: Non è possibile eliminare l'account attualmente in uso.
+    delete-success: Account eliminato.
+    delete-unavailable: Impossibile eliminare l'account.
+    load-unavailable: Impossibile caricare gli account.
+    save-success: Account salvato.
+    save-unavailable: Impossibile salvare l'account.
+  table:
+    add-label: Aggiungi account
+    edit-label: Modifica account
+  title: Account
+attachments:
+  close-label: Chiudi finestra degli allegati
+  delete-label: Elimina allegato
+  dialogs:
+    delete-message: Eliminare "{file:questo allegato}"?
+    delete-title: Elimina allegato
+    overwrite-message: Esiste già un allegato denominato "{file:questo file}". Sovrascriverlo?
+    overwrite-title: Sovrascrivi allegato
+  empty: Nessun allegato disponibile per questo documento.
+  insert-label: Inserisci allegato
+  messages:
+    delete-success: Allegato "{file:questo file}" eliminato.
+    delete-unavailable: Impossibile eliminare l'allegato "{file:questo file}".
+    invalid-file-name: Nome del file non valido.
+    refresh-unavailable: Impossibile aggiornare gli allegati del documento.
+    upload-success: Allegato caricato.
+    upload-unavailable: Impossibile caricare l'allegato.
+  title: Allegati
+authentication:
+  messages:
+    failed: Autenticazione non riuscita.
+  title: Accesso
+document:
+  editor:
+    label: Editor del contenuto sorgente del documento
+    messages:
+      image-upload-success: Immagine caricata.
+      image-upload-unavailable: Impossibile caricare l'immagine.
+      paste-one-image: Incolla un'immagine alla volta.
+      unsupported-image-type: Tipo di immagine {type:sconosciuto} non supportato.
+      wait-before-pasting: Attendi il salvataggio del documento prima di incollare un'altra immagine.
+  empty:
+    create-prompt: Crearlo ora?
+    missing-content: Questo documento non ha ancora contenuti.
+    missing-document: Questo documento non esiste ancora.
+    title: Documento non trovato
+  loading: Caricamento del documento in corso...
+  tags-label: Tag del documento
+footer:
+  last-update: Ultimo aggiornamento {timestamp:in un momento sconosciuto} di {author:un autore sconosciuto}
+  login: Accedi
+  logout: Esci
+  powered-by: Basato su
+header:
+  accounts: Account
+  profile: Profilo
+  sign-in: Accedi
+  toggle-actions-label: Mostra o nascondi azioni
+  toggle-sidebar-label: Mostra o nascondi barra laterale
+initialization:
+  description: Inizializza i dati per questa nuova istanza
+  messages:
+    failed: Inizializzazione non riuscita.
+privacy:
+  disagree: Rifiuta
+  title: Informativa sulla privacy e sui cookie
+profile:
+  description: Aggiorna le informazioni personali dell'account
+  messages:
+    update-success: Profilo aggiornato
+    update-unavailable: Impossibile aggiornare il profilo
+  password-placeholder: Lascia vuoti i campi per mantenere la password attuale.
+  title: Profilo
+release:
+  check-action: Controlla aggiornamenti
+  message: È disponibile la versione {version:sconosciuta}.
+  messages:
+    check-unavailable: Impossibile controllare la disponibilità di nuove versioni.
+  title: Nuova versione disponibile
+search:
+  empty: Nessun risultato.
+  instruction: Inserisci un termine di ricerca.
+  messages:
+    unavailable: Impossibile cercare nella wiki.
+  title: Risultati della ricerca
+settings:
+  color-picker-label: Apri selettore colore
+  description: Configura il motore della wiki
+  languages:
+    en: Inglese
+    it: Italiano
+  loading: Caricamento delle impostazioni in corso...
+  messages:
+    load-unavailable: Impossibile caricare le impostazioni.
+    timezone-load-unavailable: Impossibile caricare l'elenco dei fusi orari del browser.
+    timezone-unsupported: La selezione del fuso orario non è supportata dal browser.
+    update-success: Impostazioni aggiornate.
+    update-unavailable: Impossibile aggiornare le impostazioni.
+  options:
+    dark: Scuro
+    light: Chiaro
+  placeholders:
+    privacy-banner: Lascia vuoto per disattivare la finestra della privacy
+    timezone-search: Cerca fuso orario
+  title: Impostazioni
+sidebar:
+  document: Documento
+  navigation-label: Navigazione della wiki
+  pinned: In evidenza
+  search-label: Cerca nella wiki
+  search-placeholder: Cerca nella wiki...
+startup:
+  messages:
+    information-unavailable: Impossibile caricare le informazioni del motore.
+    local-session-unavailable: Impossibile inizializzare la sessione locale dell'amministratore.
+  title: Errore di avvio
+top:
+  label: Torna all'inizio
+trash:
+  deleted-label: Eliminato
+  dialogs:
+    delete-message: Eliminare definitivamente "{document:questo documento}"? Verranno rimossi definitivamente "{document:questo documento}", tutti i documenti contenuti e gli allegati.
+    delete-title: Elimina definitivamente il documento
+    recover-close-label: Chiudi finestra di ripristino
+    recover-description: Seleziona il documento principale di destinazione per {document:questo documento}.
+    recover-title: Ripristina documento
+  empty: Il cestino è vuoto
+  loading: Caricamento del cestino in corso...
+  messages:
+    delete-success: Documento eliminato definitivamente.
+    delete-unavailable: Impossibile eliminare definitivamente il documento.
+    load-unavailable: Impossibile caricare il cestino.
+    recover-success: Documento ripristinato.
+    recover-unavailable: Impossibile ripristinare il documento.
+  path-label: Percorso
+  permanently-delete-label: Elimina definitivamente
+  permanently-delete-entry-label: Elimina definitivamente {document:questo documento}
+  recover-label: Ripristina
+  recover-entry-label: Ripristina {document:questo documento}
+  title: Cestino
+  updated-label: Aggiornato
+  author-label: Autore
+  unknown: Sconosciuto
+tree:
+  loading: Caricamento dei percorsi in corso...
+  messages:
+    load-unavailable: Impossibile caricare i documenti contenuti.
+  toggle-label: Mostra o nascondi {path:questo percorso}
+versions:
+  close-label: Chiudi finestra delle revisioni
+  delete-label: Elimina revisione
+  delete-message: Eliminare definitivamente la revisione del {timestamp:momento selezionato}?
+  delete-title: Elimina revisione
+  empty: Nessuna revisione disponibile per questo documento.
+  messages:
+    delete-success: Revisione del documento eliminata.
+    delete-unavailable: Impossibile eliminare la revisione selezionata.
+    load-unavailable: Impossibile caricare la revisione selezionata.
+    refresh-unavailable: Impossibile aggiornare le revisioni del documento.
+  title: Revisioni del documento
