@@ -21,7 +21,7 @@ check-versions:
 		echo "Version mismatch: VERSION=$(VERSION), backend=$(BEV), frontend=$(FEV), desktop=$(DV)" >&2; \
 		exit 1; \
 	else \
-  	echo "Versions OK: VERSION=$(VERSION)"; \
+  	echo "Versions OK: $(VERSION)"; \
 	fi
 
 check-localizations:
