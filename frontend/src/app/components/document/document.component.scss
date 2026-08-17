@@ -45,7 +45,7 @@ code {
 /* Article / lists */
 article ul,
 article ol {
-  padding-left: 30px !important;
+  padding-inline-start: 30px !important;
   margin-top: 10px !important;
   margin-bottom: 15px !important;
 }
@@ -76,7 +76,7 @@ article ol ol {
 }
 
 article ul ul {
-  padding-left: 30px !important;
+  padding-inline-start: 30px !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
@@ -125,7 +125,7 @@ pre.debug {
 .copy-btn {
   position: absolute;
   top: 5px;
-  right: 5px;
+  inset-inline-end: 5px;
   padding: 2px 5px;
   font-size: 12px;
   cursor: pointer;

@@ -5,7 +5,7 @@
 
   > span {
     flex: 1 1 auto;
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -36,7 +36,7 @@
 .node-button {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: start;
   justify-content: center;
   flex: 1 1 auto;
   min-width: 0;
@@ -44,7 +44,7 @@
   border: 0;
   border-radius: 0.375rem;
   background: transparent;
-  text-align: left;
+  text-align: start;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
 

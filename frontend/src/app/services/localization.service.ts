@@ -10,6 +10,7 @@ import localizationES from 'src/app/localizations/es.yml';
 import localizationFA from 'src/app/localizations/fa.yml';
 import localizationIT from 'src/app/localizations/it.yml';
 import { parse } from 'yaml';
+import { Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { computed, effect, inject, Injectable, Signal } from '@angular/core';
 import { LogsService } from 'src/app/services/logs.service';
@@ -18,6 +19,7 @@ import { LocalizationParameters, SettingsType } from 'src/app/types';
 
 type LocalizationDictionary = Readonly<Record<string, string>>;
 type LocalizationTree = Readonly<Record<string, unknown>>;
+type TextDirection = 'ltr' | 'rtl';
 
 registerLocaleData(localeCS);
 registerLocaleData(localeDE);
@@ -29,9 +31,10 @@ registerLocaleData(localeIT);
 export class LocalizationService {
 
   private readonly document:Document = inject(DOCUMENT);
+  private readonly directionality:Directionality = inject(Directionality);
   private readonly logsService:LogsService = inject(LogsService);
   private readonly settingsService:SettingsService = inject(SettingsService);
-
+  private readonly rtlLanguages:ReadonlyArray<SettingsType['localization']> = [ 'fa' ];
   private readonly localizations:Readonly<Partial<Record<SettingsType['localization'], LocalizationDictionary>>> = {
     cs: this.parseLocalization('cs', localizationCS),
     de: this.parseLocalization('de', localizationDE),
@@ -44,11 +47,19 @@ export class LocalizationService {
   public readonly language:Signal<SettingsType['localization']> = computed(():SettingsType['localization'] => {
     return ( this.settingsService.settings()?.localization ?? 'en' );
   });
+  public readonly direction:Signal<TextDirection> = computed(():TextDirection => {
+    return this.rtlLanguages.includes(this.language()) ? 'rtl' : 'ltr';
+  });
 
   public constructor() {
     effect(():void => {
       this.document.documentElement.lang = this.language();
-      this.document.documentElement.dir = this.language() === 'fa' ? 'rtl' : 'ltr';
+      this.document.documentElement.dir = this.direction();
+      this.document.body.dir = this.direction();
+      if ( this.directionality.value !== this.direction() ) {
+        this.directionality.valueSignal.set(this.direction());
+        this.directionality.change.emit(this.direction());
+      }
     });
   }
 

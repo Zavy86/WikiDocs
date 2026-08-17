@@ -1,10 +1,10 @@
 :host {
   display: flex;
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 
 :host(:first-child) {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 
 .action-button {

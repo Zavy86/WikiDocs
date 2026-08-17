@@ -14,7 +14,7 @@
   padding: 10px 12px;
   border-bottom: 1px solid var(--app-border-color);
   vertical-align: middle;
-  text-align: left;
+  text-align: start;
 }
 
 .accounts-table th {
@@ -25,7 +25,7 @@
 .row-actions {
   width: 1%;
   white-space: nowrap;
-  text-align: right !important;
+  text-align: end !important;
 }
 
 .table-action-button {
