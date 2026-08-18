@@ -19,7 +19,13 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Install npm dependencies
-        run: npm install typescript ts-node yaml
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            desktop/package-lock.json
+      - name: Install dependencies
+        shell: bash
+        run: make install-deps
       - name: Execute tests
         run: make execute-tests

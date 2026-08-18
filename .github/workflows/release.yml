@@ -62,7 +62,6 @@ jobs:
         run: make execute-tests
 
   windows:
-    if: ${{ false }}
     name: Build for Windows x64
     needs: prerequisites
     runs-on: windows-latest
@@ -121,6 +120,7 @@ jobs:
           compression-level: 0
 
   macos:
+    if: ${{ false }}
     name: Build for macOS arm64
     needs: prerequisites
     runs-on: macos-latest
