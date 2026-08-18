@@ -86,9 +86,13 @@ jobs:
         shell: bash
         run: make check-versions
       - name: Install dependencies
-        timeout-minutes: 5
+        timeout-minutes: 15
         shell: bash
         run: make install-deps
+      - name: Build runtimes
+        timeout-minutes: 15
+        shell: bash
+        run: make build-runtime
       - name: Build Windows application
         timeout-minutes: 15
         shell: bash
@@ -133,8 +137,13 @@ jobs:
       - name: Validate versions
         run: make check-versions
       - name: Install dependencies
-        timeout-minutes: 5
+        timeout-minutes: 15
+        shell: bash
         run: make install-deps
+      - name: Build runtimes
+        timeout-minutes: 15
+        shell: bash
+        run: make build-runtime
       - name: Build macOS application
         run: make desktop-release
       - name: Prepare macOS asset
