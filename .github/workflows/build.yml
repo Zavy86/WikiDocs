@@ -14,7 +14,7 @@ jobs:
       contents: write
     steps:
       - name: Check out the source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Retrieve current version
         run: |
           VER=$(cat VERSION)
@@ -51,7 +51,6 @@ jobs:
         with:
           images: |
             zavy86/wikidocs
-#            ghcr.io/username/app
           tags: |
             type=raw,value=${{ env.VERSION }}
             type=raw,value=${{ env.V_MAJOR }}
