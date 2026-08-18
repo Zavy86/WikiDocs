@@ -232,8 +232,9 @@ jobs:
           version="$(tr -d '\r\n' < VERSION)"
           windows_asset="release-assets/WikiDocs-windows-${version}.exe"
           macos_asset="release-assets/WikiDocs-macos-${version}.zip"
-          test -f "${windows_asset}"
-          test -f "${macos_asset}"
+          # TEMP: restore these checks when desktop build jobs are enabled.
+          # test -f "${windows_asset}"
+          # test -f "${macos_asset}"
           echo "VERSION=${version}" >> "${GITHUB_ENV}"
           cat > release-notes.md <<'EOF'
           ## Unsigned desktop applications  
@@ -264,9 +265,10 @@ jobs:
               --draft=false \
               --prerelease=false \
               --latest
-            gh release upload "${version}" "${windows_asset}" "${macos_asset}" --clobber
+            # TEMP: restore asset upload when desktop build jobs are enabled.
+            # gh release upload "${version}" "${windows_asset}" "${macos_asset}" --clobber
           else
-            gh release create "${version}" "${windows_asset}" "${macos_asset}" \
+            gh release create "${version}" \
               --verify-tag \
               --title "Release ${version}" \
               --notes-file release-notes.md \

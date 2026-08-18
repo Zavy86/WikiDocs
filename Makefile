@@ -63,6 +63,7 @@ docker-compose-down:
 docker-release:
 	@echo "Releasing Wiki|Docs version $(VERSION)"
 	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile \
+		-t zavy86/wikidocs:latest \
 		-t zavy86/wikidocs:$(VERSION) \
 		-t zavy86/wikidocs:$(VERSION_MINOR) \
 		-t zavy86/wikidocs:$(VERSION_MAJOR) \
