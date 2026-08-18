@@ -232,7 +232,7 @@ jobs:
           Before proceeding with the migration from version 1.x.x (legacy), always **perform a full backup** of your dataset.
           Despite significant structural changes in this release, your data remains fully compatible: upon first launch, you will simply need to reconfigure the wiki and set up an administrator user, after which all existing documents will function as expected.
           The only _manual adjustment required_ is moving the `homepage` document to the root directory, as the new index page is no longer located under that specific slug.
-          If are you using Docker you need to point to the new port `3210` instead of `80`.
+          If are you using _Docker_ you need to point to the new port `3210` instead of `80`.
           ## Unsigned desktop applications
           The dekstop packages in this release are not digitally signed.
           An unsigned application lacks a digital certificate from Microsoft or Apple, causing operating systems to flag it as unverified and display security warnings even though the code is safe.
