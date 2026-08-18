@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="dialog-title app-dialog-title">
-  <span>Attachments</span>
-  <button mat-icon-button type="button" class="app-dialog-close-button" [disabled]="isUploading() || isRefreshing()" (click)="close()" aria-label="Close attachments dialog">
+  <span>{{ 'attachments.title' | localized }}</span>
+  <button mat-icon-button type="button" class="app-dialog-close-button" [disabled]="isUploading() || isRefreshing()" (click)="close()" [attr.aria-label]="'attachments.close-label' | localized">
     <mat-icon>close</mat-icon>
   </button>
 </h2>
@@ -8,16 +8,16 @@
   <div class="upload-row">
     <label class="file-picker">
       <input type="file" [disabled]="isUploading() || isRefreshing()" (change)="onFileSelected($event)" />
-      <span>{{ selectedFileName() || 'Choose file' }}</span>
+      <span>{{ selectedFileName() || ('common.actions.choose-file' | localized) }}</span>
     </label>
-    <button mat-flat-button color="primary" type="button" [disabled]="!selectedFileName() || isUploading() || isRefreshing()" (click)="uploadSelectedFile()">Upload</button>
+    <button mat-flat-button color="primary" type="button" [disabled]="!selectedFileName() || isUploading() || isRefreshing()" (click)="uploadSelectedFile()">{{ 'common.actions.upload' | localized }}</button>
   </div>
   @if (isUploading() || isRefreshing()) {
     <mat-progress-bar mode="indeterminate" />
   }
   <div class="attachments-section">
     @if (attachments().length === 0) {
-      <p class="empty-message">No attachments available for this document.</p>
+      <p class="empty-message">{{ 'attachments.empty' | localized }}</p>
     } @else {
       <mat-list>
         @for (attachment of attachments(); track attachment.file) {
@@ -30,7 +30,7 @@
                   type="button"
                   [disabled]="isUploading() || isRefreshing()"
                   (click)="insertAttachment(attachment)"
-                  aria-label="Insert attachment"
+                  [attr.aria-label]="'attachments.insert-label' | localized"
                 >
                   <mat-icon>{{ isImageAttachment(attachment.file) ? 'add_photo_alternate' : 'add_link' }}</mat-icon>
                 </button>
@@ -48,7 +48,7 @@
                 class="attachment-delete-button"
                 [disabled]="isUploading() || isRefreshing() || isDeletingAttachment(attachment.file)"
                 (click)="requestDeleteAttachment(attachment)"
-                aria-label="Delete attachment"
+                [attr.aria-label]="'attachments.delete-label' | localized"
               >
                 <mat-icon>delete</mat-icon>
               </button>

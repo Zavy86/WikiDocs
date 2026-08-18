@@ -1,15 +1,15 @@
 <main class="page-search">
   <section class="app-page-content">
-    <h1>Search results</h1>
+    <h1>{{ 'search.title' | localized }}</h1>
     @if (!query()) {
-      <p>Enter a search term.</p>
+      <p>{{ 'search.instruction' | localized }}</p>
     } @else {
       @if (loading()) {
         <div class="search-loading" role="status" aria-live="polite">
           <mat-spinner diameter="48" strokeWidth="4" aria-hidden="true" />
         </div>
       } @else if (results().length === 0) {
-        <p>No results.</p>
+        <p>{{ 'search.empty' | localized }}</p>
       } @else {
         <div class="search-results">
           @for (result of results(); track result.metadata.path) {

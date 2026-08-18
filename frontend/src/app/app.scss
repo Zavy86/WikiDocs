@@ -15,11 +15,15 @@
 
 .app-drawer {
   width: var(--app-sidebar-width);
-  border-right: 1px solid var(--app-divider-color);
+  border-inline-end: 1px solid var(--app-divider-color);
   background-color: var(--app-surface-color);
   border-radius: 0;
   box-shadow: none;
   overflow: hidden;
+}
+
+:host-context([dir='rtl']) .app-drawer {
+  border-inline-end: 1px solid var(--app-divider-color) !important;
 }
 
 .app-content {
@@ -41,7 +45,7 @@
 
 @media only screen and (max-width: 992px) {
   .app-drawer {
-    border-right: 0;
+    border-inline-end: 0;
   }
 
 }

@@ -2,6 +2,8 @@ import { Component, computed, inject, input, InputSignal, output, OutputEmitterR
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { DocumentType, MetadataType, SettingsType } from 'src/app/types';
 
 @Component({
@@ -9,11 +11,12 @@ import { DocumentType, MetadataType, SettingsType } from 'src/app/types';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  imports: [ RouterLink, MatButtonModule, MatIconModule ],
+  imports: [ RouterLink, MatButtonModule, MatIconModule, LocalizedPipe ],
 })
 export class SidebarComponent {
 
   private readonly router:Router = inject(Router);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   public readonly settings:InputSignal<SettingsType | null> = input<SettingsType | null>(null);
   public readonly search:InputSignal<string> = input<string>('');
@@ -32,7 +35,7 @@ export class SidebarComponent {
 
   protected readonly notice:Signal<string> = computed(():string => {
     const notice:string = ( this.settings()?.notice?.trim() ?? '' );
-    return ( notice.length > 0 ? notice : `Copyright ${ new Date().getFullYear() } All Rights Reserved` );
+    return ( notice.length > 0 ? notice : this.localizationService.getText('common.defaults.notice', { year: new Date().getFullYear() }) );
   });
 
   protected readonly showDocument:Signal<boolean> = computed(():boolean => {

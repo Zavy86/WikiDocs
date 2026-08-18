@@ -4,6 +4,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { DocumentViewerComponent } from 'src/app/components/document/viewer/viewer.component';
 import { DocumentExistsComponent } from 'src/app/components/document/exists/exists.component';
 import { DocumentEditorComponent, EditorInsertRequest, EditorPastedImageRequest } from 'src/app/components/document/editor/editor.component';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { DocumentType } from 'src/app/types';
 
 export type DocumentMode = 'view' | 'edit';
@@ -26,7 +27,7 @@ export type DocumentPageData = {
   selector: 'app-document',
   templateUrl: './document.component.html',
   styleUrl: './document.component.scss',
-  imports: [ DocumentViewerComponent, DocumentExistsComponent, DocumentEditorComponent ],
+  imports: [ DocumentViewerComponent, DocumentExistsComponent, DocumentEditorComponent, LocalizedPipe ],
 })
 export class DocumentComponent {
   private readonly pageData:Signal<DocumentPageData> = inject<Signal<DocumentPageData>>(ROUTER_OUTLET_DATA);

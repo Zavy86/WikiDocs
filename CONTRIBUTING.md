@@ -112,11 +112,32 @@ Every published change must follow this flow:
 Direct code changes without prior Issue discussion are not accepted.
 
 
+## Frontend localization
+
+Frontend-owned user-facing text is stored in YAML catalogs under `frontend/src/app/localizations`.
+Use semantic, lowercase, kebab-case key segments and resolve text through the `localized` pipe in templates or
+`LocalizationService.getText()` in TypeScript instead of hardcoding UI strings.
+
+When adding, changing, renaming, or removing a localization key, update every language catalog in the same change.
+All catalogs must contain the same keys and named placeholders as the reference `en.yml` catalog. Placeholder defaults
+may be translated. Run the aggregate repository checks after every localization change:
+
+```bash
+make check
+```
+
+The frontend-specific catalog check remains available as `cd frontend && npm run check:localizations`. Future
+repository-wide checks must be exposed through their own Makefile target and added to the aggregate `check` target.
+
+
 ## Required validation before opening/merging a PR
 
 Build and test checks must pass across all three project environments (backend, frontend, desktop).
 
 ```bash
+# Repository-wide checks
+make check
+
 # Backend
 cd backend && npm run test && npm run build
 

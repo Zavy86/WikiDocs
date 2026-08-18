@@ -1,5 +1,5 @@
-import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { SettingsType } from 'src/app/types';
 

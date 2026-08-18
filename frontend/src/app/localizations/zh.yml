@@ -1,0 +1,309 @@
+common:
+  defaults:
+    notice: 版权所有 {year} 保留所有权利
+  actions:
+    agree: 同意
+    cancel: 取消
+    choose-file: 选择文件
+    continue: 继续
+    create: 创建
+    delete: 删除
+    delete-permanently: 永久删除
+    discard: 放弃
+    dismiss: 关闭
+    initialize: 初始化
+    keep-editing: 继续编辑
+    move: 移动
+    overwrite: 覆盖
+    recover: 恢复
+    reset: 重置
+    retry: 重试
+    save: 保存
+    save-and-upload: 保存并上传
+    sign-in: 登录
+    upload: 上传
+    view-releases: 查看版本
+  fields:
+    account: 帐户
+    check-password: 验证密码
+    color: 颜色
+    confirm-password: 确认密码
+    firstname: 名
+    language: 语言
+    lastname: 姓
+    name: 名称
+    new-password: 新密码
+    notice: 声明
+    owner: 所有者
+    password: 密码
+    path: 路径
+    privacy-banner: 隐私横幅
+    role: 角色
+    subtitle: 副标题
+    template: 主题
+    timezone: 时区
+    title: 标题
+  roles:
+    administrator: 管理员
+    author: 作者
+    user: 用户
+  states:
+    checking: 正在检查...
+    initializing: 正在初始化...
+    loading: 正在加载...
+    saving: 正在保存...
+    signing-in: 正在登录...
+  validation:
+    account-email: 帐户必须是有效的电子邮件地址
+    account-maxlength: 帐户最多可包含 256 个字符
+    account-required: 必须填写帐户
+    firstname-maxlength: 名最多可包含 32 个字符
+    firstname-required: 必须填写名
+    lastname-maxlength: 姓最多可包含 32 个字符
+    lastname-required: 必须填写姓
+    password-confirmation-maxlength: 确认密码最多可包含 256 个字符
+    password-confirmation-required: 必须填写确认密码
+    password-fields-incomplete: 请填写两个密码字段
+    password-maxlength: 密码最多可包含 256 个字符
+    password-mismatch: 两次输入的密码必须一致
+    password-required: 必须填写密码
+    title-maxlength: 标题最多可包含 32 个字符
+    title-required: 必须填写标题
+app:
+  actions:
+    attachments: 附件
+    cancel-editing: 取消编辑
+    create-document: 创建文档
+    create-version-before-saving: 保存前创建版本
+    delete-document: 删除文档
+    document-versions: 文档版本
+    do-not-create-version-before-saving: 保存前不创建版本
+    edit-document: 编辑文档
+    move-document: 移动文档
+    new-document: 新建文档
+    pin-document: 固定文档
+    print: 打印
+    settings: 设置
+    sign-out: 退出登录
+    trash: 回收站
+    unpin-document: 取消固定文档
+  dialogs:
+    delete-document:
+      message: 确定要删除此文档吗？未保存的更改将被放弃，文档将移至回收站
+      title: 删除文档
+    discard-changes:
+      message: 确定要放弃未保存的更改吗？
+      title: 放弃更改
+    move-document:
+      close-label: 关闭移动文档对话框
+      description: 请选择 {path:此文档} 的目标父级。
+      unsaved-message: 您有未保存的更改。确定要继续移动此文档吗？
+      title: 移动文档
+    new-document:
+      message: 请输入新文档的目标路径
+      title: 新建文档
+    save-before-image:
+      message: 上传图片前必须先保存文档。要保存此草稿并继续吗？
+      title: 上传图片前保存文档
+  messages:
+    delete-success: 文档已成功删除
+    delete-unavailable: 无法删除文档
+    invalid-path: 路径无效
+    invalid-source-path: 源文档路径无效
+    move-success: 文档已成功移动。
+    move-unavailable: 无法移动文档
+    navigation-unavailable: 无法导航至所选路径
+    pin-success: 文档已成功固定。
+    pin-unavailable: 无法固定文档。
+    reserved-path: 此路径由应用程序保留
+    save-before-image-unavailable: 上传图片前无法保存文档。
+    save-success: 文档已成功保存。
+    save-unavailable: 无法保存文档。
+    settings-load-unavailable: 无法加载设置
+    unpin-success: 文档已取消固定。
+    unpin-unavailable: 无法取消固定文档。
+accounts:
+  account-dialog:
+    close-label: 关闭帐户对话框
+    create-title: 创建帐户
+    delete-message: 确定要永久删除帐户“{account:此帐户}”吗？
+    delete-title: 删除帐户
+    edit-title: 编辑帐户
+    password-placeholder: 留空以保留当前密码。
+  description: 管理已授权的 Wiki 用户
+  empty: 未找到帐户。
+  loading: 正在加载帐户...
+  messages:
+    current-account-delete-forbidden: 您不能删除当前帐户。
+    delete-success: 帐户已成功删除。
+    delete-unavailable: 无法删除帐户。
+    load-unavailable: 无法加载帐户。
+    save-success: 帐户已成功保存。
+    save-unavailable: 无法保存帐户。
+  table:
+    add-label: 添加帐户
+    edit-label: 编辑帐户
+  title: 帐户
+attachments:
+  close-label: 关闭附件对话框
+  delete-label: 删除附件
+  dialogs:
+    delete-message: 要删除“{file:此附件}”吗？
+    delete-title: 删除附件
+    overwrite-message: 名为“{file:此文件}”的附件已存在。要覆盖吗？
+    overwrite-title: 覆盖附件
+  empty: 此文档没有可用附件。
+  insert-label: 插入附件
+  messages:
+    delete-success: 附件“{file:此文件}”已成功删除。
+    delete-unavailable: 无法删除附件“{file:此文件}”。
+    invalid-file-name: 文件名无效。
+    refresh-unavailable: 无法刷新文档附件。
+    upload-success: 附件已成功上传。
+    upload-unavailable: 无法上传附件。
+  title: 附件
+authentication:
+  messages:
+    failed: 身份验证失败。
+  title: 登录
+document:
+  editor:
+    label: 文档原始内容编辑器
+    messages:
+      image-upload-success: 图片已成功上传。
+      image-upload-unavailable: 无法上传图片。
+      paste-one-image: 请一次粘贴一张图片。
+      unsupported-image-type: 不支持的图片类型 {type:未知}。
+      wait-before-pasting: 粘贴另一张图片前，请等待文档保存完成。
+  empty:
+    create-prompt: 要现在创建吗？
+    missing-content: 此文档尚无内容。
+    missing-document: 此文档尚不存在。
+    title: 未找到文档
+  loading: 正在加载文档...
+  tags-label: 文档标签
+footer:
+  last-update: 最后更新于 {timestamp:未知时间}，更新者：{author:未知作者}
+  login: 登录
+  logout: 退出登录
+  powered-by: 技术支持
+header:
+  accounts: 帐户
+  profile: 个人资料
+  sign-in: 登录
+  toggle-actions-label: 切换操作菜单
+  toggle-sidebar-label: 切换侧边栏
+initialization:
+  description: 为此新实例初始化数据集
+  messages:
+    failed: 初始化失败。
+privacy:
+  disagree: 不同意
+  title: 隐私政策和 Cookie 协议
+profile:
+  description: 更新您的个人帐户信息
+  messages:
+    update-success: 个人资料已成功更新
+    update-unavailable: 无法更新个人资料
+  password-placeholder: 留空以保留当前密码。
+  title: 个人资料
+release:
+  check-action: 检查新版本
+  message: 版本 {version:未知} 可用。
+  messages:
+    check-unavailable: 无法检查新版本。
+  title: 有新版本可用
+search:
+  empty: 没有结果。
+  instruction: 请输入搜索词。
+  messages:
+    unavailable: 无法搜索 Wiki。
+  title: 搜索结果
+settings:
+  color-picker-label: 打开颜色选择器
+  description: 配置您的 Wiki 引擎
+  languages:
+    ar: 阿拉伯语
+    cs: 捷克语
+    de: 德语
+    en: 英语
+    es: 西班牙语
+    fa: 波斯语
+    fr: 法语
+    hi: 印地语
+    it: 意大利语
+    ja: 日语
+    nl: 荷兰语
+    pl: 波兰语
+    pt: 葡萄牙语
+    ru: 俄语
+    zh: 中文（简体）
+  loading: 正在加载设置...
+  messages:
+    load-unavailable: 无法加载设置。
+    timezone-load-unavailable: 无法加载浏览器时区列表。
+    timezone-unsupported: 此浏览器不支持选择时区。
+    update-success: 设置已成功更新。
+    update-unavailable: 无法更新设置。
+  options:
+    dark: 深色
+    light: 浅色
+  placeholders:
+    privacy-banner: 留空以禁用隐私提示框
+    timezone-search: 搜索时区
+  title: 设置
+sidebar:
+  document: 文档
+  navigation-label: Wiki 导航
+  pinned: 已固定
+  search-label: 搜索 Wiki
+  search-placeholder: 在 Wiki 中搜索...
+startup:
+  messages:
+    information-unavailable: 无法加载引擎信息。
+    local-session-unavailable: 无法初始化本地管理员会话。
+  title: 启动错误
+top:
+  label: 返回顶部
+trash:
+  deleted-label: 已删除
+  dialogs:
+    delete-message: 要永久删除“{document:此文档}”吗？这将永久移除“{document:此文档}”、所有嵌套文档及附件。
+    delete-title: 永久删除文档
+    recover-close-label: 关闭恢复对话框
+    recover-description: 请选择 {document:此文档} 的目标父级。
+    recover-title: 恢复文档
+  empty: 回收站为空
+  loading: 正在加载回收站...
+  messages:
+    delete-success: 文档已永久删除。
+    delete-unavailable: 无法永久删除文档。
+    load-unavailable: 无法加载回收站。
+    recover-success: 文档已成功恢复。
+    recover-unavailable: 无法恢复文档。
+  path-label: 路径
+  permanently-delete-label: 永久删除
+  permanently-delete-entry-label: 永久删除 {document:此文档}
+  recover-label: 恢复
+  recover-entry-label: 恢复 {document:此文档}
+  title: 回收站
+  updated-label: 已更新
+  author-label: 作者
+  unknown: 未知
+tree:
+  loading: 正在加载路径...
+  messages:
+    load-unavailable: 无法加载子项。
+  toggle-label: 切换 {path:此路径}
+versions:
+  close-label: 关闭版本对话框
+  delete-label: 删除版本
+  delete-message: 确定要永久删除 {timestamp:所选时间} 的版本吗？
+  delete-title: 删除版本
+  empty: 此文档没有可用版本。
+  messages:
+    delete-success: 文档版本已成功删除。
+    delete-unavailable: 无法删除所选版本。
+    load-unavailable: 无法加载所选版本。
+    refresh-unavailable: 无法刷新文档版本。
+  title: 文档版本

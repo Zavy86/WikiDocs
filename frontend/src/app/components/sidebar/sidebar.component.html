@@ -7,18 +7,18 @@
           class="search-input"
           name="search"
           autocomplete="off"
-          placeholder="Search in wiki.."
+          [placeholder]="'sidebar.search-placeholder' | localized"
           [value]="search()"
       />
-      <button class="search-button" mat-icon-button type="submit" aria-label="Search wiki">
+      <button class="search-button" mat-icon-button type="submit" [attr.aria-label]="'sidebar.search-label' | localized">
         <mat-icon>search</mat-icon>
       </button>
     </form>
   </div>
-  <nav class="sidebar-nav" aria-label="Wiki navigation">
+  <nav class="sidebar-nav" [attr.aria-label]="'sidebar.navigation-label' | localized">
     <ul class="nav-list">
       @if (pinned()?.length) {
-        <li class="nav-section-label">Pinned</li>
+        <li class="nav-section-label">{{ 'sidebar.pinned' | localized }}</li>
       }
       @for (entry of pinned(); track entry.path) {
         <li class="nav-item">
@@ -29,7 +29,7 @@
         <li class="nav-divider"></li>
       }
       @if (showDocument()) {
-        <li class="nav-section-label">Document</li>
+        <li class="nav-section-label">{{ 'sidebar.document' | localized }}</li>
         <li class="nav-item active">
           <strong>
             <a [routerLink]="document()?.metadata?.path" (click)="onNavLinkClick()">{{ document()?.metadata?.title }}</a>

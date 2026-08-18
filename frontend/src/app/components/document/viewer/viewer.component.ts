@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { ParserService } from 'src/app/services/parser.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { AttachmentType, ContentType, MetadataType } from 'src/app/types';
 
 @Component({
@@ -11,7 +12,7 @@ import { AttachmentType, ContentType, MetadataType } from 'src/app/types';
   selector: 'app-document-viewer',
   templateUrl: './viewer.component.html',
   styleUrl: './viewer.component.scss',
-  imports: [ MatChipsModule, MarkdownComponent ],
+  imports: [ MatChipsModule, MarkdownComponent, LocalizedPipe ],
 })
 export class DocumentViewerComponent {
   private readonly router:Router = inject(Router);

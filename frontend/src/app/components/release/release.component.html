@@ -1,8 +1,8 @@
-<h2 mat-dialog-title class="app-dialog-title">New version available</h2>
+<h2 mat-dialog-title class="app-dialog-title">{{ 'release.title' | localized }}</h2>
 <mat-dialog-content>
-  <p class="app-dialog-message">Version {{ data.latest }} is available.</p>
+  <p class="app-dialog-message">{{ 'release.message' | localized:{ version: data.latest } }}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-stroked-button type="button" (click)="close()">Dismiss</button>
-  <a mat-flat-button color="primary" href="https://github.com/Zavy86/WikiDocs/releases" target="_blank" rel="noopener" (click)="close()">View releases</a>
+  <button mat-stroked-button type="button" (click)="close()">{{ 'common.actions.dismiss' | localized }}</button>
+  <a mat-flat-button color="primary" href="https://github.com/Zavy86/WikiDocs/releases" target="_blank" rel="noopener" (click)="close()">{{ 'common.actions.view-releases' | localized }}</a>
 </mat-dialog-actions>

@@ -7,6 +7,8 @@ import { MarkdownComponent } from 'ngx-markdown';
 import { distinctUntilChanged, map } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { LocalizedPipe } from 'src/app/app.pipes';
 import { SearchResultType, SearchType } from 'src/app/types';
 
 @Component({
@@ -14,12 +16,14 @@ import { SearchResultType, SearchType } from 'src/app/types';
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
-  imports: [ RouterLink, MarkdownComponent, MatProgressSpinnerModule ],
+  imports: [ RouterLink, MarkdownComponent, MatProgressSpinnerModule, LocalizedPipe ],
 })
 export class SearchComponent {
+
   private readonly route:ActivatedRoute = inject(ActivatedRoute);
   private readonly alertService:AlertService = inject(AlertService);
   private readonly httpService:HttpService = inject(HttpService);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly query:WritableSignal<string> = signal('');
   protected readonly results:WritableSignal<ReadonlyArray<SearchResultType>> = signal<ReadonlyArray<SearchResultType>>([]);
@@ -54,7 +58,7 @@ export class SearchComponent {
         if ( requestId !== this.requestSequence ) { return; }
         this.results.set([]);
         this.loading.set(false);
-        this.alertService.error(error.message || 'Unable to search the wiki.');
+        this.alertService.error(this.localizationService.getText('search.messages.unavailable'));
       },
     });
   }

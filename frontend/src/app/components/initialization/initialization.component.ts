@@ -6,18 +6,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { InitializationType } from 'src/app/types';
+import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
-import { AlertService } from 'src/app/services/alert.service';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { matchingFieldsErrorStateMatcher, matchingFieldsValidator } from 'src/app/app.validators';
+import { LocalizedPipe } from 'src/app/app.pipes';
+import { InitializationType } from 'src/app/types';
 
 @Component({
   standalone: true,
   selector: 'app-initialization',
   templateUrl: './initialization.component.html',
   styleUrl: './initialization.component.scss',
-  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule ],
+  imports: [ ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, LocalizedPipe ],
 })
 export class InitializationComponent implements OnInit {
   private readonly alertService:AlertService = inject(AlertService);
@@ -25,6 +27,7 @@ export class InitializationComponent implements OnInit {
   private readonly informationService:InformationService = inject(InformationService);
   private readonly formBuilder:FormBuilder = inject(FormBuilder);
   private readonly router:Router = inject(Router);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly loading:WritableSignal<boolean> = signal(false);
   protected readonly isLocalMode:WritableSignal<boolean> = signal(false);
@@ -82,7 +85,7 @@ export class InitializationComponent implements OnInit {
           });
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Initialization failed.');
+          this.alertService.error(this.localizationService.getText('initialization.messages.failed'));
         },
       });
   }

@@ -4,7 +4,7 @@ export type SettingsContract = {
   owner:string;
   notice:string;
   privacy:string | null;
-  localization:'en' | 'it';
+  localization:'ar' | 'cs' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'hi' | 'it' | 'ja' | 'nl' | 'pl' | 'pt' | 'ru' | 'zh';
   timezone:string;
   template:'light' | 'dark';
   color:string;

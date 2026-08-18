@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 @Component({
   standalone: true,
@@ -8,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './top.component.html',
   styleUrl: './top.component.scss',
   host: { '(window:scroll)': 'onWindowScroll()' },
-  imports: [ MatButtonModule, MatIconModule ]
+  imports: [ MatButtonModule, MatIconModule, LocalizedPipe ]
 })
 export class TopComponent implements OnInit {
 

@@ -4,7 +4,7 @@
   gap: 0.5rem;
   > span {
     flex: 1 1 auto;
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -13,7 +13,7 @@
 }
 
 .delete-button {
-  margin-right: auto;
+  margin-inline-end: auto;
 
   &:not([disabled]) {
     background-color: #d32f2f;

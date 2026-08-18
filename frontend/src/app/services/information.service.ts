@@ -1,8 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable, signal, WritableSignal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { InformationType } from 'src/app/types';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { InformationType } from 'src/app/types';
 
 @Injectable({ providedIn: 'root' })
 export class InformationService {
@@ -15,6 +15,7 @@ export class InformationService {
 
   constructor(
     private readonly httpService:HttpService,
+    private readonly localizationService:LocalizationService,
   ) {}
 
   public loading():boolean {
@@ -42,9 +43,9 @@ export class InformationService {
       .then((information:InformationType):void => {
         this.informationState.set(information);
       })
-      .catch((error:unknown):void => {
+      .catch(():void => {
         this.informationState.set(null);
-        this.errorState.set(error instanceof HttpErrorResponse && error.message ? error.message : 'Unable to load engine information.');
+        this.errorState.set(this.localizationService.getText('startup.messages.information-unavailable'));
       })
       .finally(():void => {
         this.loadingState.set(false);

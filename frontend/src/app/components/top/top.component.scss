@@ -6,14 +6,14 @@
 .top {
   position: fixed;
   bottom: 16px;
-  right: 16px;
+  inset-inline-end: 16px;
   z-index: 1200;
   box-shadow: 0 3px 10px rgb(0 0 0 / 22%);
 }
 
 @media only screen and (max-width: 992px) {
   .top {
-    right: 16px;
+    inset-inline-end: 16px;
     bottom: 16px;
   }
 }

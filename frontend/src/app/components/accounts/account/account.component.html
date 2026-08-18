@@ -1,42 +1,42 @@
 <h2 mat-dialog-title class="dialog-title app-dialog-title">
   <span>{{ title() }}</span>
-  <button mat-icon-button type="button" aria-label="Close account dialog" (click)="close()">
+  <button mat-icon-button type="button" [attr.aria-label]="'accounts.account-dialog.close-label' | localized" (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
 </h2>
 <mat-dialog-content>
   <form class="dialog-form" [formGroup]="form" (ngSubmit)="save()">
     <mat-form-field appearance="outline" class="app-form-control-full-width">
-      <mat-label>Account</mat-label>
+      <mat-label>{{ 'common.fields.account' | localized }}</mat-label>
       <input matInput id="account" name="account" type="email" formControlName="account" [readonly]="isEditMode" autocomplete="off" />
       @if (form.controls.account.touched && form.controls.account.hasError('required')) {
-        <mat-error>Account is required</mat-error>
+        <mat-error>{{ 'common.validation.account-required' | localized }}</mat-error>
       }
       @if (form.controls.account.touched && form.controls.account.hasError('email')) {
-        <mat-error>Account must be a valid email</mat-error>
+        <mat-error>{{ 'common.validation.account-email' | localized }}</mat-error>
       }
     </mat-form-field>
     <div class="layout-grid layout-grid-2">
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Firstname</mat-label>
+        <mat-label>{{ 'common.fields.firstname' | localized }}</mat-label>
         <input matInput id="firstname" name="firstname" type="text" formControlName="firstname" maxlength="32" autocomplete="off" />
       </mat-form-field>
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Lastname</mat-label>
+        <mat-label>{{ 'common.fields.lastname' | localized }}</mat-label>
         <input matInput id="lastname" name="lastname" type="text" formControlName="lastname" maxlength="32" autocomplete="off" />
       </mat-form-field>
     </div>
     <mat-form-field appearance="outline" class="app-form-control-full-width">
-      <mat-label>Role</mat-label>
+      <mat-label>{{ 'common.fields.role' | localized }}</mat-label>
       <mat-select id="role" name="role" formControlName="role">
-        <mat-option value="administrator">administrator</mat-option>
-        <mat-option value="author">author</mat-option>
-        <mat-option value="user">user</mat-option>
+        <mat-option value="administrator">{{ 'common.roles.administrator' | localized }}</mat-option>
+        <mat-option value="author">{{ 'common.roles.author' | localized }}</mat-option>
+        <mat-option value="user">{{ 'common.roles.user' | localized }}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="layout-grid layout-grid-2">
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Password</mat-label>
+        <mat-label>{{ 'common.fields.password' | localized }}</mat-label>
         <input
           matInput
           id="password"
@@ -44,19 +44,19 @@
           type="password"
           formControlName="password"
           maxlength="256"
-          [placeholder]="isEditMode ? 'Leave blank to keep current password.' : ''"
+          [placeholder]="isEditMode ? ('accounts.account-dialog.password-placeholder' | localized) : ''"
           [errorStateMatcher]="passwordErrorStateMatcher"
           autocomplete="new-password"
         />
         @if (form.controls.password.touched && form.hasError('fieldsIncomplete')) {
-          <mat-error>Fill both password fields</mat-error>
+          <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
         }
         @if (form.controls.password.touched && form.controls.password.hasError('required')) {
-          <mat-error>Password is required</mat-error>
+          <mat-error>{{ 'common.validation.password-required' | localized }}</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline" class="app-form-control-full-width">
-        <mat-label>Check password</mat-label>
+        <mat-label>{{ 'common.fields.check-password' | localized }}</mat-label>
         <input
           matInput
           id="confirm"
@@ -68,13 +68,13 @@
           autocomplete="new-password"
         />
         @if (form.controls.confirm.touched && form.hasError('fieldsIncomplete')) {
-          <mat-error>Fill both password fields</mat-error>
+          <mat-error>{{ 'common.validation.password-fields-incomplete' | localized }}</mat-error>
         }
         @if (form.controls.confirm.touched && form.hasError('fieldsMismatch')) {
-          <mat-error>Passwords must match</mat-error>
+          <mat-error>{{ 'common.validation.password-mismatch' | localized }}</mat-error>
         }
         @if (form.controls.confirm.touched && form.controls.confirm.hasError('required')) {
-          <mat-error>Password confirmation is required</mat-error>
+          <mat-error>{{ 'common.validation.password-confirmation-required' | localized }}</mat-error>
         }
       </mat-form-field>
     </div>
@@ -82,8 +82,8 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   @if (isEditMode) {
-    <button mat-flat-button color="warn" class="delete-button" type="button" (click)="remove()" [disabled]="isSelfAccount">Delete</button>
+    <button mat-flat-button color="warn" class="delete-button" type="button" (click)="remove()" [disabled]="isSelfAccount">{{ 'common.actions.delete' | localized }}</button>
   }
-  <button mat-stroked-button type="button" (click)="reset()">Reset</button>
+  <button mat-stroked-button type="button" (click)="reset()">{{ 'common.actions.reset' | localized }}</button>
   <button mat-flat-button color="primary" type="button" (click)="save()">{{ submitLabel() }}</button>
 </mat-dialog-actions>

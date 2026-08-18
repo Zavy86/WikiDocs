@@ -119,8 +119,32 @@ html.app-theme-dark {
   --app-mark-surface-color: color-mix(in srgb, #facc15 28%, transparent);
   --app-highlight-surface-color: color-mix(in srgb, #facc15 32%, transparent);
   --app-shell-accent-tint: color-mix(in srgb, var(--theme-color) 10%, var(--app-background-color));
+  --app-shell-background: linear-gradient(
+    90deg,
+    var(--app-surface-color) 0%,
+    var(--app-surface-color) 500px,
+    var(--app-background-color) 100%
+  );
   --app-heading-shadow: 0 3px 6px rgb(0 0 0 / 35%);
   --app-control-shadow: 0 3px 6px rgb(0 0 0 / 35%);
+}
+
+:root:not(.app-theme-dark)[dir='rtl'] {
+  --app-shell-background: linear-gradient(
+    90deg,
+    var(--app-shell-accent-tint) 0%,
+    var(--app-background-color) calc(100% - 500px),
+    var(--app-background-color) 100%
+  );
+}
+
+:root.app-theme-dark[dir='rtl'] {
+  --app-shell-background: linear-gradient(
+    90deg,
+    var(--app-background-color) 0%,
+    var(--app-surface-color) calc(100% - 500px),
+    var(--app-surface-color) 100%
+  );
 }
 
 .main-color {
@@ -150,6 +174,8 @@ body * {
 pre,
 code {
   font-family: var(--app-monospace-font-family);
+  direction: ltr;
+  text-align: left;
 }
 
 .app-shell,
@@ -188,13 +214,13 @@ h2.app-dialog-title {
 }
 
 .app-dialog-message {
-  margin: 0;
+  margin: 0 0 1rem;
   white-space: pre-line;
 }
 
 .app-dialog-close-button {
-  margin-right: -0.25rem;
-  margin-left: auto;
+  margin-inline-end: -0.25rem;
+  margin-inline-start: auto;
 }
 
 .layout-grid {

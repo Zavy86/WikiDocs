@@ -529,6 +529,29 @@ signal and cache because the stored settings no longer describe the active datas
 The root application observes the settings signal and delegates `template` and `color` application to `ThemeService`.
 `ThemeService` owns only the visual state and does not persist a separate theme cache.
 
+### Localization lifecycle
+
+Frontend-owned user-facing text is stored as nested YAML objects under `frontend/src/app/localizations`. The Angular
+builder imports each registered `.yml` file as text, and `LocalizationService` parses and flattens it into dot-separated
+semantic keys. `en.yml` is the reference catalog; every additional catalog must contain the same keys and named
+placeholders.
+
+`LocalizationService` derives the active language from the settings signal and therefore uses the same `SETTINGS`
+local-storage cache as `SettingsService`; it does not persist a separate language value. English is used before settings
+are available. The service also keeps the document `lang` attribute aligned with the active language.
+
+Templates resolve text through the standalone `localized` pipe, while TypeScript flows call
+`LocalizationService.getText()`. Named placeholders accept string or numeric parameters and may define a localized
+literal default, for example `{document:this document}`. A missing localization code is logged and rendered as
+`{code}` without falling back to another language. `TimeZonePipe` combines the active language with the separately
+configured timezone when formatting dates.
+
+The root `make check` target runs repository-wide validation, including version consistency and the frontend localization
+check. The frontend-specific `npm run check:localizations` command validates YAML structure, key naming, non-empty
+string leaves, catalog key parity, and placeholder parity. Any key addition, change, rename, or removal must update every
+language catalog in the same change set. Future repository-wide checks are added as dedicated prerequisites of the
+aggregate Make target.
+
 ### Session lifecycle
 
 The frontend stores the encoded session token in `localStorage` under `JWT`, decodes its payload into Angular signals,

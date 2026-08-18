@@ -4,24 +4,27 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { AccountType } from 'src/app/types';
 import { AccountsService } from 'src/app/services/accounts.service';
-import { SessionService } from 'src/app/services/session.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+import { SessionService } from 'src/app/services/session.service';
 import { AccountComponent, AccountData, AccountMode, AccountResult } from 'src/app/components/accounts/account/account.component';
+import { LocalizedPipe } from 'src/app/app.pipes';
+import { AccountType } from 'src/app/types';
 
 @Component({
   standalone: true,
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss',
-  imports: [ MatButtonModule, MatIconModule ],
+  imports: [ MatButtonModule, MatIconModule, LocalizedPipe ],
 })
 export class AccountsComponent {
   private readonly accountsService:AccountsService = inject(AccountsService);
   private readonly alertService:AlertService = inject(AlertService);
   private readonly sessionService:SessionService = inject(SessionService);
   private readonly dialog:MatDialog = inject(MatDialog);
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
 
   protected readonly loading:WritableSignal<boolean> = signal(true);
   protected readonly processing:WritableSignal<boolean> = signal(false);
@@ -71,7 +74,7 @@ export class AccountsComponent {
         },
         error: (error:HttpErrorResponse):void => {
           this.accounts.set([]);
-          this.alertService.error(error.message || 'Unable to load accounts.');
+          this.alertService.error(this.localizationService.getText('accounts.messages.load-unavailable'));
         }
       });
   }
@@ -83,18 +86,18 @@ export class AccountsComponent {
       .pipe(finalize(():void => this.processing.set(false)))
       .subscribe({
         next: ():void => {
-          this.alertService.success('Account saved successfully.');
+          this.alertService.success(this.localizationService.getText('accounts.messages.save-success'));
           this.loadAccounts();
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to save account.');
+          this.alertService.error(this.localizationService.getText('accounts.messages.save-unavailable'));
         }
       });
   }
 
   private deleteAccount(account:string):void {
     if ( account === this.sessionService.account() ) {
-      return this.alertService.error('You cannot delete your current account.');
+      return this.alertService.error(this.localizationService.getText('accounts.messages.current-account-delete-forbidden'));
     }
     this.processing.set(true);
     this.accountsService
@@ -102,11 +105,11 @@ export class AccountsComponent {
       .pipe(finalize(():void => this.processing.set(false)))
       .subscribe({
         next: ():void => {
-          this.alertService.warning('Account deleted successfully.');
+          this.alertService.warning(this.localizationService.getText('accounts.messages.delete-success'));
           this.loadAccounts();
         },
         error: (error:HttpErrorResponse):void => {
-          this.alertService.error(error.message || 'Unable to delete account.');
+          this.alertService.error(this.localizationService.getText('accounts.messages.delete-unavailable'));
         }
       });
   }

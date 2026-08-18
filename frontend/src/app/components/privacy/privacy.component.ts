@@ -3,13 +3,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { PrivacyService } from 'src/app/services/privacy.service';
 import { SettingsType } from 'src/app/types';
+import { LocalizedPipe } from 'src/app/app.pipes';
 
 @Component({
   standalone: true,
   selector: 'app-privacy',
   templateUrl: './privacy.component.html',
   styleUrl: './privacy.component.scss',
-  imports: [ MatDialogModule, MatButtonModule ],
+  imports: [ MatDialogModule, MatButtonModule, LocalizedPipe ],
 })
 export class PrivacyComponent implements OnDestroy {
 

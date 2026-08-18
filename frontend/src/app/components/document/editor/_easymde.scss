@@ -47,6 +47,8 @@ $-toolbar-icons: (
     font-family: var(--app-monospace-font-family);
     font-size: 14px;
     line-height: 1.4;
+    direction: ltr;
+    text-align: left;
   }
 
   .app-theme-dark app-document-editor .EasyMDEContainer {

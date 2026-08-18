@@ -1,0 +1,309 @@
+common:
+  defaults:
+    notice: Copyright {year} All Rights Reserved
+  actions:
+    agree: 同意する
+    cancel: キャンセル
+    choose-file: ファイルを選択
+    continue: 続行
+    create: 作成
+    delete: 削除
+    delete-permanently: 完全に削除
+    discard: 破棄
+    dismiss: 閉じる
+    initialize: 初期化
+    keep-editing: 編集を続ける
+    move: 移動
+    overwrite: 上書き
+    recover: 復元
+    reset: リセット
+    retry: 再試行
+    save: 保存
+    save-and-upload: 保存してアップロード
+    sign-in: サインイン
+    upload: アップロード
+    view-releases: リリースを表示
+  fields:
+    account: アカウント
+    check-password: パスワードを確認
+    color: 色
+    confirm-password: パスワードの確認
+    firstname: 名
+    language: 言語
+    lastname: 姓
+    name: 名前
+    new-password: 新しいパスワード
+    notice: 通知
+    owner: 所有者
+    password: パスワード
+    path: パス
+    privacy-banner: プライバシーバナー
+    role: 役割
+    subtitle: サブタイトル
+    template: テンプレート
+    timezone: タイムゾーン
+    title: タイトル
+  roles:
+    administrator: 管理者
+    author: 作成者
+    user: ユーザー
+  states:
+    checking: 確認中...
+    initializing: 初期化中...
+    loading: 読み込み中...
+    saving: 保存中...
+    signing-in: サインイン中...
+  validation:
+    account-email: アカウントには有効なメールアドレスを入力してください
+    account-maxlength: アカウントは256文字以内で入力してください
+    account-required: アカウントは必須です
+    firstname-maxlength: 名は32文字以内で入力してください
+    firstname-required: 名は必須です
+    lastname-maxlength: 姓は32文字以内で入力してください
+    lastname-required: 姓は必須です
+    password-confirmation-maxlength: パスワードの確認は256文字以内で入力してください
+    password-confirmation-required: パスワードの確認は必須です
+    password-fields-incomplete: 両方のパスワード欄を入力してください
+    password-maxlength: パスワードは256文字以内で入力してください
+    password-mismatch: パスワードが一致しません
+    password-required: パスワードは必須です
+    title-maxlength: タイトルは32文字以内で入力してください
+    title-required: タイトルは必須です
+app:
+  actions:
+    attachments: 添付ファイル
+    cancel-editing: 編集をキャンセル
+    create-document: ドキュメントを作成
+    create-version-before-saving: 保存前にバージョンを作成
+    delete-document: ドキュメントを削除
+    document-versions: ドキュメントのバージョン
+    do-not-create-version-before-saving: 保存前にバージョンを作成しない
+    edit-document: ドキュメントを編集
+    move-document: ドキュメントを移動
+    new-document: 新しいドキュメント
+    pin-document: ドキュメントを固定
+    print: 印刷
+    settings: 設定
+    sign-out: サインアウト
+    trash: ごみ箱
+    unpin-document: ドキュメントの固定を解除
+  dialogs:
+    delete-document:
+      message: このドキュメントを削除してもよろしいですか？未保存の変更は破棄され、ドキュメントはごみ箱に移動します
+      title: ドキュメントを削除
+    discard-changes:
+      message: 未保存の変更を破棄してもよろしいですか？
+      title: 変更を破棄
+    move-document:
+      close-label: ドキュメント移動ダイアログを閉じる
+      description: "{path:このドキュメント}の移動先となる親ドキュメントを選択してください。"
+      unsaved-message: 未保存の変更があります。このドキュメントの移動を続行してもよろしいですか？
+      title: ドキュメントを移動
+    new-document:
+      message: 新しいドキュメントの移動先パスを入力してください
+      title: 新しいドキュメント
+    save-before-image:
+      message: 画像をアップロードする前にドキュメントを保存する必要があります。この下書きを保存して続行しますか？
+      title: 画像のアップロード前にドキュメントを保存
+  messages:
+    delete-success: ドキュメントを削除しました
+    delete-unavailable: ドキュメントを削除できません
+    invalid-path: パスが無効です
+    invalid-source-path: 移動元ドキュメントのパスが無効です
+    move-success: ドキュメントを移動しました。
+    move-unavailable: ドキュメントを移動できません
+    navigation-unavailable: 選択したパスに移動できません
+    pin-success: ドキュメントを固定しました。
+    pin-unavailable: ドキュメントを固定できません。
+    reserved-path: このパスはアプリケーションで予約されています
+    save-before-image-unavailable: 画像のアップロード前にドキュメントを保存できません。
+    save-success: ドキュメントを保存しました。
+    save-unavailable: ドキュメントを保存できません。
+    settings-load-unavailable: 設定を読み込めません
+    unpin-success: ドキュメントの固定を解除しました。
+    unpin-unavailable: ドキュメントの固定を解除できません。
+accounts:
+  account-dialog:
+    close-label: アカウントダイアログを閉じる
+    create-title: アカウントを作成
+    delete-message: アカウント「{account:このアカウント}」を完全に削除してもよろしいですか？
+    delete-title: アカウントを削除
+    edit-title: アカウントを編集
+    password-placeholder: 現在のパスワードを維持するには空欄のままにしてください。
+  description: 許可されたWikiユーザーを管理します
+  empty: アカウントが見つかりません。
+  loading: アカウントを読み込み中...
+  messages:
+    current-account-delete-forbidden: 現在使用しているアカウントは削除できません。
+    delete-success: アカウントを削除しました。
+    delete-unavailable: アカウントを削除できません。
+    load-unavailable: アカウントを読み込めません。
+    save-success: アカウントを保存しました。
+    save-unavailable: アカウントを保存できません。
+  table:
+    add-label: アカウントを追加
+    edit-label: アカウントを編集
+  title: アカウント
+attachments:
+  close-label: 添付ファイルダイアログを閉じる
+  delete-label: 添付ファイルを削除
+  dialogs:
+    delete-message: 「{file:この添付ファイル}」を削除しますか？
+    delete-title: 添付ファイルを削除
+    overwrite-message: 「{file:このファイル}」という名前の添付ファイルがすでに存在します。上書きしますか？
+    overwrite-title: 添付ファイルを上書き
+  empty: このドキュメントに利用可能な添付ファイルはありません。
+  insert-label: 添付ファイルを挿入
+  messages:
+    delete-success: 添付ファイル「{file:このファイル}」を削除しました。
+    delete-unavailable: 添付ファイル「{file:このファイル}」を削除できません。
+    invalid-file-name: ファイル名が無効です。
+    refresh-unavailable: ドキュメントの添付ファイルを更新できません。
+    upload-success: 添付ファイルをアップロードしました。
+    upload-unavailable: 添付ファイルをアップロードできません。
+  title: 添付ファイル
+authentication:
+  messages:
+    failed: 認証に失敗しました。
+  title: ログイン
+document:
+  editor:
+    label: ドキュメントのソースコンテンツエディター
+    messages:
+      image-upload-success: 画像をアップロードしました。
+      image-upload-unavailable: 画像をアップロードできません。
+      paste-one-image: 一度に貼り付けられる画像は1枚です。
+      unsupported-image-type: 画像形式{type:不明}はサポートされていません。
+      wait-before-pasting: 別の画像を貼り付ける前に、ドキュメントが保存されるまでお待ちください。
+  empty:
+    create-prompt: 今すぐ作成しますか？
+    missing-content: このドキュメントにはまだコンテンツがありません。
+    missing-document: このドキュメントはまだ存在しません。
+    title: ドキュメントが見つかりません
+  loading: ドキュメントを読み込み中...
+  tags-label: ドキュメントタグ
+footer:
+  last-update: "最終更新: {timestamp:不明な時刻}（{author:不明な作成者}）"
+  login: ログイン
+  logout: ログアウト
+  powered-by: 提供元
+header:
+  accounts: アカウント
+  profile: プロフィール
+  sign-in: サインイン
+  toggle-actions-label: 操作の表示を切り替える
+  toggle-sidebar-label: サイドバーの表示を切り替える
+initialization:
+  description: この新しいインスタンス用にデータセットを初期化します
+  messages:
+    failed: 初期化に失敗しました。
+privacy:
+  disagree: 同意しない
+  title: プライバシーポリシーとCookieに関する同意
+profile:
+  description: 個人アカウント情報を更新します
+  messages:
+    update-success: プロフィールを更新しました
+    update-unavailable: プロフィールを更新できません
+  password-placeholder: 現在のパスワードを維持するには、欄を空欄のままにしてください。
+  title: プロフィール
+release:
+  check-action: 新しいバージョンを確認
+  message: バージョン{version:不明}を利用できます。
+  messages:
+    check-unavailable: 新しいバージョンを確認できません。
+  title: 新しいバージョンを利用できます
+search:
+  empty: 結果がありません。
+  instruction: 検索語を入力してください。
+  messages:
+    unavailable: Wikiを検索できません。
+  title: 検索結果
+settings:
+  color-picker-label: カラーピッカーを開く
+  description: Wikiエンジンを設定します
+  languages:
+    ar: アラビア語
+    cs: チェコ語
+    de: ドイツ語
+    en: 英語
+    es: スペイン語
+    fa: ペルシア語
+    fr: フランス語
+    hi: ヒンディー語
+    it: イタリア語
+    ja: 日本語
+    nl: オランダ語
+    pl: ポーランド語
+    pt: ポルトガル語
+    ru: ロシア語
+    zh: 中国語
+  loading: 設定を読み込み中...
+  messages:
+    load-unavailable: 設定を読み込めません。
+    timezone-load-unavailable: ブラウザーのタイムゾーン一覧を読み込めません。
+    timezone-unsupported: このブラウザーはタイムゾーンの選択をサポートしていません。
+    update-success: 設定を更新しました。
+    update-unavailable: 設定を更新できません。
+  options:
+    dark: ダーク
+    light: ライト
+  placeholders:
+    privacy-banner: プライバシーモーダルを無効にするには空欄のままにしてください
+    timezone-search: タイムゾーンを検索
+  title: 設定
+sidebar:
+  document: ドキュメント
+  navigation-label: Wikiナビゲーション
+  pinned: 固定済み
+  search-label: Wikiを検索
+  search-placeholder: Wiki内を検索...
+startup:
+  messages:
+    information-unavailable: エンジン情報を読み込めません。
+    local-session-unavailable: ローカル管理者セッションを初期化できません。
+  title: 起動エラー
+top:
+  label: 上に戻る
+trash:
+  deleted-label: 削除日時
+  dialogs:
+    delete-message: 「{document:このドキュメント}」を完全に削除しますか？この操作により「{document:このドキュメント}」、すべての子ドキュメント、および添付ファイルが完全に削除されます。
+    delete-title: ドキュメントを完全に削除
+    recover-close-label: 復元ダイアログを閉じる
+    recover-description: "{document:このドキュメント}の復元先となる親ドキュメントを選択してください。"
+    recover-title: ドキュメントを復元
+  empty: ごみ箱は空です
+  loading: ごみ箱を読み込み中...
+  messages:
+    delete-success: ドキュメントを完全に削除しました。
+    delete-unavailable: ドキュメントを完全に削除できません。
+    load-unavailable: ごみ箱を読み込めません。
+    recover-success: ドキュメントを復元しました。
+    recover-unavailable: ドキュメントを復元できません。
+  path-label: パス
+  permanently-delete-label: 完全に削除
+  permanently-delete-entry-label: "{document:このドキュメント}を完全に削除"
+  recover-label: 復元
+  recover-entry-label: "{document:このドキュメント}を復元"
+  title: ごみ箱
+  updated-label: 更新日時
+  author-label: 作成者
+  unknown: 不明
+tree:
+  loading: パスを読み込み中...
+  messages:
+    load-unavailable: 子ドキュメントを読み込めません。
+  toggle-label: "{path:このパス}の表示を切り替える"
+versions:
+  close-label: バージョンダイアログを閉じる
+  delete-label: バージョンを削除
+  delete-message: "{timestamp:選択した時刻}のバージョンを完全に削除してもよろしいですか？"
+  delete-title: バージョンを削除
+  empty: このドキュメントに利用可能なバージョンはありません。
+  messages:
+    delete-success: ドキュメントのバージョンを削除しました。
+    delete-unavailable: 選択したバージョンを削除できません。
+    load-unavailable: 選択したバージョンを読み込めません。
+    refresh-unavailable: ドキュメントのバージョンを更新できません。
+  title: ドキュメントのバージョン

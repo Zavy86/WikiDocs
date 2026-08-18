@@ -7,7 +7,9 @@ BEV := $(strip $(shell jq -r .version backend/package.json))
 FEV := $(strip $(shell jq -r .version frontend/package.json))
 DV := $(strip $(shell jq -r .version desktop/package.json))
 
-.PHONY: check-versions install-deps build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta
+.PHONY: checks check-versions check-localizations install-deps build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta
+
+checks: check-versions check-localizations
 
 check-versions:
 	@if ! jq -en \
@@ -18,7 +20,12 @@ check-versions:
 		'$$version == $$backend and $$version == $$frontend and $$version == $$desktop' > /dev/null; then \
 		echo "Version mismatch: VERSION=$(VERSION), backend=$(BEV), frontend=$(FEV), desktop=$(DV)" >&2; \
 		exit 1; \
+	else \
+  	echo "Versions OK: $(VERSION)"; \
 	fi
+
+check-localizations:
+	cd frontend && npm run check:localizations
 
 install-deps:
 	cd backend && npm i

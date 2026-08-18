@@ -1,46 +1,48 @@
 <main class="page-main">
   <section class="app-page-content">
-    <h1>Settings</h1>
-    <p>Configure your wiki engine</p>
+    <h1>{{ 'settings.title' | localized }}</h1>
+    <p>{{ 'settings.description' | localized }}</p>
     @if (loading()) {
-      <p class="loading">Loading settings...</p>
+      <p class="loading">{{ 'settings.loading' | localized }}</p>
     } @else {
       <form class="settings-form" [formGroup]="form" (ngSubmit)="save()">
         <div class="layout-grid layout-grid-5-7" [class.layout-grid-mobile-stack]="isMobile()">
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'common.fields.title' | localized }}</mat-label>
             <input matInput id="title" name="title" type="text" formControlName="title" maxlength="32" />
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Subtitle</mat-label>
+            <mat-label>{{ 'common.fields.subtitle' | localized }}</mat-label>
             <input matInput id="subtitle" name="subtitle" type="text" formControlName="subtitle" maxlength="64" />
           </mat-form-field>
         </div>
         <div class="layout-grid layout-grid-4-8" [class.layout-grid-mobile-stack]="isMobile()">
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Owner</mat-label>
+            <mat-label>{{ 'common.fields.owner' | localized }}</mat-label>
             <input matInput id="owner" name="owner" type="text" formControlName="owner" maxlength="64" />
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Notice</mat-label>
+            <mat-label>{{ 'common.fields.notice' | localized }}</mat-label>
             <input matInput id="notice" name="notice" type="text" formControlName="notice" maxlength="128" />
           </mat-form-field>
         </div>
         @if (!isLocalMode()) {
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Privacy banner</mat-label>
-            <textarea matInput id="privacy" name="privacy" formControlName="privacy" maxlength="1024" placeholder="Leave empty to disable the privacy modal"></textarea>
+            <mat-label>{{ 'common.fields.privacy-banner' | localized }}</mat-label>
+            <textarea matInput id="privacy" name="privacy" formControlName="privacy" maxlength="1024" [placeholder]="'settings.placeholders.privacy-banner' | localized"></textarea>
           </mat-form-field>
         }
         <div class="layout-grid layout-grid-4" [class.layout-grid-mobile-stack]="isMobile()">
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Language</mat-label>
+            <mat-label>{{ 'common.fields.language' | localized }}</mat-label>
             <mat-select id="localization" name="localization" formControlName="localization">
-              <mat-option value="en">English</mat-option>
+              @for (language of localizationOptions(); track language.code) {
+                <mat-option [value]="language.code">{{ language.label }}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Timezone</mat-label>
+            <mat-label>{{ 'common.fields.timezone' | localized }}</mat-label>
             <input
               matInput
               id="timezone"
@@ -61,10 +63,10 @@
             }
           </mat-form-field>
           <mat-form-field appearance="outline" class="app-form-control-full-width">
-            <mat-label>Template</mat-label>
+            <mat-label>{{ 'common.fields.template' | localized }}</mat-label>
             <mat-select id="template" name="template" formControlName="template">
-              <mat-option value="light">Light</mat-option>
-              <mat-option value="dark">Dark</mat-option>
+              <mat-option value="light">{{ 'settings.options.light' | localized }}</mat-option>
+              <mat-option value="dark">{{ 'settings.options.dark' | localized }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field
@@ -73,18 +75,18 @@
             [class.color-field-invalid]="form.controls.color.invalid"
             [style.--color-field-background]="form.controls.color.value"
           >
-            <mat-label>Color</mat-label>
+            <mat-label>{{ 'common.fields.color' | localized }}</mat-label>
             <input matInput id="color" name="color" type="text" formControlName="color" />
-            <button mat-icon-button matSuffix type="button" aria-label="Open color picker" (click)="openColorPicker()">
+            <button mat-icon-button matSuffix type="button" [attr.aria-label]="'settings.color-picker-label' | localized" (click)="openColorPicker()">
               <span class="material-symbols-outlined">palette</span>
             </button>
           </mat-form-field>
           <input #colorPicker class="native-color-picker" type="color" tabindex="-1" [value]="colorPickerValue()" (input)="onColorPickerChange($event)" />
         </div>
         <div class="app-form-actions">
-          <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">Reset</button>
-          <button mat-stroked-button type="button" (click)="checkForNewVersions()" [disabled]="checkingRelease()">{{ checkingRelease() ? 'Checking...' : 'Check for new versions' }}</button>
-          <button mat-flat-button color="primary" type="submit" [disabled]="saving() || timezoneLoadError() !== null">{{ saving() ? 'Saving...' : 'Save' }}</button>
+          <button mat-stroked-button type="button" (click)="reset()" [disabled]="saving()">{{ 'common.actions.reset' | localized }}</button>
+          <button mat-stroked-button type="button" (click)="checkForNewVersions()" [disabled]="checkingRelease()">{{ (checkingRelease() ? 'common.states.checking' : 'release.check-action') | localized }}</button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="saving() || timezoneLoadError() !== null">{{ (saving() ? 'common.states.saving' : 'common.actions.save') | localized }}</button>
         </div>
       </form>
     }

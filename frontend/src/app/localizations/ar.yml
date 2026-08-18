@@ -1,0 +1,309 @@
+common:
+  defaults:
+    notice: حقوق النشر {year} جميع الحقوق محفوظة
+  actions:
+    agree: أوافق
+    cancel: إلغاء
+    choose-file: اختيار ملف
+    continue: متابعة
+    create: إنشاء
+    delete: حذف
+    delete-permanently: حذف نهائيًا
+    discard: تجاهل
+    dismiss: إغلاق
+    initialize: تهيئة
+    keep-editing: متابعة التحرير
+    move: نقل
+    overwrite: استبدال
+    recover: استرداد
+    reset: إعادة تعيين
+    retry: إعادة المحاولة
+    save: حفظ
+    save-and-upload: حفظ ورفع
+    sign-in: تسجيل الدخول
+    upload: رفع
+    view-releases: عرض الإصدارات
+  fields:
+    account: الحساب
+    check-password: التحقق من كلمة المرور
+    color: اللون
+    confirm-password: تأكيد كلمة المرور
+    firstname: الاسم الأول
+    language: اللغة
+    lastname: اسم العائلة
+    name: الاسم
+    new-password: كلمة المرور الجديدة
+    notice: إشعار
+    owner: المالك
+    password: كلمة المرور
+    path: المسار
+    privacy-banner: لافتة الخصوصية
+    role: الدور
+    subtitle: العنوان الفرعي
+    template: القالب
+    timezone: المنطقة الزمنية
+    title: العنوان
+  roles:
+    administrator: مسؤول
+    author: مؤلف
+    user: مستخدم
+  states:
+    checking: جارٍ التحقق...
+    initializing: جارٍ التهيئة...
+    loading: جارٍ التحميل...
+    saving: جارٍ الحفظ...
+    signing-in: جارٍ تسجيل الدخول...
+  validation:
+    account-email: يجب أن يكون الحساب عنوان بريد إلكتروني صالحًا
+    account-maxlength: يجب ألا يتجاوز الحساب 256 حرفًا
+    account-required: الحساب مطلوب
+    firstname-maxlength: يجب ألا يتجاوز الاسم الأول 32 حرفًا
+    firstname-required: الاسم الأول مطلوب
+    lastname-maxlength: يجب ألا يتجاوز اسم العائلة 32 حرفًا
+    lastname-required: اسم العائلة مطلوب
+    password-confirmation-maxlength: يجب ألا يتجاوز تأكيد كلمة المرور 256 حرفًا
+    password-confirmation-required: تأكيد كلمة المرور مطلوب
+    password-fields-incomplete: يُرجى ملء حقلي كلمة المرور
+    password-maxlength: يجب ألا تتجاوز كلمة المرور 256 حرفًا
+    password-mismatch: يجب أن تتطابق كلمتا المرور
+    password-required: كلمة المرور مطلوبة
+    title-maxlength: يجب ألا يتجاوز العنوان 32 حرفًا
+    title-required: العنوان مطلوب
+app:
+  actions:
+    attachments: المرفقات
+    cancel-editing: إلغاء التحرير
+    create-document: إنشاء مستند
+    create-version-before-saving: إنشاء إصدار قبل الحفظ
+    delete-document: حذف المستند
+    document-versions: إصدارات المستند
+    do-not-create-version-before-saving: عدم إنشاء إصدار قبل الحفظ
+    edit-document: تحرير المستند
+    move-document: نقل المستند
+    new-document: مستند جديد
+    pin-document: تثبيت المستند
+    print: طباعة
+    settings: الإعدادات
+    sign-out: تسجيل الخروج
+    trash: سلة المهملات
+    unpin-document: إلغاء تثبيت المستند
+  dialogs:
+    delete-document:
+      message: هل أنتم متأكدون من حذف هذا المستند؟ ستُهمل التغييرات غير المحفوظة وسيُنقل المستند إلى سلة المهملات
+      title: حذف المستند
+    discard-changes:
+      message: هل أنتم متأكدون من تجاهل التغييرات غير المحفوظة؟
+      title: تجاهل التغييرات
+    move-document:
+      close-label: إغلاق مربع حوار النقل
+      description: اختاروا الأصل الوجهة لـ {path:هذا المستند}.
+      unsaved-message: لديكم تغييرات غير محفوظة. هل أنتم متأكدون من متابعة نقل هذا المستند؟
+      title: نقل المستند
+    new-document:
+      message: أدخلوا مسار الوجهة للمستند الجديد
+      title: مستند جديد
+    save-before-image:
+      message: يجب حفظ المستند قبل رفع صورة. هل ترغبون في حفظ هذه المسودة والمتابعة؟
+      title: حفظ المستند قبل رفع الصورة
+  messages:
+    delete-success: تم حذف المستند بنجاح
+    delete-unavailable: تعذر حذف المستند
+    invalid-path: مسار غير صالح
+    invalid-source-path: مسار المستند المصدر غير صالح
+    move-success: تم نقل المستند بنجاح.
+    move-unavailable: تعذر نقل المستند
+    navigation-unavailable: تعذر الانتقال إلى المسار المحدد
+    pin-success: تم تثبيت المستند بنجاح.
+    pin-unavailable: تعذر تثبيت المستند.
+    reserved-path: هذا المسار محجوز للتطبيق
+    save-before-image-unavailable: تعذر حفظ المستند قبل رفع الصورة.
+    save-success: تم حفظ المستند بنجاح.
+    save-unavailable: تعذر حفظ المستند.
+    settings-load-unavailable: تعذر تحميل الإعدادات
+    unpin-success: تم إلغاء تثبيت المستند بنجاح.
+    unpin-unavailable: تعذر إلغاء تثبيت المستند.
+accounts:
+  account-dialog:
+    close-label: إغلاق مربع حوار الحساب
+    create-title: إنشاء حساب
+    delete-message: هل أنتم متأكدون من حذف الحساب "{account:هذا الحساب}" نهائيًا؟
+    delete-title: حذف الحساب
+    edit-title: تحرير الحساب
+    password-placeholder: اتركوه فارغًا للاحتفاظ بكلمة المرور الحالية.
+  description: إدارة مستخدمي الويكي المصرح لهم
+  empty: لم يُعثر على حسابات.
+  loading: جارٍ تحميل الحسابات...
+  messages:
+    current-account-delete-forbidden: لا يمكنكم حذف حسابكم الحالي.
+    delete-success: تم حذف الحساب بنجاح.
+    delete-unavailable: تعذر حذف الحساب.
+    load-unavailable: تعذر تحميل الحسابات.
+    save-success: تم حفظ الحساب بنجاح.
+    save-unavailable: تعذر حفظ الحساب.
+  table:
+    add-label: إضافة حساب
+    edit-label: تحرير الحساب
+  title: الحسابات
+attachments:
+  close-label: إغلاق مربع حوار المرفقات
+  delete-label: حذف المرفق
+  dialogs:
+    delete-message: هل ترغبون في حذف "{file:هذا المرفق}"؟
+    delete-title: حذف المرفق
+    overwrite-message: يوجد مرفق باسم "{file:هذا الملف}" بالفعل. هل ترغبون في استبداله؟
+    overwrite-title: استبدال المرفق
+  empty: لا توجد مرفقات متاحة لهذا المستند.
+  insert-label: إدراج مرفق
+  messages:
+    delete-success: تم حذف المرفق "{file:هذا الملف}" بنجاح.
+    delete-unavailable: تعذر حذف المرفق "{file:هذا الملف}".
+    invalid-file-name: اسم الملف غير صالح.
+    refresh-unavailable: تعذر تحديث مرفقات المستند.
+    upload-success: تم رفع المرفق بنجاح.
+    upload-unavailable: تعذر رفع المرفق.
+  title: المرفقات
+authentication:
+  messages:
+    failed: فشلت المصادقة.
+  title: تسجيل الدخول
+document:
+  editor:
+    label: محرر المحتوى الخام للمستند
+    messages:
+      image-upload-success: تم رفع الصورة بنجاح.
+      image-upload-unavailable: تعذر رفع الصورة.
+      paste-one-image: الصقوا صورة واحدة في كل مرة.
+      unsupported-image-type: نوع الصورة {type:غير معروف} غير مدعوم.
+      wait-before-pasting: انتظروا حتى يُحفظ المستند قبل لصق صورة أخرى.
+  empty:
+    create-prompt: هل ترغبون في إنشائه الآن؟
+    missing-content: لا يحتوي هذا المستند على محتوى بعد.
+    missing-document: هذا المستند غير موجود بعد.
+    title: لم يُعثر على المستند
+  loading: جارٍ تحميل المستند...
+  tags-label: وسوم المستند
+footer:
+  last-update: آخر تحديث {timestamp:في وقت غير معروف} بواسطة {author:مؤلف غير معروف}
+  login: تسجيل الدخول
+  logout: تسجيل الخروج
+  powered-by: مدعوم بواسطة
+header:
+  accounts: الحسابات
+  profile: الملف الشخصي
+  sign-in: تسجيل الدخول
+  toggle-actions-label: إظهار الإجراءات أو إخفاؤها
+  toggle-sidebar-label: إظهار الشريط الجانبي أو إخفاؤه
+initialization:
+  description: تهيئة مجموعات البيانات لهذه النسخة الجديدة
+  messages:
+    failed: فشلت التهيئة.
+privacy:
+  disagree: لا أوافق
+  title: سياسة الخصوصية واتفاقية ملفات تعريف الارتباط
+profile:
+  description: تحديث معلومات حسابكم الشخصية
+  messages:
+    update-success: تم تحديث الملف الشخصي بنجاح
+    update-unavailable: تعذر تحديث الملف الشخصي
+  password-placeholder: اتركوا الحقول فارغة للاحتفاظ بكلمة المرور الحالية.
+  title: الملف الشخصي
+release:
+  check-action: التحقق من الإصدارات الجديدة
+  message: الإصدار {version:غير معروف} متاح.
+  messages:
+    check-unavailable: تعذر التحقق من الإصدارات الجديدة.
+  title: إصدار جديد متاح
+search:
+  empty: لا توجد نتائج.
+  instruction: أدخلوا مصطلح بحث.
+  messages:
+    unavailable: تعذر البحث في الويكي.
+  title: نتائج البحث
+settings:
+  color-picker-label: فتح منتقي الألوان
+  description: تهيئة محرك الويكي الخاص بكم
+  languages:
+    ar: العربية
+    cs: التشيكية
+    de: الألمانية
+    en: الإنجليزية
+    es: الإسبانية
+    fa: الفارسية
+    fr: الفرنسية
+    hi: الهندية
+    it: الإيطالية
+    ja: اليابانية
+    nl: الهولندية
+    pl: البولندية
+    pt: البرتغالية
+    ru: الروسية
+    zh: الصينية
+  loading: جارٍ تحميل الإعدادات...
+  messages:
+    load-unavailable: تعذر تحميل الإعدادات.
+    timezone-load-unavailable: تعذر تحميل قائمة المناطق الزمنية للمتصفح.
+    timezone-unsupported: لا يدعم هذا المتصفح اختيار المنطقة الزمنية.
+    update-success: تم تحديث الإعدادات بنجاح.
+    update-unavailable: تعذر تحديث الإعدادات.
+  options:
+    dark: داكن
+    light: فاتح
+  placeholders:
+    privacy-banner: اتركوه فارغًا لتعطيل نافذة الخصوصية
+    timezone-search: البحث عن منطقة زمنية
+  title: الإعدادات
+sidebar:
+  document: مستند
+  navigation-label: تنقل الويكي
+  pinned: مثبّت
+  search-label: البحث في الويكي
+  search-placeholder: ابحثوا في الويكي...
+startup:
+  messages:
+    information-unavailable: تعذر تحميل معلومات المحرك.
+    local-session-unavailable: تعذر تهيئة جلسة المسؤول المحلية.
+  title: خطأ في بدء التشغيل
+top:
+  label: العودة إلى الأعلى
+trash:
+  deleted-label: محذوف
+  dialogs:
+    delete-message: هل ترغبون في حذف "{document:هذا المستند}" نهائيًا؟ سيؤدي ذلك إلى إزالة "{document:هذا المستند}" وجميع المستندات المتداخلة والمرفقات نهائيًا.
+    delete-title: حذف المستند نهائيًا
+    recover-close-label: إغلاق مربع حوار الاسترداد
+    recover-description: اختاروا الأصل الوجهة لـ {document:هذا المستند}.
+    recover-title: استرداد المستند
+  empty: سلة المهملات فارغة
+  loading: جارٍ تحميل سلة المهملات...
+  messages:
+    delete-success: تم حذف المستند نهائيًا.
+    delete-unavailable: تعذر حذف المستند نهائيًا.
+    load-unavailable: تعذر تحميل سلة المهملات.
+    recover-success: تم استرداد المستند بنجاح.
+    recover-unavailable: تعذر استرداد المستند.
+  path-label: المسار
+  permanently-delete-label: حذف نهائيًا
+  permanently-delete-entry-label: حذف {document:هذا المستند} نهائيًا
+  recover-label: استرداد
+  recover-entry-label: استرداد {document:هذا المستند}
+  title: سلة المهملات
+  updated-label: تم التحديث
+  author-label: المؤلف
+  unknown: غير معروف
+tree:
+  loading: جارٍ تحميل المسارات...
+  messages:
+    load-unavailable: تعذر تحميل العناصر الفرعية.
+  toggle-label: إظهار {path:هذا المسار} أو إخفاؤه
+versions:
+  close-label: إغلاق مربع حوار الإصدارات
+  delete-label: حذف الإصدار
+  delete-message: هل أنتم متأكدون من حذف إصدار {timestamp:الوقت المحدد} نهائيًا؟
+  delete-title: حذف الإصدار
+  empty: لا تتوفر إصدارات لهذا المستند.
+  messages:
+    delete-success: تم حذف إصدار المستند بنجاح.
+    delete-unavailable: تعذر حذف الإصدار المحدد.
+    load-unavailable: تعذر تحميل الإصدار المحدد.
+    refresh-unavailable: تعذر تحديث إصدارات المستند.
+  title: إصدارات المستند

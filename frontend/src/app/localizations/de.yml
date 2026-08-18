@@ -1,0 +1,309 @@
+common:
+  defaults:
+    notice: Copyright {year} Alle Rechte vorbehalten
+  actions:
+    agree: Zustimmen
+    cancel: Abbrechen
+    choose-file: Datei auswählen
+    continue: Fortfahren
+    create: Erstellen
+    delete: Löschen
+    delete-permanently: Dauerhaft löschen
+    discard: Verwerfen
+    dismiss: Schließen
+    initialize: Initialisieren
+    keep-editing: Bearbeitung fortsetzen
+    move: Verschieben
+    overwrite: Überschreiben
+    recover: Wiederherstellen
+    reset: Zurücksetzen
+    retry: Erneut versuchen
+    save: Speichern
+    save-and-upload: Speichern und hochladen
+    sign-in: Anmelden
+    upload: Hochladen
+    view-releases: Versionen anzeigen
+  fields:
+    account: Konto
+    check-password: Passwort prüfen
+    color: Farbe
+    confirm-password: Passwort bestätigen
+    firstname: Vorname
+    language: Sprache
+    lastname: Nachname
+    name: Name
+    new-password: Neues Passwort
+    notice: Hinweis
+    owner: Eigentümer
+    password: Passwort
+    path: Pfad
+    privacy-banner: Datenschutzhinweis
+    role: Rolle
+    subtitle: Untertitel
+    template: Vorlage
+    timezone: Zeitzone
+    title: Titel
+  roles:
+    administrator: Administrator
+    author: Autor
+    user: Benutzer
+  states:
+    checking: Wird geprüft...
+    initializing: Wird initialisiert...
+    loading: Wird geladen...
+    saving: Wird gespeichert...
+    signing-in: Anmeldung läuft...
+  validation:
+    account-email: Das Konto muss eine gültige E-Mail-Adresse sein
+    account-maxlength: Das Konto darf höchstens 256 Zeichen lang sein
+    account-required: Ein Konto ist erforderlich
+    firstname-maxlength: Der Vorname darf höchstens 32 Zeichen lang sein
+    firstname-required: Der Vorname ist erforderlich
+    lastname-maxlength: Der Nachname darf höchstens 32 Zeichen lang sein
+    lastname-required: Der Nachname ist erforderlich
+    password-confirmation-maxlength: Die Passwortbestätigung darf höchstens 256 Zeichen lang sein
+    password-confirmation-required: Die Passwortbestätigung ist erforderlich
+    password-fields-incomplete: Füllen Sie beide Passwortfelder aus
+    password-maxlength: Das Passwort darf höchstens 256 Zeichen lang sein
+    password-mismatch: Die Passwörter müssen übereinstimmen
+    password-required: Ein Passwort ist erforderlich
+    title-maxlength: Der Titel darf höchstens 32 Zeichen lang sein
+    title-required: Ein Titel ist erforderlich
+app:
+  actions:
+    attachments: Anhänge
+    cancel-editing: Bearbeitung abbrechen
+    create-document: Dokument erstellen
+    create-version-before-saving: Vor dem Speichern eine Version erstellen
+    delete-document: Dokument löschen
+    document-versions: Dokumentversionen
+    do-not-create-version-before-saving: Vor dem Speichern keine Version erstellen
+    edit-document: Dokument bearbeiten
+    move-document: Dokument verschieben
+    new-document: Neues Dokument
+    pin-document: Dokument anheften
+    print: Drucken
+    settings: Einstellungen
+    sign-out: Abmelden
+    trash: Papierkorb
+    unpin-document: Dokument lösen
+  dialogs:
+    delete-document:
+      message: Möchten Sie dieses Dokument wirklich löschen? Nicht gespeicherte Änderungen werden verworfen und das Dokument wird in den Papierkorb verschoben
+      title: Dokument löschen
+    discard-changes:
+      message: Möchten Sie nicht gespeicherte Änderungen wirklich verwerfen?
+      title: Änderungen verwerfen
+    move-document:
+      close-label: Dialog zum Verschieben schließen
+      description: Wählen Sie das übergeordnete Zieldokument für {path:dieses Dokument} aus.
+      unsaved-message: Sie haben nicht gespeicherte Änderungen. Möchten Sie dieses Dokument wirklich weiter verschieben?
+      title: Dokument verschieben
+    new-document:
+      message: Geben Sie den Zielpfad für das neue Dokument ein
+      title: Neues Dokument
+    save-before-image:
+      message: Das Dokument muss gespeichert werden, bevor ein Bild hochgeladen werden kann. Möchten Sie diesen Entwurf speichern und fortfahren?
+      title: Dokument vor dem Hochladen eines Bildes speichern
+  messages:
+    delete-success: Dokument erfolgreich gelöscht
+    delete-unavailable: Dokument kann nicht gelöscht werden
+    invalid-path: Ungültiger Pfad
+    invalid-source-path: Ungültiger Quellpfad des Dokuments
+    move-success: Dokument erfolgreich verschoben.
+    move-unavailable: Dokument kann nicht verschoben werden
+    navigation-unavailable: Der ausgewählte Pfad kann nicht aufgerufen werden
+    pin-success: Dokument erfolgreich angeheftet.
+    pin-unavailable: Dokument kann nicht angeheftet werden.
+    reserved-path: Dieser Pfad ist für die Anwendung reserviert
+    save-before-image-unavailable: Das Dokument kann vor dem Hochladen eines Bildes nicht gespeichert werden.
+    save-success: Dokument erfolgreich gespeichert.
+    save-unavailable: Dokument kann nicht gespeichert werden.
+    settings-load-unavailable: Einstellungen können nicht geladen werden
+    unpin-success: Dokument erfolgreich gelöst.
+    unpin-unavailable: Dokument kann nicht gelöst werden.
+accounts:
+  account-dialog:
+    close-label: Kontodialog schließen
+    create-title: Konto erstellen
+    delete-message: Möchten Sie das Konto "{account:dieses Konto}" wirklich dauerhaft löschen?
+    delete-title: Konto löschen
+    edit-title: Konto bearbeiten
+    password-placeholder: Lassen Sie das Feld leer, um das aktuelle Passwort beizubehalten.
+  description: Autorisierte Wiki-Benutzer verwalten
+  empty: Keine Konten gefunden.
+  loading: Konten werden geladen...
+  messages:
+    current-account-delete-forbidden: Sie können Ihr aktuelles Konto nicht löschen.
+    delete-success: Konto erfolgreich gelöscht.
+    delete-unavailable: Konto kann nicht gelöscht werden.
+    load-unavailable: Konten können nicht geladen werden.
+    save-success: Konto erfolgreich gespeichert.
+    save-unavailable: Konto kann nicht gespeichert werden.
+  table:
+    add-label: Konto hinzufügen
+    edit-label: Konto bearbeiten
+  title: Konten
+attachments:
+  close-label: Anhangsdialog schließen
+  delete-label: Anhang löschen
+  dialogs:
+    delete-message: Möchten Sie "{file:diesen Anhang}" löschen?
+    delete-title: Anhang löschen
+    overwrite-message: Ein Anhang mit dem Namen "{file:diese Datei}" ist bereits vorhanden. Möchten Sie ihn überschreiben?
+    overwrite-title: Anhang überschreiben
+  empty: Für dieses Dokument sind keine Anhänge verfügbar.
+  insert-label: Anhang einfügen
+  messages:
+    delete-success: Anhang "{file:diese Datei}" erfolgreich gelöscht.
+    delete-unavailable: Anhang "{file:diese Datei}" kann nicht gelöscht werden.
+    invalid-file-name: Ungültiger Dateiname.
+    refresh-unavailable: Dokumentanhänge können nicht aktualisiert werden.
+    upload-success: Anhang erfolgreich hochgeladen.
+    upload-unavailable: Anhang kann nicht hochgeladen werden.
+  title: Anhänge
+authentication:
+  messages:
+    failed: Anmeldung fehlgeschlagen.
+  title: Anmeldung
+document:
+  editor:
+    label: Editor für den Rohinhalt des Dokuments
+    messages:
+      image-upload-success: Bild erfolgreich hochgeladen.
+      image-upload-unavailable: Bild kann nicht hochgeladen werden.
+      paste-one-image: Fügen Sie jeweils nur ein Bild ein.
+      unsupported-image-type: Der Bildtyp {type:unbekannt} wird nicht unterstützt.
+      wait-before-pasting: Warten Sie, bis das Dokument gespeichert ist, bevor Sie ein weiteres Bild einfügen.
+  empty:
+    create-prompt: Möchten Sie es jetzt erstellen?
+    missing-content: Dieses Dokument hat noch keinen Inhalt.
+    missing-document: Dieses Dokument existiert noch nicht.
+    title: Dokument nicht gefunden
+  loading: Dokument wird geladen...
+  tags-label: Dokument-Tags
+footer:
+  last-update: Zuletzt aktualisiert {timestamp:zu einem unbekannten Zeitpunkt} von {author:einem unbekannten Autor}
+  login: Anmeldung
+  logout: Abmelden
+  powered-by: Unterstützt von
+header:
+  accounts: Konten
+  profile: Profil
+  sign-in: Anmelden
+  toggle-actions-label: Aktionen ein- oder ausblenden
+  toggle-sidebar-label: Seitenleiste ein- oder ausblenden
+initialization:
+  description: Datensätze für diese neue Instanz initialisieren
+  messages:
+    failed: Initialisierung fehlgeschlagen.
+privacy:
+  disagree: Ablehnen
+  title: Datenschutzrichtlinie und Cookie-Vereinbarung
+profile:
+  description: Persönliche Kontoinformationen aktualisieren
+  messages:
+    update-success: Profil erfolgreich aktualisiert
+    update-unavailable: Profil kann nicht aktualisiert werden
+  password-placeholder: Lassen Sie die Felder leer, um Ihr aktuelles Passwort beizubehalten.
+  title: Profil
+release:
+  check-action: Nach neuen Versionen suchen
+  message: Version {version:unbekannt} ist verfügbar.
+  messages:
+    check-unavailable: Nach neuen Versionen kann nicht gesucht werden.
+  title: Neue Version verfügbar
+search:
+  empty: Keine Ergebnisse.
+  instruction: Geben Sie einen Suchbegriff ein.
+  messages:
+    unavailable: Das Wiki kann nicht durchsucht werden.
+  title: Suchergebnisse
+settings:
+  color-picker-label: Farbauswahl öffnen
+  description: Ihre Wiki-Engine konfigurieren
+  languages:
+    ar: Arabisch
+    cs: Tschechisch
+    de: Deutsch
+    en: Englisch
+    es: Spanisch
+    fa: Persisch
+    fr: Französisch
+    hi: Hindi
+    it: Italienisch
+    ja: Japanisch
+    nl: Niederländisch
+    pl: Polnisch
+    pt: Portugiesisch
+    ru: Russisch
+    zh: Chinesisch
+  loading: Einstellungen werden geladen...
+  messages:
+    load-unavailable: Einstellungen können nicht geladen werden.
+    timezone-load-unavailable: Die Zeitzonenliste des Browsers kann nicht geladen werden.
+    timezone-unsupported: Die Auswahl einer Zeitzone wird von diesem Browser nicht unterstützt.
+    update-success: Einstellungen erfolgreich aktualisiert.
+    update-unavailable: Einstellungen können nicht aktualisiert werden.
+  options:
+    dark: Dunkel
+    light: Hell
+  placeholders:
+    privacy-banner: Lassen Sie das Feld leer, um das Datenschutzfenster zu deaktivieren
+    timezone-search: Zeitzone suchen
+  title: Einstellungen
+sidebar:
+  document: Dokument
+  navigation-label: Wiki-Navigation
+  pinned: Angeheftet
+  search-label: Wiki durchsuchen
+  search-placeholder: Im Wiki suchen...
+startup:
+  messages:
+    information-unavailable: Engine-Informationen können nicht geladen werden.
+    local-session-unavailable: Die lokale Administratorsitzung kann nicht initialisiert werden.
+  title: Startfehler
+top:
+  label: Nach oben
+trash:
+  deleted-label: Gelöscht
+  dialogs:
+    delete-message: Möchten Sie "{document:dieses Dokument}" wirklich dauerhaft löschen? Dadurch werden "{document:dieses Dokument}", alle untergeordneten Dokumente und Anhänge dauerhaft entfernt.
+    delete-title: Dokument dauerhaft löschen
+    recover-close-label: Wiederherstellungsdialog schließen
+    recover-description: Wählen Sie das übergeordnete Zieldokument für {document:dieses Dokument} aus.
+    recover-title: Dokument wiederherstellen
+  empty: Der Papierkorb ist leer
+  loading: Papierkorb wird geladen...
+  messages:
+    delete-success: Dokument dauerhaft gelöscht.
+    delete-unavailable: Dokument kann nicht dauerhaft gelöscht werden.
+    load-unavailable: Papierkorb kann nicht geladen werden.
+    recover-success: Dokument erfolgreich wiederhergestellt.
+    recover-unavailable: Dokument kann nicht wiederhergestellt werden.
+  path-label: Pfad
+  permanently-delete-label: Dauerhaft löschen
+  permanently-delete-entry-label: "{document:dieses Dokument} dauerhaft löschen"
+  recover-label: Wiederherstellen
+  recover-entry-label: "{document:dieses Dokument} wiederherstellen"
+  title: Papierkorb
+  updated-label: Aktualisiert
+  author-label: Autor
+  unknown: Unbekannt
+tree:
+  loading: Pfade werden geladen...
+  messages:
+    load-unavailable: Untergeordnete Dokumente können nicht geladen werden.
+  toggle-label: "{path:diesen Pfad} ein- oder ausblenden"
+versions:
+  close-label: Versionsdialog schließen
+  delete-label: Version löschen
+  delete-message: Möchten Sie die Version vom {timestamp:ausgewählten Zeitpunkt} wirklich dauerhaft löschen?
+  delete-title: Version löschen
+  empty: Für dieses Dokument sind keine Versionen verfügbar.
+  messages:
+    delete-success: Dokumentversion erfolgreich gelöscht.
+    delete-unavailable: Die ausgewählte Dokumentversion kann nicht gelöscht werden.
+    load-unavailable: Die ausgewählte Dokumentversion kann nicht geladen werden.
+    refresh-unavailable: Dokumentversionen können nicht aktualisiert werden.
+  title: Dokumentversionen

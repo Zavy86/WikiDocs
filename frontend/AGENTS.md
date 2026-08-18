@@ -42,6 +42,18 @@ Keep new/refactored code in the same layer where responsibility already exists.
 4. Use Angular dependency injection through constructors or `inject()` consistently with local patterns.
 5. Avoid direct DOM manipulation when Angular template/data-binding patterns can solve the same requirement.
 
+## Localization
+
+1. All frontend-owned user-facing text must be defined in `src/app/localizations/*.yml`; do not add hardcoded UI text to
+   templates or TypeScript.
+2. Use the `localized` pipe in templates and `LocalizationService.getText()` for text produced in TypeScript.
+3. Use semantic, lowercase, kebab-case key segments organized into feature namespaces.
+4. Every localization key addition, change, rename, or removal must be applied to **every language catalog in the same
+   change set**.
+5. Every language must contain the exact same keys and named placeholders; placeholder defaults may be translated.
+6. Run `make check` from the repository root after changing any localization catalog. Frontend-specific check remains
+   available as `npm run check:localizations` from `frontend/`.
+
 ## Shared Contracts (`/shared/contracts`)
 
 `/shared/contracts` is the cross-layer contract source of truth.
@@ -68,7 +80,8 @@ On each task ask me if you want to run the following commands to verify that you
 
 Run from `frontend/`:
 
-1. `npm run build`
-2. `npm run test`
+1. `npm run check:localizations`
+2. `npm run build`
+3. `npm run test`
 
 Refactoring is considered complete only when these commands pass.
