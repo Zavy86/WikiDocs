@@ -103,7 +103,6 @@ services:
       - datasets:/var/lib/wikidocs/datasets
     ports:
       - "3210:3210"
-
 ```
 
 
@@ -126,15 +125,15 @@ If you want to contribute to the project, please check the [CONTRIBUTING](CONTRI
 ### Creator
 
 💡 [**Manuel Zavatta**](https://github.com/Zavy86)
-[ [Website](http://im.zavy.dev)
+( [Website](http://im.zavy.dev)
 | [LinkedIn](https://www.linkedin.com/in/manuel-zavatta/)
 | [YouTube](https://www.youtube.com/@zavy86)
-| [Contacts](mailto://manuel.zavatta@gmail.com) ]
+| [Contacts](mailto://manuel.zavatta@gmail.com) )
 
 ### Collaborators
 
 - [Amin Persia](https://github.com/leomoon)  
-- [ffiesta](https://github.com/ffiesta)
+- [Paulo Taborda](https://github.com/ffiesta)
 
 ### Contributors
 - [Alex Meyer](https://github.com/reyemxela)
