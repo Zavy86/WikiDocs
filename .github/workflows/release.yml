@@ -208,7 +208,7 @@ jobs:
 
   release:
     name: Publish GitHub release
-    needs:
+#    needs:
 #      - windows
 #      - macos
 #      - docker
