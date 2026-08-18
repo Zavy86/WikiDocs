@@ -42,7 +42,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 
 Try the demo playground at: [http://demo.wikidocs.app](http://demo.wikidocs.app)
 
-Authentication: 
+Authentication:
 
 Username: `john.doe@wikidocs.app`  
 Password: `wikidocs`
