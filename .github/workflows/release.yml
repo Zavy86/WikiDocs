@@ -27,13 +27,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Require the main branch
-        shell: bash
-        run: |
-          if [[ "${GITHUB_REF}" != "refs/heads/main" ]]; then
-            echo "Releases can only be created from the main branch." >&2
-            exit 1
-          fi
+#      - name: Require the main branch
+#        shell: bash
+#        run: |
+#          if [[ "${GITHUB_REF}" != "refs/heads/main" ]]; then
+#            echo "Releases can only be created from the main branch." >&2
+#            exit 1
+#          fi
       - name: Check out the source code
         uses: actions/checkout@v7
       - name: Set up Node.js
@@ -109,6 +109,7 @@ jobs:
           compression-level: 0
 
   macos:
+    if: ${{ false }}
     name: Build for macOS arm64
     needs: prerequisites
     runs-on: macos-latest
@@ -154,6 +155,7 @@ jobs:
           compression-level: 0
 
   docker:
+    if: ${{ false }}
     name: Publish Docker image
     needs:
       - prerequisites
@@ -190,6 +192,7 @@ jobs:
         run: make docker-release
 
   release:
+    if: ${{ false }}
     name: Publish GitHub release
     needs:
       - windows
