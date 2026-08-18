@@ -8,6 +8,10 @@ on:
       - .github/workflows/release.yml
       - VERSION
   workflow_dispatch:
+# TEMP
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+# TEMP
 
 permissions:
   contents: read
