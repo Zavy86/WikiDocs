@@ -21,10 +21,11 @@ env:
   NODE_VERSION: '22'
 
 jobs:
-  test:
-    name: Validate and test
+
+  prerequisites:
+    name: Validate versions, install dependencies and test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Require the main branch
         shell: bash
@@ -33,10 +34,8 @@ jobs:
             echo "Releases can only be created from the main branch." >&2
             exit 1
           fi
-
       - name: Check out the source code
         uses: actions/checkout@v7
-
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
@@ -46,10 +45,6 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
             desktop/package-lock.json
-
-      - name: Validate versions
-        run: make check-versions
-
       - name: Require a stable release version
         shell: bash
         run: |
@@ -57,23 +52,20 @@ jobs:
             echo 'VERSION must use the stable x.y.z format.' >&2
             exit 1
           fi
-
       - name: Install dependencies
-        timeout-minutes: 5
+        timeout-minutes: 15
         run: make install-deps
-
       - name: Run tests
         run: make test
 
-  build-windows:
-    name: Build Windows x64
-    needs: test
+  windows:
+    name: Build for Windows x64
+    needs: prerequisites
     runs-on: windows-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Check out the source code
         uses: actions/checkout@v7
-
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
@@ -83,24 +75,20 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
             desktop/package-lock.json
-
       - name: Install GNU Make
         shell: pwsh
         run: choco install make --yes --no-progress
-
       - name: Validate versions
         shell: bash
         run: make check-versions
-
       - name: Install dependencies
         timeout-minutes: 5
         shell: bash
         run: make install-deps
-
       - name: Build Windows application
+      - timeout-minutes: 15
         shell: bash
         run: make desktop-release
-
       - name: Prepare Windows asset
         shell: pwsh
         run: |
@@ -111,7 +99,6 @@ jobs:
           }
           New-Item -ItemType Directory -Path 'release-assets' -Force | Out-Null
           Copy-Item -LiteralPath $installers[0].FullName -Destination "release-assets/WikiDocs-windows-$version.exe"
-
       - name: Upload Windows asset
         uses: actions/upload-artifact@v7
         with:
@@ -121,15 +108,14 @@ jobs:
           retention-days: 1
           compression-level: 0
 
-  build-macos:
-    name: Build macOS arm64
-    needs: test
+  macos:
+    name: Build for macOS arm64
+    needs: prerequisites
     runs-on: macos-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Check out the source code
         uses: actions/checkout@v7
-
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
@@ -139,17 +125,13 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
             desktop/package-lock.json
-
       - name: Validate versions
         run: make check-versions
-
       - name: Install dependencies
         timeout-minutes: 5
         run: make install-deps
-
       - name: Build macOS application
         run: make desktop-release
-
       - name: Prepare macOS asset
         shell: bash
         run: |
@@ -162,7 +144,6 @@ jobs:
           artifact="$(find desktop/out/make -type f -name '*.zip' -print -quit)"
           mkdir -p release-assets
           cp "${artifact}" "release-assets/WikiDocs-macos-${version}.zip"
-
       - name: Upload macOS asset
         uses: actions/upload-artifact@v7
         with:
@@ -175,19 +156,18 @@ jobs:
   docker:
     name: Publish Docker image
     needs:
-      - build-windows
-      - build-macos
+      - prerequisites
+      - windows
+      - macos
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Check out the source code
         uses: actions/checkout@v7
-
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-
       - name: Install jq when unavailable
         shell: bash
         run: |
@@ -195,30 +175,25 @@ jobs:
             sudo apt-get update
             sudo apt-get install --yes jq
           fi
-
       - name: Validate versions
         run: make check-versions
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Build and publish Docker image
         run: make docker-release
 
   release:
     name: Publish GitHub release
     needs:
-      - build-windows
-      - build-macos
+      - windows
+      - macos
       - docker
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -229,13 +204,11 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-
       - name: Download desktop assets
         uses: actions/download-artifact@v8
         with:
           path: release-assets
           merge-multiple: true
-
       - name: Prepare release metadata
         shell: bash
         run: |
@@ -245,27 +218,18 @@ jobs:
           test -f "${windows_asset}"
           test -f "${macos_asset}"
           echo "VERSION=${version}" >> "${GITHUB_ENV}"
-
           cat > release-notes.md <<'EOF'
-          ## Unsigned desktop applications
-
-          The Windows and macOS packages in this release are not digitally signed.
-
+          ## Unsigned desktop applications  
+          The Windows and macOS packages in this release are not digitally signed.  
           ### Windows
-
-          If Microsoft Defender SmartScreen blocks the installer, select **More info** and then **Run anyway**. If Windows marks the downloaded file as blocked, right-click it, open **Properties**, select **Unblock**, and apply the change.
-
+          If Microsoft Defender SmartScreen blocks the installer, select **More info** and then **Run anyway**. If Windows marks the downloaded file as blocked, right-click it, open **Properties**, select **Unblock**, and apply the change.  
           ### macOS
-
-          Move WikiDocs to **Applications**, Control-click the application, select **Open**, and confirm **Open**. Alternatively, use **System Settings → Privacy & Security → Open Anyway**.
-
+          Move WikiDocs to **Applications**, Control-click the application, select **Open**, and confirm **Open**. Alternatively, use **System Settings → Privacy & Security → Open Anyway**.  
           If macOS still blocks this specific application, remove only its quarantine attribute:
-
           ```shell
           xattr -dr com.apple.quarantine /Applications/WikiDocs.app
           ```
           EOF
-
       - name: Create or replace GitHub release
         shell: bash
         env:
@@ -274,10 +238,8 @@ jobs:
           version="${VERSION}"
           windows_asset="release-assets/WikiDocs-windows-${version}.exe"
           macos_asset="release-assets/WikiDocs-macos-${version}.zip"
-
           git tag --force "${version}" "${GITHUB_SHA}"
           git push origin "refs/tags/${version}" --force
-
           if gh release view "${version}" >/dev/null 2>&1; then
             gh release edit "${version}" \
               --title "Release ${version}" \

@@ -9,10 +9,9 @@ VERSION_BACKEND := $(strip $(shell jq -r .version backend/package.json))
 VERSION_FRONTEND := $(strip $(shell jq -r .version frontend/package.json))
 VERSION_DESKTOP := $(strip $(shell jq -r .version desktop/package.json))
 
-.PHONY: checks check-versions check-localizations install-deps build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta
+.PHONY: checks check-versions check-localizations install-deps test build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
 
 checks: check-versions check-localizations
-.PHONY: check-versions install-deps test build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
 
 check-versions:
 	@if ! jq -en \
@@ -30,21 +29,21 @@ check-versions:
 check-localizations:
 	cd frontend && npm run check:localizations
 
-install-deps: check-versions
+install-deps:
 	cd backend && npm ci
 	cd frontend && npm ci
 	cd desktop && npm ci
 
-test: check-versions
+test:
 	cd backend && npm run test
 	cd frontend && npm run test
 	cd desktop && npm run test
 
-build-runtime: check-versions
+build-runtime:
 	cd backend && npm run build
 	cd frontend && npm run build
 
-desktop-release: check-versions build-runtime
+desktop-release:
 	@echo "Release Wiki|Docs Desktop version $(VERSION)"
 	cd desktop && npm run make
 
@@ -61,16 +60,15 @@ docker-compose-down:
 	docker compose -f docker/compose.yml -p wikidocs-dev down
 	docker compose -f docker/compose.yml -p wikidocs-dev rm -f
 
-docker-release: check-versions
+docker-release:
 	@echo "Releasing Wiki|Docs version $(VERSION)"
 	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile \
-		-t zavy86/wikidocs:latest \
 		-t zavy86/wikidocs:$(VERSION) \
 		-t zavy86/wikidocs:$(VERSION_MINOR) \
 		-t zavy86/wikidocs:$(VERSION_MAJOR) \
 		--push .
 
-docker-release-beta: check-versions
+docker-release-beta:
 	@echo "Releasing Wiki|Docs beta version"
 	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile -t zavy86/wikidocs:beta --push .
 
