@@ -52,8 +52,7 @@ jobs:
           images: |
             zavy86/wikidocs
 #            ghcr.io/username/app
-          tags: |  
-            type=raw,value=latest
+          tags: |
             type=raw,value=${{ env.VERSION }}
             type=raw,value=${{ env.V_MAJOR }}
             type=raw,value=${{ env.V_MINOR }}
