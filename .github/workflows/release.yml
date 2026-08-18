@@ -180,8 +180,8 @@ jobs:
     name: Publish Docker image
     needs:
       - prerequisites
-      - windows
-      - macos
+#      - windows
+#      - macos
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
