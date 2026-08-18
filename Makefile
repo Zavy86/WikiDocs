@@ -33,9 +33,11 @@ install-deps:
 	cd desktop && npm ci
 
 execute-tests:
-	cd backend && npm run test
-	cd frontend && npm run test
-	cd desktop && npm run test
+	mkdir -p test-results
+	cd backend && npm run test -- --json --outputFile=../test-results/backend.json
+	cd frontend && npm run test -- --watch=false --reporters=json --output-file=../test-results/frontend.json
+	cd desktop && npm run test:report
+	node scripts/write-test-summary.mjs test-results
 
 build-runtime:
 	cd backend && npm run build
