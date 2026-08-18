@@ -4,12 +4,12 @@ Just a databaseless markdown flat-file wiki.
 
 Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
-> This is the new version 2 Wiki|Docs, a complete rewrite of the original project.
+> This is the new version of Wiki|Docs, a complete rewrite of the original project.
 > 
 > The new version is based on a modern architecture with API, a web client, and a desktop application.
 > 
 > If you are looking for the oldest version of the project written in PHP, please follow
-> [this branch](https://github.com/Zavy86/WikiDocs/tree/v1).
+> [this branch](https://github.com/Zavy86/WikiDocs/tree/legacy).
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_.
 
@@ -56,6 +56,7 @@ To run Wiki|Docs you can either use the desktop application or run it in a self-
 ### Desktop
 
 [Download](https://github.com/Zavy86/wikidocs/releases) the lastest release of the desktop application and run the installer.
+
 The application will be installed in your system, and you can start it from the start menu or desktop shortcut.
 
 
@@ -111,30 +112,31 @@ services:
 If you want to sync your Wiki|Docs data between multiple devices, you can self-host the application and configure your
 desktop application to connect to your self-hosted instance.
 
-This way, you can access and edit your Wiki|Docs content online and from any device.
+In the FILE menu (press ALT on Windows), you can find the Settings menu where you can enter the sync configuration.
 
-> This feature is work in progress and will be available in a future release.
+This way, you can access and edit your Wiki|Docs content online and from any device.
 
 
 ## Developers
 
 Here you can find a list of the contributors that helped to make this project possible.
 
-If you want to contribute to the project, please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+If you want to contribute to the project, please check the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
 
 ### Creator
 
-**Manuel Zavatta**
-- [WebSite](http://www.zavy.im)
-- [GitHub](https://github.com/Zavy86)
-- [YouTube](https://www.youtube.com/@zavy86)
-- [Contacts](mailto://manuel.zavatta@gmail.com)
+💡 [**Manuel Zavatta**](https://github.com/Zavy86)
+[ [Website](http://im.zavy.dev)
+| [LinkedIn](https://www.linkedin.com/in/manuel-zavatta/)
+| [YouTube](https://www.youtube.com/@zavy86)
+| [Contacts](mailto://manuel.zavatta@gmail.com) ]
 
+### Collaborators
 
-### Version 1 Contributors
-
-- [Amin Persia](https://github.com/leomoon)
+- [Amin Persia](https://github.com/leomoon)  
 - [ffiesta](https://github.com/ffiesta)
+
+### Contributors
 - [Alex Meyer](https://github.com/reyemxela)
 - [Micha](https://github.com/serial)
 - [Bo Allen](https://github.com/bitwisecreative)

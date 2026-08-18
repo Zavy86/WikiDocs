@@ -1,0 +1,274 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/release.yml
+      - VERSION
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CI: 'true'
+  NODE_VERSION: '22'
+
+jobs:
+
+  prerequisites:
+    name: Validate versions, install dependencies and execute tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Require the main branch
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" != "refs/heads/main" ]]; then
+            echo "Releases can only be created from the main branch." >&2
+            exit 1
+          fi
+      - name: Check out the source code
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            desktop/package-lock.json
+      - name: Require a stable release version
+        shell: bash
+        run: |
+          if ! grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' VERSION; then
+            echo 'VERSION must use the stable x.y.z format.' >&2
+            exit 1
+          fi
+      - name: Install dependencies
+        run: make install-deps
+      - name: Execute tests
+        run: make execute-tests
+
+  windows:
+    name: Build for Windows x64
+    needs: prerequisites
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            desktop/package-lock.json
+      - name: Restore Electron cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.LOCALAPPDATA }}\electron\Cache
+          key: electron-cache-${{ runner.os }}-x64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          restore-keys: |
+            electron-cache-${{ runner.os }}-x64-v1-
+      - name: Install GNU Make
+        shell: pwsh
+        run: choco install make --yes --no-progress
+      - name: Validate versions
+        shell: bash
+        run: make check-versions
+      - name: Install dependencies
+        shell: bash
+        run: make install-deps
+      - name: Build runtimes
+        shell: bash
+        run: make build-runtime
+      - name: Build Windows application
+        shell: bash
+        run: make desktop-release
+      - name: Prepare Windows asset
+        shell: pwsh
+        run: |
+          $version = (Get-Content -Raw VERSION).Trim()
+          $installers = @(Get-ChildItem -Path 'desktop/out/make' -Recurse -File -Filter '*Setup.exe')
+          if ($installers.Count -ne 1) {
+            throw "Expected one Windows installer, found $($installers.Count)."
+          }
+          New-Item -ItemType Directory -Path 'release-assets' -Force | Out-Null
+          Copy-Item -LiteralPath $installers[0].FullName -Destination "release-assets/WikiDocs-windows-$version.exe"
+      - name: Upload Windows asset
+        uses: actions/upload-artifact@v7
+        with:
+          name: wikidocs-windows
+          path: release-assets/WikiDocs-windows-*.exe
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+
+  macos:
+    name: Build for macOS arm64
+    needs: prerequisites
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            desktop/package-lock.json
+      - name: Restore Electron cache
+        uses: actions/cache@v5
+        with:
+          path: ~/Library/Caches/electron
+          key: electron-cache-${{ runner.os }}-arm64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          restore-keys: |
+            electron-cache-${{ runner.os }}-arm64-v1-
+      - name: Validate versions
+        run: make check-versions
+      - name: Install dependencies
+        shell: bash
+        run: make install-deps
+      - name: Build runtimes
+        shell: bash
+        run: make build-runtime
+      - name: Build macOS application
+        run: make desktop-release
+      - name: Prepare macOS asset
+        shell: bash
+        run: |
+          version="$(tr -d '\r\n' < VERSION)"
+          artifact_count="$(find desktop/out/make -type f -name '*.zip' | wc -l | tr -d ' ')"
+          if [[ "${artifact_count}" != "1" ]]; then
+            echo "Expected one macOS archive, found ${artifact_count}." >&2
+            exit 1
+          fi
+          artifact="$(find desktop/out/make -type f -name '*.zip' -print -quit)"
+          mkdir -p release-assets
+          cp "${artifact}" "release-assets/WikiDocs-macos-${version}.zip"
+      - name: Upload macOS asset
+        uses: actions/upload-artifact@v7
+        with:
+          name: wikidocs-macos
+          path: release-assets/WikiDocs-macos-*.zip
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+
+  docker:
+    name: Publish Docker image
+    needs:
+      - prerequisites
+      - windows
+      - macos
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Validate versions
+        run: make check-versions
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and publish Docker image
+        run: make docker-release
+
+  release:
+    name: Publish GitHub release
+    needs:
+      - windows
+      - macos
+      - docker
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Download desktop assets
+        uses: actions/download-artifact@v8
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Prepare release metadata
+        shell: bash
+        run: |
+          version="$(tr -d '\r\n' < VERSION)"
+          windows_asset="release-assets/WikiDocs-windows-${version}.exe"
+          macos_asset="release-assets/WikiDocs-macos-${version}.zip"
+          test -f "${windows_asset}"
+          test -f "${macos_asset}"
+          echo "VERSION=${version}" >> "${GITHUB_ENV}"
+          cat > release-notes.md <<'EOF'
+          ## Migration
+          Before proceeding with the migration from version 1.x.x (legacy), always **perform a full backup** of your dataset.
+          Despite significant structural changes in this release, your data remains fully compatible: upon first launch, you will simply need to reconfigure the wiki and set up an administrator user, after which all existing documents will function as expected.
+          The only _manual adjustment required_ is moving the `homepage` document to the root directory, as the new index page is no longer located under that specific slug.
+          If are you using Docker you need to point to the new port `3210` instead of `80`.
+          ## Unsigned desktop applications
+          The dekstop packages in this release are not digitally signed.
+          An unsigned application lacks a digital certificate from Microsoft or Apple, causing operating systems to flag it as unverified and display security warnings even though the code is safe.
+          Digital signing is currently not planned because it requires recurring fees per year for developer certificates and Apple program memberships, which is not currently sustainable for this project.
+          To bypass these warnings, you can either build the application manually from the source code or follow the quick setup steps below:
+          ### Windows
+          If Microsoft Defender SmartScreen blocks the installer, select **More info** and then **Run anyway**. If Windows marks the downloaded file as blocked, right-click it, open **Properties**, select **Unblock**, and apply the change.
+          ### Mac
+          Move WikiDocs to **Applications**, Control-click the application, select **Open**, and confirm **Open**. Alternatively, use **System Settings → Privacy & Security → Open Anyway**.
+          If still blocks this specific application, remove only its quarantine attribute:
+          ```shell
+          xattr -dr com.apple.quarantine /Applications/WikiDocs.app
+          ```
+          EOF
+      - name: Create or replace GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${VERSION}"
+          windows_asset="release-assets/WikiDocs-windows-${version}.exe"
+          macos_asset="release-assets/WikiDocs-macos-${version}.zip"
+          git tag --force "${version}" "${GITHUB_SHA}"
+          git push origin "refs/tags/${version}" --force
+          if gh release view "${version}" >/dev/null 2>&1; then
+            gh release edit "${version}" \
+              --title "Release ${version}" \
+              --notes-file release-notes.md \
+              --draft=false \
+              --prerelease=false \
+              --latest
+            gh release upload "${version}" "${windows_asset}" "${macos_asset}" --clobber
+          else
+            gh release create "${version}" "${windows_asset}" "${macos_asset}" \
+              --verify-tag \
+              --title "Release ${version}" \
+              --notes-file release-notes.md \
+              --latest
+          fi

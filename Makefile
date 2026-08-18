@@ -3,22 +3,22 @@
 #
 
 VERSION := $(strip $(shell jq -Rr . VERSION))
-BEV := $(strip $(shell jq -r .version backend/package.json))
-FEV := $(strip $(shell jq -r .version frontend/package.json))
-DV := $(strip $(shell jq -r .version desktop/package.json))
+VERSION_MAJOR := $(strip $(shell jq -Rr 'split(".")[0]' VERSION))
+VERSION_MINOR := $(strip $(shell jq -Rr 'split(".")[0:2] | join(".")' VERSION))
+VERSION_BACKEND := $(strip $(shell jq -r .version backend/package.json))
+VERSION_FRONTEND := $(strip $(shell jq -r .version frontend/package.json))
+VERSION_DESKTOP := $(strip $(shell jq -r .version desktop/package.json))
 
-.PHONY: checks check-versions check-localizations install-deps build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta
-
-checks: check-versions check-localizations
+.PHONY: checks check-versions check-localizations install-deps execute-tests build-runtime desktop-release docker-build-dev docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
 
 check-versions:
 	@if ! jq -en \
 		--arg version "$(VERSION)" \
-		--arg backend "$(BEV)" \
-		--arg frontend "$(FEV)" \
-		--arg desktop "$(DV)" \
+		--arg backend "$(VERSION_BACKEND)" \
+		--arg frontend "$(VERSION_FRONTEND)" \
+		--arg desktop "$(VERSION_DESKTOP)" \
 		'$$version == $$backend and $$version == $$frontend and $$version == $$desktop' > /dev/null; then \
-		echo "Version mismatch: VERSION=$(VERSION), backend=$(BEV), frontend=$(FEV), desktop=$(DV)" >&2; \
+		echo "Version mismatch: VERSION=$(VERSION), backend=$(VERSION_BACKEND), frontend=$(VERSION_FRONTEND), desktop=$(VERSION_DESKTOP)" >&2; \
 		exit 1; \
 	else \
   	echo "Versions OK: $(VERSION)"; \
@@ -28,17 +28,28 @@ check-localizations:
 	cd frontend && npm run check:localizations
 
 install-deps:
-	cd backend && npm i
-	cd frontend && npm i
-	cd desktop && npm i
+	cd backend && npm ci
+	cd frontend && npm ci
+	cd desktop && npm ci
+
+execute-tests:
+	mkdir -p test-results
+	cd backend && npm run test -- --json --outputFile=../test-results/backend.json
+	cd frontend && npm run test -- --watch=false --reporters=json --output-file=../test-results/frontend.json
+	cd desktop && npm run test:report
+	node scripts/write-test-summary.mjs test-results
 
 build-runtime:
 	cd backend && npm run build
 	cd frontend && npm run build
 
-desktop-release: check-versions
+desktop-release:
 	@echo "Release Wiki|Docs Desktop version $(VERSION)"
 	cd desktop && npm run make
+
+docker-build-dev:
+	@echo "Releasing Wiki|Docs development version"
+	docker build -f docker/dockerfile -t zavy86/wikidocs:dev .
 
 docker-compose-up:
 	@echo "Starting Wiki|Docs stack"
@@ -49,12 +60,16 @@ docker-compose-down:
 	docker compose -f docker/compose.yml -p wikidocs-dev down
 	docker compose -f docker/compose.yml -p wikidocs-dev rm -f
 
-docker-release: check-versions
+docker-release:
 	@echo "Releasing Wiki|Docs version $(VERSION)"
-	#docker build -f docker/dockerfile -t zavy86/wikidocs:$(VERSION) .
-	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile -t zavy86/wikidocs:$(VERSION) .
+	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile \
+		-t zavy86/wikidocs:latest \
+		-t zavy86/wikidocs:$(VERSION) \
+		-t zavy86/wikidocs:$(VERSION_MINOR) \
+		-t zavy86/wikidocs:$(VERSION_MAJOR) \
+		--push .
 
-docker-release-beta: check-versions
+docker-release-beta:
 	@echo "Releasing Wiki|Docs beta version"
 	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile -t zavy86/wikidocs:beta --push .
 
