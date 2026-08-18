@@ -118,6 +118,14 @@ location / {
 
 You can customize the default template by creating the file `styles/styles-custom.css`.
 
+Attachment uploads are checked against the extension to MIME type map in
+`helpers/mimetypes/mimetypes.php`. To support an extension that is not covered
+there, copy `helpers/mimetypes/sample.mimetypes-custom.php` to
+`helpers/mimetypes/mimetypes-custom.php` and add it, for example
+`"midi" => "audio/midi",`. Entries in the custom file are merged on top of the
+defaults and are not overwritten by an upgrade, so the shipped map never needs
+to be edited.
+
 
 
 ## Developers

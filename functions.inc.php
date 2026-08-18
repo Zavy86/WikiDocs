@@ -198,6 +198,68 @@ function wdf_safe_filename(string $name):string{
 }
 
 /**
+ * MIME Types
+ *
+ * Load the project maintained extension => MIME types map from
+ * helpers/mimetypes/mimetypes.php and merge the optional user maintained
+ * helpers/mimetypes/mimetypes-custom.php on top of it, so an extension
+ * defined by the user replaces the default entry for that extension.
+ *
+ * Extensions are lowercased and every entry is normalized to an array of MIME
+ * types, so a custom file may declare a single type as a plain string.
+ *
+ * @return array Map of lowercase extension => array of accepted MIME types
+ */
+function wdf_mimetypes():array{
+  static $mimetypes=null;
+  if($mimetypes!==null){return $mimetypes;}
+  $dir=(defined("BASE")?BASE:__DIR__.DIRECTORY_SEPARATOR)."helpers".DIRECTORY_SEPARATOR."mimetypes".DIRECTORY_SEPARATOR;
+  $mimetypes=array();
+  foreach(array("mimetypes.php","mimetypes-custom.php") as $file){
+    if(!file_exists($dir.$file)){continue;}
+    $loaded=require($dir.$file);
+    if(!is_array($loaded)){continue;}
+    foreach($loaded as $extension=>$types){
+      $extension=strtolower(trim((string)$extension));
+      if(!strlen($extension)){continue;}
+      $types=array_values(array_filter(array_map(
+        fn($type)=>strtolower(trim((string)$type)),
+        is_array($types)?$types:array($types)
+      ),fn($type)=>strlen($type)>0));
+      if(!count($types)){continue;}
+      $mimetypes[$extension]=$types;
+    }
+  }
+  return $mimetypes;
+}
+
+/**
+ * MIME Type Allowed
+ *
+ * Check the content type reported for an uploaded file against the MIME types
+ * declared for its extension. An extension that is not declared is not
+ * checked, so an unusual format can be enabled through the attachment
+ * settings without also having to describe it in the MIME map.
+ *
+ * The reported content type is supplied by the client and can be forged, so
+ * this is a usability filter and not a security boundary: the extension
+ * allow-list remains the gate that decides what may be uploaded.
+ *
+ * @param string $extension File extension (case insensitive)
+ * @param ?string $type Content type reported for the uploaded file
+ * @return bool True if the content type is plausible for the extension
+ */
+function wdf_mimetype_allowed(string $extension,?string $type):bool{
+  $mimetypes=wdf_mimetypes();
+  $extension=strtolower(trim($extension));
+  // unknown extension, nothing to check against
+  if(!isset($mimetypes[$extension])){return true;}
+  // strip any parameters, e.g. "text/plain; charset=utf-8"
+  $type=strtolower(trim(explode(";",(string)$type)[0]));
+  return in_array($type,$mimetypes[$extension],true);
+}
+
+/**
  * Timestamp Format
  *
  * @param ?int $timestamp Unix timestamp
