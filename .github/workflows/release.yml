@@ -59,6 +59,7 @@ jobs:
         run: make test
 
   windows:
+    if: ${{ false }}
     name: Build for Windows x64
     needs: prerequisites
     runs-on: windows-latest
