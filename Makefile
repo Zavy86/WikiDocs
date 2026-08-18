@@ -9,7 +9,7 @@ VERSION_BACKEND := $(strip $(shell jq -r .version backend/package.json))
 VERSION_FRONTEND := $(strip $(shell jq -r .version frontend/package.json))
 VERSION_DESKTOP := $(strip $(shell jq -r .version desktop/package.json))
 
-.PHONY: checks check-versions check-localizations install-deps execute-tests build-runtime desktop-release docker-build-dev docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
+.PHONY: checks check-versions check-localizations install-deps execute-tests build-runtime desktop-release docker-release docker-release-beta docker-release-pulse docker-compose-up docker-compose-down
 
 check-versions:
 	@if ! jq -en \
@@ -47,19 +47,6 @@ desktop-release:
 	@echo "Release Wiki|Docs Desktop version $(VERSION)"
 	cd desktop && npm run make
 
-docker-build-dev:
-	@echo "Releasing Wiki|Docs development version"
-	docker build -f docker/dockerfile -t zavy86/wikidocs:dev .
-
-docker-compose-up:
-	@echo "Starting Wiki|Docs stack"
-	docker compose -f docker/compose.yml -p wikidocs-dev up --build --remove-orphans -d
-
-docker-compose-down:
-	@echo "Stopping Wiki|Docs stack"
-	docker compose -f docker/compose.yml -p wikidocs-dev down
-	docker compose -f docker/compose.yml -p wikidocs-dev rm -f
-
 docker-release:
 	@echo "Releasing Wiki|Docs version $(VERSION)"
 	docker buildx build --platform linux/amd64,linux/arm64 -f docker/dockerfile \
@@ -76,3 +63,12 @@ docker-release-beta:
 docker-release-pulse:
 	@echo "Releasing Wiki|Docs Pulse"
 	docker buildx build --platform linux/amd64,linux/arm64 -f pulse/dockerfile -t zavy86/wikidocs:pulse --push .
+
+docker-compose-up:
+	@echo "Starting Wiki|Docs stack"
+	docker compose -f docker/compose.yml -p wikidocs-dev up --build --remove-orphans -d
+
+docker-compose-down:
+	@echo "Stopping Wiki|Docs stack"
+	docker compose -f docker/compose.yml -p wikidocs-dev down
+	docker compose -f docker/compose.yml -p wikidocs-dev rm -f
