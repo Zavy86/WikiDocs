@@ -1,9 +1,6 @@
-name: Checks
+name: Tests
 
 on:
-  push:
-    branches:
-      - 'main'
   pull_request:
     types: [ opened, synchronize, reopened ]
 
@@ -12,7 +9,7 @@ env:
 
 jobs:
   checks:
-    name: Checks Pipeline
+    name: Tests Pipeline
     runs-on: ubuntu-latest
     permissions: read-all
     steps:
