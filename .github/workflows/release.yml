@@ -83,9 +83,9 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ${{ env.LOCALAPPDATA }}\electron\Cache
-          key: ${{ runner.os }}-electron-x64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          key: electron-cache-${{ runner.os }}-x64-v1-${{ hashFiles('desktop/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-electron-x64-v1-
+            electron-cache-${{ runner.os }}-x64-v1-
       - name: Install GNU Make
         shell: pwsh
         run: choco install make --yes --no-progress
@@ -142,9 +142,9 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/Library/Caches/electron
-          key: ${{ runner.os }}-electron-arm64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          key: electron-cache-${{ runner.os }}-arm64-v1-${{ hashFiles('desktop/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-electron-arm64-v1-
+            electron-cache-${{ runner.os }}-arm64-v1-
       - name: Validate versions
         run: make check-versions
       - name: Install dependencies
@@ -177,11 +177,12 @@ jobs:
           compression-level: 0
 
   docker:
+    if: ${{ false }}
     name: Publish Docker image
     needs:
       - prerequisites
-#      - windows
-#      - macos
+      - windows
+      - macos
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -206,12 +207,11 @@ jobs:
         run: make docker-release
 
   release:
-    if: ${{ false }}
     name: Publish GitHub release
     needs:
-      - windows
-      - macos
-      - docker
+#      - windows
+#      - macos
+#      - docker
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
