@@ -9,9 +9,7 @@ VERSION_BACKEND := $(strip $(shell jq -r .version backend/package.json))
 VERSION_FRONTEND := $(strip $(shell jq -r .version frontend/package.json))
 VERSION_DESKTOP := $(strip $(shell jq -r .version desktop/package.json))
 
-.PHONY: checks check-versions check-localizations install-deps test build-runtime desktop-release docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
-
-checks: check-versions check-localizations
+.PHONY: checks check-versions check-localizations install-deps execute-tests build-runtime desktop-release docker-build-dev docker-compose-up docker-compose-down docker-release docker-release-beta docker-release-pulse
 
 check-versions:
 	@if ! jq -en \
@@ -34,7 +32,7 @@ install-deps:
 	cd frontend && npm ci
 	cd desktop && npm ci
 
-test:
+execute-tests:
 	cd backend && npm run test
 	cd frontend && npm run test
 	cd desktop && npm run test

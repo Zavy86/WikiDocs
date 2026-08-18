@@ -34,6 +34,7 @@ const config:ForgeConfig = {
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
+      noMsi: true,
       setupIcon: `${iconBasePath}.ico`,
     }),
     new MakerZIP({}, ['darwin']),

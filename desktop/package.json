@@ -9,11 +9,10 @@
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
-    "prestart": "npm --prefix ../backend run build && npm --prefix ../frontend run build",
     "package": "node ./scripts/verify-runtime-artifacts.js && electron-forge package",
     "make": "node ./scripts/verify-runtime-artifacts.js && electron-forge make",
     "publish": "node ./scripts/verify-runtime-artifacts.js && electron-forge publish",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "node --test tests/*.test.js"
   },
   "packageManager": "npm",
   "dependencies": {

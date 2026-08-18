@@ -27,9 +27,9 @@ env:
 jobs:
 
   prerequisites:
-    name: Validate versions, install dependencies and test
+    name: Validate versions, install dependencies and execute tests
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
 #      - name: Require the main branch
 #        shell: bash
@@ -57,12 +57,12 @@ jobs:
             exit 1
           fi
       - name: Install dependencies
-        timeout-minutes: 15
         run: make install-deps
-      - name: Run tests
-        run: make test
+      - name: Execute tests
+        run: make execute-tests
 
   windows:
+    if: ${{ false }}
     name: Build for Windows x64
     needs: prerequisites
     runs-on: windows-latest
@@ -79,6 +79,13 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
             desktop/package-lock.json
+      - name: Restore Electron cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.LOCALAPPDATA }}\electron\Cache
+          key: ${{ runner.os }}-electron-x64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-electron-x64-v1-
       - name: Install GNU Make
         shell: pwsh
         run: choco install make --yes --no-progress
@@ -86,15 +93,12 @@ jobs:
         shell: bash
         run: make check-versions
       - name: Install dependencies
-        timeout-minutes: 15
         shell: bash
         run: make install-deps
       - name: Build runtimes
-        timeout-minutes: 15
         shell: bash
         run: make build-runtime
       - name: Build Windows application
-        timeout-minutes: 15
         shell: bash
         run: make desktop-release
       - name: Prepare Windows asset
@@ -117,7 +121,6 @@ jobs:
           compression-level: 0
 
   macos:
-    if: ${{ false }}
     name: Build for macOS arm64
     needs: prerequisites
     runs-on: macos-latest
@@ -134,14 +137,19 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
             desktop/package-lock.json
+      - name: Restore Electron cache
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Caches/electron
+          key: ${{ runner.os }}-electron-arm64-v1-${{ hashFiles('desktop/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-electron-arm64-v1-
       - name: Validate versions
         run: make check-versions
       - name: Install dependencies
-        timeout-minutes: 15
         shell: bash
         run: make install-deps
       - name: Build runtimes
-        timeout-minutes: 15
         shell: bash
         run: make build-runtime
       - name: Build macOS application

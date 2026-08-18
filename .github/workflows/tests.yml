@@ -21,5 +21,5 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install npm dependencies
         run: npm install typescript ts-node yaml
-      - name: Execute checks
-        run: make checks
+      - name: Execute tests
+        run: make execute-tests
