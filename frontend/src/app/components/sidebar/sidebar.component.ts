@@ -46,24 +46,13 @@ export class SidebarComponent {
     return ( notice.length > 0 ? notice : this.localizationService.getText('common.defaults.notice', { year: new Date().getFullYear() }) );
   });
 
-  protected readonly showDocument:Signal<boolean> = computed(():boolean => {
-    const document:DocumentType | null = this.document();
-    return !! document && ( document.exists === true || document.children.length > 0 );
-  });
-
   constructor() {
     effect((onCleanup):void => {
       const document:DocumentType | null = this.document();
       if ( document === null ) { return; }
-      const parentPath:string | null = this.getParentPath(document.metadata.path);
-      if ( parentPath === null ) {
-        this.sectionMetadata.set(null);
-        this.siblingEntries.set([]);
-        this.hasSiblingContext.set(false);
-        return;
-      }
+      const treePath:string = this.getParentPath(document.metadata.path) ?? document.metadata.path;
       this.hasSiblingContext.set(true);
-      const subscription:Subscription = this.httpService.GET<TreeType>(`/tree?path=${ encodeURIComponent(parentPath) }`).subscribe({
+      const subscription:Subscription = this.httpService.GET<TreeType>(`/tree?path=${ encodeURIComponent(treePath) }`).subscribe({
         next: (tree:TreeType):void => {
           this.sectionMetadata.set(tree.metadata);
           this.siblingEntries.set(tree.leaves);

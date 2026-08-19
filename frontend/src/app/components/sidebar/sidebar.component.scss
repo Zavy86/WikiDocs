@@ -154,12 +154,17 @@
   padding-inline-start: 40px;
 }
 
-.section-parent a {
+.sub-index.active a {
   font-weight: 600;
 }
 
-.sub-index.active {
-  background-color: var(--app-muted-surface-color);
+.sub-sub-index a {
+  font-weight: normal;
+  padding-inline-start: 50px;
+}
+
+.section-parent-active a {
+  font-weight: 600;
 }
 
 .sidebar-footer {

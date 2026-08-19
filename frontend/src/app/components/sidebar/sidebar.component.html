@@ -36,36 +36,21 @@
         <li class="nav-divider"></li>
       }
       @if (hasSiblingContext()) {
-        <li class="nav-section-label">{{ 'sidebar.current-section' | localized }}</li>
         @if (sectionMetadata(); as section) {
-          <li class="nav-item section-parent">
-            <strong>
-              <a [routerLink]="section.path" (click)="onNavLinkClick()">{{ section.title }}</a>
-            </strong>
+          <li class="nav-item section-parent" [class.active]="isActive(section)" [class.section-parent-active]="isActive(section)">
+            <a [routerLink]="section.path" (click)="onNavLinkClick()">{{ section.title }}</a>
           </li>
         }
         @for (entry of siblingEntries(); track entry.path) {
           <li class="nav-item sub-index" [class.active]="isActive(entry)">
             <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
           </li>
-        }
-      }
-      @if (showDocument() && (pinned()?.length || hasSiblingContext())) {
-        <li class="nav-divider"></li>
-      }
-      @if (showDocument()) {
-        <li class="nav-section-label">{{ 'sidebar.document' | localized }}</li>
-        <li class="nav-item active">
-          <strong>
-            <a [routerLink]="document()?.metadata?.path" (click)="onNavLinkClick()">{{ document()?.metadata?.title }}</a>
-          </strong>
-        </li>
-        @if (document()?.children?.length) {
-          @for (child of document()?.children ?? []; track child.path) {
-            <li class="nav-item sub-index" [class.active]="isActive(child)">
-              <a [routerLink]="child.path"
-                 (click)="onNavLinkClick()">{{ child.title }}</a>
-            </li>
+          @if (isActive(entry) && document()?.children?.length) {
+            @for (child of document()?.children ?? []; track child.path) {
+              <li class="nav-item sub-sub-index" [class.active]="isActive(child)">
+                <a [routerLink]="child.path" (click)="onNavLinkClick()">{{ child.title }}</a>
+              </li>
+            }
           }
         }
       }
