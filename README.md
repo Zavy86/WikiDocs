@@ -4,17 +4,19 @@
 
 [![license](https://img.shields.io/github/license/Zavy86/WikiDocs)](LICENSE)
 [![release](https://img.shields.io/github/v/release/Zavy86/WikiDocs?display_name=release&sort=semver)](https://github.com/Zavy86/WikiDocs/releases)
+[![latest downloads](https://img.shields.io/github/downloads/Zavy86/WikiDocs/latest/total)](https://github.com/Zavy86/WikiDocs/releases/latest)
 [![docker pulls](https://img.shields.io/docker/pulls/zavy86/wikidocs)](https://hub.docker.com/r/zavy86/wikidocs)
 
 Wiki|Docs is a privacy-friendly wiki for people who want to own their knowledge base.
 
 Run it entirely on your computer with the standalone desktop app, or host it yourself with Docker. Your content remains portable Markdown files, rather than data locked into a database or cloud service.
 
----
-
-[TRY THE DEMO](#demo) · [HOW TO INSTALL](#setup) · [SEE THE SCREENSHOTS](#screenshots) · [CONTRIBUTE](#contributing)
-
----
+<p align="center">
+  <a href="#demo"><img src="https://img.shields.io/badge/TRY THE DEMO-2ea44f" alt="TRY THE DEMO" /></a>
+  <a href="#setup"><img src="https://img.shields.io/badge/INSTALL WIKI|DOCS-0969da" alt="INSTALL WIKI|DOCS" /></a>
+  <a href="#screenshots"><img src="https://img.shields.io/badge/SEE SCREENSHOTS-8250df" alt="SEE SCREENSHOTS" /></a>
+  <a href="#contributing"><img src="https://img.shields.io/badge/CONTRIBUTE-e16f24" alt="CONTRIBUTE" /></a>
+</p>
 
 Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
@@ -83,6 +85,18 @@ Wiki|Docs combines the convenience of a modern editor with the durability of pla
 - And much more.
 
 
+## Demo
+
+Explore the demo playground at [http://demo.wikidocs.app](http://demo.wikidocs.app) with the following credentials:
+
+Authentication:
+
+Username: `john.doe@wikidocs.app`<br>
+Password: `wikidocs`
+
+If Wiki|Docs is useful to you, please consider [starring the project](https://github.com/Zavy86/WikiDocs/stargazers).
+
+
 ## Screenshots
 
 Here is a glimpse of the desktop and web experience. Select any image to open the original screenshot at full size.
@@ -105,18 +119,6 @@ Here is a glimpse of the desktop and web experience. Select any image to open th
 <p align="center">
   <a href="screenshots/wikidocs-api.png" target="_blank"><img src="screenshots/wikidocs-api.png" alt="Wiki|Docs API documentation" width="750" /></a>
 </p>
-
-
-## Demo
-
-Explore the demo playground at [http://demo.wikidocs.app](http://demo.wikidocs.app) with the following credentials:
-
-Authentication:
-
-Username: `john.doe@wikidocs.app`  
-Password: `wikidocs`
-
-If Wiki|Docs is useful to you, please consider [starring the project](https://github.com/Zavy86/WikiDocs/stargazers).
 
 
 ## Setup
