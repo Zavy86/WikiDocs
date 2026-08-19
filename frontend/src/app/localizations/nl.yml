@@ -260,7 +260,6 @@ settings:
     timezone-search: Zoek tijdzone
   title: Instellingen
 sidebar:
-  document: Document
   navigation-label: Wiki-navigatie
   pinned: Vastgezet
   search-label: Zoekwiki

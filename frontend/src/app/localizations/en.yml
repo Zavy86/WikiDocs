@@ -253,7 +253,6 @@ settings:
     timezone-search: Search timezone
   title: Settings
 sidebar:
-  document: Document
   navigation-label: Wiki navigation
   pinned: Pinned
   search-label: Search wiki

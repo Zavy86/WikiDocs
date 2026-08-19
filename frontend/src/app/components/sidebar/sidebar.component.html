@@ -18,29 +18,39 @@
   <nav class="sidebar-nav" [attr.aria-label]="'sidebar.navigation-label' | localized">
     <ul class="nav-list">
       @if (pinned()?.length) {
-        <li class="nav-section-label">{{ 'sidebar.pinned' | localized }}</li>
-      }
-      @for (entry of pinned(); track entry.path) {
-        <li class="nav-item">
-          <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+        <li class="nav-section-label nav-section-toggle">
+          <button type="button" [attr.aria-expanded]="pinnedExpanded()" (click)="togglePinned()">
+            <span>{{ 'sidebar.pinned' | localized }}</span>
+            <mat-icon aria-hidden="true">{{ pinnedExpanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </button>
         </li>
+        @if (pinnedExpanded()) {
+          @for (entry of pinned(); track entry.path) {
+            <li class="nav-item" [class.active]="isActive(entry)">
+              <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+            </li>
+          }
+        }
       }
-      @if (pinned()?.length && showDocument()) {
+      @if (pinned()?.length && hasSiblingContext()) {
         <li class="nav-divider"></li>
       }
-      @if (showDocument()) {
-        <li class="nav-section-label">{{ 'sidebar.document' | localized }}</li>
-        <li class="nav-item active">
-          <strong>
-            <a [routerLink]="document()?.metadata?.path" (click)="onNavLinkClick()">{{ document()?.metadata?.title }}</a>
-          </strong>
-        </li>
-        @if (document()?.children?.length) {
-          @for (child of document()?.children ?? []; track child.path) {
-            <li class="nav-item sub-index" [class.active]="isActive(child)">
-              <a [routerLink]="child.path"
-                 (click)="onNavLinkClick()">{{ child.title }}</a>
-            </li>
+      @if (hasSiblingContext()) {
+        @if (sectionMetadata(); as section) {
+          <li class="nav-item section-parent" [class.active]="isActive(section)" [class.section-parent-active]="isActive(section)">
+            <a [routerLink]="section.path" (click)="onNavLinkClick()">{{ section.title }}</a>
+          </li>
+        }
+        @for (entry of siblingEntries(); track entry.path) {
+          <li class="nav-item sub-index" [class.active]="isActive(entry)">
+            <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+          </li>
+          @if (isActive(entry) && document()?.children?.length) {
+            @for (child of document()?.children ?? []; track child.path) {
+              <li class="nav-item sub-sub-index" [class.active]="isActive(child)">
+                <a [routerLink]="child.path" (click)="onNavLinkClick()">{{ child.title }}</a>
+              </li>
+            }
           }
         }
       }

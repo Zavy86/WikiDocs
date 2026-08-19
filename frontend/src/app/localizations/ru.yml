@@ -253,7 +253,6 @@ settings:
     timezone-search: Поиск часового пояса
   title: Настройки
 sidebar:
-  document: Документ
   navigation-label: Навигация по wiki
   pinned: Закреплённые
   search-label: Поиск в wiki

@@ -133,7 +133,7 @@ routes with an authorization additionally require at least one authorization dec
 | `PATCH`  | `/api/pinned`       | `write`    | Move `path` to `sorting`.                                 |
 | `DELETE` | `/api/pinned`       | `write`    | Unpin `path`.                                             |
 | `GET`    | `/api/search`       | `read`     | Search document bodies for `query`.                       |
-| `GET`    | `/api/tree`         | `read`     | Retrieve direct children of `path`.                       |
+| `GET`    | `/api/tree`         | `read`     | Retrieve metadata and direct children of `path`.          |
 | `GET`    | `/api/document`     | `read`     | Retrieve `path`.                                          |
 | `POST`   | `/api/document`     | `write`    | Create or replace `path`.                                 |
 | `PATCH`  | `/api/document`     | `write`    | Move `path` to `destination`.                             |
@@ -456,13 +456,14 @@ destination parent and fails on a destination collision. Permanent removal recur
 
 ## Tree, search, and pinned documents
 
-Tree retrieval returns direct child metadata without loading document content.
+Tree retrieval returns metadata for the requested document and its direct children without loading document content.
 
 ```
 ┌─────────────────────────────────────────┐
 │ TreeContract                            │
 ├─────────────────────────────────────────┤
 │ Properties:                             │
+│ ├── metadata: MetadataContract          │
 │ └── leaves: MetadataContract[]          │
 └─────────────────────────────────────────┘
 ```
