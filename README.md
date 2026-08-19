@@ -7,9 +7,9 @@
 [![total downloads](https://img.shields.io/github/downloads/Zavy86/WikiDocs/total)](https://github.com/Zavy86/WikiDocs/releases)
 [![docker pulls](https://img.shields.io/docker/pulls/zavy86/wikidocs)](https://hub.docker.com/r/zavy86/wikidocs)
 
-Wiki|Docs is a privacy-friendly wiki for people who want to own their knowledge base.
+Wiki|Docs is a privacy-friendly wiki for people **who want to own** their knowledge base.
 
-Run it entirely on your computer with the standalone desktop app, or host it yourself with Docker. Your content remains portable Markdown files, rather than data locked into a database or cloud service.
+Run it entirely on your computer with the **standalone desktop app**, or host it yourself with Docker. Your content remains **portable Markdown files**, rather than data locked into a database or cloud service.
 
 <p align="center">
   <a href="#demo"><img src="https://img.shields.io/badge/TRY THE DEMO-2ea44f" alt="TRY THE DEMO" /></a>
@@ -27,7 +27,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 
 ## What's new in Wiki|Docs
 
-Wiki|Docs 2 is a complete rewrite in TypeScript across the entire stack: the NestJS backend, Angular web client, and Electron desktop application.
+Wiki|Docs 2 is a **complete rewrite in TypeScript** across the entire stack: the NestJS backend, Angular web client, and Electron desktop application.
 
 The new architecture brings:
 
@@ -42,13 +42,13 @@ The new architecture brings:
 
 ## Why Wiki|Docs?
 
-Wiki|Docs is designed for people who value ownership over their information. It keeps the writing experience simple while giving you the freedom to work locally, self host when needed, and move your content without vendor lock in.
+Wiki|Docs is designed for people who value **ownership over their information**. It keeps the writing experience simple while giving you the freedom to work locally, self-host when needed, and move your content without _vendor lock in_.
 
 | What you need | What Wiki\|Docs provides |
-| --- | --- |
+|---|---|
 | Privacy and portability | Plain Markdown files and no database required. |
 | A simple local workspace | A standalone desktop app that works without a hosted service. |
-| Access from anywhere | Optional Docker self hosting and sync between your desktop app and remote instance. |
+| Access from anywhere | Optional Docker self-hosting and sync between the desktop app and a remote instance. |
 
 
 ## Quick start
@@ -84,7 +84,7 @@ Wiki|Docs combines the convenience of a modern editor with the durability of pla
 
 ## Demo
 
-Explore the demo playground at [http://demo.wikidocs.app](http://demo.wikidocs.app) with the following credentials:
+Explore the demo playground at [http://demo.wikidocs.app](http://demo.wikidocs.app) with the following **demo credentials**:
 
 Authentication:
 
@@ -180,9 +180,9 @@ You can then access and edit your Wiki|Docs content online from any device.
 
 ## Migration
 
-Before migrating from version 1.x.x (legacy), always create a complete backup of your dataset.
+Before migrating from version 1.x.x (legacy), always create a **complete backup** of your dataset.
 
-Despite the significant structural changes in this release, your data remains fully compatible. On first launch, reconfigure the wiki and create an administrator user. All existing documents will then work as expected.
+Despite the significant structural changes in this release, your data remains **fully compatible**. On first launch, reconfigure the wiki and create an administrator user. All existing documents will then work as expected.
 
 The only manual adjustment is to move the homepage document to the root directory, because version 2 no longer uses the legacy homepage slug as its index page.
 
@@ -194,14 +194,14 @@ If you use Docker, point to port `3210` instead of `80` and bind the dataset vol
 Start with the resources below to learn how to use, host, extend, or get help with Wiki|Docs.
 
 - Visit [WikiDocs.app](https://www.wikidocs.app) for product documentation and guides.
-- Open your self hosted instance at `/api/` for the Swagger documentation.
+- Open your self-hosted instance at `/api/` for the Swagger documentation.
 - Ask questions or share ideas in [GitHub Discussions](https://github.com/Zavy86/WikiDocs/discussions).
 - Report a problem through [GitHub Issues](https://github.com/Zavy86/WikiDocs/issues).
 
 
 ## Contributing
 
-Contributions of every kind are welcome, from bug reports and feature ideas to documentation, testing, code, and pull request reviews.
+**Contributions of every kind are welcome**, from bug reports and feature ideas to documentation, testing, code, and pull request reviews.
 
 - [Report a bug](https://github.com/Zavy86/WikiDocs/issues/new?labels=bug)
 - [Propose a feature](https://github.com/Zavy86/WikiDocs/discussions)
