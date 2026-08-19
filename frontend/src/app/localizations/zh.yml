@@ -253,6 +253,7 @@ settings:
     timezone-search: 搜索时区
   title: 设置
 sidebar:
+  current-section: 本节中
   document: 文档
   navigation-label: Wiki 导航
   pinned: 已固定

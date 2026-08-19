@@ -253,6 +253,7 @@ settings:
     timezone-search: جست‌وجوی منطقهٔ زمانی
   title: تنظیمات
 sidebar:
+  current-section: در این بخش
   document: سند
   navigation-label: پیمایش ویکی
   pinned: سنجاق‌شده

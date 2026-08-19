@@ -253,6 +253,7 @@ settings:
     timezone-search: Wyszukaj strefę czasową
   title: Ustawienia
 sidebar:
+  current-section: W tej sekcji
   document: Dokument
   navigation-label: Nawigacja wiki
   pinned: Przypięte

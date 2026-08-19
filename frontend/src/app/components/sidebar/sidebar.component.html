@@ -18,14 +18,32 @@
   <nav class="sidebar-nav" [attr.aria-label]="'sidebar.navigation-label' | localized">
     <ul class="nav-list">
       @if (pinned()?.length) {
-        <li class="nav-section-label">{{ 'sidebar.pinned' | localized }}</li>
-      }
-      @for (entry of pinned(); track entry.path) {
-        <li class="nav-item">
-          <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+        <li class="nav-section-label nav-section-toggle">
+          <button type="button" [attr.aria-expanded]="pinnedExpanded()" (click)="togglePinned()">
+            <span>{{ 'sidebar.pinned' | localized }}</span>
+            <mat-icon aria-hidden="true">{{ pinnedExpanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </button>
         </li>
+        @if (pinnedExpanded()) {
+          @for (entry of pinned(); track entry.path) {
+            <li class="nav-item" [class.active]="isActive(entry)">
+              <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+            </li>
+          }
+        }
       }
-      @if (pinned()?.length && showDocument()) {
+      @if (pinned()?.length && hasSiblingContext()) {
+        <li class="nav-divider"></li>
+      }
+      @if (hasSiblingContext()) {
+        <li class="nav-section-label">{{ 'sidebar.current-section' | localized }}</li>
+        @for (entry of siblingEntries(); track entry.path) {
+          <li class="nav-item sub-index" [class.active]="isActive(entry)">
+            <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>
+          </li>
+        }
+      }
+      @if (showDocument() && (pinned()?.length || hasSiblingContext())) {
         <li class="nav-divider"></li>
       }
       @if (showDocument()) {

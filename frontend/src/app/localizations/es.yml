@@ -253,6 +253,7 @@ settings:
     timezone-search: Buscar zona horaria
   title: Configuración
 sidebar:
+  current-section: En esta sección
   document: Documento
   navigation-label: Navegación de la wiki
   pinned: Fijado

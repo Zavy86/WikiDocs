@@ -253,6 +253,7 @@ settings:
     timezone-search: Zeitzone suchen
   title: Einstellungen
 sidebar:
+  current-section: In diesem Abschnitt
   document: Dokument
   navigation-label: Wiki-Navigation
   pinned: Angeheftet
