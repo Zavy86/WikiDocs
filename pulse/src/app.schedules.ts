@@ -5,7 +5,7 @@ import { AppService } from 'src/app.service';
 const VERSION_INTERVAL = ( 15 * 60 * 1000 );
 const DAILY_METRICS_INTERVAL = ( 60 * 60 * 1000 );
 const WEEKLY_METRICS_INTERVAL = ( 60 * 60 * 1000 );
-const VERSION_URL = 'https://raw.githubusercontent.com/Zavy86/WikiDocs/master/VERSION';
+const VERSION_URL = 'https://raw.githubusercontent.com/Zavy86/WikiDocs/main/VERSION';
 
 @Injectable()
 export class AppSchedules implements OnModuleInit {
