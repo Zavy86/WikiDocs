@@ -32,6 +32,7 @@ export class SidebarComponent {
   public readonly openedChange:OutputEmitterRef<boolean> = output<boolean>();
 
   protected readonly pinnedExpanded:WritableSignal<boolean> = signal(true);
+  protected readonly sectionMetadata:WritableSignal<MetadataType | null> = signal<MetadataType | null>(null);
   protected readonly siblingEntries:WritableSignal<ReadonlyArray<MetadataType>> = signal<ReadonlyArray<MetadataType>>([]);
   protected readonly hasSiblingContext:WritableSignal<boolean> = signal(false);
 
@@ -56,6 +57,7 @@ export class SidebarComponent {
       if ( document === null ) { return; }
       const parentPath:string | null = this.getParentPath(document.metadata.path);
       if ( parentPath === null ) {
+        this.sectionMetadata.set(null);
         this.siblingEntries.set([]);
         this.hasSiblingContext.set(false);
         return;
@@ -63,9 +65,11 @@ export class SidebarComponent {
       this.hasSiblingContext.set(true);
       const subscription:Subscription = this.httpService.GET<TreeType>(`/tree?path=${ encodeURIComponent(parentPath) }`).subscribe({
         next: (tree:TreeType):void => {
+          this.sectionMetadata.set(tree.metadata);
           this.siblingEntries.set(tree.leaves);
         },
         error: ():void => {
+          this.sectionMetadata.set(null);
           this.siblingEntries.set([]);
           this.hasSiblingContext.set(false);
         }

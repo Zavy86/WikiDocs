@@ -285,8 +285,11 @@ export class DocumentService {
       this.logger.warn(`Tree path <${ pathLabel }> not found`);
       throw new NotFoundException(`Path <${ pathLabel }> not found`);
     }
-    const leaves:MetadataSchema[] = await this.retriveChildren(path);
-    return { leaves };
+    const [ metadata, leaves ]:[ MetadataSchema, MetadataSchema[] ] = await Promise.all([
+      this.buildDocumentMetadata(path),
+      this.retriveChildren(path)
+    ]);
+    return { metadata, leaves };
   }
 
   public async document_retrive(path:string):Promise<DocumentSchema> {

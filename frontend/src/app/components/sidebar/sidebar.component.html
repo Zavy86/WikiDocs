@@ -37,6 +37,13 @@
       }
       @if (hasSiblingContext()) {
         <li class="nav-section-label">{{ 'sidebar.current-section' | localized }}</li>
+        @if (sectionMetadata(); as section) {
+          <li class="nav-item section-parent">
+            <strong>
+              <a [routerLink]="section.path" (click)="onNavLinkClick()">{{ section.title }}</a>
+            </strong>
+          </li>
+        }
         @for (entry of siblingEntries(); track entry.path) {
           <li class="nav-item sub-index" [class.active]="isActive(entry)">
             <a [routerLink]="entry.path" (click)="onNavLinkClick()">{{ entry.title }}</a>

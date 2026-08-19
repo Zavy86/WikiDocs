@@ -154,6 +154,10 @@
   padding-inline-start: 40px;
 }
 
+.section-parent a {
+  font-weight: 600;
+}
+
 .sub-index.active {
   background-color: var(--app-muted-surface-color);
 }
