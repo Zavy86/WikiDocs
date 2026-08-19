@@ -1,7 +1,3 @@
-> Check out the new **Version 2** beta!
->
-> https://github.com/Zavy86/WikiDocs/tree/v2
-
 # Wiki|Docs
 
 Just a databaseless markdown flat-file wiki engine.
@@ -9,8 +5,6 @@ Just a databaseless markdown flat-file wiki engine.
 Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_
-
-[![Wiki|Docs presentation and contributors recruitment on YouTube](https://www.wikidocs.app/datasets/documents/homepage/cover-side-project-wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
 ## Features
 - Open source
