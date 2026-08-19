@@ -152,6 +152,7 @@ If you want to contribute to the project, please check the [CONTRIBUTING](CONTRI
 - [Petr Husák](https://github.com/petrhusak)
 - [Oliver Lehmann](https://github.com/OlliL)
 - [Prabal Khare](https://github.com/00PrabalK00)
+- [Roberto Bellingeri](https://github.com/bellingeri)
 
 
 ## License
