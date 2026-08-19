@@ -6,7 +6,7 @@
 [![Release](https://img.shields.io/github/v/release/Zavy86/WikiDocs?display_name=release&sort=semver)](https://github.com/Zavy86/WikiDocs/releases)
 [![Docker pulls](https://img.shields.io/docker/pulls/zavy86/wikidocs)](https://hub.docker.com/r/zavy86/wikidocs)
 
-Wiki|Docs is a local-first, privacy-friendly wiki for people who want to own their knowledge base.
+Wiki|Docs is a privacy-friendly wiki for people who want to own their knowledge base.
 
 Run it entirely on your computer with the standalone desktop app, or self-host it with Docker, your content remains portable Markdown files, not data locked into a database or cloud service.
 
@@ -38,12 +38,14 @@ The new architecture brings:
 
 - A standalone desktop application that keeps your Markdown files on your own computer, ready to use with the LLM tools you choose.
 - A self-hosted Docker service that can remotely store and serve the same portable data (privately or publicly).
-- Desktop-remote sync, so you can work locally and keep your knowledge base updated with your self-hosted instance.
+- Desktop and remote sync, so you can work locally and keep your knowledge base updated with your self-hosted instance.
 - REST APIs that make Wiki|Docs straightforward to integrate with other tools and workflows.
 
 ---
 
 ## Why Wiki|Docs?
+
+Wiki|Docs is designed for people who value ownership over their information. It keeps the writing experience simple while giving you the freedom to work locally, self host when needed, and move your content without vendor lock in.
 
 | What you need | What Wiki\|Docs provides |
 | --- | --- |
@@ -62,6 +64,8 @@ The new architecture brings:
 ---
 
 ## Features
+
+Wiki|Docs combines the convenience of a modern editor with the durability of plain text Markdown. Whether you are documenting a project, building a personal knowledge base, or sharing a team wiki, the same portable files remain at the center of your workflow.
 
 - Open source
 - Plain text files
@@ -85,6 +89,8 @@ The new architecture brings:
 ---
 
 ## Screenshots
+
+Here is a glimpse of the desktop and web experience. Select any image to open the original screenshot at full size.
 
 <p align="center">
   <a href="screenshots/wikidocs-homepage.png" target="_blank"><img src="screenshots/wikidocs-homepage.png" alt="Wiki|Docs homepage" width="250" /></a>
@@ -185,7 +191,21 @@ This way, you can access and edit your Wiki|Docs content online and from any dev
 
 ---
 
+## Migration
+
+Before migrating from version 1.x.x (legacy), always create a complete backup of your dataset.
+
+Despite the significant structural changes in this release, your data remains fully compatible. At first launch, reconfigure the wiki and create an administrator user. All existing documents will then work as expected.
+
+The only manual adjustment is to move the homepage document to the root directory, because the new index page is no longer located under that specific slug.
+
+If you use Docker, point to port `3210` instead of `80` and bind the dataset volume to `/var/lib/wikidocs/datasets`.
+
+---
+
 ## Help and documentation
+
+Start with the resources below to learn how to use, host, extend, or get help with Wiki|Docs.
 
 - Visit [WikiDocs.app](https://www.wikidocs.app) for product documentation and guides.
 - Open your self-hosted instance at `/api/` for Swagger docs.
@@ -196,7 +216,7 @@ This way, you can access and edit your Wiki|Docs content online and from any dev
 
 ## Contributing
 
-Contributions of every kind are welcome.
+Contributions of every kind are welcome, from bug reports and feature ideas to documentation, testing, code, and pull request reviews.
 
 - [Report a bug](https://github.com/Zavy86/WikiDocs/issues/new?labels=bug)
 - [Propose a feature](https://github.com/Zavy86/WikiDocs/discussions)
