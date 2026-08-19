@@ -1,6 +1,6 @@
 # Wiki|Docs
 
-> A database free, flat file wiki built with Markdown.
+> Just a databaseless markdown flat-file wiki
 
 [![license](https://img.shields.io/github/license/Zavy86/WikiDocs)](LICENSE)
 [![release](https://img.shields.io/github/v/release/Zavy86/WikiDocs?display_name=release&sort=semver)](https://github.com/Zavy86/WikiDocs/releases)
