@@ -38,6 +38,15 @@ if(!file_exists(realpath(dirname(__FILE__))."/datasets/config.inc.php")){header(
 // include configuration file
 require_once("datasets/config.inc.php");
 
+// attachment extensions (empty array = no restriction)
+if(!defined("ATTACHMENT_UPLOAD_EXTENSIONS")){define("ATTACHMENT_UPLOAD_EXTENSIONS",array());}
+if(!defined("ATTACHMENT_DISPLAY_EXTENSIONS")){define("ATTACHMENT_DISPLAY_EXTENSIONS",array());}
+
+// extensions that can never be allowed, regardless of configuration
+if(!defined("ATTACHMENT_DENIED_EXTENSIONS")){
+  define("ATTACHMENT_DENIED_EXTENSIONS",array("php","php3","php4","php5","php7","php8","phtml","phps","phar","inc","htaccess","htpasswd","cgi","pl","py","sh","shtml"));
+}
+
 // check debug from session
 if(Session::getInstance()->isDebug()){$debug=true;}else{$debug=false;}
 

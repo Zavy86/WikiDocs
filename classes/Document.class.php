@@ -435,9 +435,10 @@ final class Document{
             foreach($elements as $element_fe){
                 // skip directories
                 if(is_dir($this->DIR."/".$element_fe)){continue;}
-                $file_extension=explode(".",$element_fe);
+                $file_extension_array=explode(".",$element_fe);
+                $file_extension=strtolower(end($file_extension_array));
                 // check extensions
-                if(!in_array(end($file_extension),array("png","gif","jpg","jpeg","svg"))){continue;}
+                if(!in_array($file_extension,array("png","gif","jpg","jpeg","svg"))){continue;}
                 // add element to documents array
                 $images_array[]=$element_fe;
             }
@@ -464,9 +465,15 @@ final class Document{
             foreach($elements as $element_fe){
                 // skip directories
                 if(is_dir($this->DIR."/".$element_fe)){continue;}
-                $file_extension=explode(".",$element_fe);
+                $file_extension_array=explode(".",$element_fe);
+                $file_extension=strtolower(end($file_extension_array));
                 // check extensions
-                if(!in_array(end($file_extension),array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx"))){continue;}
+                if(MODE=='edit') {
+                    if(count(ATTACHMENT_UPLOAD_EXTENSIONS) && !in_array($file_extension,ATTACHMENT_UPLOAD_EXTENSIONS)){continue;}
+                }
+                else {
+                    if(count(ATTACHMENT_DISPLAY_EXTENSIONS) && !in_array($file_extension,ATTACHMENT_DISPLAY_EXTENSIONS)){continue;}
+                }
                 // make element
                 $attachment=new stdClass();
                 $attachment->label=$element_fe;

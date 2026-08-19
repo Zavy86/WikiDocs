@@ -80,7 +80,9 @@ if($g_act=="conclude"){
     'VIEWCODE'=>'null',
     'COLOR'=>'#4CAF50',
     'DARK'=>'false',
-    'GTAG'=>'null'
+    'GTAG'=>'null',
+    'ATTACHMENT_UPLOAD_EXTENSIONS'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods"),
+    'ATTACHMENT_DISPLAY_EXTENSIONS'=>array("pdf","txt","doc","docx","xls","xlsx","ppt","pptx","odt","ods")
   ];
   foreach($config_items as $key=>$value){
     if($value===null||$value==='null'){
@@ -89,6 +91,8 @@ if($g_act=="conclude"){
       $config.="define('".$key. "', ".($value==='true'?'true':'false').");\n";
     }elseif(is_numeric($value)){
       $config.="define('".$key."', ".$value.");\n";
+    }elseif(is_array($value)){
+      $config.="define('".$key."', array(\"".implode("\",\"",$value)."\"));\n";
     }else{
       $config.="define('" .$key."', '".addslashes($value)."');\n";
     }
