@@ -31,10 +31,10 @@ Wiki|Docs 2 is a **complete rewrite in TypeScript** across the entire stack: the
 
 The new architecture brings:
 
-- A standalone desktop application that keeps your Markdown files on your computer, ready for use with the LLM tools you choose.
-- A self-hosted Docker service that can remotely store and serve the same portable data (privately or publicly).
-- Desktop and remote sync, so you can work locally and keep your knowledge base updated with your self-hosted instance.
-- REST APIs that make Wiki|Docs straightforward to integrate with other tools and workflows.
+- A **standalone desktop application** that keeps your Markdown files on your computer, ready for use with the LLM tools you choose.
+- A **self-hosted Docker service** that can remotely store and serve the same portable data (privately or publicly).
+- **Desktop and remote sync**, so you can work locally and keep your knowledge base updated with your self-hosted instance.
+- **REST APIs** that make Wiki|Docs straightforward to integrate with other tools and workflows.
 
 > If you are looking for the original PHP version of the project, please see
 > [this branch](https://github.com/Zavy86/WikiDocs/tree/legacy).
@@ -96,7 +96,7 @@ If Wiki|Docs is useful to you, please consider [starring the project](https://gi
 
 ## Screenshots
 
-Here is a glimpse of the desktop and web experience. Select any image to open the original screenshot at full size.
+Here is a glimpse of the desktop and web experience. Select any image to open the original screenshot at **full size**.
 
 <p align="center">
   <a href="screenshots/wikidocs-homepage.png" target="_blank"><img src="screenshots/wikidocs-homepage.png" alt="Wiki|Docs homepage" width="250" /></a>
@@ -120,11 +120,11 @@ Here is a glimpse of the desktop and web experience. Select any image to open th
 
 ## Setup
 
-To run Wiki|Docs you can either use the desktop application or run it in a self-hosted environment.
+To run Wiki|Docs, you can either use the desktop application or run it in a self-hosted environment.
 
 ### Desktop
 
-[Download](https://github.com/Zavy86/wikidocs/releases) the latest desktop application release and run the installer.
+[Download](https://github.com/Zavy86/wikidocs/releases) the latest **desktop application release** and run the installer.
 
 The application will be installed on your system, then you can launch it from the Start menu or desktop shortcut.
 
@@ -173,7 +173,7 @@ services:
 
 To sync your Wiki|Docs data across multiple devices, host the application yourself and configure the desktop app to connect to your remote instance.
 
-Open the Settings menu from the File menu (press Alt on Windows) to enter the sync configuration.
+Open the **Settings** menu from the File menu (press Alt on Windows) to enter the sync configuration.
 
 You can then access and edit your Wiki|Docs content online from any device.
 
@@ -184,16 +184,16 @@ Before migrating from version 1.x.x (legacy), always create a **complete backup*
 
 Despite the significant structural changes in this release, your data remains **fully compatible**. On first launch, reconfigure the wiki and create an administrator user. All existing documents will then work as expected.
 
-The only manual adjustment is to move the homepage document to the root directory, because version 2 no longer uses the legacy homepage slug as its index page.
+The **only manual adjustment** is to move the homepage document to the root directory, because version 2 no longer uses the legacy homepage slug as its index page.
 
-If you use Docker, point to port `3210` instead of `80` and bind the dataset volume to `/var/lib/wikidocs/datasets`.
+If you use Docker, point to port **`3210`** instead of `80` and bind the dataset volume to **`/var/lib/wikidocs/datasets`**.
 
 
 ## Help and documentation
 
 Start with the resources below to learn how to use, host, extend, or get help with Wiki|Docs.
 
-- Visit [WikiDocs.app](https://www.wikidocs.app) for product documentation and guides.
+- Visit [www.wikidocs.app](https://www.wikidocs.app) for product documentation and guides.
 - Open your self-hosted instance at `/api/` for the Swagger documentation.
 - Ask questions or share ideas in [GitHub Discussions](https://github.com/Zavy86/WikiDocs/discussions).
 - Report a problem through [GitHub Issues](https://github.com/Zavy86/WikiDocs/issues).
