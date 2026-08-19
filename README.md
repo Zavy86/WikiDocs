@@ -38,6 +38,28 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - and many more...
 
 
+## Screenshots
+
+<p align="center">
+  <a href="screenshots/wikidocs-homepage.png" target="_blank"><img src="screenshots/wikidocs-homepage.png" alt="Wiki|Docs homepage" width="280" /></a>
+  <a href="screenshots/wikidocs-settings.png" target="_blank"><img src="screenshots/wikidocs-settings.png" alt="Wiki|Docs settings" width="280" /></a>
+  <a href="screenshots/wikidocs-profile.png" target="_blank"><img src="screenshots/wikidocs-profile.png" alt="Wiki|Docs profile" width="280" /></a>
+</p>
+<p align="center">
+  <a href="screenshots/wikidocs-accounts.png" target="_blank"><img src="screenshots/wikidocs-accounts.png" alt="Wiki|Docs accounts" width="280" /></a>
+  <a href="screenshots/wikidocs-editor.png" target="_blank"><img src="screenshots/wikidocs-editor.png" alt="Wiki|Docs editor" width="280" /></a>
+  <a href="screenshots/wikidocs-attachments.png" target="_blank"><img src="screenshots/wikidocs-attachments.png" alt="Wiki|Docs attachments" width="280" /></a>
+</p>
+<p align="center">
+  <a href="screenshots/wikidocs-versions.png" target="_blank"><img src="screenshots/wikidocs-versions.png" alt="Wiki|Docs page versions" width="280" /></a>
+  <a href="screenshots/wikidocs-trash.png" target="_blank"><img src="screenshots/wikidocs-trash.png" alt="Wiki|Docs trash" width="280" /></a>
+  <a href="screenshots/wikidocs-print.png" target="_blank"><img src="screenshots/wikidocs-print.png" alt="Wiki|Docs print view" width="280" /></a>
+</p>
+<p align="center">
+  <a href="screenshots/wikidocs-api.png" target="_blank"><img src="screenshots/wikidocs-api.png" alt="Wiki|Docs API documentation" width="840" /></a>
+</p>
+
+
 ## Demo
 
 Try the demo playground at: [http://demo.wikidocs.app](http://demo.wikidocs.app)
