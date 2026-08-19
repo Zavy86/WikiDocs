@@ -1,20 +1,65 @@
 # Wiki|Docs
 
-Just a databaseless markdown flat-file wiki.
+> Just a databaseless markdown flat-file wiki.
+
+[![License](https://img.shields.io/github/license/Zavy86/WikiDocs)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/Zavy86/WikiDocs?display_name=release&sort=semver)](https://github.com/Zavy86/WikiDocs/releases)
+[![Docker pulls](https://img.shields.io/docker/pulls/zavy86/wikidocs)](https://hub.docker.com/r/zavy86/wikidocs)
+
+Wiki|Docs is a local-first, privacy-friendly wiki for people who want to own their knowledge base.
+
+Run it entirely on your computer with the standalone desktop app, or self-host it with Docker, your content remains portable Markdown files, not data locked into a database or cloud service.
+
+---
+
+[TRY THE DEMO](#demo) · [HOW TO INSTALL](#setup) · [SEE THE SCREENSHOTS](#screenshots) · [CONTRIBUTE](#contributing)
+
+---
 
 Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
-> This is the new version of Wiki|Docs, a complete rewrite of the original project.
-> 
-> The new version is based on a modern architecture with API, a web client, and a desktop application.
-> 
+> This is the new version of Wiki|Docs, a complete rewrite of the original project.  
+> The new version is based on a modern architecture with API, a web client, and a desktop application.  
 > If you are looking for the oldest version of the project written in PHP, please follow
 > [this branch](https://github.com/Zavy86/WikiDocs/tree/legacy).
 
-_Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_.
 
 [![Wiki|Docs presentation and contributors recruitment on YouTube](screenshots/wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
+_Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_.
+
+---
+
+## What's new in Wiki|Docs
+
+Wiki|Docs 2 is a complete rewrite in TypeScript across the entire stack: the NestJS backend, Angular web client, and Electron desktop application.
+
+The new architecture brings:
+
+- A standalone desktop application that keeps your Markdown files on your own computer, ready to use with the LLM tools you choose.
+- A self-hosted Docker service that can remotely store and serve the same portable data (privately or publicly).
+- Desktop-remote sync, so you can work locally and keep your knowledge base updated with your self-hosted instance.
+- REST APIs that make Wiki|Docs straightforward to integrate with other tools and workflows.
+
+---
+
+## Why Wiki|Docs?
+
+| What you need | What Wiki\|Docs provides |
+| --- | --- |
+| Privacy and portability | Plain Markdown files and no database required. |
+| A simple local workspace | A standalone desktop app that works without a hosted service. |
+| Access from everywhere | Optional Docker self-hosting and sync between desktop and remote. |
+
+---
+
+## Quick start
+
+1. [Try the public demo](#demo) to explore Wiki|Docs immediately.
+2. [Download the desktop application](https://github.com/Zavy86/wikidocs/releases) to keep your wiki entirely local.
+3. [Run the Docker image](#self-hosted) when you want a self-hosted instance and remote sync.
+
+---
 
 ## Features
 
@@ -37,6 +82,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
 - Dark mode
 - and many more...
 
+---
 
 ## Screenshots
 
@@ -59,6 +105,7 @@ _Please consider supporting this project by making a donation via [PayPal](https
   <a href="screenshots/wikidocs-api.png" target="_blank"><img src="screenshots/wikidocs-api.png" alt="Wiki|Docs API documentation" width="750" /></a>
 </p>
 
+---
 
 ## Demo
 
@@ -69,18 +116,19 @@ Authentication:
 Username: `john.doe@wikidocs.app`  
 Password: `wikidocs`
 
+If Wiki|Docs is useful to you, please consider [starring the project](https://github.com/Zavy86/WikiDocs/stargazers).
+
+---
 
 ## Setup
 
 To run Wiki|Docs you can either use the desktop application or run it in a self-hosted environment.
-
 
 ### Desktop
 
 [Download](https://github.com/Zavy86/wikidocs/releases) the lastest release of the desktop application and run the installer.
 
 The application will be installed in your system, and you can start it from the start menu or desktop shortcut.
-
 
 ### Self-hosted
 
@@ -92,20 +140,17 @@ Running in container is the recommended way to self-host Wiki|Docs, as it is the
 You can access to the web client at `http://localhost:3210` after running the container, and you can also interact with
 the backend API at `http://localhost:3210/api/` where you can find the swagger documentation.
 
-
 #### Quick run
 
 ```
 docker run -p 3210:3210 zavy86/wikidocs:2
 ```
 
-
 #### Additional settings
 
 ```
 docker run --name wikidocs -d -p 3210:3210 -v /path/to/local/wikidocs/datasets/or/volume:/var/lib/wikidocs zavy86/wikidocs:2
 ```
-
 
 #### With Docker Compose
 
@@ -127,6 +172,7 @@ services:
       - "3210:3210"
 ```
 
+---
 
 ## Sync
 
@@ -137,6 +183,29 @@ In the FILE menu (press ALT on Windows), you can find the Settings menu where yo
 
 This way, you can access and edit your Wiki|Docs content online and from any device.
 
+---
+
+## Help and documentation
+
+- Visit [WikiDocs.app](https://www.wikidocs.app) for product documentation and guides.
+- Open your self-hosted instance at `/api/` for Swagger docs.
+- Ask questions or share ideas in [GitHub Discussions](https://github.com/Zavy86/WikiDocs/discussions).
+- Report a problem through [GitHub Issues](https://github.com/Zavy86/WikiDocs/issues).
+
+---
+
+## Contributing
+
+Contributions of every kind are welcome.
+
+- [Report a bug](https://github.com/Zavy86/WikiDocs/issues/new?labels=bug)
+- [Propose a feature](https://github.com/Zavy86/WikiDocs/discussions)
+- [Improve the documentation](https://github.com/Zavy86/WikiDocs/issues/new)
+- [See where help is wanted](https://github.com/Zavy86/WikiDocs/labels/help%20wanted)
+- [Find a good first issue](https://github.com/Zavy86/WikiDocs/labels/good%20first%20issue)
+- [Contribute code](CONTRIBUTING.md)
+
+---
 
 ## Developers
 
@@ -176,6 +245,8 @@ If you want to contribute to the project, please check the [CONTRIBUTING](CONTRI
 - [Prabal Khare](https://github.com/00PrabalK00)
 - [Roberto Bellingeri](https://github.com/bellingeri)
 
+
+---
 
 ## License
 
