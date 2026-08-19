@@ -253,8 +253,6 @@ settings:
     timezone-search: Rechercher un fuseau horaire
   title: Paramètres
 sidebar:
-  current-section: Dans cette section
-  document: Document
   navigation-label: Navigation du wiki
   pinned: Épinglé
   search-label: Rechercher dans le wiki

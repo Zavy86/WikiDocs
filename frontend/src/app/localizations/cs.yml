@@ -253,8 +253,6 @@ settings:
     timezone-search: Hledat časové pásmo
   title: Nastavení
 sidebar:
-  current-section: V této sekci
-  document: Dokument
   navigation-label: Navigace wiki
   pinned: Připnuté
   search-label: Prohledat wiki

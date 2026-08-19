@@ -253,8 +253,6 @@ settings:
     timezone-search: البحث عن منطقة زمنية
   title: الإعدادات
 sidebar:
-  current-section: في هذا القسم
-  document: مستند
   navigation-label: تنقل الويكي
   pinned: مثبّت
   search-label: البحث في الويكي

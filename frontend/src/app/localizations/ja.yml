@@ -253,8 +253,6 @@ settings:
     timezone-search: タイムゾーンを検索
   title: 設定
 sidebar:
-  current-section: このセクション内
-  document: ドキュメント
   navigation-label: Wikiナビゲーション
   pinned: 固定済み
   search-label: Wikiを検索

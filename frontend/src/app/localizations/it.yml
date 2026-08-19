@@ -253,8 +253,6 @@ settings:
     timezone-search: Cerca fuso orario
   title: Impostazioni
 sidebar:
-  current-section: In questa sezione
-  document: Documento
   navigation-label: Navigazione della wiki
   pinned: In evidenza
   search-label: Cerca nella wiki
