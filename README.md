@@ -20,12 +20,6 @@ Run it entirely on your computer with the standalone desktop app, or host it you
 
 Project homepage: [https://www.wikidocs.app](https://www.wikidocs.app)
 
-> This is the new version of Wiki|Docs, a complete rewrite of the original project.  
-> The new version is built on a modern architecture with a REST API, web client, and desktop application.  
-> If you are looking for the original PHP version of the project, please see
-> [this branch](https://github.com/Zavy86/WikiDocs/tree/legacy).
-
-
 [![Wiki|Docs presentation and contributors recruitment on YouTube](screenshots/wikidocs-youtube.jpg)](https://youtu.be/x2nVq9RbG54 "Watch Wiki|Docs presentation and contributors recruitment on YouTube")
 
 _Please consider supporting this project by making a donation via [PayPal](https://www.paypal.me/zavy86)_.
@@ -41,6 +35,9 @@ The new architecture brings:
 - A self-hosted Docker service that can remotely store and serve the same portable data (privately or publicly).
 - Desktop and remote sync, so you can work locally and keep your knowledge base updated with your self-hosted instance.
 - REST APIs that make Wiki|Docs straightforward to integrate with other tools and workflows.
+
+> If you are looking for the original PHP version of the project, please see
+> [this branch](https://github.com/Zavy86/WikiDocs/tree/legacy).
 
 
 ## Why Wiki|Docs?
