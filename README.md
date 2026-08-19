@@ -4,7 +4,7 @@
 
 [![license](https://img.shields.io/github/license/Zavy86/WikiDocs)](LICENSE)
 [![release](https://img.shields.io/github/v/release/Zavy86/WikiDocs?display_name=release&sort=semver)](https://github.com/Zavy86/WikiDocs/releases)
-[![latest downloads](https://img.shields.io/github/downloads/Zavy86/WikiDocs/latest/total)](https://github.com/Zavy86/WikiDocs/releases/latest)
+[![total downloads](https://img.shields.io/github/downloads/Zavy86/WikiDocs/total)](https://github.com/Zavy86/WikiDocs/releases)
 [![docker pulls](https://img.shields.io/docker/pulls/zavy86/wikidocs)](https://hub.docker.com/r/zavy86/wikidocs)
 
 Wiki|Docs is a privacy-friendly wiki for people who want to own their knowledge base.
