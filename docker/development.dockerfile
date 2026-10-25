@@ -8,7 +8,7 @@
 # docker run --name wikidocs-dev -d -p 80:80 -v ${PWD}:/var/www/localhost/htdocs wikidocs-dev
 #
 
-FROM alpine:3.20
+FROM alpine:3
 
 ARG DEPENDENCIES="\
 nano \

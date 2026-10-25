@@ -13,7 +13,7 @@
 # docker buildx build -f docker/production.dockerfile --platform linux/amd64,linux/arm64 --no-cache --push -t zavy86/wikidocs .
 #
 
-FROM alpine:3.20
+FROM alpine:3
 
 ARG DEPENDENCIES="\
 shadow \
@@ -34,8 +34,8 @@ RUN apk add --no-cache $DEPENDENCIES
 RUN php --ini
 RUN php -i | grep "Loaded Configuration File"
 # increase upload file size
-RUN sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 256M/' /etc/php83/php.ini && \
-    sed -i 's/^post_max_size = .*/post_max_size = 256M/' /etc/php83/php.ini
+RUN sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 256M/' /etc/php*/php.ini && \
+    sed -i 's/^post_max_size = .*/post_max_size = 256M/' /etc/php*/php.ini
 
 # configure apache
 RUN sed -ri \
