@@ -168,6 +168,41 @@ services:
       - "3210:3210"
 ```
 
+#### About the secret
+
+`SECRET` is the private key Wiki|Docs uses to sign session tokens and attachment links and to hash account passwords.
+It is never shown to users and does not need to be typed anywhere: set it once and keep it.
+
+- Use a long random value (32 characters or more), for example `openssl rand -hex 32`.
+- Keep it stable: changing it signs everyone out and invalidates every stored account password, so users could no longer log in.
+- Do not share it or commit it to version control.
+- The Docker image ships with an insecure default, always override it on any instance reachable by others.
+
+To keep the secret out of the compose file, store it in a file and point `SECRET_FILE` to it.
+When `SECRET_FILE` is set it takes precedence over `SECRET`, and trailing line breaks in the file are ignored.
+
+```
+volumes:
+  datasets:
+
+services:
+  wikidocs:
+    image: zavy86/wikidocs:2
+    environment:
+      MODE: public|private
+      SECRET_FILE: /run/secrets/wikidocs_secret
+    volumes:
+      - datasets:/var/lib/wikidocs/datasets
+    ports:
+      - "3210:3210"
+    secrets:
+      - wikidocs_secret
+
+secrets:
+  wikidocs_secret:
+    file: ./wikidocs_secret.txt
+```
+
 
 ## Sync
 

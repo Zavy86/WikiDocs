@@ -9,6 +9,7 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from 'src/app.module';
 import { AppLogger } from 'src/app.logger';
+import { resolveSecretFromFile } from 'src/app.environment';
 
 const logger:Logger = new Logger('Bootstrap');
 
@@ -18,6 +19,11 @@ function crash(message:string):never {
 }
 
 async function checkEnvironmentOrCrash():Promise<void> {
+  try {
+    await resolveSecretFromFile();
+  } catch ( error ) {
+    crash((error as Error).message);
+  }
   if ( ! process.env.MODE ) { crash(`Missing required MODE environment variable`); }
   if ( process.env.MODE !== 'local' && process.env.MODE !== 'private' && process.env.MODE !== 'public' ) {
     crash(`Invalid MODE environment variable value <${ process.env.MODE }>, expected 'local', 'private' or 'public'`);
