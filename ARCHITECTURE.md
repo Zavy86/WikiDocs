@@ -65,13 +65,19 @@ for non-API, extensionless routes.
 
 The backend validates required environment variables before NestJS starts. Invalid configuration terminates the process.
 
-| Variable   | Required | Meaning                                                                                     |
-|------------|----------|---------------------------------------------------------------------------------------------|
-| `MODE`     | Yes      | Runtime mode: `local`, `private`, or `public`.                                              |
-| `SECRET`   | Yes      | HMAC/JWT secret used for passwords, session tokens, and attachment tokens.                  |
-| `DATASETS` | Yes      | Existing writable dataset root directory.                                                   |
-| `PORT`     | No       | Backend listening port, default `3000`.                                                     |
-| `FRONTEND` | No       | Readable Angular browser bundle directory containing `index.html` to enables static hosting |
+| Variable      | Required | Meaning                                                                                     |
+|---------------|----------|---------------------------------------------------------------------------------------------|
+| `MODE`        | Yes      | Runtime mode: `local`, `private`, or `public`.                                              |
+| `SECRET`      | Yes      | HMAC/JWT secret used for passwords, session tokens, and attachment tokens.                  |
+| `SECRET_FILE` | No       | Path of a file containing the secret, e.g. a Docker secret. Takes precedence over `SECRET`. |
+| `DATASETS`    | Yes      | Existing writable dataset root directory.                                                   |
+| `PORT`        | No       | Backend listening port, default `3000`.                                                     |
+| `FRONTEND`    | No       | Readable Angular browser bundle directory containing `index.html` to enables static hosting |
+
+`SECRET` is required, but it can be provided through `SECRET_FILE` instead, following the Docker secrets convention.
+When `SECRET_FILE` is set, the backend reads the file before validating the environment and uses its content as the
+secret, with trailing line breaks removed. It takes precedence over `SECRET`, which the Docker image sets to an insecure
+default. An unreadable or empty file terminates the process.
 
 Runtime modes affect authentication:
 
