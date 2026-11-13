@@ -283,6 +283,7 @@ If you want to contribute to the project, please check the [CONTRIBUTING](CONTRI
 - [Oliver Lehmann](https://github.com/OlliL)
 - [Prabal Khare](https://github.com/00PrabalK00)
 - [Roberto Bellingeri](https://github.com/bellingeri)
+- [Asish Kumar](https://github.com/officialasishkumar)
 
 
 ## License
