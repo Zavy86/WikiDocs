@@ -345,10 +345,11 @@ export class AppController {
     @Res({ passthrough: true }) response:Response,
   ):Promise<StreamableFile> {
     const attachment:AttachmentStream = await this.documentService.attachment_retrive(path, file, token);
-    const escapedFileName:string = attachment.fileName.replace(/"/g, '\\"');
+    const fallbackFileName:string = attachment.fileName.replace(/[^\x20-\x7e]/gu, '_').replace(/["\\]/g, '\\$&');
+    const encodedFileName:string = encodeURIComponent(attachment.fileName).replace(/['()*]/g, (character:string):string => `%${ character.charCodeAt(0).toString(16).toUpperCase() }`);
     response.type(attachment.fileType);
     response.setHeader('Content-Length', attachment.contentLength.toString());
-    response.setHeader('Content-Disposition', `inline; filename="${ escapedFileName }"`);
+    response.setHeader('Content-Disposition', `inline; filename="${ fallbackFileName }"; filename*=UTF-8''${ encodedFileName }`);
     return new StreamableFile(attachment.stream);
   }
 

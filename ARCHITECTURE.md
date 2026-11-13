@@ -369,7 +369,9 @@ neither content nor children remains a missing page.
 └─────────────────────────────────────────┘
 ```
 
-Document paths are trimmed, lowercased, slash-normalized, and restricted to `a-z`, digits, `_`, `.`, `-`, and `/`.
+Document paths are trimmed, slash-normalized, and restricted to Unicode letters, marks and numbers, `_`, `.`, `-`, and `/`;
+any other character is replaced by `-`. ASCII letters are lowercased while non-ASCII letters keep their case, matching
+the directory names created by version 1 (for example `/Guides/Été 2026` is stored as `guides/Été-2026`).
 Traversal segments and `_versions` in API paths are rejected.
 
 `content.md` contains frontmatter and Markdown:

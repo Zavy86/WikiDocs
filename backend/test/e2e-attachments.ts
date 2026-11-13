@@ -56,6 +56,35 @@ describe('attachments', ():void => {
       .expect(404);
   });
 
+  it('stores and serves attachments with non-English file names', async ():Promise<void> => {
+    const path:string = '/文档';
+    await testApp.http
+      .post('/api/document')
+      .query({ path })
+      .set(bearer(adminToken))
+      .send({ raw: '# 文档' })
+      .expect(204);
+    await testApp.http
+      .post('/api/attachment')
+      .query({ path, file: '笔记 été.txt' })
+      .set(bearer(adminToken))
+      .attach('file', Buffer.from('attachment content'), '笔记 été.txt')
+      .expect(204);
+    const document = await testApp.http
+      .get('/api/document')
+      .query({ path })
+      .set(bearer(adminToken))
+      .expect(200);
+    const attachment = document.body.attachments[ 0 ] as { file:string; token:string };
+    expect(attachment.file).toBe('笔记-été.txt');
+    const downloaded = await testApp.http
+      .get('/api/attachment')
+      .query({ path, file: attachment.file, token: attachment.token })
+      .expect(200)
+      .expect('Content-Disposition', `inline; filename="__-_t_.txt"; filename*=UTF-8''${ encodeURIComponent('笔记-été.txt') }`);
+    expect(downloaded.body).toEqual(Buffer.from('attachment content'));
+  });
+
   it('rejects invalid attachment uploads and removals', async ():Promise<void> => {
     await testApp.http
       .post('/api/attachment')
