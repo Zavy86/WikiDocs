@@ -204,6 +204,34 @@ secrets:
 ```
 
 
+## Custom styles
+
+You can override the default look of Wiki|Docs with your own stylesheet. The web client loads `custom.css` after the
+standard styles, so its rules take precedence. The image ships an empty default file, so nothing is required.
+
+To use your own, create a `custom.css` file next to your Compose file before starting the container and bind it
+read-only:
+
+```
+services:
+  wikidocs:
+    volumes:
+      - datasets:/var/lib/wikidocs/datasets
+      - ./custom.css:/app/frontend/custom.css:ro
+```
+
+Most of the layout is driven by CSS custom properties defined in
+[`frontend/src/styles.scss`](./frontend/src/styles.scss), so overriding them is usually enough:
+
+```css
+:root {
+  --app-content-max-width: 1280px;
+}
+```
+
+Changes are applied on the next page reload.
+
+
 ## Sync
 
 To sync your Wiki|Docs data across multiple devices, host the application yourself and configure the desktop app to connect to your remote instance.
