@@ -5,7 +5,7 @@ import { AfterViewInit, Component, computed, effect, inject, Signal, signal, vie
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, PRIMARY_OUTLET, Router, RouterOutlet, UrlSegment } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpService } from 'src/app/services/http.service';
 import { InformationService } from 'src/app/services/information.service';
@@ -733,9 +733,10 @@ export class App implements AfterViewInit {
   }
 
   private normalizePath(url:string):string {
-    const [ pathWithoutQuery ] = url.split('?');
-    if ( ! pathWithoutQuery || pathWithoutQuery === '/' ) { return '/'; }
-    return ( pathWithoutQuery.startsWith('/') ? pathWithoutQuery : `/${ pathWithoutQuery }` );
+    // The router URL is percent-encoded, so the decoded segments are used to support non-ASCII document paths
+    const segments:UrlSegment[] = ( this.router.parseUrl(url).root.children[ PRIMARY_OUTLET ]?.segments ?? [] );
+    if ( segments.length === 0 ) { return '/'; }
+    return `/${ segments.map((segment:UrlSegment):string => segment.path).join('/') }`;
   }
 
   private normalizeUserPath(rawPath:string):string | null {

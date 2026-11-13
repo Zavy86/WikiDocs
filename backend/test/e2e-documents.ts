@@ -1,5 +1,5 @@
 import { authenticate, bearer, createE2eApp, E2e, initialize } from './e2e';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 describe('documents', ():void => {
@@ -128,6 +128,49 @@ describe('documents', ():void => {
           expect.objectContaining({ path: '/guides/blank-title', title: 'blank-title' })
         ]));
       });
+  });
+
+  it('keeps non-English letters and numbers in document paths', async ():Promise<void> => {
+    const documentsPath:string = join(testApp.datasetsPath, 'documents');
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/Guides/Été 2026' })
+      .set(bearer(adminToken))
+      .send({ raw: '# Été' })
+      .expect(204);
+    await expect(readFile(join(documentsPath, 'guides', 'Été-2026', 'content.md'), 'utf-8')).resolves.toContain('# Été');
+    await testApp.http
+      .post('/api/document')
+      .query({ path: '/文档/指南' })
+      .set(bearer(adminToken))
+      .send({ raw: '# 指南' })
+      .expect(204);
+    await testApp.http
+      .get('/api/document')
+      .query({ path: '/文档/指南' })
+      .set(bearer(adminToken))
+      .expect(200)
+      .expect(({ body }):void => expect(body).toMatchObject({ exists: true, metadata: { path: '/文档/指南', title: '指南' } }));
+    await testApp.http
+      .get('/api/tree')
+      .query({ path: '/文档' })
+      .set(bearer(adminToken))
+      .expect(200)
+      .expect(({ body }):void => {
+        expect(body.leaves).toEqual([ expect.objectContaining({ path: '/文档/指南', title: '指南' }) ]);
+      });
+  });
+
+  it('resolves existing directories with non-English names', async ():Promise<void> => {
+    const documentsPath:string = join(testApp.datasetsPath, 'documents');
+    await mkdir(join(documentsPath, 'École', 'résumé'), { recursive: true });
+    await writeFile(join(documentsPath, 'École', 'résumé', 'content.md'), 'Document body.\n', 'utf-8');
+    await testApp.http
+      .get('/api/document')
+      .query({ path: '/École/résumé' })
+      .set(bearer(adminToken))
+      .expect(200)
+      .expect(({ body }):void => expect(body).toMatchObject({ exists: true, metadata: { path: '/École/résumé', title: 'résumé' } }));
   });
 
   it('rejects invalid document move targets', async ():Promise<void> => {

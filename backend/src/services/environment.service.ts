@@ -54,14 +54,15 @@ export class EnvironmentService {
   }
 
   public sanitizeDocumentPath(path:string):string {
+    // Non-ASCII letters keep their case so that directories created by version 1 still resolve
     const sanitized:string = path
       .trim()
-      .toLowerCase()
+      .replace(/[A-Z]+/g, (letters:string):string => letters.toLowerCase())
       .replace(/\\/g, '/')
       .replace(/^\/+|\/+$/g, '')
       .replace(/\/+/g, '/')
       .replace(/^\/$/g, '')
-      .replace(/[^a-z0-9_.-/]/g, '-')
+      .replace(/[^\p{L}\p{M}\p{N}_./-]/gu, '-')
       .replace(/-{2,}/g, '-');
     if ( sanitized.includes('..') ) {
       throw new BadRequestException(`Invalid path <${ path }>, '..' is not allowed`);
