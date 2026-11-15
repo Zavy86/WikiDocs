@@ -173,6 +173,13 @@ authentication:
     failed: Authenticatie mislukt.
   title: Aanmelden
 document:
+  alerts:
+    caution: Let op
+    important: Belangrijk
+    note: Opmerking
+    question: Vraag
+    tip: Tip
+    warning: Waarschuwing
   editor:
     label: Document-editor voor onbewerkte inhoud
     messages:

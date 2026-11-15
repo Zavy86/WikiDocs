@@ -167,6 +167,13 @@ authentication:
     failed: Échec de l'authentification.
   title: Connexion
 document:
+  alerts:
+    caution: Attention
+    important: Important
+    note: Remarque
+    question: Question
+    tip: Astuce
+    warning: Avertissement
   editor:
     label: Éditeur du contenu brut du document
     messages:

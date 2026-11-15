@@ -167,6 +167,13 @@ authentication:
     failed: प्रमाणीकरण विफल होना।
   title: लॉग इन करें
 document:
+  alerts:
+    caution: सावधानी
+    important: महत्वपूर्ण
+    note: नोट
+    question: प्रश्न
+    tip: सुझाव
+    warning: चेतावनी
   editor:
     label: दस्तावेज़ कच्ची सामग्री संपादक
     messages:

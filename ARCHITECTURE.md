@@ -405,6 +405,18 @@ insert-and-upload flow. Unsupported image types, multiple pasted images, and upl
 is in progress produce an actionable error. If the attachment upload fails, the editor removes the Markdown reference
 it inserted for that image.
 
+### Alerts
+
+The document viewer renders GitHub-style alerts, also supporting the special quotes written with version 1. A blockquote
+whose first line is a `[!TYPE]` marker becomes a colored alert box; `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`,
+and `QUESTION` are recognized case-insensitively. Text after the marker on the same line replaces the localized default
+title, and the following quoted lines are rendered as regular Markdown. Unknown markers stay regular blockquotes.
+
+```markdown
+> [!WARNING] Back up first
+> Create a complete backup of your dataset before upgrading.
+```
+
 ```
 ┌─────────────────────────────────────────┐
 │ MetadataContract                        │

@@ -167,6 +167,13 @@ authentication:
     failed: 身份验证失败。
   title: 登录
 document:
+  alerts:
+    caution: 注意
+    important: 重要
+    note: 备注
+    question: 问题
+    tip: 提示
+    warning: 警告
   editor:
     label: 文档原始内容编辑器
     messages:

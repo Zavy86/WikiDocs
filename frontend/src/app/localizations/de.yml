@@ -167,6 +167,13 @@ authentication:
     failed: Anmeldung fehlgeschlagen.
   title: Anmeldung
 document:
+  alerts:
+    caution: Vorsicht
+    important: Wichtig
+    note: Hinweis
+    question: Frage
+    tip: Tipp
+    warning: Warnung
   editor:
     label: Editor für den Rohinhalt des Dokuments
     messages:

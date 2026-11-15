@@ -167,6 +167,13 @@ authentication:
     failed: Falha na autenticação.
   title: Iniciar sessão
 document:
+  alerts:
+    caution: Cuidado
+    important: Importante
+    note: Nota
+    question: Pergunta
+    tip: Dica
+    warning: Aviso
   editor:
     label: Editor de conteúdo bruto do documento
     messages:

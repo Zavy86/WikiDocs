@@ -167,6 +167,13 @@ authentication:
     failed: 認証に失敗しました。
   title: ログイン
 document:
+  alerts:
+    caution: 注意
+    important: 重要
+    note: メモ
+    question: 質問
+    tip: ヒント
+    warning: 警告
   editor:
     label: ドキュメントのソースコンテンツエディター
     messages:
