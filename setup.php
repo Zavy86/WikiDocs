@@ -15,6 +15,7 @@ function sanitizeInput($input){return htmlspecialchars(trim($input),ENT_COMPAT,'
 function checkWebServer(){
   if((isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false)){return "apache";}
   elseif(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false){return "nginx";}
+  elseif(PHP_SAPI==='cli-server'){return "php built-in server";}
   else{return null;}
 }
 // definitions
@@ -149,7 +150,7 @@ if($g_act=="conclude"){
         Your environment has been verified..
         <ul class="collection">
           <li class="collection-item">
-            webserver: <?= checkWebServer() ?? 'apache or nginx is required' ?>
+            webserver: <?= checkWebServer() ?? 'apache, nginx or php built-in server is required' ?>
             <?= checkWebServer() ? $check_ok : $check_ko ?>
           </li>
           <?php foreach($server_modules as $key => $module): ?>
