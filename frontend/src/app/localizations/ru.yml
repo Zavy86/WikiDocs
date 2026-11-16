@@ -167,6 +167,13 @@ authentication:
     failed: Аутентификация не удалась.
   title: Вход
 document:
+  alerts:
+    caution: Осторожно
+    important: Важно
+    note: Примечание
+    question: Вопрос
+    tip: Совет
+    warning: Предупреждение
   editor:
     label: Редактор исходного содержимого документа
     messages:

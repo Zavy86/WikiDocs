@@ -70,6 +70,7 @@ Wiki|Docs combines the convenience of a modern editor with the durability of pla
 - Editor full WYSIWYG
 - Support for KaTeX math
 - Support for Mermaid diagrams
+- Support for GitHub-style alerts
 - Unlimited page revisions
 - Uploading and downloading attachments
 - Uploading images (also from clipboard)

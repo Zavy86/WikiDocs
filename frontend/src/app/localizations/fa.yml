@@ -167,6 +167,13 @@ authentication:
     failed: احراز هویت ناموفق بود.
   title: ورود
 document:
+  alerts:
+    caution: احتیاط
+    important: مهم
+    note: یادداشت
+    question: پرسش
+    tip: نکته
+    warning: هشدار
   editor:
     label: ویرایشگر محتوای خام سند
     messages:

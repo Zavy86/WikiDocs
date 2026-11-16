@@ -167,6 +167,13 @@ authentication:
     failed: Autenticazione non riuscita.
   title: Accesso
 document:
+  alerts:
+    caution: Attenzione
+    important: Importante
+    note: Nota
+    question: Domanda
+    tip: Suggerimento
+    warning: Avvertenza
   editor:
     label: Editor del contenuto sorgente del documento
     messages:

@@ -167,6 +167,13 @@ authentication:
     failed: Error de autenticación.
   title: Inicio de sesión
 document:
+  alerts:
+    caution: Precaución
+    important: Importante
+    note: Nota
+    question: Pregunta
+    tip: Consejo
+    warning: Advertencia
   editor:
     label: Editor de contenido sin formato del documento
     messages:

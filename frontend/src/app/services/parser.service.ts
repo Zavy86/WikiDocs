@@ -1,11 +1,17 @@
-import type { MarkedExtension, Tokens } from 'marked';
-import { Injectable } from '@angular/core';
+import type { MarkedExtension, RendererThis, Token, Tokens, TokenizerThis } from 'marked';
+import { inject, Injectable } from '@angular/core';
 import { buildBackendUrl } from 'src/app/app.backend';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { AttachmentType } from 'src/app/types';
+
+const alertVariants = [ 'caution', 'important', 'note', 'question', 'tip', 'warning' ] as const;
+
+type AlertVariant = typeof alertVariants[number];
 
 @Injectable({ providedIn: 'root' })
 export class ParserService {
 
+  private readonly localizationService:LocalizationService = inject(LocalizationService);
   private markdownPluginsPromise:Promise<void> | null = null;
 
   public loadMarkdownPlugins():Promise<void> {
@@ -38,6 +44,42 @@ export class ParserService {
     };
   }
 
+  public createAlertExtension():MarkedExtension {
+    const markerPattern:RegExp = new RegExp(String.raw`^ {0,3}>[ \t]?\[!(${ alertVariants.join('|') })\][ \t]*([^\n]*)(?:\n|$)`, 'i');
+    const getDefaultTitle = (variant:AlertVariant):string => this.escapeHtml(this.localizationService.getText(`document.alerts.${ variant }`));
+    return {
+      extensions: [ {
+        name: 'alert',
+        level: 'block',
+        start: (source:string):number | undefined => /^ {0,3}>[ \t]?\[!/m.exec(source)?.index,
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          const marker:RegExpExecArray | null = markerPattern.exec(source);
+          if ( ! marker ) { return undefined; }
+          const quote:string = /^(?: {0,3}>[^\n]*(?:\n|$))*/.exec(source.slice(marker[ 0 ].length))?.[ 0 ] ?? '';
+          const body:string = quote.replace(/^ {0,3}> ?/gm, '');
+          const top:boolean = this.lexer.state.top;
+          this.lexer.state.top = true;
+          const tokens:Token[] = this.lexer.blockTokens(body);
+          this.lexer.state.top = top;
+          return {
+            type: 'alert',
+            raw: marker[ 0 ] + quote,
+            variant: marker[ 1 ].toLowerCase(),
+            title: this.lexer.inline(marker[ 2 ].trim()),
+            tokens,
+          };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          const variant:AlertVariant = token[ 'variant' ];
+          const titleTokens:Token[] = token[ 'title' ];
+          const title:string = titleTokens.length > 0 ? this.parser.parseInline(titleTokens) : getDefaultTitle(variant);
+          return `<div class="markdown-alert markdown-alert-${ variant }">\n<p class="markdown-alert-title">${ title }</p>\n${ this.parser.parse(token.tokens ?? []) }</div>\n`;
+        },
+        childTokens: [ 'title', 'tokens' ],
+      } ],
+    };
+  }
+
   private async initializeMarkdownPlugins():Promise<void> {
     const [ markedModule, prismModule, emojiModule, katexModule, mermaidModule, clipboardModule ] = await Promise.all([
       import('marked'),
@@ -48,7 +90,7 @@ export class ParserService {
       import('clipboard'),
     ]);
 
-    markedModule.marked.use(this.createHighlightExtension());
+    markedModule.marked.use(this.createHighlightExtension(), this.createAlertExtension());
 
     ( globalThis as { Prism?:unknown } ).Prism = prismModule.default;
 

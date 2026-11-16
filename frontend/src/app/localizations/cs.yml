@@ -167,6 +167,13 @@ authentication:
     failed: Ověření se nezdařilo.
   title: Přihlášení
 document:
+  alerts:
+    caution: Upozornění
+    important: Důležité
+    note: Poznámka
+    question: Otázka
+    tip: Tip
+    warning: Varování
   editor:
     label: Editor zdrojového obsahu dokumentu
     messages:

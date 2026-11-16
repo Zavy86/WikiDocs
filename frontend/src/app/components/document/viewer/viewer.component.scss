@@ -253,6 +253,97 @@
   background: transparent !important;
 }
 
+:host ::ng-deep .document-content .markdown-alert {
+  margin: 0 0 1rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  border-inline-start: 4px solid var(--markdown-alert-color);
+  border-start-end-radius: 8px;
+  border-end-end-radius: 8px;
+  background: color-mix(in srgb, var(--markdown-alert-color) 8%, transparent);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+:host ::ng-deep .document-content .markdown-alert-title {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  color: var(--markdown-alert-color);
+
+  &::before {
+    content: var(--markdown-alert-icon);
+    display: inline-block;
+    margin-inline-end: 0.4rem;
+    vertical-align: -0.25em;
+    font-family: 'Material Symbols Outlined';
+    font-size: 1.25rem;
+    font-weight: normal;
+    line-height: 1;
+    direction: ltr;
+    font-feature-settings: 'liga';
+  }
+}
+
+:host ::ng-deep .document-content {
+  .markdown-alert-caution {
+    --markdown-alert-color: #d1242f;
+    --markdown-alert-icon: 'report';
+  }
+
+  .markdown-alert-important {
+    --markdown-alert-color: #8250df;
+    --markdown-alert-icon: 'feedback';
+  }
+
+  .markdown-alert-note {
+    --markdown-alert-color: #0969da;
+    --markdown-alert-icon: 'info';
+  }
+
+  .markdown-alert-question {
+    --markdown-alert-color: #0e7490;
+    --markdown-alert-icon: 'help';
+  }
+
+  .markdown-alert-tip {
+    --markdown-alert-color: #1a7f37;
+    --markdown-alert-icon: 'lightbulb';
+  }
+
+  .markdown-alert-warning {
+    --markdown-alert-color: #9a6700;
+    --markdown-alert-icon: 'warning';
+  }
+}
+
+:host-context(.app-theme-dark) ::ng-deep .document-content {
+  .markdown-alert-caution {
+    --markdown-alert-color: #f85149;
+  }
+
+  .markdown-alert-important {
+    --markdown-alert-color: #ab7df8;
+  }
+
+  .markdown-alert-note {
+    --markdown-alert-color: #4493f8;
+  }
+
+  .markdown-alert-question {
+    --markdown-alert-color: #22b8cf;
+  }
+
+  .markdown-alert-tip {
+    --markdown-alert-color: #3fb950;
+  }
+
+  .markdown-alert-warning {
+    --markdown-alert-color: #d29922;
+  }
+}
+
 @media print {
   .document-content :where(pre, code, blockquote, table) {
     color: #000000 !important;

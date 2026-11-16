@@ -167,6 +167,13 @@ authentication:
     failed: Authentication failed.
   title: Login
 document:
+  alerts:
+    caution: Caution
+    important: Important
+    note: Note
+    question: Question
+    tip: Tip
+    warning: Warning
   editor:
     label: Document raw content editor
     messages:

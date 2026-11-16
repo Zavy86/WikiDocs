@@ -167,6 +167,13 @@ authentication:
     failed: فشلت المصادقة.
   title: تسجيل الدخول
 document:
+  alerts:
+    caution: تنبيه
+    important: مهم
+    note: ملاحظة
+    question: سؤال
+    tip: نصيحة
+    warning: تحذير
   editor:
     label: محرر المحتوى الخام للمستند
     messages:

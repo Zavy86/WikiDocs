@@ -167,6 +167,13 @@ authentication:
     failed: Uwierzytelnianie nie powiodło się.
   title: Logowanie
 document:
+  alerts:
+    caution: Przestroga
+    important: Ważne
+    note: Uwaga
+    question: Pytanie
+    tip: Wskazówka
+    warning: Ostrzeżenie
   editor:
     label: Edytor surowej zawartości dokumentu
     messages:
