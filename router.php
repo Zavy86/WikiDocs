@@ -31,7 +31,7 @@ $relative_path=(string)substr($request_path,strlen($base_path));
 if(preg_match('#(^|/)\.#',$relative_path)){http_response_code(403);exit;}
 
 // redirect markdown files to the homepage instead of exposing their sources
-if(preg_match('#\.md$#i',$request_path)){header("location: ".$base_path,true,301);exit;}
+if(preg_match('#\.md$#i',$request_path)){header("location: ".$base_path,true,302);exit;}
 
 // serve existing files as they are (assets, attachments, setup.php, etc.)
 $requested_file=realpath(__DIR__."/".$relative_path);
