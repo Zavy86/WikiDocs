@@ -174,6 +174,8 @@ document:
     question: سؤال
     tip: نصيحة
     warning: تحذير
+  collapsible:
+    summary: انقر للتوسيع
   editor:
     label: محرر المحتوى الخام للمستند
     messages:
@@ -189,6 +191,8 @@ document:
     title: لم يُعثر على المستند
   loading: جارٍ تحميل المستند...
   tags-label: وسوم المستند
+  video:
+    title: فيديو {provider}
 footer:
   last-update: آخر تحديث {timestamp:في وقت غير معروف} بواسطة {author:مؤلف غير معروف}
   login: تسجيل الدخول

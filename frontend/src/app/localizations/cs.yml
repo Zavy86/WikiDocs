@@ -174,6 +174,8 @@ document:
     question: Otázka
     tip: Tip
     warning: Varování
+  collapsible:
+    summary: Kliknutím rozbalíte
   editor:
     label: Editor zdrojového obsahu dokumentu
     messages:
@@ -189,6 +191,8 @@ document:
     title: Dokument nebyl nalezen
   loading: Probíhá načítání dokumentu...
   tags-label: Štítky dokumentu
+  video:
+    title: Video {provider}
 footer:
   last-update: Poslední aktualizace {timestamp:v neznámou dobu}, autor {author:neznámý autor}
   login: Přihlásit se

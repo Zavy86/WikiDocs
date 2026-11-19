@@ -180,6 +180,8 @@ document:
     question: Vraag
     tip: Tip
     warning: Waarschuwing
+  collapsible:
+    summary: Klik om uit te vouwen
   editor:
     label: Document-editor voor onbewerkte inhoud
     messages:
@@ -196,6 +198,8 @@ document:
     title: Document niet gevonden
   loading: Document laden...
   tags-label: Documenttags
+  video:
+    title: "{provider}-video"
 footer:
   last-update: Laatst bijgewerkt op {timestamp:een onbekend tijdstip} door {author:een onbekende auteur}
   login: Aanmelden

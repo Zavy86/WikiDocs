@@ -174,6 +174,8 @@ document:
     question: प्रश्न
     tip: सुझाव
     warning: चेतावनी
+  collapsible:
+    summary: विस्तार करने के लिए क्लिक करें
   editor:
     label: दस्तावेज़ कच्ची सामग्री संपादक
     messages:
@@ -189,6 +191,8 @@ document:
     title: दस्तावेज़ नहीं मिला
   loading: दस्तावेज़ लोड हो रहा है...
   tags-label: दस्तावेज़ टैग
+  video:
+    title: "{provider} वीडियो"
 footer:
   last-update: "{author:अज्ञात लेखक} द्वारा अंतिम अद्यतन {timestamp:अज्ञात समय पर}"
   login: लॉग इन करें
