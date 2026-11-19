@@ -417,6 +417,44 @@ title, and the following quoted lines are rendered as regular Markdown. Unknown 
 > Create a complete backup of your dataset before upgrading.
 ```
 
+### Version 1 extensions
+
+The document viewer also renders the custom tags written with version 1. Tags inside code spans and code blocks, tags
+that are not closed, and tags with an unsupported value stay plain text.
+
+| Syntax                               | Result                                                         |
+|--------------------------------------|----------------------------------------------------------------|
+| `+++ Summary` … `+++`                | Collapsible section, the summary is optional                   |
+| `[video src="https://…"]`            | Embedded YouTube or Vimeo player                               |
+| `[color=#ff0000]text[/color]`        | Colored text, accepting hex, named, `rgb()` and `hsl()` colors |
+| `[mono]text[/mono]`                  | Monospaced text                                                |
+| `[rtl]text[/rtl]`, `[ltr]text[/ltr]` | Forced text direction                                          |
+
+A collapsible section starts at a line beginning with `+++` and ends at the next line containing only `+++`, or at the
+end of its container when it is not closed. Without a summary, a localized default summary is shown. A `+++ Summary`
+line inside a section opens a nested one. The section body is rendered as regular Markdown, so it can contain lists,
+code, alerts, and other sections. Printed documents always include the content of collapsed sections.
+
+```markdown
++++ Installation steps
+1. Download the latest release.
+2. Run the installer.
++++
+```
+
+Videos accept YouTube `watch`, `youtu.be`, `shorts`, `live`, and `embed` links, and Vimeo video, channel, group,
+album, showcase, and player links, including the private hash of unlisted Vimeo videos. Any other source is left as
+written.
+
+Colors, monospace, and direction tags apply inline. A direction tag that starts a block and whose closing tag ends a
+line wraps the enclosed Markdown in a block with that direction instead, so its content is aligned accordingly:
+
+```markdown
+[rtl]
+سلام دنیا
+[/rtl]
+```
+
 ```
 ┌─────────────────────────────────────────┐
 │ MetadataContract                        │

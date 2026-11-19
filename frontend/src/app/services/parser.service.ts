@@ -8,6 +8,28 @@ const alertVariants = [ 'caution', 'important', 'note', 'question', 'tip', 'warn
 
 type AlertVariant = typeof alertVariants[number];
 
+type VideoEmbed = { readonly provider:string; readonly url:string };
+
+const colorPattern:RegExp = /^(?:#(?:[\da-f]{3,4}|[\da-f]{6}|[\da-f]{8})|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/a-z+-]*\))$/i;
+
+// marked passes block start functions the source without its first character, so a match is only a valid block start
+// when it follows a line break.
+const findLineStart = (source:string, pattern:RegExp):number | undefined => {
+  const match:RegExpExecArray | null = pattern.exec(source);
+  return match ? match.index + 1 : undefined;
+};
+
+const findClosingTag = (source:string, name:string, offset:number):number => {
+  const tagPattern:RegExp = new RegExp(String.raw`\[(/?)${ name }(?:=[^\]\n]*)?\]`, 'g');
+  tagPattern.lastIndex = offset;
+  let depth:number = 1;
+  for ( let tag:RegExpExecArray | null = tagPattern.exec(source); tag; tag = tagPattern.exec(source) ) {
+    depth += tag[ 1 ] ? -1 : 1;
+    if ( depth === 0 ) { return tag.index; }
+  }
+  return -1;
+};
+
 @Injectable({ providedIn: 'root' })
 export class ParserService {
 
@@ -80,6 +102,179 @@ export class ParserService {
     };
   }
 
+  public createCollapsibleExtension():MarkedExtension {
+    const openingPattern:RegExp = /^ {0,3}\+\+\+(?!\+)[ \t]*([^\n]*?)[ \t]*(?:\n|$)/;
+    const markerPattern:RegExp = /^ {0,3}\+\+\+(?!\+)[ \t]*(\S?)/;
+    const fencePattern:RegExp = /^ {0,3}(`{3,}|~{3,})([^\n]*)$/;
+    const getDefaultSummary = ():string => this.escapeHtml(this.localizationService.getText('document.collapsible.summary'));
+    return {
+      extensions: [ {
+        name: 'collapsible',
+        level: 'block',
+        start: (source:string):number | undefined => findLineStart(source, /\n {0,3}\+\+\+(?!\+)/),
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          const opening:RegExpExecArray | null = openingPattern.exec(source);
+          if ( ! opening ) { return undefined; }
+          let bodyEnd:number = source.length;
+          let end:number = source.length;
+          let depth:number = 1;
+          let fence:string | null = null;
+          for ( let position:number = opening[ 0 ].length; position < source.length; ) {
+            const lineEnd:number = source.indexOf('\n', position);
+            const next:number = lineEnd === -1 ? source.length : lineEnd + 1;
+            const line:string = source.slice(position, lineEnd === -1 ? source.length : lineEnd);
+            const fenceMatch:RegExpExecArray | null = fencePattern.exec(line);
+            if ( fence ) {
+              if ( fenceMatch && fenceMatch[ 1 ][ 0 ] === fence[ 0 ] && fenceMatch[ 1 ].length >= fence.length && ! fenceMatch[ 2 ].trim() ) { fence = null; }
+            } else if ( fenceMatch ) {
+              fence = fenceMatch[ 1 ];
+            } else {
+              const marker:RegExpExecArray | null = markerPattern.exec(line);
+              if ( marker ) { depth += marker[ 1 ] ? 1 : -1; }
+              if ( depth === 0 ) {
+                bodyEnd = position;
+                end = next;
+                break;
+              }
+            }
+            position = next;
+          }
+          const top:boolean = this.lexer.state.top;
+          this.lexer.state.top = true;
+          const tokens:Token[] = this.lexer.blockTokens(source.slice(opening[ 0 ].length, bodyEnd));
+          this.lexer.state.top = top;
+          return {
+            type: 'collapsible',
+            raw: source.slice(0, end),
+            summary: this.lexer.inline(opening[ 1 ]),
+            tokens,
+          };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          const summaryTokens:Token[] = token[ 'summary' ];
+          const summary:string = summaryTokens.length > 0 ? this.parser.parseInline(summaryTokens) : getDefaultSummary();
+          return `<details class="markdown-collapsible">\n<summary>${ summary }</summary>\n${ this.parser.parse(token.tokens ?? []) }</details>\n`;
+        },
+        childTokens: [ 'summary', 'tokens' ],
+      } ],
+    };
+  }
+
+  public createVideoExtension():MarkedExtension {
+    const getTitle = (provider:string):string => this.escapeHtmlAttribute(this.localizationService.getText('document.video.title', { provider }));
+    return {
+      extensions: [ {
+        name: 'video',
+        level: 'inline',
+        start: (source:string):number => source.indexOf('[video'),
+        tokenizer: (source:string):Tokens.Generic | undefined => {
+          const match:RegExpExecArray | null = /^\[video\b[^\]\n]*?\bsrc="([^"\n]*)"[^\]\n]*\]/.exec(source);
+          const embed:VideoEmbed | null = match ? this.resolveVideoEmbed(match[ 1 ]) : null;
+          if ( ! match || ! embed ) { return undefined; }
+          return { type: 'video', raw: match[ 0 ], provider: embed.provider, url: embed.url };
+        },
+        renderer: (token:Tokens.Generic):string => {
+          const url:string = this.escapeHtmlAttribute(token[ 'url' ]);
+          const allow:string = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          return `<iframe class="markdown-video" src="${ url }" title="${ getTitle(token[ 'provider' ]) }" loading="lazy" allow="${ allow }" allowfullscreen></iframe>`;
+        },
+      } ],
+    };
+  }
+
+  public createColorExtension():MarkedExtension {
+    const escapeAttribute = (value:string):string => this.escapeHtmlAttribute(value);
+    return {
+      extensions: [ {
+        name: 'color',
+        level: 'inline',
+        start: (source:string):number => source.indexOf('[color='),
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          const opening:RegExpExecArray | null = /^\[color=([^\]\n]+)\]/.exec(source);
+          if ( ! opening || ! colorPattern.test(opening[ 1 ].trim()) ) { return undefined; }
+          const closing:number = findClosingTag(source, 'color', opening[ 0 ].length);
+          if ( closing === -1 ) { return undefined; }
+          return {
+            type: 'color',
+            raw: source.slice(0, closing + '[/color]'.length),
+            color: opening[ 1 ].trim(),
+            tokens: this.lexer.inlineTokens(source.slice(opening[ 0 ].length, closing)),
+          };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          return `<span style="color: ${ escapeAttribute(token[ 'color' ]) }">${ this.parser.parseInline(token.tokens ?? []) }</span>`;
+        },
+      } ],
+    };
+  }
+
+  public createMonospaceExtension():MarkedExtension {
+    return {
+      extensions: [ {
+        name: 'monospace',
+        level: 'inline',
+        start: (source:string):number => source.indexOf('[mono]'),
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          if ( ! source.startsWith('[mono]') ) { return undefined; }
+          const closing:number = findClosingTag(source, 'mono', '[mono]'.length);
+          if ( closing === -1 ) { return undefined; }
+          return {
+            type: 'monospace',
+            raw: source.slice(0, closing + '[/mono]'.length),
+            tokens: this.lexer.inlineTokens(source.slice('[mono]'.length, closing)),
+          };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          return `<span class="markdown-monospace">${ this.parser.parseInline(token.tokens ?? []) }</span>`;
+        },
+      } ],
+    };
+  }
+
+  public createDirectionExtension():MarkedExtension {
+    return {
+      extensions: [ {
+        name: 'directionBlock',
+        level: 'block',
+        start: (source:string):number | undefined => findLineStart(source, /\n {0,3}\[(?:rtl|ltr)\]/),
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          const opening:RegExpExecArray | null = /^ {0,3}\[(rtl|ltr)\]/.exec(source);
+          if ( ! opening ) { return undefined; }
+          const closing:number = findClosingTag(source, opening[ 1 ], opening[ 0 ].length);
+          const ending:RegExpExecArray | null = closing === -1 ? null : new RegExp(String.raw`^\[/${ opening[ 1 ] }\][ \t]*(?:\n|$)`).exec(source.slice(closing));
+          if ( ! ending ) { return undefined; }
+          const top:boolean = this.lexer.state.top;
+          this.lexer.state.top = true;
+          const tokens:Token[] = this.lexer.blockTokens(source.slice(opening[ 0 ].length, closing));
+          this.lexer.state.top = top;
+          return { type: 'directionBlock', raw: source.slice(0, closing + ending[ 0 ].length), direction: opening[ 1 ], tokens };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          return `<div class="markdown-direction" dir="${ token[ 'direction' ] }">\n${ this.parser.parse(token.tokens ?? []) }</div>\n`;
+        },
+      }, {
+        name: 'directionInline',
+        level: 'inline',
+        start: (source:string):number | undefined => /\[(?:rtl|ltr)\]/.exec(source)?.index,
+        tokenizer(this:TokenizerThis, source:string):Tokens.Generic | undefined {
+          const opening:RegExpExecArray | null = /^\[(rtl|ltr)\]/.exec(source);
+          if ( ! opening ) { return undefined; }
+          const closing:number = findClosingTag(source, opening[ 1 ], opening[ 0 ].length);
+          if ( closing === -1 ) { return undefined; }
+          return {
+            type: 'directionInline',
+            raw: source.slice(0, closing + `[/${ opening[ 1 ] }]`.length),
+            direction: opening[ 1 ],
+            tokens: this.lexer.inlineTokens(source.slice(opening[ 0 ].length, closing)),
+          };
+        },
+        renderer(this:RendererThis, token:Tokens.Generic):string {
+          return `<span dir="${ token[ 'direction' ] }">${ this.parser.parseInline(token.tokens ?? []) }</span>`;
+        },
+      } ],
+    };
+  }
+
   private async initializeMarkdownPlugins():Promise<void> {
     const [ markedModule, prismModule, emojiModule, katexModule, mermaidModule, clipboardModule ] = await Promise.all([
       import('marked'),
@@ -90,7 +285,15 @@ export class ParserService {
       import('clipboard'),
     ]);
 
-    markedModule.marked.use(this.createHighlightExtension(), this.createAlertExtension());
+    markedModule.marked.use(
+      this.createHighlightExtension(),
+      this.createAlertExtension(),
+      this.createCollapsibleExtension(),
+      this.createDirectionExtension(),
+      this.createVideoExtension(),
+      this.createColorExtension(),
+      this.createMonospaceExtension(),
+    );
 
     ( globalThis as { Prism?:unknown } ).Prism = prismModule.default;
 
@@ -221,6 +424,34 @@ export class ParserService {
     if ( ! trimmedTail ) { return null; }
     const quotedTitleMatch:RegExpMatchArray | null = trimmedTail.match(/^(['"])([\s\S]*)\1$/);
     return quotedTitleMatch?.[ 2 ] ?? null;
+  }
+
+  private resolveVideoEmbed(source:string):VideoEmbed | null {
+    let url:URL;
+    try {
+      url = new URL(source.trim());
+    } catch {
+      return null;
+    }
+    if ( url.protocol !== 'https:' && url.protocol !== 'http:' ) { return null; }
+    const host:string = url.hostname.toLowerCase().replace(/^(?:www|m)\./, '');
+    if ( host === 'youtube.com' || host === 'youtube-nocookie.com' || host === 'youtu.be' ) {
+      const id:string | null | undefined = host === 'youtu.be'
+        ? /^\/([\w-]+)\/?$/.exec(url.pathname)?.[ 1 ]
+        : url.pathname === '/watch' ? url.searchParams.get('v') : /^\/(?:embed|shorts|live)\/([\w-]+)\/?$/.exec(url.pathname)?.[ 1 ];
+      return id && /^[\w-]{11}$/.test(id) ? { provider: 'YouTube', url: `https://www.youtube.com/embed/${ id }` } : null;
+    }
+    if ( host === 'vimeo.com' || host === 'player.vimeo.com' ) {
+      const pathPattern:RegExp = host === 'player.vimeo.com'
+        ? /^\/video\/(\d+)\/?$/
+        : /^\/(?:channels\/[\w-]+\/|groups\/[\w-]+\/videos\/|(?:album|showcase)\/\d+\/video\/)?(\d+)(?:\/([\da-f]+))?\/?$/i;
+      const path:RegExpExecArray | null = pathPattern.exec(url.pathname);
+      if ( ! path ) { return null; }
+      const hash:string | null = path[ 2 ] ?? url.searchParams.get('h');
+      const query:string = hash && /^[\da-f]+$/i.test(hash) ? `?h=${ hash }` : '';
+      return { provider: 'Vimeo', url: `https://player.vimeo.com/video/${ path[ 1 ] }${ query }` };
+    }
+    return null;
   }
 
   private escapeHtml(value:string):string {

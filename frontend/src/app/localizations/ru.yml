@@ -174,6 +174,8 @@ document:
     question: Вопрос
     tip: Совет
     warning: Предупреждение
+  collapsible:
+    summary: Нажмите, чтобы развернуть
   editor:
     label: Редактор исходного содержимого документа
     messages:
@@ -189,6 +191,8 @@ document:
     title: Документ не найден
   loading: Загрузка документа...
   tags-label: Теги документа
+  video:
+    title: Видео {provider}
 footer:
   last-update: "Последнее обновление {timestamp:в неизвестное время}, автор: {author:неизвестный автор}"
   login: Вход

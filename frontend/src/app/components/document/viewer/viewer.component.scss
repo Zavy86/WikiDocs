@@ -344,6 +344,57 @@
   }
 }
 
+:host ::ng-deep .document-content .markdown-collapsible {
+  margin: 0 0 1rem;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 8px;
+
+  > summary {
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  &[open] > summary {
+    border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  > :not(summary) {
+    margin-inline: 1rem;
+  }
+
+  > summary + * {
+    margin-top: 0.75rem;
+  }
+
+  > :last-child:not(summary) {
+    margin-bottom: 0.75rem;
+  }
+}
+
+// The global styles detect the direction of each block from its content, so forced direction blocks restore the
+// direction inherited from their `dir` attribute. Code keeps its own left-to-right direction.
+:host ::ng-deep .document-content .markdown-direction {
+  &, :where(h1, h2, h3, h4, h5, h6, p, th, td, div) {
+    unicode-bidi: isolate;
+  }
+}
+
+:host ::ng-deep .document-content .markdown-video {
+  display: block;
+  width: min(100%, 960px);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin-inline: auto;
+  border: 0;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .document-content .markdown-monospace {
+  font-family: var(--app-monospace-font-family);
+}
+
 @media print {
   .document-content :where(pre, code, blockquote, table) {
     color: #000000 !important;
@@ -366,5 +417,9 @@
 
   :host-context(.app-theme-dark) .document-content :where(.mermaid, pre.mermaid) svg {
     filter: invert(1) hue-rotate(180deg);
+  }
+
+  :host ::ng-deep .document-content .markdown-collapsible::details-content {
+    content-visibility: visible;
   }
 }
