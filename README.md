@@ -108,6 +108,19 @@ location / {
 - Copy the configuration sample file `cp config.sample.inc.php datasets/config.inc.php`
 - Edit the configuration file `nano datasets/config.inc.php`
 
+## PHP Built-in Server
+
+The [PHP built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php) ignores `.htaccess`
+files, so WikiDocs ships a `router.php` script that applies the same rewrite rules.
+It is meant for local development, testing and personal use, not for production.
+
+- Start the server from the WikiDocs directory with `php -S localhost:8080 router.php`
+- Open `http://localhost:8080/` and follow the setup
+
+To serve WikiDocs from a subdirectory, start the server from the document root and pass the router inside the
+subdirectory, for example `php -S localhost:8080 -t /var/www /var/www/wikidocs/router.php`, the setup will then use
+`/wikidocs/` as path.
+
 ## Customization
 
 You can customize the default template by creating the file `styles/styles-custom.css`.
